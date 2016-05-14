@@ -17,16 +17,17 @@ public interface IGraph {
 	 */
 	public boolean contains (IMarking mark);
 	
-	public IAccessibleMarkings getAccessibleMarkings(IMarking mark);
+	public IAccessibleMarkings getAccessibleMarkings(IMarking mark) throws Exception;
 	public Vector<IMarking> getAllMarkings();
 	public IMarking getInitialMarking();
 	/**
 	 * Renvoie l'ensemble des marquages les plus proches de "mark" qui permettent d'atteindre la transition "tr".
 	 * Par plus proche on entend les marquages (satisfaisant la contrainte d'atteinte de la transition) pour lesquels
 	 * la distance IMarking::distanceWith() est minimale.
+	 * @throws Exception 
 	 */
-	public Vector<IMarking> getNearestMarkings (IMarking mark, ITransition tr);
-	public int getRefMarking (IMarking mark);
+	public Vector<IMarking> getNearestMarkings (IMarking mark, ITransition tr) throws Exception;
+	public int getRefMarking (IMarking mark) throws Exception;
 	public IMarking getMarkingByRef (int refMarking);
 	
 	/**
@@ -36,39 +37,45 @@ public interface IGraph {
 	 * dans le vecteur "systemTransition") toutes les autres transitions connectées (en sortie) à ce marquage seront
 	 * ignorées à l'exception des transitions systèmes. Dans ces cas là les transitions systèmes sont considérées avec un poids
 	 * de 0 dans le calcul de la distance du chemin.
+	 * @throws Exception 
 	 */
-	public Vector<IPathIntersection> getShortestPathsToTransition (IMarking from, ITransition to, Vector<String> systemTransition);
+	public Vector<IPathIntersection> getShortestPathsToTransition (IMarking from, ITransition to, Vector<String> systemTransition) throws Exception;
 	
 	public String getType();
 	
 	/** Vérifie si la transition "t" est accessible dans le graphe quel que soit le marquage du graphe considéré */
 	public boolean isAlwaysEnabled (ITransition t);
 	
-	/** Vérifie si le marquage "mark" est accessible dans le graphe à partir de "from". */
-	public boolean isMarkingAccessible (IMarking mark, IMarking from);
+	/** Vérifie si le marquage "mark" est accessible dans le graphe à partir de "from". 
+	 * @throws Exception */
+	public boolean isMarkingAccessible (IMarking mark, IMarking from) throws Exception;
 	
-	/** Vérifie si la transition "t" est présente en amont de "startingMarking" dans le graphe. */
-	public boolean isPreviouslyEnabled (ITransition t, IMarking startingMarking);
+	/** Vérifie si la transition "t" est présente en amont de "startingMarking" dans le graphe. 
+	 * @throws Exception */
+	public boolean isPreviouslyEnabled (ITransition t, IMarking startingMarking) throws Exception;
 	
 	/**
 	 * Vérifie si la transition "t" est présente en aval de "startingMarking" dans le graphe.
 	 * D'autre part, si un marquage du graphe est connecté (en sortie) à au moins une transition système (ie. incluse
 	 * dans le vecteur "systemTransition") toutes les autres transitions connectées (en sortie) à ce marquage seront
 	 * ignorées à l'exception des transitions systèmes
+	 * @throws Exception 
 	 */
-	public boolean isSubsequentlyEnabled (ITransition t, IMarking startingMarking, Vector<String> systemTransition);
+	public boolean isSubsequentlyEnabled (ITransition t, IMarking startingMarking, Vector<String> systemTransition) throws Exception;
 	
 	/**
 	 * Vérifie si le marquage "to" est un successeur immédiat du marquage "from".
+	 * @throws Exception 
 	 */
-	public boolean isSuccessorMarking (IMarking from, IMarking to);
+	public boolean isSuccessorMarking (IMarking from, IMarking to) throws Exception;
 	
 	/**
 	 * Calcule et retourne la plus petite distance entre le marquage passé en paramètre et l'ensemble des marquages possibles
 	 * du Rdp qui permettent d'atteindre la transition "tr". La distance entre deux marquages est la somme des valeurs absolues
 	 * des differences des marquages de chaque place.
+	 * @throws Exception 
 	 */
-	public int minimalDistanceWith(IMarking marking, ITransition tr);
+	public int minimalDistanceWith(IMarking marking, ITransition tr) throws Exception;
 	
 	public void print();
 	
