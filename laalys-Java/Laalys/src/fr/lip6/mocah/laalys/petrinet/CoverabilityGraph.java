@@ -2,7 +2,7 @@ package fr.lip6.mocah.laalys.petrinet;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Note pour comparaison avec Tina :
@@ -18,7 +18,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 	private String globalStrategy;
 
 	private int minimalWeightToAddOmega = 1; // voir gros commentaire computeAccessibleGraph
-	//private var minimalWeightsToAddOmega:Vector.<int>; // voir gros commentaire computeAccessibleGraph
+	//private var minimalWeightsToAddOmega:ArrayList.<int>; // voir gros commentaire computeAccessibleGraph
 	
 	public static final String STRATEGY_FIRST = "FIRST";
 	public static final String STRATEGY_AND = "AND";
@@ -49,11 +49,11 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * @see #isMarkingAccessible()
 	 * @see #getShortestPathsToTransition()
 	 */
-	public CoverabilityGraph(IMarking initialMark, Vector<IPlaceInfo> pl, Vector<ITransition> tr, String strategy)
+	public CoverabilityGraph(IMarking initialMark, ArrayList<IPlaceInfo> pl, ArrayList<ITransition> tr, String strategy)
 	{
 		super(initialMark, pl, tr);
 		minimalWeightToAddOmega = 1;
-		//minimalWeightsToAddOmega = new Vector.<int>();
+		//minimalWeightsToAddOmega = new ArrayList.<int>();
 		this.globalStrategy = strategy;
 	}
 	
@@ -232,7 +232,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 				// des graphe de couverture validé par Isabelle Mounier (équipe MOVE - LIP6)
 			} else {
 				// on remonte l'arborescence pour tenter de trouver un marquage que "startingMarking" recouvre strictement
-				Vector<IIndirectMarking> inMarkings = accessibleMarkingsByRefMarking.get(refMarkingByMarkingCode.get(code).id).getInMarkings();
+				ArrayList<IIndirectMarking> inMarkings = accessibleMarkingsByRefMarking.get(refMarkingByMarkingCode.get(code).id).getInMarkings();
 				// on parcours maintenant chaque parent
 				for (IIndirectMarking indirectMarking : inMarkings) {
 					// on récupère le parent courant
@@ -253,11 +253,11 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * Renvoie la reference du marquage égual à "mark" s'il existe dans le graphe ou les réferences des marquages les plus proches.
 	 * Par plus proche on entend les marquages équivalents qui contiennent le moins de omega.
 	 */
-	protected Vector<Integer> getRefClosestEquivalentMarkings(IMarking mark)
+	protected ArrayList<Integer> getRefClosestEquivalentMarkings(IMarking mark)
 	{
-		Vector<Integer> equivalentMarkings = getRefEquivalentMarkings(mark);
+		ArrayList<Integer> equivalentMarkings = getRefEquivalentMarkings(mark);
 		
-		Vector<Integer> closestMarks = new Vector<Integer>();
+		ArrayList<Integer> closestMarks = new ArrayList<Integer>();
 		int nbOmega = Integer.MAX_VALUE;
 		
 		// on parcours tous les marquages équivalents et on va retourner celui qui est le plus proche
@@ -279,7 +279,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 				{
 					// si le nombre de oméga est strictement plus petit que le ou les précédents, on enregistre ce nouveau marquage
 					// et son nombre de oméga
-					closestMarks = new Vector<Integer>();
+					closestMarks = new ArrayList<Integer>();
 					nbOmega = currentNbOmega;
 				}
 				// On enregistre cette nouvelle référence de marquage
@@ -295,9 +295,9 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * autre marquage contenant des omégas).
 	 * Deux marquages sont équivalents si les poids de leurs places sont identiques excepté pour les places contenant des omégas
 	 */
-	protected Vector<Integer> getRefEquivalentMarkings(IMarking mark)
+	protected ArrayList<Integer> getRefEquivalentMarkings(IMarking mark)
 	{
-		Vector<Integer> equivalentMarkings = new Vector<Integer>();
+		ArrayList<Integer> equivalentMarkings = new ArrayList<Integer>();
 		// On tente de le trouver direct dans le dictionnaire
 		if (refMarkingByMarkingCode.containsKey(mark.getCode()))
 		{
@@ -336,18 +336,18 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * @throws Exception 
 	 */
 	@Override 
-	public Vector<IPathIntersection> getShortestPathsToTransition(IMarking from, ITransition to, Vector<String> systemTransition) throws Exception
+	public ArrayList<IPathIntersection> getShortestPathsToTransition(IMarking from, ITransition to, ArrayList<String> systemTransition) throws Exception
 	{
 		if (systemTransition == null)
-			systemTransition = new Vector<String>();
-		Vector<IPathIntersection> roads = new Vector<IPathIntersection>();
+			systemTransition = new ArrayList<String>();
+		ArrayList<IPathIntersection> roads = new ArrayList<IPathIntersection>();
 		if (processStrategy(new Process_isSubsequentlyEnabled(), from, to, systemTransition, new HashSet<Integer>()))
 		{
 			// On récupère l'ensemble des références de marquage qui correspondent à "from"
-			Vector<Integer> refMarkings = getRefClosestEquivalentMarkings(from);
+			ArrayList<Integer> refMarkings = getRefClosestEquivalentMarkings(from);
 			// On lance l'analyse sur chaque référence de marquage en fonction de la stratégie
 			if (refMarkings.size() == 1 || globalStrategy.equals(STRATEGY_FIRST))
-				roads.add(getShortestPaths_rec(refMarkings.firstElement(), to, new HashMap<Integer, MarkingSeen>(), systemTransition));
+				roads.add(getShortestPaths_rec(refMarkings.get(0), to, new HashMap<Integer, MarkingSeen>(), systemTransition));
 			else
 			{
 				int minDist = Integer.MAX_VALUE;
@@ -359,7 +359,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 						if (path.getDistance() < minDist)
 						{
 							minDist = path.getDistance();
-							roads = new Vector<IPathIntersection>();
+							roads = new ArrayList<IPathIntersection>();
 						}
 						roads.add(path);
 					}
@@ -430,10 +430,10 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * @throws Exception 
 	 */
 	@Override
-	public boolean isSubsequentlyEnabled(ITransition t, IMarking startingMarking, Vector<String> systemTransition) throws Exception
+	public boolean isSubsequentlyEnabled(ITransition t, IMarking startingMarking, ArrayList<String> systemTransition) throws Exception
 	{
 		if (systemTransition == null)
-			systemTransition = new Vector<String>();
+			systemTransition = new ArrayList<String>();
 		return processStrategy(new Process_isSubsequentlyEnabled(), startingMarking, t, systemTransition, new HashSet<Integer>());
 	}
 	
@@ -514,7 +514,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * en paramètre d'une autre fonction.
 	 * Cette classe implemente la fonction "execute" qui prend en paramètre la référence du marquage source ("refMarking")
 	 * et un tableau "args" contenant les données de travail propres à cette fonction à savoir un objet de type ITransition
-	 * pour la transition à rechercher, un objet de type Vector<String> pour la liste des transitions systèmes et
+	 * pour la transition à rechercher, un objet de type ArrayList<String> pour la liste des transitions systèmes et
 	 * un objet de type HashSet<Integer> pour les marquages déjà analysés.
 	 * Si un marquage du graphe est connecté (en sortie) à au moins une transition système (ie. incluse
 	 * dans le troisième paramètre de "args") toutes les autres transitions connectées (en sortie) à ce marquage seront
@@ -525,10 +525,10 @@ public class CoverabilityGraph extends AccessibleGraph {
 		public boolean execute(int refMarking, Object... args)
 		{
 			// Récupération des paramètres dans l'argument "args"
-			if (args.length != 3 || !(args[0] instanceof ITransition) || !(args[1] instanceof Vector<?>) || !(args[2] instanceof HashSet<?>))
-				throw new Error("\"isSubsequentlyEnabled_rec\" waiting three fields in args parameter : an \"ITransition\", a\"Vector<String>\" and a \"HashSet<Integer>\"");
+			if (args.length != 3 || !(args[0] instanceof ITransition) || !(args[1] instanceof ArrayList<?>) || !(args[2] instanceof HashSet<?>))
+				throw new Error("\"isSubsequentlyEnabled_rec\" waiting three fields in args parameter : an \"ITransition\", a\"ArrayList<String>\" and a \"HashSet<Integer>\"");
 			ITransition t = (ITransition) args[0];
-			Vector<String> systemTransition = (Vector<String>) args[1];
+			ArrayList<String> systemTransition = (ArrayList<String>) args[1];
 			HashSet<Integer> seen = (HashSet<Integer>) args[2];
 			
 			return isSubsequentlyEnabled_rec(refMarking, t, systemTransition, seen);
@@ -540,7 +540,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * en paramètre d'une autre fonction.
 	 * Cette classe implemente la fonction "execute" qui prend en paramètre la référence du marquage source
 	 * ("parentRef") et un tableau "args" contenant les données de travail propres à ce traitement à savoir
-	 * un objet de type IMarking pour le marquage à rechercher et un objet de type Vector<String> pour la
+	 * un objet de type IMarking pour le marquage à rechercher et un objet de type ArrayList<String> pour la
 	 * liste des transitions systèmes.
 	 * @throws Exception 
 	 */
@@ -561,16 +561,16 @@ public class CoverabilityGraph extends AccessibleGraph {
 	protected boolean processStrategy(Command workingFunction, IMarking startingMarking, Object... args) throws Exception
 	{
 		// On récupère l'ensemble des références de marquage qui correspondent à "startingMarking"
-		Vector<Integer> refMarkings = getRefClosestEquivalentMarkings(startingMarking);
+		ArrayList<Integer> refMarkings = getRefClosestEquivalentMarkings(startingMarking);
 		// On lance l'analyse sur chaque référence de marquage en fonction de la stratégie
 		if (refMarkings.size() == 1 || globalStrategy.equals(STRATEGY_FIRST))
-			return workingFunction.execute(refMarkings.firstElement(), args);
+			return workingFunction.execute(refMarkings.get(0), args);
 		else
 		{
 			for (int ref : refMarkings)
 			{
 				boolean localRes = workingFunction.execute(ref, args);
-				if (globalStrategy == STRATEGY_OR)
+				if (globalStrategy.equals(STRATEGY_OR))
 				{
 					if (localRes) return true;
 				}
@@ -579,7 +579,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 					if (!localRes) return false;
 				}
 			}
-			if (globalStrategy == STRATEGY_OR)
+			if (globalStrategy.equals(STRATEGY_OR))
 				return false;
 			else // STRATEGY_AND
 				return true;

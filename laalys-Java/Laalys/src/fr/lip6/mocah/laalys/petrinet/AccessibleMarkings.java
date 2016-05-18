@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -8,14 +8,14 @@ import java.util.Vector;
  */
 public class AccessibleMarkings implements IAccessibleMarkings {
 	private int marking;
-	private Vector<IIndirectMarking> inMarkings;
-	private Vector<IIndirectMarking> outMarkings;
+	private ArrayList<IIndirectMarking> inMarkings;
+	private ArrayList<IIndirectMarking> outMarkings;
 	
 	public AccessibleMarkings(int m)
 	{
 		marking = m;
-		inMarkings = new Vector<IIndirectMarking>();
-		outMarkings = new Vector<IIndirectMarking>();
+		inMarkings = new ArrayList<IIndirectMarking>();
+		outMarkings = new ArrayList<IIndirectMarking>();
 	}
 	
 	public void addInMarking(IIndirectMarking inMarking)
@@ -28,7 +28,7 @@ public class AccessibleMarkings implements IAccessibleMarkings {
 		outMarkings.add(outMarking);
 	}
 	
-	public Vector<IIndirectMarking> getInMarkings()
+	public ArrayList<IIndirectMarking> getInMarkings()
 	{
 		return inMarkings;
 	}
@@ -38,7 +38,7 @@ public class AccessibleMarkings implements IAccessibleMarkings {
 		return marking;
 	}
 	
-	public Vector<IIndirectMarking> getOutMarkings()
+	public ArrayList<IIndirectMarking> getOutMarkings()
 	{
 		return outMarkings;
 	}

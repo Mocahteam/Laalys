@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -18,7 +18,7 @@ public interface IGraph {
 	public boolean contains (IMarking mark);
 	
 	public IAccessibleMarkings getAccessibleMarkings(IMarking mark) throws Exception;
-	public Vector<IMarking> getAllMarkings();
+	public ArrayList<IMarking> getAllMarkings();
 	public IMarking getInitialMarking();
 	/**
 	 * Renvoie l'ensemble des marquages les plus proches de "mark" qui permettent d'atteindre la transition "tr".
@@ -26,7 +26,7 @@ public interface IGraph {
 	 * la distance IMarking::distanceWith() est minimale.
 	 * @throws Exception 
 	 */
-	public Vector<IMarking> getNearestMarkings (IMarking mark, ITransition tr) throws Exception;
+	public ArrayList<IMarking> getNearestMarkings (IMarking mark, ITransition tr) throws Exception;
 	public int getRefMarking (IMarking mark) throws Exception;
 	public IMarking getMarkingByRef (int refMarking);
 	
@@ -39,7 +39,7 @@ public interface IGraph {
 	 * de 0 dans le calcul de la distance du chemin.
 	 * @throws Exception 
 	 */
-	public Vector<IPathIntersection> getShortestPathsToTransition (IMarking from, ITransition to, Vector<String> systemTransition) throws Exception;
+	public ArrayList<IPathIntersection> getShortestPathsToTransition (IMarking from, ITransition to, ArrayList<String> systemTransition) throws Exception;
 	
 	public String getType();
 	
@@ -61,7 +61,7 @@ public interface IGraph {
 	 * ignorées à l'exception des transitions systèmes
 	 * @throws Exception 
 	 */
-	public boolean isSubsequentlyEnabled (ITransition t, IMarking startingMarking, Vector<String> systemTransition) throws Exception;
+	public boolean isSubsequentlyEnabled (ITransition t, IMarking startingMarking, ArrayList<String> systemTransition) throws Exception;
 	
 	/**
 	 * Vérifie si le marquage "to" est un successeur immédiat du marquage "from".

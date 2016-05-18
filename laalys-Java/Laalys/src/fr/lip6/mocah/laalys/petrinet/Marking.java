@@ -1,18 +1,18 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
  * @author Mathieu Muratet
  */
 public class Marking implements IMarking {
-	private Vector<Integer> marking;
+	private ArrayList<Integer> marking;
 	private String code;
 	
 	public Marking()
 	{
-		marking = new Vector<Integer>();
+		marking = new ArrayList<Integer>();
 		code = "";
 	}
 	
@@ -81,7 +81,7 @@ public class Marking implements IMarking {
 	}
 	
 	/** check if this marking exists in a set of markings */
-	public boolean existIn(Vector<IMarking> markings)
+	public boolean existIn(ArrayList<IMarking> markings)
 	{
 		int diff = 0;
 		for (int i = 0 ; i < markings.size(); i++)

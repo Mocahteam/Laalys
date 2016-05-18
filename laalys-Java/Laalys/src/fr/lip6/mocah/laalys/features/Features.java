@@ -2,7 +2,7 @@ package fr.lip6.mocah.laalys.features;
 
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -100,17 +100,17 @@ public class Features implements IFeatures {
 		}
 	}
 	
-	public Vector<String> getSystemTransitions()
+	public ArrayList<String> getSystemTransitions()
 	{
-		Vector<String> sys = new Vector<String>();
+		ArrayList<String> sys = new ArrayList<String>();
 		for ( String id : systems )
 			sys.add (id);
 		return sys;
 	}
 	
-	public Vector<String> getEndLevelTransitions()
+	public ArrayList<String> getEndLevelTransitions()
 	{
-		Vector<String> ends = new Vector<String>();
+		ArrayList<String> ends = new ArrayList<String>();
 		for ( String id : this.ends )
 			ends.add (id);
 		return ends;

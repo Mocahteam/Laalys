@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.traces;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -30,12 +30,12 @@ public interface ITrace {
 	/**
 	 * @return tous les labels associés à la trace
 	 */
-	public Vector<String> getLabels();
+	public ArrayList<String> getLabels();
 	/**
 	 * Définit un ensemble de label pour la trace
 	 * @param	labels
 	 */
-	public void setLabels(Vector<String> labels);
+	public void setLabels(ArrayList<String> labels);
 	/**
 	 * Ajoute un label à la trace
 	 * @param	value

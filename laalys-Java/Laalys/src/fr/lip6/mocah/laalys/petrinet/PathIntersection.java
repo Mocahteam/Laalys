@@ -1,19 +1,19 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
  * @author Mathieu Muratet
  */
 public class PathIntersection implements IPathIntersection {
-	private Vector<IPathLink> links;
+	private ArrayList<IPathLink> links;
 	private int distance;
 	private boolean seen_rec; // permet d'éviter les boucles dans l'appel récursif
 	
 	public PathIntersection()
 	{
-		links = new Vector<IPathLink>();
+		links = new ArrayList<IPathLink>();
 		distance = -1;
 	}
 	
@@ -27,7 +27,7 @@ public class PathIntersection implements IPathIntersection {
 		return distance;
 	}
 	
-	public Vector<IPathLink> getLinks()
+	public ArrayList<IPathLink> getLinks()
 	{
 		return links;
 	}

@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -11,22 +11,22 @@ public class Transition implements ITransition {
 	private String id;
 	private String transitionName;
 	// arcs IN of a transition are defined as triplet {transition:t, weight:w, type:t}	
-	private Vector<IArc> arcsIn;
+	private ArrayList<IArc> arcsIn;
 	// arcs OUT of a transition are defined as couple {transition:t, weight:w}
-	private Vector<IArc> arcsOut;
+	private ArrayList<IArc> arcsOut;
 	
 	public Transition()
 	{
-		arcsIn = new Vector<IArc>();
-		arcsOut = new Vector<IArc>();
+		arcsIn = new ArrayList<IArc>();
+		arcsOut = new ArrayList<IArc>();
 	}
 	
-	public Vector<IArc> getArcsIn()
+	public ArrayList<IArc> getArcsIn()
 	{
 		return arcsIn;
 	}
 	
-	public Vector<IArc> getArcsOut()
+	public ArrayList<IArc> getArcsOut()
 	{
 		return arcsOut;
 	}

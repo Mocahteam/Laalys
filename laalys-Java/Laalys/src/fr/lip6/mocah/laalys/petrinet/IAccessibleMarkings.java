@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -11,9 +11,9 @@ public interface IAccessibleMarkings {
 	
 	public void addOutMarking(IIndirectMarking outMarking);
 	
-	public Vector<IIndirectMarking> getInMarkings();
+	public ArrayList<IIndirectMarking> getInMarkings();
 	
 	public int getRefMarking();
 	
-	public Vector<IIndirectMarking> getOutMarkings();
+	public ArrayList<IIndirectMarking> getOutMarkings();
 }

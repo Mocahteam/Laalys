@@ -1,8 +1,8 @@
 package fr.lip6.mocah.laalys.petrinet;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Vector;
 
 /**
  * ...
@@ -10,11 +10,11 @@ import java.util.Vector;
  */
 public class AccessibleGraph implements IGraph {
 	protected HashMap<String, ShadowMarking> refMarkingByMarkingCode;
-	protected Vector<IAccessibleMarkings> accessibleMarkingsByRefMarking;
-	protected Vector<IMarking> markingByRefMarking;
-	protected Vector<IMarking> toExplore;
-	protected Vector<ITransition> transitions;
-	protected Vector<IPlaceInfo> places;
+	protected ArrayList<IAccessibleMarkings> accessibleMarkingsByRefMarking;
+	protected ArrayList<IMarking> markingByRefMarking;
+	protected ArrayList<IMarking> toExplore;
+	protected ArrayList<ITransition> transitions;
+	protected ArrayList<IPlaceInfo> places;
 	protected IMarking initialMarking;
 	protected IPetriNet pn;
 	
@@ -40,12 +40,12 @@ public class AccessibleGraph implements IGraph {
 		}
 	}
 	
-	public AccessibleGraph(IMarking initialMark, Vector<IPlaceInfo> pl, Vector<ITransition> tr)
+	public AccessibleGraph(IMarking initialMark, ArrayList<IPlaceInfo> pl, ArrayList<ITransition> tr)
 	{
 		refMarkingByMarkingCode = new HashMap<String, ShadowMarking>();
-		accessibleMarkingsByRefMarking = new Vector<IAccessibleMarkings>();
-		markingByRefMarking = new Vector<IMarking>();
-		toExplore = new Vector<IMarking>();
+		accessibleMarkingsByRefMarking = new ArrayList<IAccessibleMarkings>();
+		markingByRefMarking = new ArrayList<IMarking>();
+		toExplore = new ArrayList<IMarking>();
 		initialMarking = initialMark.clone();
 		toExplore.add(initialMarking);
 		
@@ -145,9 +145,9 @@ public class AccessibleGraph implements IGraph {
 		return false;
 	}
 	
-	public Vector<IMarking> getAllMarkings()
+	public ArrayList<IMarking> getAllMarkings()
 	{
-		Vector<IMarking> list = new Vector<IMarking>();
+		ArrayList<IMarking> list = new ArrayList<IMarking>();
 		for (IMarking m : markingByRefMarking)
 			list.add(m);
 		return list;
@@ -171,9 +171,9 @@ public class AccessibleGraph implements IGraph {
 	 * la distance IMarking::distanceWith() est minimale.
 	 * @throws Exception 
 	 */
-	public Vector<IMarking> getNearestMarkings(IMarking mark, ITransition tr) throws Exception {
+	public ArrayList<IMarking> getNearestMarkings(IMarking mark, ITransition tr) throws Exception {
 		int d_min = Integer.MAX_VALUE;
-		Vector<IMarking> nearestMarkings = new Vector<IMarking>();
+		ArrayList<IMarking> nearestMarkings = new ArrayList<IMarking>();
 		// On parcours tout les marquages
 		for (IMarking m : this.getAllMarkings())
 		{
@@ -184,7 +184,7 @@ public class AccessibleGraph implements IGraph {
 				if (dist <= d_min){
 					if (dist < d_min) {
 						d_min = dist;
-						nearestMarkings = new Vector<IMarking>();
+						nearestMarkings = new ArrayList<IMarking>();
 					}
 					nearestMarkings.add(m);
 				}
@@ -207,7 +207,7 @@ public class AccessibleGraph implements IGraph {
 	 * ignorées à l'exception des transitions systèmes. Dans ces cas là les transitions systèmes sont considérées avec un poids
 	 * de 0 dans le calcul de la distance du chemin.
 	 */
-	protected IPathIntersection getShortestPaths_rec(int fromRef, ITransition to, HashMap<Integer, MarkingSeen> markingSeen, Vector<String> systemTransition)
+	protected IPathIntersection getShortestPaths_rec(int fromRef, ITransition to, HashMap<Integer, MarkingSeen> markingSeen, ArrayList<String> systemTransition)
 	{
 		// Définition de l'intersection à retourner
 		IPathIntersection intersection = new PathIntersection();
@@ -308,7 +308,7 @@ public class AccessibleGraph implements IGraph {
 		{
 			// Dans le cas où la branche en cours a déjà été analysée en totalité celà veut dire
 			// que l'on est sur un autre chemin. On récupère donc simplement l'intersection correspondante
-			if (markingSeen.get(fromRef).status == "processed")
+			if (markingSeen.get(fromRef).status.equals("processed"))
 			{
 				// On récupère l'intersection de cette branche déjà analysée
 				intersection = markingSeen.get(fromRef).data;
@@ -329,12 +329,12 @@ public class AccessibleGraph implements IGraph {
 	 * de 0 dans le calcul de la distance du chemin.
 	 * @throws Exception 
 	 */
-	public Vector<IPathIntersection> getShortestPathsToTransition (IMarking from, ITransition to, Vector<String> systemTransition) throws Exception
+	public ArrayList<IPathIntersection> getShortestPathsToTransition (IMarking from, ITransition to, ArrayList<String> systemTransition) throws Exception
 	{
 		if (!refMarkingByMarkingCode.containsKey(from.getCode()))
 			throw new Exception ("AccessibleGraph::getShortestPathsToTransition => target marking \""+from.getCode()+"\" is not a known marking");
 		
-		Vector<IPathIntersection> roads = new Vector<IPathIntersection>();
+		ArrayList<IPathIntersection> roads = new ArrayList<IPathIntersection>();
 		roads.add(getShortestPaths_rec(refMarkingByMarkingCode.get(from.getCode()).id, to, new HashMap<Integer, MarkingSeen>(), systemTransition));
 		return roads;
 	}
@@ -388,7 +388,7 @@ public class AccessibleGraph implements IGraph {
 		}
 		//remember that we already seen this marking
 		seen.add(code);
-		Vector<IIndirectMarking> outMarkings = accessibleMarkingsByRefMarking.get(refMarkingByMarkingCode.get(code).id).getOutMarkings();
+		ArrayList<IIndirectMarking> outMarkings = accessibleMarkingsByRefMarking.get(refMarkingByMarkingCode.get(code).id).getOutMarkings();
 		//if the marking doesn t have out marking (ie child)
 		if (outMarkings.size() == 0)
 		{
@@ -473,7 +473,7 @@ public class AccessibleGraph implements IGraph {
 	 * ignorées à l'exception des transitions systèmes
 	 * @throws Exception 
 	 */
-	public boolean isSubsequentlyEnabled(ITransition t, IMarking startingMarking, Vector<String> systemTransition) throws Exception
+	public boolean isSubsequentlyEnabled(ITransition t, IMarking startingMarking, ArrayList<String> systemTransition) throws Exception
 	{
 		if (!refMarkingByMarkingCode.containsKey(startingMarking.getCode()))
 			throw new Exception ("AccessibleGraph::isSubsequentlyEnabled => \""+startingMarking.getCode()+"\" is not a known marking");
@@ -488,7 +488,7 @@ public class AccessibleGraph implements IGraph {
 	 * dans "systemTransition") toutes les autres transitions connectées (en sortie) à ce marquage seront
 	 * ignorées à l'exception des transitions systèmes.
 	 */
-	protected boolean isSubsequentlyEnabled_rec(int refMarking, ITransition t, Vector<String> systemTransition, HashSet<Integer> seen)
+	protected boolean isSubsequentlyEnabled_rec(int refMarking, ITransition t, ArrayList<String> systemTransition, HashSet<Integer> seen)
 	{
 		// check if this current marking hasn't already seen
 		if (!seen.contains(refMarking))
@@ -542,7 +542,7 @@ public class AccessibleGraph implements IGraph {
 	public boolean isSuccessorMarking(IMarking from, IMarking to) throws Exception
 	{
 		// récupération les marquages en sortie de "from"
-		Vector<IIndirectMarking> outMarkings = this.getAccessibleMarkings(from).getOutMarkings();
+		ArrayList<IIndirectMarking> outMarkings = this.getAccessibleMarkings(from).getOutMarkings();
 		for (IIndirectMarking outM : outMarkings)
 		{
 			// On vérifier si ce marquage accessible n'est pas celui recherché
