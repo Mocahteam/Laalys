@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.features;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -33,10 +33,10 @@ public interface IFeatures {
 	 * renvoie la liste de toutes les transitions systemes
 	 * @return
 	 */
-	public Vector<String> getSystemTransitions ();
+	public ArrayList<String> getSystemTransitions ();
 	/**
 	 * renvoie la listes de toutes les transitions fin de niveau
 	 * @return
 	 */
-	public Vector<String> getEndLevelTransitions ();
+	public ArrayList<String> getEndLevelTransitions ();
 }

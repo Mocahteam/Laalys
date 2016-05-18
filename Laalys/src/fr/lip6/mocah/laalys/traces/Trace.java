@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.traces;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,7 +19,7 @@ public class Trace implements ITrace
 	private String _action = null;
 	private String _source = ActionSource.UNKNOW;
 	private String _origin   = ActionType.UNKNOW;
-	private Vector<String> _labels = null;
+	private ArrayList<String> _labels = null;
 	private Boolean _isTry = null;
 	
 	public Trace( String source, Node xml ) 
@@ -86,20 +86,20 @@ public class Trace implements ITrace
 	 * @inheritDoc
 	 */
 	public void freeLabels() {
-		this._labels = new Vector<String>();
+		this._labels = new ArrayList<String>();
 	}
 	/**
 	 * @inheritDoc
 	 */
-	public Vector<String> getLabels() {
+	public ArrayList<String> getLabels() {
 		return this._labels;
 	}
 	/**
 	 * @inheritDoc
 	 * @param	labels
 	 */
-	public void setLabels(Vector<String> _labels) {
-		this._labels = new Vector<String>(_labels); // crée un clone
+	public void setLabels(ArrayList<String> _labels) {
+		this._labels = new ArrayList<String>(_labels); // crée un clone
 	}
 	/**
 	 * @inheritDoc

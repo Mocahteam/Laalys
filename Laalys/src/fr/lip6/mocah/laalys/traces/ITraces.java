@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.traces;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import org.w3c.dom.Document;
 
@@ -67,10 +67,10 @@ public interface ITraces {
 	/**
 	 * GETTER
 	 */
-	public Vector<ITrace> getTraces();
+	public ArrayList<ITrace> getTraces();
 	 
 	/**
 	 * SETTER
 	 */
-	public void setTraces(Vector<ITrace> value);
+	public void setTraces(ArrayList<ITrace> value);
 }

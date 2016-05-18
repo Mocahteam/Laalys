@@ -1,7 +1,7 @@
 package fr.lip6.mocah.laalys.traces;
 
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -22,9 +22,9 @@ public class Traces implements ITraces {
 	/**
 	 * list of trace
 	 */
-	private Vector<ITrace> _traces = new Vector<ITrace>();
+	private ArrayList<ITrace> _traces = new ArrayList<ITrace>();
 	/**
-	 * the index of the current action in traces vector
+	 * the index of the current action in traces ArrayList
 	 */
 	private int currentIndex = 0;
 	/**
@@ -138,7 +138,7 @@ public class Traces implements ITraces {
 	 */
 	public void clear()
 	{
-		_traces = new Vector<ITrace>();
+		_traces = new ArrayList<ITrace>();
 		currentIndex = 0;
 		xml = null;
 	}
@@ -186,12 +186,12 @@ public class Traces implements ITraces {
 	 * GETTER AND SETTER
 	 */
 	
-	public Vector<ITrace> getTraces() 
+	public ArrayList<ITrace> getTraces() 
 	{
 		return _traces;
 	}
 	
-	public void setTraces(Vector<ITrace> value) 
+	public void setTraces(ArrayList<ITrace> value) 
 	{
 		_traces = value;
 	}

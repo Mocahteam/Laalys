@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -26,7 +26,7 @@ public interface IMarking {
 	public int distanceWith (IMarking mark, int minimalWeight);
 	
 	/** check if this marking exists in a set of markings */
-	public boolean existIn(Vector<IMarking> markings);
+	public boolean existIn(ArrayList<IMarking> markings);
 	
 	public String getCode();
 	

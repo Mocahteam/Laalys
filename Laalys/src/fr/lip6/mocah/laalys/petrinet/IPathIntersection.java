@@ -1,6 +1,6 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * ...
@@ -11,7 +11,7 @@ public interface IPathIntersection {
 	
 	public int getDistance();
 	
-	public Vector<IPathLink> getLinks();
+	public ArrayList<IPathLink> getLinks();
 	
 	/**
 	 * Vérifie si cette intersection est identique à celle passée en paramètre ("path").
