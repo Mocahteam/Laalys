@@ -53,7 +53,7 @@ public class AccessibleGraph implements IGraph {
 		places = pl;
 		
 		// a temporary PetriNet to check transition firing
-		this.pn = new PetriNet();
+		this.pn = new PetriNet(false, "", "");
 		this.pn.setPlaces(this.places);
 		this.pn.setTransitions(this.transitions);
 		this.pn.setCurrentMarkings(this.initialMarking);
