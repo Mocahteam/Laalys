@@ -169,7 +169,7 @@ public interface IPetriNet {
 	 * Vérifie si une transition "t" a été précédement sensibilisée par rapport à l'état courant.
 	 * @throws Exception 
 	 */
-	public boolean isPreviouslyEnabled (ITransition t, ArrayList<String> systemTransition) throws Exception;
+	public boolean isPreviouslyEnabled (ITransition t) throws Exception;
 	
 	/**
 	 * Vérifie si la transition "t" est quasi vivante à partir de l'état initial. Une transition est dite quasi vivante

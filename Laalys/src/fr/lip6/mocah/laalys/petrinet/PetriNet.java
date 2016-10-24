@@ -1262,7 +1262,7 @@ public class PetriNet implements IPetriNet {
 	 * Vérifie si une transition "t" a été précédement sensibilisée par rapport à l'état courant.
 	 * @throws Exception 
 	 */
-	public boolean isPreviouslyEnabled(ITransition t, ArrayList<String> systemTransition) throws Exception
+	public boolean isPreviouslyEnabled(ITransition t) throws Exception
 	{
 		if (graph == null)
 			throw new Exception("Reachable graph is null, you have to call PetriNet \"compute()\" function before and wait \"COMPLETE\" event");
