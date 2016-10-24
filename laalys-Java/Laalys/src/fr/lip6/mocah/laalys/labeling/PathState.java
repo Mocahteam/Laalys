@@ -7,4 +7,10 @@ public class PathState {
 	public ITrace action;
 	public IMarking mark;
 	public IMarking submark;
+	
+	public PathState (ITrace action, IMarking mark, IMarking submark){
+		this.action = action;
+		this.mark = mark;
+		this.submark = submark;
+	}
 }
