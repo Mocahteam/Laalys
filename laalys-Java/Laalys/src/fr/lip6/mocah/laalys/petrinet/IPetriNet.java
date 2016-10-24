@@ -22,8 +22,9 @@ public interface IPetriNet {
 	 * Cette fonction peut charger :
 	 *  - des fichiers ".xml" (respectant le format de PiPe3.0)
 	 *  - des fichiers ".pnml"
+	 * @throws Exception 
 	 */
-	public void createPetriNet(String url);
+	public void createPetriNet(String url) throws Exception;
 	
 	public void createPlace (String id, String name) throws Exception;
 	
