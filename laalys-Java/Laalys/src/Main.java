@@ -1,5 +1,8 @@
 import java.io.StringWriter;
 import java.util.Vector;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -13,6 +16,11 @@ import org.w3c.dom.Node;
 
 import fr.lip6.mocah.laalys.features.Features;
 import fr.lip6.mocah.laalys.features.IFeatures;
+import fr.lip6.mocah.laalys.labeling.Labeling_V9;
+import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
+import fr.lip6.mocah.laalys.petrinet.IPetriNet;
+import fr.lip6.mocah.laalys.petrinet.PetriNet;
+import fr.lip6.mocah.laalys.traces.ITrace;
 import fr.lip6.mocah.laalys.traces.ITraces;
 import fr.lip6.mocah.laalys.traces.Traces;
 
@@ -20,37 +28,68 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ITraces traces = new Traces();
-		traces.loadFile("C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\SVN_Mocah\\laalys-As3\\Trunk\\LaalysV9\\bin\\exemples\\trace\\expe_paris_montagne\\MurDeGlace\\Bem.xml");
-		Document exp = traces.toXML();
+//		String fullPnName = "murDeGlace.pnml";
+//		String filteredPnName = "murDeGlace_contraintManuellement.pnml";
+//		String featuresName = "murDeGlace.xml";
+//		String traceName = "expe_paris_montagne\\MurDeGlace\\Vivianier.xml";
+		String fullPnName = "Thermometer.pnml";
+		String filteredPnName = "Thermometer.pnml";
+		String featuresName = "Thermometer.xml";
+		String traceName = "expe_paris_montagne\\Thermometer\\Vivianier.xml";
 		
-		StringWriter sw = new StringWriter();
+		// Chargement du Rdp Complet
+		IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+		long stamp = System.currentTimeMillis();
 		try {
-		 Transformer t = TransformerFactory.newInstance().newTransformer();
-		 t.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-		 t.setOutputProperty(OutputKeys.INDENT, "yes");
-		 t.transform(new DOMSource(exp), new StreamResult(sw));
-		} catch (TransformerException te) {
-		 System.out.println("nodeToString Transformer Exception");
+			fullPn.loadPetriNet("C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples\\completeNet\\"+fullPnName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		System.out.println(sw.toString());
-		
+		//System.out.println("full graph size : "+fullPn.getGraph().getAllMarkings().size() + " " + (System.currentTimeMillis()-stamp));
+
+		stamp = System.currentTimeMillis();
+		// Chargement du Rdp Filtré
+		IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+		try {
+			filteredPn.loadPetriNet("C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples\\filteredNet\\"+filteredPnName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("filtered graph size : "+filteredPn.getGraph().getAllMarkings().size() + " " + (System.currentTimeMillis()-stamp));
+
+		// Chargement des Spécificités
 		IFeatures features = new Features();
-		features.loadFile("C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\SVN_Mocah\\laalys-As3\\Trunk\\LaalysV9\\bin\\exemples\\specifTransition\\murDeGlace.xml");
-		System.out.println(features.getSystemTransitions());
-		System.out.println(features.getEndLevelTransitions());
+		features.loadFile("C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples\\specifTransition\\"+featuresName);
+//		System.out.println(features.getSystemTransitions());
+//		System.out.println(features.getEndLevelTransitions());
+
+		// Chargement des traces
+		ITraces traces = new Traces();
+		traces.loadFile("C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples\\trace\\"+traceName);
+
+		Logger monLog = Logger.getLogger(Main.class.getName());
+		monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
+		monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
+		ConsoleHandler ch = new ConsoleHandler();
+		ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau &Ge; INFO
+		monLog.addHandler(ch);
+		Labeling_V9 algo = new Labeling_V9(monLog, false);
+		algo.setCompletePN(fullPn);
+		algo.setFilteredPN(filteredPn);
+		algo.setFeatures(features);
+		try {
+			algo.label(traces);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		// create an empty Vector vec with an initial capacity of 4      
-		Vector<String> vec = new Vector<String>(4);
-		
-		// use add() method to add elements in the vector
-		vec.add("a");
-		vec.add("bb");
-		vec.add("kjg");
-		vec.add("mlj mj");
-		
-		// convert the contents into string
-		System.out.println(vec.toString());
+		// print traces and labels
+		for (ITrace tr : traces.getTraces()){
+			System.out.println(tr.getAction()+ " "+tr.getLabels());
+		}
 	}
 
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+<map id="Le mur de glace" nbPrecedingTry="0" Configuration="" BeginningTime="855188" EndingTime="952899">
+<transition time="915818" action="store-clef;5" origin="player" try="false"/>
+<transition time="917714" action="get-clef;5" origin="player" try="false"/>
+<transition time="920591" action="open-porte;2" origin="player" try="false"/>
+<transition time="920591" action="storeBack-clef;5" origin="system"/>
+<transition time="922402" action="store-alumettes;1" origin="player" try="false"/>
+<transition time="927850" action="get-alumettes;1" origin="player" try="false"/>
+<transition time="931899" action="activate-chaudiere;3" origin="player" try="false"/>
+<transition time="931899" action="storeBack-alumettes;1" origin="system"/>
+<transition time="932869" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
+<transition time="933353" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
+<transition time="933869" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
+<transition time="934351" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
+<transition time="934833" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
+<transition time="935266" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
+<transition time="948570" action="warming_]-inf ; 0[_to_[0]_chaudiere" origin="system"/>
+<transition time="950833" action="warming_[0]_to_]0; +inf[_chaudiere" origin="system"/>
+<transition time="952899" action="exit-;6" origin="player" try="false"/>
+</map>
+</data>

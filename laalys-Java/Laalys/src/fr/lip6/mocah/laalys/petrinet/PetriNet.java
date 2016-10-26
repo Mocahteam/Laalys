@@ -158,7 +158,7 @@ public class PetriNet implements IPetriNet {
 	 *  - des fichiers ".pnml"
 	 * @throws Exception when the extention of the url is not a supported one
 	 */
-	public void createPetriNet(String url) throws Exception
+	public void loadPetriNet(String url) throws Exception
 	{
 		String extension = url.substring(url.lastIndexOf(".")+1);
 
@@ -354,7 +354,7 @@ public class PetriNet implements IPetriNet {
 				}
 				String type = Arc.REGULAR_ARC;
 				// recherche et enregistrement du type d'arc
-				Node typeXML = getChildByName(arcXML, "inscription");
+				Node typeXML = getChildByName(arcXML, "type");
 				if (typeXML != null){
 					if (typeXML.getAttributes().getNamedItem("value").getNodeValue().equals("test"))
 						type = Arc.READ_ARC;
@@ -449,7 +449,7 @@ public class PetriNet implements IPetriNet {
 		// Vérification que rdpExtraction couvre bien rdpBase
 		for (IPlaceInfo p : rdpBase.getPlaces())
 		{
-			if (rdpExtraction.getPlaceById(p.getId()) != null)
+			if (rdpExtraction.getPlaceById(p.getId()) == null)
 				return null;
 		}
 		// Toutes les places du rdpBase sont bien incluses dans le rdpExtraction
@@ -770,7 +770,7 @@ public class PetriNet implements IPetriNet {
 						currentId++;
 					}
 					// on ajoute ce noeud avec un id d'export unique
-					nodes += exportNode(markingCode2exportId.get(mark.getCode()), false, ends.indexOf(action.getAction()) != -1, false, true, false, -1, x, y);
+					nodes += exportNode(markingCode2exportId.get(mark.getCode()), false, ends.contains(action.getAction()), false, true, false, -1, x, y);
 					x += step;
 					if (x / step > size-1) {
 						x = 0;
@@ -993,7 +993,7 @@ public class PetriNet implements IPetriNet {
 		{
 			String id = arcOut.getTarget().getId();
 			//si on as deja ajoute la place pas la peine de le re faire
-			if ( placesId.indexOf( id ) != -1 ) continue;
+			if ( placesId.contains( id ) ) continue;
 			for (int ind = 0 ; ind < this.placesInfo.size() ; ind++)
 			{
 				if ( this.placesInfo.get(ind).getId() == id )
@@ -1008,7 +1008,7 @@ public class PetriNet implements IPetriNet {
 		{
 			String id2 = arcIn.getTarget().getId();
 			//si on as deja ajoute la place pas la peine de le re faire
-			if ( placesId.indexOf( id2 ) != -1 ) continue;
+			if ( placesId.contains( id2 ) ) continue;
 			for (int index = 0 ; index < this.placesInfo.size() ; index++)
 			{
 				if( this.placesInfo.get(index).getId() == id2 )
@@ -1146,7 +1146,7 @@ public class PetriNet implements IPetriNet {
 		for (ITransition tr : this.getTransitions())
 		{
 			//si le nom de la transition contient le mot clef
-			if (tr.getName().indexOf(keyWord) != -1)
+			if (tr.getName().contains(keyWord))
 				// on enregistre cette transition
 				trList.add(tr);
 		}
@@ -1181,6 +1181,7 @@ public class PetriNet implements IPetriNet {
 				graph = new AccessibleGraph(initialMarking, placesInfo, transitions);
 			else
 				throw new Error("PetriNet::initialization => "+_kindOfGraph+" is not a known kind of graph");
+
 			graph.computeGraph();
 		}
 	}

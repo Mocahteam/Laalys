@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transitions>
+	<transition id="exit-;8"                                system="false" end="true" />
+	<transition id="warming_]-inf ; -9[_to_[-9]_chaudiere"  system="true" end="false" />
+	<transition id="warming_[-9]_to_]-9; +inf[_chaudiere"   system="true" end="false" />
+	<transition id="cooling_[-9]_to_]-inf ; -9[_1"          system="true" end="false" />
+	<transition id="cooling_[-9]_to_]-inf ; -9[_2"          system="true" end="false" />
+	<transition id="cooling_]-9; +inf[_to_[-9]_3"           system="true" end="false" />
+	<transition id="cooling_]-9; +inf[_to_[-9]_4"           system="true" end="false" />
+</transitions>

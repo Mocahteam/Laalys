@@ -1,0 +1,194 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-3398-81D21-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>frozenDoor</text>
+  </name>
+ <page id="g-3398-81D2E-1">
+  <place id="p-3398-81D32-2">
+  <name>
+   <text>boiler off</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="495" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-3398-81D47-3">
+  <name>
+   <text>boiler on</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="140"/>
+   </graphics>
+  </place>
+  <transition id="t-3398-81D4D-4">
+  <name>
+   <text>close door</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="275" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-3398-81D55-5">
+  <name>
+   <text>discard key</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="160"/>
+   </graphics>
+  </transition>
+  <place id="p-3398-81D58-6">
+  <name>
+   <text>door closed</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="355" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-3398-81D5D-7">
+  <name>
+   <text>door open</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="80"/>
+   </graphics>
+  </place>
+  <transition id="t-3398-81D5F-8">
+  <name>
+   <text>grab key</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-3398-81D63-9">
+  <name>
+   <text>key in inventory</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="195" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-3398-81D67-10">
+  <name>
+   <text>key on the floor</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="55" y="140"/>
+   </graphics>
+  </place>
+  <transition id="t-3398-81D6C-11">
+  <name>
+   <text>open door - exit</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="275" y="110"/>
+   </graphics>
+  </transition>
+  <transition id="t-3398-81D6F-12">
+  <name>
+   <text>turn off boiler</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="435" y="100"/>
+   </graphics>
+  </transition>
+  <transition id="t-3398-81D73-13">
+  <name>
+   <text>turn on boiler</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="435" y="160"/>
+   </graphics>
+  </transition>
+  <arc id="e-3398-81D77-14" source="p-3398-81D32-2" target="t-3398-81D73-13">
+  </arc>
+  <arc id="e-3398-81D7A-15" source="t-3398-81D5F-8" target="p-3398-81D63-9">
+  </arc>
+  <arc id="e-3398-81D7B-16" source="p-3398-81D5D-7" target="t-3398-81D4D-4">
+  </arc>
+  <arc id="e-3398-81D7D-17" source="p-3398-81D58-6" target="t-3398-81D6C-11">
+  </arc>
+  <arc id="e-3398-81D7E-18" source="t-3398-81D55-5" target="p-3398-81D67-10">
+  </arc>
+  <arc id="e-3398-81D7F-19" source="t-3398-81D4D-4" target="p-3398-81D58-6">
+  </arc>
+  <arc id="e-3398-81D80-20" source="p-3398-81D47-3" target="t-3398-81D6F-12">
+  </arc>
+  <arc id="e-3398-81D81-21" source="p-3398-81D63-9" target="t-3398-81D55-5">
+  </arc>
+  <arc id="e-3398-81D82-22" source="t-3398-81D6C-11" target="p-3398-81D47-3">
+   <graphics>
+    <position x="303" y="122" />
+    <position x="335" y="132" />
+   </graphics>  </arc>
+  <arc id="e-3398-81D9F-23" source="t-3398-81D73-13" target="p-3398-81D47-3">
+  </arc>
+  <arc id="e-3398-81DA1-24" source="t-3398-81D6F-12" target="p-3398-81D32-2">
+  </arc>
+  <arc id="e-3398-81DA2-25" source="t-3398-81D6C-11" target="p-3398-81D63-9">
+   <graphics>
+    <position x="247" y="110" />
+    <position x="219" y="124" />
+   </graphics>  </arc>
+  <arc id="e-3398-81E04-26" source="t-3398-81D6C-11" target="p-3398-81D5D-7">
+  </arc>
+  <arc id="e-3398-81E05-27" source="p-3398-81D67-10" target="t-3398-81D5F-8">
+  </arc>
+  <arc id="e-3398-81E06-28" source="p-3398-81D63-9" target="t-3398-81D6C-11">
+   <graphics>
+    <position x="223" y="140" />
+    <position x="255" y="126" />
+   </graphics>  </arc>
+  <arc id="e-3398-81E09-29" source="p-3398-81D47-3" target="t-3398-81D6C-11">
+   <graphics>
+    <position x="343" y="124" />
+    <position x="311" y="110" />
+   </graphics>  </arc>
+ </page>
+ </net>
+</pnml>

@@ -141,7 +141,7 @@ public class Labeling_V9 implements ILabeling {
 	 */
 	public void label( ITraces traces ) throws Exception
 	{
-		logger.log(Level.INFO, "debut de la labellisation des actions" );
+		if (this.logAll) logger.log(Level.INFO, "debut de la labellisation des actions" );
 		this.traces = traces;
 		this.reset();
 		
@@ -311,48 +311,57 @@ public class Labeling_V9 implements ILabeling {
 			}
 		} else {
 			if ( this.logAll ) logger.log(Level.INFO, "L'action est un Try => !sens(t, MC)");
-			//on regarde si la transition est presente dans le  rdp filtre
-			if ( this.currentFilteredTransition != null )
-			{
-				if ( this.logAll ) logger.log(Level.INFO, "t € RdpF");
-				// On teste si la transition a pu être déclenchée => amont_t(t, GF, MF)
-				if (this.filteredRdp.isPreviouslyEnabled(this.currentFilteredTransition)) {
-					if ( this.logAll ) logger.log(Level.INFO, "amont_t(t, GF, MF)");
-					// On teste si la transition pourra être déclenchée => v(t, GF, MF, lSys)
-					if (this.filteredRdp.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MF, this.systemTransitions)) {
-						if ( this.logAll ) logger.log(Level.INFO, "v(t, GF, MF, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Intrusion");
-						currentAction.addLabel( Labels.INTRUSION );
+			// Normalement on ne devrait jamais avoir un transition système non sensibilisée
+			// mais on vérifie quand même au cas où
+			if ( !this.systemTransitions.contains(this.currentAction.getAction()) ){
+				if ( this.logAll ) logger.log(Level.INFO, "Action non système");
+				//on regarde si la transition est presente dans le  rdp filtre
+				if ( this.currentFilteredTransition != null )
+				{
+					if ( this.logAll ) logger.log(Level.INFO, "t € RdpF");
+					// On teste si la transition a pu être déclenchée => amont_t(t, GF, MF)
+					if (this.filteredRdp.isPreviouslyEnabled(this.currentFilteredTransition)) {
+						if ( this.logAll ) logger.log(Level.INFO, "amont_t(t, GF, MF)");
+						// On teste si la transition pourra être déclenchée => v(t, GF, MF, lSys)
+						if (this.filteredRdp.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MF, this.systemTransitions)) {
+							if ( this.logAll ) logger.log(Level.INFO, "v(t, GF, MF, lSys)");
+							if ( this.logAll ) logger.log(Level.INFO, "\t=> Intrusion");
+							currentAction.addLabel( Labels.INTRUSION );
+						}
+						else {
+							if ( this.logAll ) logger.log(Level.INFO, "!v(t, GF, MF, lSys)");
+							if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tard");
+							currentAction.addLabel( Labels.TROP_TARD );
+						}
 					}
 					else {
-						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GF, MF, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tard");
-						currentAction.addLabel( Labels.TROP_TARD );
+						if ( this.logAll ) logger.log(Level.INFO, "!amont_t(t, GF, MF)");
+						// On teste si la transition pourra être déclenchée => v(t, GF, MF, lSys)
+						if (this.filteredRdp.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MF, this.systemTransitions)) {
+							if ( this.logAll ) logger.log(Level.INFO, "v(t, GF, MF, lSys)");
+							if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tôt");
+							currentAction.addLabel( Labels.TROP_TOT );
+						}
+						else {
+							// Vis-à-vis du marquage courant, on n'a jamais pu jouer cette transition et on ne pourrapas le faire. Mais
+							// comme t ϵ RdpF elle est forcément accéssible sinon l'expert n'aurait pas pu la jouer. Donc c'est qu'elle
+							// est sur une autre branche.
+							if ( this.logAll ) logger.log(Level.INFO, "!v(t, GF, MF, lSys)");
+							if ( this.logAll ) logger.log(Level.INFO, "\t=> Autre branche de résolution");
+							currentAction.addLabel( Labels.AUTRE_BRANCHE_DE_RESOLUTION );
+						}
 					}
 				}
-				else {
-					if ( this.logAll ) logger.log(Level.INFO, "!amont_t(t, GF, MF)");
-					// On teste si la transition pourra être déclenchée => v(t, GF, MF, lSys)
-					if (this.filteredRdp.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MF, this.systemTransitions)) {
-						if ( this.logAll ) logger.log(Level.INFO, "v(t, GF, MF, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tôt");
-						currentAction.addLabel( Labels.TROP_TOT );
-					}
-					else {
-						// Vis-à-vis du marquage courant, on n'a jamais pu jouer cette transition et on ne pourrapas le faire. Mais
-						// comme t ϵ RdpF elle est forcément accéssible sinon l'expert n'aurait pas pu la jouer. Donc c'est qu'elle
-						// est sur une autre branche.
-						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GF, MF, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Autre branche de résolution");
-						currentAction.addLabel( Labels.AUTRE_BRANCHE_DE_RESOLUTION );
-					}
+				else
+				{
+					if ( this.logAll ) logger.log(Level.INFO, "!t € RdpF");
+					if ( this.logAll ) logger.log(Level.INFO, "\t=> Erronée");
+					currentAction.addLabel( Labels.ERRONEE );
 				}
-			}
-			else
-			{
-				if ( this.logAll ) logger.log(Level.INFO, "!t € RdpF");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> Erronée");
-				currentAction.addLabel( Labels.ERRONEE );
+			} else {
+				// celà ne devrait pas arriver, problème dans la trace ???
+				if ( this.logAll ) logger.log(Level.INFO, "Action système, Attention le cas d'une transition système non sensibilisée ne devrait pas arriver... Vérifier la trace ???");
+				// De toute façon on ne labelise pas les transition systèmes donc on ne fait rien
 			}
 		}
 	}
@@ -669,11 +678,6 @@ public class Labeling_V9 implements ILabeling {
 			this.artificialRdp.setPlaces( this.filteredRdp.getPlaces() );
 			this.artificialRdp.setTransitions( this.filteredRdp.getTransitions() );
 			this.artificialRdp.setCurrentMarkings(MC_subset);
-			
-			//on restore les marquage MC et MF dans leurs réseaux respectifs car l'analyse de l'action sera reprise depuis le debut
-			this.filteredRdp.setCurrentMarkings( this.MF );
-			this.completeRdp.setCurrentMarkings( this.MC );
-			
 			this.artificialRdp.initialization();
 			this.artificialRdpList.add(this.artificialRdp);
 		}

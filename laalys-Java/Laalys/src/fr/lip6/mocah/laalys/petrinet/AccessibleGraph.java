@@ -226,7 +226,7 @@ public class AccessibleGraph implements IGraph {
 			{
 				for (IIndirectMarking outM : localAM.getOutMarkings())
 				{
-					if (systemTransition.indexOf(outM.getTransition().getId()) != -1)
+					if (systemTransition.contains(outM.getTransition().getId()))
 					{
 						exclusive = true;
 						// Dans le cas d'une transition système, on considère que son poid à une valeur de 0
@@ -242,7 +242,7 @@ public class AccessibleGraph implements IGraph {
 			for (IIndirectMarking outM : localAM.getOutMarkings())
 			{
 				// prise en compte de l'exclusivité
-				if (!exclusive || systemTransition.indexOf(outM.getTransition().getId()) != -1)
+				if (!exclusive || systemTransition.contains(outM.getTransition().getId()))
 				{
 					// Ici on est soit dans le cas ou il n'y a pas d'exclusivité parmis les transitions accessibles
 					// OU la transition en cours de traitement est justement une transition système
@@ -405,7 +405,7 @@ public class AccessibleGraph implements IGraph {
 			// on utilise plutôt Marking::isEquivalentTo. Cela ne pose pas de problème dans le cadre d'un graphe
 			// d'accessibilité, car dans ce cas "isEqualTo" et "isEquivalentTo" retournent les mêmes résultats car
 			// le graphe ne contient pas d'omégas.
-			if (newMarking.isEquivalentTo(child, 1))
+			if (newMarking != null && newMarking.isEquivalentTo(child, 1))
 			{
 				//then we find it
 				return true;
@@ -502,7 +502,7 @@ public class AccessibleGraph implements IGraph {
 			{
 				for (IIndirectMarking outM : localAM.getOutMarkings())
 				{
-					if (systemTransition.indexOf(outM.getTransition().getId()) != -1)
+					if (systemTransition.contains(outM.getTransition().getId()))
 						exclusive = true;
 				}
 			}
@@ -512,7 +512,7 @@ public class AccessibleGraph implements IGraph {
 			for (IIndirectMarking outM : localAM.getOutMarkings())
 			{
 				// prise en compte de l'exclusivité
-				if (!exclusive || systemTransition.indexOf(outM.getTransition().getId()) != -1)
+				if (!exclusive || systemTransition.contains(outM.getTransition().getId()))
 				{
 					// Ici on est soit dans le cas ou il n'y a pas d'exclusivité parmis les transitions accessibles
 					// OU la transition en cours de traitement est justement une transition système

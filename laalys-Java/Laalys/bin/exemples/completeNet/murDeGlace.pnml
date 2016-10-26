@@ -1,0 +1,994 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-F21-252BF-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>murDeGlace</text>
+  </name>
+ <page id="g-F21-252C5-1">
+  <place id="p-F21-252C8-2">
+  <name>
+   <text>T chaudiere = -3 + x</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="420"/>
+   </graphics>
+  </place>
+  <place id="p-F21-252D6-3">
+  <name>
+   <text>T in [0]</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="650"/>
+   </graphics>
+  </place>
+  <place id="p-F21-252DE-4">
+  <name>
+   <text>T in ]-inf ; 0[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="135" y="650"/>
+   </graphics>
+  </place>
+  <place id="p-F21-252E6-5">
+  <name>
+   <text>T in ]0; +inf[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="335" y="650"/>
+   </graphics>
+  </place>
+  <transition id="t-F21-252ED-6">
+  <name>
+   <text>activate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="735" y="130"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-252F6-7">
+  <name>
+   <text>activate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="330"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25301-8">
+  <name>
+   <text>activate-message_panneau;10</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="735" y="330"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-2530C-9">
+  <name>
+   <text>activate-panneau;4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="935" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-F21-25314-10">
+  <name>
+   <text>alumettes_floor;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="285" y="150"/>
+   </graphics>
+  </place>
+  <place id="p-F21-2531D-11">
+  <name>
+   <text>alumettes_hand;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="415" y="150"/>
+   </graphics>
+  </place>
+  <place id="p-F21-25324-12">
+  <name>
+   <text>alumettes_inv;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="60"/>
+   </graphics>
+  </place>
+  <place id="p-F21-2532C-13">
+  <name>
+   <text>chaudiere_Off;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="785" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-F21-25334-14">
+  <name>
+   <text>chaudiere_On;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="685" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-F21-2533C-15">
+  <name>
+   <text>clef_floor;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1085" y="150"/>
+   </graphics>
+  </place>
+  <place id="p-F21-25344-16">
+  <name>
+   <text>clef_hand;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1215" y="150"/>
+   </graphics>
+  </place>
+  <place id="p-F21-2534C-17">
+  <name>
+   <text>clef_inv;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1155" y="60"/>
+   </graphics>
+  </place>
+  <transition id="t-F21-25354-18">
+  <name>
+   <text>close-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="70"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-2536C-19">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="810"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25376-20">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="255" y="800"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25380-21">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="385" y="790"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25389-22">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="515" y="780"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25391-23">
+  <name>
+   <text>desactivate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="735" y="70"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-2539B-24">
+  <name>
+   <text>desactivate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="270"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253A3-25">
+  <name>
+   <text>desactivate-message_panneau;10</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="735" y="270"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253AC-26">
+  <name>
+   <text>desactivate-panneau;4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="935" y="70"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253B4-27">
+  <name>
+   <text>destroy-bloc1;16</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="885" y="400"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253BD-28">
+  <name>
+   <text>drop-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="140"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253C5-29">
+  <name>
+   <text>drop-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1155" y="140"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253CC-30">
+  <name>
+   <text>drop-masse;7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="340"/>
+   </graphics>
+  </transition>
+  <place id="p-F21-253D5-31">
+  <name>
+   <text>endLevel-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1005" y="775"/>
+   </graphics>
+  </place>
+  <transition id="t-F21-253DD-32">
+  <name>
+   <text>exit-7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1055" y="635"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253E3-33">
+  <name>
+   <text>exit-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="910" y="640"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253EA-34">
+  <name>
+   <text>get-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="405" y="110"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253F2-35">
+  <name>
+   <text>get-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1205" y="110"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-253FC-36">
+  <name>
+   <text>get-masse;7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="405" y="310"/>
+   </graphics>
+  </transition>
+  <place id="p-F21-2540D-37">
+  <name>
+   <text>levier_plus_2_1_Off;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>6</text>
+   </initialMarking>
+   <graphics>
+    <position x="585" y="310"/>
+   </graphics>
+  </place>
+  <place id="p-F21-25417-38">
+  <name>
+   <text>levier_plus_2_1_On;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="485" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-F21-2549E-39">
+  <name>
+   <text>liquid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="635" y="900"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254A7-40">
+  <name>
+   <text>masse_floor;7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="285" y="350"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254AF-41">
+  <name>
+   <text>masse_hand;7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="415" y="350"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254B6-42">
+  <name>
+   <text>masse_inv;7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="260"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254BD-43">
+  <name>
+   <text>message_panneau;10</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="835" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254C4-44">
+  <name>
+   <text>message_panneau_Off;10</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="785" y="310"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254CD-45">
+  <name>
+   <text>message_panneau_On;10</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="685" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254D4-46">
+  <name>
+   <text>nbbloc1;16</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>6</text>
+   </initialMarking>
+   <graphics>
+    <position x="1035" y="400"/>
+   </graphics>
+  </place>
+  <transition id="t-F21-254DC-47">
+  <name>
+   <text>open-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-F21-254E3-48">
+  <name>
+   <text>panneau;4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="635" y="250"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254EB-49">
+  <name>
+   <text>panneau_Off;4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="985" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254F3-50">
+  <name>
+   <text>panneau_On;4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="885" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-F21-254FA-51">
+  <name>
+   <text>porte_closed;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="585" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-F21-25503-52">
+  <name>
+   <text>porte_open;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="485" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-F21-2550A-53">
+  <name>
+   <text>solid_liquid_transition_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="880"/>
+   </graphics>
+  </place>
+  <place id="p-F21-2551A-54">
+  <name>
+   <text>solid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="435" y="850"/>
+   </graphics>
+  </place>
+  <place id="p-F21-25522-55">
+  <name>
+   <text>state_bloc1;16</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="835" y="350"/>
+   </graphics>
+  </place>
+  <transition id="t-F21-25529-56">
+  <name>
+   <text>store-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="325" y="90"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25531-57">
+  <name>
+   <text>store-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1125" y="90"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25538-58">
+  <name>
+   <text>store-masse;7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="325" y="290"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25540-59">
+  <name>
+   <text>storeBack-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="60"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25548-60">
+  <name>
+   <text>storeBack-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1225" y="60"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-2554F-61">
+  <name>
+   <text>storeBack-masse;7</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="425" y="260"/>
+   </graphics>
+  </transition>
+  <place id="p-F21-25557-62">
+  <name>
+   <text>teleporteur;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="940" y="570"/>
+   </graphics>
+  </place>
+  <transition id="t-F21-2555F-63">
+  <name>
+   <text>warming_[0]_to_]0; +inf[_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="255" y="540"/>
+   </graphics>
+  </transition>
+  <transition id="t-F21-25569-64">
+  <name>
+   <text>warming_]-inf ; 0[_to_[0]_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="550"/>
+   </graphics>
+  </transition>
+  <arc id="e-F21-25572-65" source="p-F21-252C8-2" target="t-F21-25376-20">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-F21-25576-66" source="p-F21-252E6-5" target="t-F21-25380-21">
+  </arc>
+  <arc id="e-F21-25577-67" source="p-F21-252E6-5" target="t-F21-25389-22">
+  </arc>
+  <arc id="e-F21-25579-68" source="t-F21-252ED-6" target="p-F21-25334-14">
+  </arc>
+  <arc id="e-F21-2557A-69" source="t-F21-252F6-7" target="p-F21-252C8-2">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-F21-2557D-70" source="t-F21-252F6-7" target="p-F21-25417-38">
+  </arc>
+  <arc id="e-F21-25580-71" source="t-F21-25301-8" target="p-F21-254CD-45">
+  </arc>
+  <arc id="e-F21-25581-72" source="t-F21-2530C-9" target="p-F21-254F3-50">
+  </arc>
+  <arc id="e-F21-25583-73" source="p-F21-25314-10" target="t-F21-25529-56">
+  </arc>
+  <arc id="e-F21-25585-74" source="p-F21-2531D-11" target="t-F21-252ED-6">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-25586-75" source="p-F21-2531D-11" target="t-F21-253BD-28">
+  </arc>
+  <arc id="e-F21-25588-76" source="p-F21-252C8-2" target="t-F21-25389-22">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-F21-25590-77" source="p-F21-2531D-11" target="t-F21-25540-59">
+  </arc>
+  <arc id="e-F21-25592-78" source="p-F21-25324-12" target="t-F21-253EA-34">
+  </arc>
+  <arc id="e-F21-25594-79" source="p-F21-2532C-13" target="t-F21-252ED-6">
+  </arc>
+  <arc id="e-F21-25595-80" source="p-F21-2532C-13" target="t-F21-25376-20">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-F21-25597-81" source="p-F21-2532C-13" target="t-F21-25389-22">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-F21-2559A-82" source="p-F21-25334-14" target="t-F21-2536C-19">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-F21-2559C-83" source="p-F21-25334-14" target="t-F21-25380-21">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-F21-2559E-84" source="p-F21-25334-14" target="t-F21-25391-23">
+  </arc>
+  <arc id="e-F21-2559F-85" source="p-F21-25334-14" target="t-F21-2555F-63">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255A1-86" source="p-F21-25334-14" target="t-F21-25569-64">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255A3-87" source="p-F21-252C8-2" target="t-F21-2539B-24">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-F21-255A5-88" source="p-F21-2533C-15" target="t-F21-25531-57">
+  </arc>
+  <arc id="e-F21-255A7-89" source="p-F21-25344-16" target="t-F21-25354-18">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255A9-90" source="p-F21-25344-16" target="t-F21-253C5-29">
+  </arc>
+  <arc id="e-F21-255AA-91" source="p-F21-25344-16" target="t-F21-254DC-47">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255AC-92" source="p-F21-25344-16" target="t-F21-25548-60">
+  </arc>
+  <arc id="e-F21-255AD-93" source="p-F21-2534C-17" target="t-F21-253F2-35">
+  </arc>
+  <arc id="e-F21-255B0-94" source="t-F21-25354-18" target="p-F21-254FA-51">
+  </arc>
+  <arc id="e-F21-255B1-95" source="t-F21-2536C-19" target="p-F21-252DE-4">
+  </arc>
+  <arc id="e-F21-255B3-96" source="t-F21-2536C-19" target="p-F21-2551A-54">
+  </arc>
+  <arc id="e-F21-255B5-97" source="t-F21-25376-20" target="p-F21-252DE-4">
+  </arc>
+  <arc id="e-F21-255B6-98" source="p-F21-252C8-2" target="t-F21-2555F-63">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255B9-99" source="t-F21-25376-20" target="p-F21-2551A-54">
+  </arc>
+  <arc id="e-F21-255BB-100" source="t-F21-25380-21" target="p-F21-252D6-3">
+  </arc>
+  <arc id="e-F21-255BC-101" source="t-F21-25380-21" target="p-F21-2550A-53">
+  </arc>
+  <arc id="e-F21-255BE-102" source="t-F21-25389-22" target="p-F21-252D6-3">
+  </arc>
+  <arc id="e-F21-255BF-103" source="t-F21-25389-22" target="p-F21-2550A-53">
+  </arc>
+  <arc id="e-F21-255C1-104" source="t-F21-25391-23" target="p-F21-2532C-13">
+  </arc>
+  <arc id="e-F21-255C3-105" source="t-F21-2539B-24" target="p-F21-2540D-37">
+  </arc>
+  <arc id="e-F21-255C5-106" source="t-F21-253A3-25" target="p-F21-254C4-44">
+  </arc>
+  <arc id="e-F21-255C7-107" source="t-F21-253AC-26" target="p-F21-254EB-49">
+  </arc>
+  <arc id="e-F21-255C8-108" source="t-F21-253BD-28" target="p-F21-25314-10">
+  </arc>
+  <arc id="e-F21-255CA-109" source="p-F21-252C8-2" target="t-F21-25569-64">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255CD-110" source="t-F21-253C5-29" target="p-F21-2533C-15">
+  </arc>
+  <arc id="e-F21-255CE-111" source="t-F21-253CC-30" target="p-F21-254A7-40">
+  </arc>
+  <arc id="e-F21-255D0-112" source="t-F21-253E3-33" target="p-F21-253D5-31">
+  </arc>
+  <arc id="e-F21-255D1-113" source="t-F21-253EA-34" target="p-F21-2531D-11">
+  </arc>
+  <arc id="e-F21-255D3-114" source="t-F21-253F2-35" target="p-F21-25344-16">
+  </arc>
+  <arc id="e-F21-255D4-115" source="t-F21-253FC-36" target="p-F21-254AF-41">
+  </arc>
+  <arc id="e-F21-255D6-116" source="p-F21-2540D-37" target="t-F21-252F6-7">
+  </arc>
+  <arc id="e-F21-255D8-117" source="p-F21-25417-38" target="t-F21-2539B-24">
+  </arc>
+  <arc id="e-F21-255DF-118" source="p-F21-2549E-39" target="t-F21-25380-21">
+  </arc>
+  <arc id="e-F21-255E1-119" source="p-F21-2549E-39" target="t-F21-25389-22">
+  </arc>
+  <arc id="e-F21-255E3-120" source="p-F21-252D6-3" target="t-F21-2536C-19">
+  </arc>
+  <arc id="e-F21-255E5-121" source="p-F21-254A7-40" target="t-F21-25538-58">
+  </arc>
+  <arc id="e-F21-255E6-122" source="p-F21-254AF-41" target="t-F21-253B4-27">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255E8-123" source="p-F21-254AF-41" target="t-F21-253CC-30">
+  </arc>
+  <arc id="e-F21-255E9-124" source="p-F21-254AF-41" target="t-F21-2554F-61">
+  </arc>
+  <arc id="e-F21-255EB-125" source="p-F21-254B6-42" target="t-F21-253FC-36">
+  </arc>
+  <arc id="e-F21-255EC-126" source="p-F21-254BD-43" target="t-F21-253AC-26">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255EE-127" source="p-F21-254C4-44" target="t-F21-25301-8">
+  </arc>
+  <arc id="e-F21-255F0-128" source="p-F21-254CD-45" target="t-F21-253A3-25">
+  </arc>
+  <arc id="e-F21-255F1-129" source="p-F21-254D4-46" target="t-F21-253B4-27">
+  </arc>
+  <arc id="e-F21-255F3-130" source="t-F21-254DC-47" target="p-F21-25503-52">
+  </arc>
+  <arc id="e-F21-255F5-131" source="p-F21-252D6-3" target="t-F21-25376-20">
+  </arc>
+  <arc id="e-F21-255F7-132" source="p-F21-254E3-48" target="t-F21-25301-8">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-255F9-133" source="p-F21-254EB-49" target="t-F21-2530C-9">
+  </arc>
+  <arc id="e-F21-255FA-134" source="p-F21-254F3-50" target="t-F21-253AC-26">
+  </arc>
+  <arc id="e-F21-255FC-135" source="p-F21-254FA-51" target="t-F21-254DC-47">
+  </arc>
+  <arc id="e-F21-255FE-136" source="p-F21-25503-52" target="t-F21-25354-18">
+  </arc>
+  <arc id="e-F21-255FF-137" source="p-F21-2550A-53" target="t-F21-2536C-19">
+  </arc>
+  <arc id="e-F21-25601-138" source="p-F21-2550A-53" target="t-F21-25376-20">
+  </arc>
+  <arc id="e-F21-25603-139" source="p-F21-2550A-53" target="t-F21-2555F-63">
+  </arc>
+  <arc id="e-F21-25604-140" source="p-F21-2551A-54" target="t-F21-25569-64">
+  </arc>
+  <arc id="e-F21-25606-141" source="t-F21-25529-56" target="p-F21-25324-12">
+  </arc>
+  <arc id="e-F21-25608-142" source="p-F21-252D6-3" target="t-F21-2555F-63">
+  </arc>
+  <arc id="e-F21-2560A-143" source="t-F21-25531-57" target="p-F21-2534C-17">
+  </arc>
+  <arc id="e-F21-2560C-144" source="t-F21-25538-58" target="p-F21-254B6-42">
+  </arc>
+  <arc id="e-F21-2560D-145" source="t-F21-25540-59" target="p-F21-25324-12">
+  </arc>
+  <arc id="e-F21-2560F-146" source="t-F21-25548-60" target="p-F21-2534C-17">
+  </arc>
+  <arc id="e-F21-25611-147" source="t-F21-2554F-61" target="p-F21-254B6-42">
+  </arc>
+  <arc id="e-F21-25612-148" source="p-F21-25557-62" target="t-F21-253E3-33">
+  </arc>
+  <arc id="e-F21-25614-149" source="t-F21-2555F-63" target="p-F21-252E6-5">
+  </arc>
+  <arc id="e-F21-25615-150" source="t-F21-2555F-63" target="p-F21-2549E-39">
+  </arc>
+  <arc id="e-F21-25617-151" source="t-F21-25569-64" target="p-F21-252D6-3">
+  </arc>
+  <arc id="e-F21-25618-152" source="t-F21-25569-64" target="p-F21-2550A-53">
+  </arc>
+  <arc id="e-F21-2561A-153" source="p-F21-252DE-4" target="t-F21-25569-64">
+  </arc>
+  <arc id="e-F21-2561C-154" source="p-F21-2549E-39" target="t-F21-253E3-33">
+   <type value="test"/>
+  </arc>
+  <arc id="e-F21-2561E-155" source="p-F21-25557-62" target="t-F21-253DD-32">
+  </arc>
+  <arc id="e-F21-25620-156" source="t-F21-253DD-32" target="p-F21-253D5-31">
+  </arc>
+  <arc id="e-F21-25621-157" source="p-F21-254D4-46" target="t-F21-253DD-32">
+   <inscription>
+    <text>6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+ </page>
+ </net>
+</pnml>
