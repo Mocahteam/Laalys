@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data>
+<map id="Thermometre 1" nbPrecedingTry="1" Configuration="859" BeginningTime="143152" EndingTime="183588">
+<transition time="153934" action="desactivate-levier_plus_6_1;2" origin="player" try="false"/>
+<transition time="162977" action="activate-levier_plus_2_1;6" origin="player" try="false"/>
+<transition time="163561" action="activate-levier_plus_2_1;6" origin="player" try="false"/>
+<transition time="174176" action="activate-levier_plus_3_1;4" origin="player" try="false"/>
+<transition time="175273" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="183588" action="exit-;8" origin="player" try="false"/>
+</map>
+</data>

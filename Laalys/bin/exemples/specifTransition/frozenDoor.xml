@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transitions>
+	<transition id="close door"          system="false" end="false" />
+	<transition id="open door - exit"    system="false" end="true" />
+	<transition id="turn off boiler"     system="false" end="false" />
+	<transition id="turn on boiler"      system="false" end="false" />
+	<transition id="grab key"            system="false" end="false" />
+	<transition id="discard key"         system="false" end="false" />
+</transitions>

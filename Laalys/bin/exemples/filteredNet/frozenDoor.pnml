@@ -1,0 +1,149 @@
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-14A8-E36FB-0" type ="http://www.pnml.org/version-2009/grammar/ptnet">
+  <name>
+   <text>frozenDoor</text>
+  </name>
+ <page id="g-14A8-E3705-1">
+  <place id="p-14A8-E3708-2">
+  <name>
+   <text>boiler off</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="495" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-14A8-E3719-3">
+  <name>
+   <text>boiler on</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="355" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-14A8-E371D-4">
+  <name>
+   <text>door closed</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="355" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-14A8-E3721-5">
+  <name>
+   <text>door open</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-14A8-E3723-6">
+  <name>
+   <text>grab key</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="90"/>
+   </graphics>
+  </transition>
+  <place id="p-14A8-E3727-7">
+  <name>
+   <text>key in inventory</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="195" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-14A8-E372B-8">
+  <name>
+   <text>key on the floor</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="55" y="110"/>
+   </graphics>
+  </place>
+  <transition id="t-14A8-E372E-9">
+  <name>
+   <text>open door - exit</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="275" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-14A8-E3733-10">
+  <name>
+   <text>turn on boiler</text>
+    <graphics>
+     <offset x="0" y="10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="435" y="130"/>
+   </graphics>
+  </transition>
+  <arc id="e-14A8-E3737-11" source="p-14A8-E3719-3" target="t-14A8-E372E-9">
+   <graphics>
+    <position x="339" y="94" />
+    <position x="307" y="80" />
+   </graphics>  </arc>
+  <arc id="e-14A8-E3740-12" source="p-14A8-E3708-2" target="t-14A8-E3733-10">
+  </arc>
+  <arc id="e-14A8-E3742-13" source="p-14A8-E3727-7" target="t-14A8-E372E-9">
+   <graphics>
+    <position x="219" y="110" />
+    <position x="251" y="96" />
+   </graphics>  </arc>
+  <arc id="e-14A8-E3744-14" source="p-14A8-E372B-8" target="t-14A8-E3723-6">
+  </arc>
+  <arc id="e-14A8-E3745-15" source="t-14A8-E372E-9" target="p-14A8-E3721-5">
+  </arc>
+  <arc id="e-14A8-E3745-16" source="t-14A8-E372E-9" target="p-14A8-E3727-7">
+   <graphics>
+    <position x="243" y="80" />
+    <position x="215" y="94" />
+   </graphics>  </arc>
+  <arc id="e-14A8-E3747-17" source="t-14A8-E3733-10" target="p-14A8-E3719-3">
+  </arc>
+  <arc id="e-14A8-E3748-18" source="t-14A8-E372E-9" target="p-14A8-E3719-3">
+   <graphics>
+    <position x="299" y="92" />
+    <position x="331" y="102" />
+   </graphics>  </arc>
+  <arc id="e-14A8-E374B-19" source="p-14A8-E371D-4" target="t-14A8-E372E-9">
+  </arc>
+  <arc id="e-14A8-E374C-20" source="t-14A8-E3723-6" target="p-14A8-E3727-7">
+  </arc>
+ </page>
+ </net>
+</pnml>

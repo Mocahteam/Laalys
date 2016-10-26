@@ -145,22 +145,23 @@ public class Marking implements IMarking {
 		if (code.equals(""))
 			code = ""+number;
 		else
-			code = code + "|" + number;
+			code = code + ":" + number;
 	}
 	
 	public void setTokenAt(int i, int number)
 	{
+		while (i >= this.getLength())
+			pushToken(0);
 		marking.set(i, number);
 		// update the code
-		String[] tokens = code.split("|");
+		String[] tokens = code.split(":");
 		if (tokens.length > 0){
 			tokens[i] = ""+number;
 			code = tokens[0];
 			for (int cpt = 1 ; cpt < tokens.length ; cpt++){
-				code += "|"+tokens[cpt];
+				code += ":"+tokens[cpt];
 			}
 		}
-		
 	}
 	
 	/** "this" couvre STRICTEMENT "mark" ssi "this" couvre "mark" ET "this" n'est pas égal à "mark" */

@@ -24,7 +24,7 @@ public interface IPetriNet {
 	 *  - des fichiers ".pnml"
 	 * @throws Exception 
 	 */
-	public void createPetriNet(String url) throws Exception;
+	public void loadPetriNet(String url) throws Exception;
 	
 	public void createPlace (String id, String name) throws Exception;
 	

@@ -159,7 +159,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 						newCode = newMark.getCode();
 						newRefMarkingObj = refMarkingByMarkingCode.get(newCode);
 					}
-					// le marquage a peut être été modifié par la fonction addOmega, on teste donc
+					// le marquage a peut avoir été modifié par la fonction addOmega, on teste donc
 					// à nouveau notre connaissance de ce marquage
 					if (newRefMarkingObj == null)
 					{

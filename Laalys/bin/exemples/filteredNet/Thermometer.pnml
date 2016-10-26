@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+   <net id="n-F13-1C908-0" type="http://www.laas.fr/tina/tpn">
+      <name>
+         <text>Thermometer</text>
+      </name>
+      <page id="1">
+         <place id="p-F13-1C911-2">
+            <name>
+               <text>T chaudiere = -16 + x</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>6</text>
+            </initialMarking>
+            <graphics>
+               <position x="140" y="420"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C91F-3">
+            <name>
+               <text>T in [-9]</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="240" y="650"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C926-4">
+            <name>
+               <text>T in ]-9; +inf[</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="340" y="650"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C92E-5">
+            <name>
+               <text>T in ]-inf ; -9[</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>1</text>
+            </initialMarking>
+            <graphics>
+               <position x="140" y="650"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C95B-11">
+            <name>
+               <text>chaudiere_Off;9</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="190" y="310"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C962-12">
+            <name>
+               <text>chaudiere_On;9</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>1</text>
+            </initialMarking>
+            <graphics>
+               <position x="90" y="300"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C9C9-22">
+            <name>
+               <text>endLevel-;8</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="1070" y="150"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C9DA-24">
+            <name>
+               <text>levier_plus_2_1_Off;6</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>2</text>
+            </initialMarking>
+            <graphics>
+               <position x="790" y="110"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C9E2-25">
+            <name>
+               <text>levier_plus_2_1_On;6</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="690" y="100"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C9EA-26">
+            <name>
+               <text>levier_plus_3_1_Off;4</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>2</text>
+            </initialMarking>
+            <graphics>
+               <position x="590" y="110"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C9F2-27">
+            <name>
+               <text>levier_plus_3_1_On;4</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="490" y="100"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1C9FC-28">
+            <name>
+               <text>levier_plus_4_1_Off;7</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>2</text>
+            </initialMarking>
+            <graphics>
+               <position x="990" y="110"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1CA04-29">
+            <name>
+               <text>levier_plus_4_1_On;7</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="890" y="100"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1CA0C-30">
+            <name>
+               <text>levier_plus_6_1_Off;2</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>1</text>
+            </initialMarking>
+            <graphics>
+               <position x="390" y="110"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1CA14-31">
+            <name>
+               <text>levier_plus_6_1_On;2</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>1</text>
+            </initialMarking>
+            <graphics>
+               <position x="290" y="100"/>
+            </graphics>
+         </place>
+         <place id="p-F13-1CA1D-32">
+            <name>
+               <text>teleporteur;8</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <initialMarking>
+               <text>1</text>
+            </initialMarking>
+            <graphics>
+               <position x="1130" y="50"/>
+            </graphics>
+         </place>
+         <transition id="t-F13-1C943-8">
+            <name>
+               <text>activate-levier_plus_3_1;4</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="540" y="130"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C94B-9">
+            <name>
+               <text>activate-levier_plus_4_1;7</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="940" y="130"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C96A-13">
+            <name>
+               <text>cooling_[-9]_to_]-inf ; -9[_1</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="140" y="810"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C974-14">
+            <name>
+               <text>cooling_[-9]_to_]-inf ; -9[_2</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="260" y="800"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C97C-15">
+            <name>
+               <text>cooling_]-9; +inf[_to_[-9]_3</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="390" y="790"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C985-16">
+            <name>
+               <text>cooling_]-9; +inf[_to_[-9]_4</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="520" y="780"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C9C1-21">
+            <name>
+               <text>desactivate-levier_plus_6_1;2</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="340" y="70"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C9D2-23">
+            <name>
+               <text>exit-;8</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="1100" y="120"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1CA25-33">
+            <name>
+               <text>warming_[-9]_to_]-9; +inf[_chaudiere</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="260" y="540"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1CA31-34">
+            <name>
+               <text>warming_]-inf ; -9[_to_[-9]_chaudiere</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="140" y="550"/>
+            </graphics>
+         </transition>
+         <transition id="t-F13-1C93B-7">
+            <name>
+               <text>activate-levier_plus_2_1;6</text>
+               <graphics>
+                  <offset x="0" y="-10"/>
+               </graphics>
+            </name>
+            <graphics>
+               <position x="740" y="130"/>
+            </graphics>
+         </transition>
+         <arc id="e-F13-1CA42-35" source="p-F13-1C911-2" target="t-F13-1C974-14">
+            <inscription>
+               <text>7</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+            <type value="inhibitor"/>
+         </arc>
+         <arc id="e-F13-1CA46-36" source="p-F13-1C91F-3" target="t-F13-1C974-14">
+  </arc>
+         <arc id="e-F13-1CA48-37" source="p-F13-1C91F-3" target="t-F13-1CA25-33">
+  </arc>
+         <arc id="e-F13-1CA49-38" source="p-F13-1C926-4" target="t-F13-1C97C-15">
+  </arc>
+         <arc id="e-F13-1CA4C-39" source="p-F13-1C926-4" target="t-F13-1C985-16">
+  </arc>
+         <arc id="e-F13-1CA4E-40" source="p-F13-1C92E-5" target="t-F13-1CA31-34">
+  </arc>
+         <arc id="e-F13-1CA51-42" source="t-F13-1C93B-7" target="p-F13-1C911-2">
+            <inscription>
+               <text>2</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+         </arc>
+         <arc id="e-F13-1CA54-43" source="t-F13-1C93B-7" target="p-F13-1C9E2-25">
+  </arc>
+         <arc id="e-F13-1CA55-44" source="t-F13-1C943-8" target="p-F13-1C911-2">
+            <inscription>
+               <text>3</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+         </arc>
+         <arc id="e-F13-1CA58-45" source="t-F13-1C943-8" target="p-F13-1C9F2-27">
+  </arc>
+         <arc id="e-F13-1CA5A-46" source="p-F13-1C911-2" target="t-F13-1C985-16">
+            <inscription>
+               <text>8</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+            <type value="inhibitor"/>
+         </arc>
+         <arc id="e-F13-1CA5C-47" source="t-F13-1C94B-9" target="p-F13-1C911-2">
+            <inscription>
+               <text>4</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+         </arc>
+         <arc id="e-F13-1CA5E-48" source="t-F13-1C94B-9" target="p-F13-1CA04-29">
+  </arc>
+         <arc id="e-F13-1CA67-52" source="p-F13-1C95B-11" target="t-F13-1C974-14">
+            <type value="inhibitor"/>
+         </arc>
+         <arc id="e-F13-1CA69-53" source="p-F13-1C95B-11" target="t-F13-1C985-16">
+            <type value="inhibitor"/>
+         </arc>
+         <arc id="e-F13-1CA6B-54" source="p-F13-1C962-12" target="t-F13-1C96A-13">
+            <type value="inhibitor"/>
+         </arc>
+         <arc id="e-F13-1CA6D-55" source="p-F13-1C962-12" target="t-F13-1C97C-15">
+            <type value="inhibitor"/>
+         </arc>
+         <arc id="e-F13-1CA72-58" source="p-F13-1C962-12" target="t-F13-1CA25-33">
+            <type value="test"/>
+         </arc>
+         <arc id="e-F13-1CA74-59" source="p-F13-1C962-12" target="t-F13-1CA31-34">
+            <type value="test"/>
+         </arc>
+         <arc id="e-F13-1CA76-60" source="t-F13-1C96A-13" target="p-F13-1C92E-5">
+  </arc>
+         <arc id="e-F13-1CA77-61" source="t-F13-1C974-14" target="p-F13-1C92E-5">
+  </arc>
+         <arc id="e-F13-1CA7A-62" source="t-F13-1C97C-15" target="p-F13-1C91F-3">
+  </arc>
+         <arc id="e-F13-1CA7C-63" source="t-F13-1C985-16" target="p-F13-1C91F-3">
+  </arc>
+         <arc id="e-F13-1CA87-69" source="t-F13-1C9C1-21" target="p-F13-1CA0C-30">
+  </arc>
+         <arc id="e-F13-1CA8E-70" source="t-F13-1C9D2-23" target="p-F13-1C9C9-22">
+  </arc>
+         <arc id="e-F13-1CA90-71" source="p-F13-1C9DA-24" target="t-F13-1C93B-7">
+  </arc>
+         <arc id="e-F13-1CA94-73" source="p-F13-1C9EA-26" target="t-F13-1C943-8">
+  </arc>
+         <arc id="e-F13-1CA99-75" source="p-F13-1C9FC-28" target="t-F13-1C94B-9">
+  </arc>
+         <arc id="e-F13-1CA9E-78" source="p-F13-1CA14-31" target="t-F13-1C9C1-21">
+  </arc>
+         <arc id="e-F13-1CAA2-80" source="p-F13-1CA1D-32" target="t-F13-1C9D2-23">
+  </arc>
+         <arc id="e-F13-1CAA4-81" source="t-F13-1CA25-33" target="p-F13-1C926-4">
+  </arc>
+         <arc id="e-F13-1CAA6-82" source="t-F13-1CA31-34" target="p-F13-1C91F-3">
+  </arc>
+         <arc id="e-F13-1CAA7-83" source="p-F13-1C91F-3" target="t-F13-1C9D2-23">
+            <type value="test"/>
+         </arc>
+         <arc id="e-F13-1CAA9-84" source="p-F13-1C911-2" target="t-F13-1C9C1-21">
+            <inscription>
+               <text>6</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+         </arc>
+         <arc id="e-F13-1CAAB-85" source="p-F13-1C911-2" target="t-F13-1CA25-33">
+            <inscription>
+               <text>8</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+            <type value="test"/>
+         </arc>
+         <arc id="e-F13-1CAAF-86" source="p-F13-1C911-2" target="t-F13-1CA31-34">
+            <inscription>
+               <text>7</text>
+               <graphics>
+                  <offset x="10" y="0"/>
+               </graphics>
+            </inscription>
+            <type value="test"/>
+         </arc>
+         <arc id="e-F13-1CAB2-87" source="p-F13-1C91F-3" target="t-F13-1C96A-13">
+  </arc>
+      </page>
+   </net>
+</pnml>
