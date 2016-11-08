@@ -66,7 +66,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 	protected IMarking addOmegas(IMarking currentMarking, IMarking simulateMarking)
 	{
 		IMarking newMarking = simulateMarking.clone();
-		IMarking coveredParent = findCoveredParent_rec(simulateMarking, currentMarking, new HashSet<String>());
+		IMarking coveredParent = findCoveredParent(simulateMarking, currentMarking);
 		if (coveredParent != null){
 			// Parcours de chaque place pour déterminer les omégas
 			for (int k = 0 ; k < this.places.size() ; k++)
@@ -116,7 +116,6 @@ public class CoverabilityGraph extends AccessibleGraph {
 		// init time
 		while (toExplore.size() != 0)
 		{
-			// compute next marking
 			IMarking mark = toExplore.remove(toExplore.size() - 1);
 			// synchronisation du réseau de pétri sur le marquage en cours de traitement
 			pn.setCurrentMarkings(mark);
@@ -128,7 +127,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 				int refMarking;
 				if (refMarkingObj == null)
 				{
-					// calcul du nouvel incide de ce marquage
+					// calcul du nouvel indice de ce marquage
 					refMarking = markingByRefMarking.size();
 					// ajout de ce nouveau marquage aux marquages connus
 					markingByRefMarking.add(mark);
@@ -165,7 +164,7 @@ public class CoverabilityGraph extends AccessibleGraph {
 					{
 						// enregistrer ce nouveau marquage à la liste des marquages à traiter
 						toExplore.add(newMark);
-						// calcul du nouvel incide de ce marquage
+						// calcul du nouvel indice de ce marquage
 						child = markingByRefMarking.size();
 						// ajout de ce nouveau marquage aux marquages connus
 						markingByRefMarking.add(newMark);
@@ -216,33 +215,38 @@ public class CoverabilityGraph extends AccessibleGraph {
 	 * A noter qu'il n'est pas nécessaire d'identifier tous les marquages recouvert, il suffit d'en trouver un (propriété
 	 * validée par Isabelle Mounier (équipe MOVE - LIP6)).
 	 */
-	protected IMarking findCoveredParent_rec (IMarking startingMarking, IMarking currentMarking, HashSet<String> seen) {
-		String code = currentMarking.getCode();
-		// Vérifier si on n'a pas déjà traité ce marquage
-		if (!seen.contains(code)) {
-			// enregistrer ce marquage comme traité
-			seen.add(code);
-			// vérifier si ce parent est recouvert strictement par notre marquage de départ ("startingMarking")
-			if (startingMarking.strictlyCover(currentMarking)){
-				// on a trouvé un parent recouvert strictement par notre marquage de départ : c'est le critère d'ajout des omégas
-				// on retourne ce parent
-				return currentMarking;
-				// On stoppe ici la récursion car on considère que ce parent qui est couvert strictement s'il est dans le graphe
-				// c'est qu'il a lui même été analysé vis à vis de ses parents, il est donc inutile de refaire le travail (propriété
-				// des graphe de couverture validé par Isabelle Mounier (équipe MOVE - LIP6)
-			} else {
-				// on remonte l'arborescence pour tenter de trouver un marquage que "startingMarking" recouvre strictement
-				ArrayList<IIndirectMarking> inMarkings = accessibleMarkingsByRefMarking.get(refMarkingByMarkingCode.get(code).id).getInMarkings();
-				// on parcours maintenant chaque parent
-				for (IIndirectMarking indirectMarking : inMarkings) {
-					// on récupère le parent courant
-					IMarking parentMarking = markingByRefMarking.get(indirectMarking.getRefMarking());
-					// et on procède à l'appel récursif pour tester son recouvrement et ses parents...
-					IMarking parentCovered = findCoveredParent_rec(startingMarking, parentMarking, seen);
-					// Si aucun parent n'est recouvert dans cette branche, on passe au suivant, sinon on retourne le
-					// parent recouvert et on stoppe la récursion
-					if (parentCovered != null)
-						return parentCovered;
+	protected IMarking findCoveredParent (IMarking startingMarking, IMarking currentMarking) {
+		HashSet<String> seen = new HashSet<String>();
+		HashSet<IMarking> toSee = new HashSet<IMarking>();
+		toSee.add(currentMarking);
+		// On travaille tant qu'il reste des marquages à traiter
+		while (!toSee.isEmpty()){
+			// On récupère le prochain marquage à traiter
+			IMarking workingMarking = toSee.iterator().next();
+			// On le supprime des marquages à traiter
+			toSee.remove(workingMarking);
+			// Et on récupère son code
+			String currentCode = workingMarking.getCode();
+			// Vérifier si on n'a pas déjà traité ce marquage
+			if (!seen.contains(currentCode)) {
+				// enregistrer ce marquage comme traité
+				seen.add(currentCode);
+				// vérifier si ce parent est recouvert strictement par notre marquage de départ ("startingMarking")
+				if (startingMarking.strictlyCover(workingMarking)){
+					// on a trouvé un parent recouvert strictement par notre marquage de départ : c'est le critère d'ajout des omégas
+					// on retourne ce parent
+					return workingMarking;
+					// On stoppe ici la recherche car on considère que ce parent qui est couvert strictement s'il est dans le graphe
+					// c'est qu'il a lui même été analysé vis à vis de ses parents, il est donc inutile de refaire le travail (propriété
+					// des graphe de couverture validé par Isabelle Mounier (équipe MOVE - LIP6)
+				} else {
+					// on remonte l'arborescence pour tenter de trouver un marquage que "startingMarking" recouvre strictement
+					ArrayList<IIndirectMarking> inMarkings = accessibleMarkingsByRefMarking.get(refMarkingByMarkingCode.get(currentCode).id).getInMarkings();
+					// on parcours maintenant chaque parent
+					for (IIndirectMarking indirectMarking : inMarkings) {
+						// on récupère le parent courant
+						toSee.add(markingByRefMarking.get(indirectMarking.getRefMarking()));
+					}
 				}
 			}
 		}

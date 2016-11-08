@@ -1,4 +1,5 @@
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
@@ -17,6 +18,7 @@ import org.w3c.dom.Node;
 import fr.lip6.mocah.laalys.features.Features;
 import fr.lip6.mocah.laalys.features.IFeatures;
 import fr.lip6.mocah.laalys.labeling.Labeling_V9;
+import fr.lip6.mocah.laalys.labeling.PathState;
 import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
 import fr.lip6.mocah.laalys.petrinet.IPetriNet;
 import fr.lip6.mocah.laalys.petrinet.PetriNet;
@@ -27,8 +29,7 @@ import fr.lip6.mocah.laalys.traces.Traces;
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-//		String fullPnName = "murDeGlace.pnml";
+/*//		String fullPnName = "murDeGlace.pnml";
 //		String filteredPnName = "murDeGlace_contraintManuellement.pnml";
 //		String featuresName = "murDeGlace.xml";
 //		String traceName = "expe_paris_montagne\\MurDeGlace\\Vivianier.xml";
@@ -89,6 +90,24 @@ public class Main {
 		// print traces and labels
 		for (ITrace tr : traces.getTraces()){
 			System.out.println(tr.getAction()+ " "+tr.getLabels());
+		}*/
+		
+		// Test Pour Mathieu
+		System.out.println("Chargement du RdP et calcul de son graphe de couverture...");
+		IPetriNet pn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+		try {
+			long stamp = System.currentTimeMillis();
+			pn.loadPetriNet("C:\\Users\\mmuratet\\Google Drive\\Recherche\\LIP6\\SuiviEtudiants\\Mathieu\\testModelisation4.pnml");
+			System.out.println("temps de calcul : "+(System.currentTimeMillis()-stamp)+"ms, pour un graphe de couverture d'une taille de : "+pn.getAllPossibleMarkings().size()+" états.");
+			/*System.out.println("Exportation du graphe de couverture...");
+			ArrayList<String> ends = new ArrayList<String>();
+			ends.add("FinMission");
+			PetriNet.exportToGraphml(	"C:\\Users\\mmuratet\\Downloads\\testModelisation4.graphml",
+										null, pn, new ArrayList<IPetriNet>(), new ArrayList<PathState> (), ends);
+			System.out.println("... exportation du graphe de couverture terminée.");*/
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

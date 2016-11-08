@@ -501,7 +501,7 @@ public class PetriNet implements IPetriNet {
 		// création du graphe
 		export += "\t<graph id=\"G\" edgedefault=\"directed\">\n";
 		
-		if (completeRdP.getGraph() != null) {
+		if (completeRdP != null && completeRdP.getGraph() != null) {
 			export += exportWithCompleteGraph(completeRdP, filteredRdP, artificalRdpList, path, ends);
 		} else {
 			export += exportWithoutCompleteGraph(filteredRdP, artificalRdpList, path, ends);
@@ -695,7 +695,7 @@ public class PetriNet implements IPetriNet {
 				rdpW = artificialRdpList.get(isArtificialState);
 			else
 				throw new Exception("PetriNet::exportWithoutCompleteGraph => marking \"" + mark.getCode() + "\" is not a known marking");
-			// puis pour chaque arc entrant on les exportes et on en profite pour vérifier si notre état n'est pas un état final (<=> un arc entrant
+			// puis pour chaque arc entrant on les exporte et on en profite pour vérifier si notre état n'est pas un état final (<=> un arc entrant
 			// correspondant à une action de fin experte)
 			IAccessibleMarkings am = rdpW.getGraph().getAccessibleMarkings(mark);
 			for (IIndirectMarking _in : am.getInMarkings()) {
