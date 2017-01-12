@@ -1,0 +1,7 @@
+public class Main {
+// transférer le contenu des chargements dans InterfaceLaalys.java ; ne garder que l'appel à InterfaceLaalys()
+
+	public static void main(String[] args) {	
+		InterfaceLaalys ll = new InterfaceLaalys();		
+		}
+	}

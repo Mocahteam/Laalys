@@ -1,0 +1,550 @@
+import java.awt.Dimension; 
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.awt.event.*; 
+import java.awt.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.*;
+
+import fr.lip6.mocah.laalys.features.Features;
+import fr.lip6.mocah.laalys.features.IFeatures;
+import fr.lip6.mocah.laalys.petrinet.AccessibleGraph;
+import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
+import fr.lip6.mocah.laalys.petrinet.IPetriNet;
+import fr.lip6.mocah.laalys.petrinet.ITransition;
+import fr.lip6.mocah.laalys.petrinet.PetriNet;
+import fr.lip6.mocah.laalys.traces.ITrace;
+import fr.lip6.mocah.laalys.traces.ITraces;
+import fr.lip6.mocah.laalys.traces.Traces;
+import fr.lip6.mocah.laalys.traces.Trace;
+
+import fr.lip6.mocah.laalys.labeling.Labeling_V9;
+
+class InterfaceLaalys extends JFrame implements ActionListener
+{ 
+	// dimensions de la fenêtre
+	int largeur = 1200, hauteur = 750 ;
+	// taille des textes si non standard (12)
+	int tailleTexte1 = 14;
+	int tailleTexte2 = 16;
+	JButton reseau1a,reseau1b,reseau2,reseau3,trace,suppression ;
+	JButton analyse1, analyse2, analyse3 ;
+	JRadioButton bouton1, bouton2, bouton1a, bouton1b, bouton1c ;
+	DefaultListModel model1, model2, model2bis, model3, model4;
+	JList liste_actions, liste_actions_realisees  ;
+	JList liste_actions_analysees, liste_labels ;
+	String choix="", type="accessibilité", strategie="OR" ; // par défaut
+	int indice, nb1, nb2 ;
+	String fullPnName ;
+	String filteredPnName ;
+	String featuresName ;
+	String traceName ;
+	IPetriNet fullPn ;
+	IPetriNet filteredPn ;
+	IFeatures features ;
+	ITraces traces, copie_traces, nouvelles_traces ;
+	ITrace nouvelletrace ;
+	ArrayList<ITrace> value, value1 ;
+
+
+//////////////////////////////////////////////////////////////////
+
+	public InterfaceLaalys() {
+		super("Laalys"); 
+		// fermeture application
+		WindowListener l = new WindowAdapter() { 
+			public void windowClosing(WindowEvent e){ 
+				System.exit(0); 
+				} 
+			}; 
+		addWindowListener(l);
+		// taille et structure générale en onglets
+		setSize(largeur, hauteur); 
+		JPanel pannel = new JPanel(); 
+		JTabbedPane onglets = new JTabbedPane(SwingConstants.TOP); 
+		// polices de caractères
+		Font font1 = new Font("Arial",Font.PLAIN, tailleTexte1);
+		Font font1b = new Font("Arial",Font.BOLD, tailleTexte1);
+		Font font2 = new Font("Arial",Font.PLAIN, tailleTexte2); 
+ 
+//////////////////////////////////////////////////////////////////
+
+		// onglet1 pour chargement des réseaux de Petri
+		JPanel onglet1 = new JPanel(); 
+		// si on veut un titre dans l'onglet1
+		// JLabel titreOnglet1 = new JLabel("Type ..."); 
+		// onglet1.add(titreOnglet1); 
+		onglet1.setPreferredSize(new Dimension(largeur, hauteur)); 
+		onglets.addTab("<html><font size=\"4\">Type de graphe et chargement des réseaux</font></html>", onglet1);
+
+		JPanel pannelBase = new JPanel(); 
+		pannelBase.setLayout(new BorderLayout()); 
+
+		JPanel pannel1 = new JPanel(); 
+		pannel1.setLayout(new GridLayout(2,1));
+		JPanel pannel1a = new JPanel();
+		JLabel jLabel1 =new JLabel("<HTML><b>Type de graphe</b></html>"); 
+		jLabel1.setFont(font1);
+		pannel1a.add(jLabel1);  
+		ButtonGroup group = new ButtonGroup();
+		bouton1 = new JRadioButton("Couverture", true); 
+		bouton1.setFont(font1);
+		bouton1.addActionListener(this); 
+		group.add(bouton1);
+		pannel1a.add(bouton1); 
+		bouton2 = new JRadioButton("Accessibilité");
+		bouton2.setFont(font1);
+		bouton2.addActionListener(this); 
+		group.add(bouton2);
+		pannel1a.add(bouton2);
+		pannel1.add(pannel1a);
+		JPanel pannel1b = new JPanel();
+		JLabel jLabel1a =new JLabel("<HTML><b>Stratégie d'analyse</b></html>"); 
+		jLabel1a.setFont(font1);
+		pannel1b.add(jLabel1a);  
+		ButtonGroup group2 = new ButtonGroup();
+		bouton1a = new JRadioButton("OU", true);
+		bouton1a.setFont(font1);
+		bouton1a.addActionListener(this); 
+		group2.add(bouton1a);
+		pannel1b.add(bouton1a); 
+		bouton1b = new JRadioButton("ET", true);
+		bouton1b.setFont(font1);
+		bouton1b.addActionListener(this); 
+		group2.add(bouton1b);
+		pannel1b.add(bouton1b);
+		bouton1c = new JRadioButton("FIRST", true);
+		bouton1c.setFont(font1);
+		bouton1c.addActionListener(this); 
+		group2.add(bouton1c);
+		pannel1b.add(bouton1c);
+		pannel1.add(pannel1b);		
+		pannelBase.add("North",pannel1);
+
+		JPanel pannel2 = new JPanel(); 
+		pannel2.setLayout(new  BorderLayout());
+		JPanel pannel21 = new JPanel();
+		JLabel jLabel2 =new JLabel("<html><center><p><b>Réseaux de Pétri</b> : sélectionner un <b>réseau de Pétri complet</b>, avec ou sans graphe, un <b>réseau filtré</b> et des <b>spécificités</b><br/><b>avant</b> d'accéder au chargement des traces</p></center></html>"); 
+		jLabel2.setFont(font1);
+		pannel21.add(jLabel2);  
+		pannel2.add("North", pannel21);
+
+		JPanel pannel22 = new JPanel();
+		pannel22.setLayout(new GridLayout(2,3));
+
+		JPanel panneltexte1 = new JPanel();
+		JLabel texte1 = new JLabel("Réseau de Pétri complet"); 
+		texte1.setFont(font1b);
+		panneltexte1.add(texte1);
+		pannel22.add(panneltexte1); 
+
+		JPanel panneltexte2 = new JPanel();
+		JLabel texte2 = new JLabel("Réseau de Pétri filtré"); 
+		texte2.setFont(font1b);
+		panneltexte2.add(texte2);
+		pannel22.add(panneltexte2); 
+
+		JPanel panneltexte3 = new JPanel();
+		JLabel texte3 = new JLabel("Spécificités des réseaux de Pétri"); 
+		texte3.setFont(font1b);
+		panneltexte3.add(texte3);
+		pannel22.add(panneltexte3); 
+
+		JPanel pannelbis1 = new JPanel();
+		reseau1a = new JButton("Charger sans graphe");
+		reseau1a.addActionListener(this); 
+		pannelbis1.add(reseau1a); 
+		reseau1b = new JButton("Charger avec graphe");
+		reseau1b.addActionListener(this); 
+		pannelbis1.add(reseau1b); 
+		pannel22.add(pannelbis1);
+		
+		JPanel pannelbis2 = new JPanel();
+		reseau2 = new JButton("Charger"); 
+		reseau2.addActionListener(this); 
+		pannelbis2.add(reseau2); 
+		pannel22.add(pannelbis2); 
+
+		JPanel pannelbis3 = new JPanel();
+		reseau3 = new JButton("Charger"); 			
+		reseau3.addActionListener(this); 
+		pannelbis3.add(reseau3);
+		pannel22.add(pannelbis3); 
+
+		pannel2.add("Center", pannel22);
+		pannelBase.add("Center", pannel2);
+
+		onglet1.add(pannelBase);
+
+//////////////////////////////////////////////////////////////////
+
+		// onglet2 pour traces
+		JPanel onglet2 = new JPanel(); 
+		onglet2.setPreferredSize(new Dimension(largeur, hauteur));
+		onglet2.setLayout(new BorderLayout());
+		onglets.addTab("<html><font size=\"4\">Chargement des traces</font></html>", onglet2); 
+
+		JPanel haut = new JPanel();
+		haut.setLayout(new GridLayout(3,1));
+		JPanel haut2 = new JPanel();
+		JLabel lab1 = new JLabel("<html>Pour <b>charger un fichier de traces</b>, cliquez sur le bouton : </html>"); 
+		lab1.setFont(font1);
+		haut2.add(lab1);
+		trace = new JButton("Charger un fichier de traces"); 
+		trace.addActionListener(this); 
+		haut2.add(trace);
+		haut.add(haut2);
+		JPanel haut3 = new JPanel();
+		JLabel lab2 = new JLabel("<html><center>Pour <b>construire</b> ou <b>modifier</b> une trace, choisissez dans l'ordre souhaité les actions de la liste de gauche et faites-les glisser dans la fenêtre de droite. <br/>Pour <b>supprimer</b> un élément de trace, choisissez l'action dans la liste de droite et cliquez sur la touche SUPPR du clavier.</center></html>") ;lab2.setFont(font1);
+		haut3.add(lab2);
+		haut.add(haut3);
+		JPanel haut4 = new JPanel();
+		haut4.setLayout(new GridLayout(1,2));
+		JPanel haut41 = new JPanel();
+		JLabel lab3 = new JLabel("<html><center>Actions de jeu possibles</center></html>");lab3.setFont(font1b);
+		haut41.add(lab3);
+		haut4.add(haut41);
+		JPanel haut42 = new JPanel();
+		JLabel lab4 = new JLabel("<html><center>Fichier de traces : détails des actions réalisées</center></html>");lab4.setFont(font1b);
+		haut42.add(lab4);
+		haut4.add(haut42);
+		haut.add(haut4);
+		onglet2.add("North", haut);
+
+		JPanel pannelactions = new JPanel();
+		// création de la liste1, liste d'origine des actions possibles
+		JPanel j1 = new JPanel();
+		model1 = new DefaultListModel();
+		liste_actions =new JList(model1);
+        liste_actions.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        liste_actions.setDragEnabled(true);
+		JScrollPane scrollPane = new JScrollPane(liste_actions);
+        scrollPane.setPreferredSize(new Dimension(500,500));
+		j1.add(scrollPane);
+		pannelactions.add(j1);
+
+		// création de la liste2, liste de destination des éléments de trace
+		JPanel j2 = new JPanel();
+		model2 = new DefaultListModel();
+		liste_actions_realisees = new JList(model2);
+		liste_actions_realisees.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		JScrollPane scrollPane1 = new JScrollPane(liste_actions_realisees);
+		scrollPane1.setPreferredSize(new Dimension(500,500));
+		liste_actions_realisees.setDragEnabled(true);
+		liste_actions_realisees.setDropMode(DropMode.INSERT);
+		liste_actions_realisees.setTransferHandler(new ListTransferHandler());
+		liste_actions_realisees.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {
+				// System.out.println("Touche pressée : " + e.getKeyCode());
+				model2.remove(liste_actions_realisees.getSelectedIndices()[0]);
+				}
+			public void keyReleased(KeyEvent e) {}
+			public void keyTyped(KeyEvent e) { }
+			} );
+		j2.add(scrollPane1);
+		pannelactions.add(j2);
+
+		onglet2.add("Center", pannelactions);
+	
+		// copie_traces : JList de maintien de toutes les informations
+		model2bis = new DefaultListModel();
+		// copie_traces = new JList(model2bis);	
+
+/////////////////////////////////////////////////////////////////
+
+		// onglet3 pour analyse	
+		JPanel onglet3 = new JPanel(); 
+ 		onglet3.setLayout(new BorderLayout());	
+		onglet3.setPreferredSize(new Dimension(largeur, hauteur));
+		onglets.addTab("<html><font size=\"4\">Stratégie d'analyse, analyse</font></html>", onglet3); 
+		
+		JPanel pannelhaut = new JPanel();
+		pannelhaut.setLayout(new GridLayout(2,3));
+		JPanel un = new JPanel();
+		analyse1 = new JButton("Analyser toutes les actions");
+		analyse1.addActionListener(this);
+		un.add(analyse1);
+		pannelhaut.add(un);
+		
+		JPanel deux = new JPanel();
+		analyse2 = new JButton("Exporter au format Graphml");
+		analyse2.addActionListener(this);
+		deux.add(analyse2);
+		pannelhaut.add(deux);
+		
+		JPanel trois = new JPanel();
+		analyse3 = new JButton("Exporter les labels");
+		analyse3.addActionListener(this);
+		trois.add(analyse3);
+		pannelhaut.add(trois);
+		
+		JPanel aux1 = new JPanel();
+		JLabel t1 = new JLabel("Compte-rendu d'analyse");t1.setFont(font1);
+		aux1.add(t1);
+		pannelhaut.add(aux1);
+		JPanel aux2 = new JPanel();
+		JLabel t2 = new JLabel("Actions analysées"); t2.setFont(font1);
+		aux2.add(t2);
+		pannelhaut.add(aux2);
+		JPanel aux3 = new JPanel();
+		JLabel t3 = new JLabel("Labels correspondants"); t3.setFont(font1);
+		aux3.add(t3);
+		pannelhaut.add(aux3);		
+		onglet3.add("North", pannelhaut);
+
+		JPanel pannelbas = new JPanel();
+		pannelbas.setLayout(new GridLayout(1,3));
+		JPanel aux4 = new JPanel();
+		Canvas cv = new Canvas();
+		cv.setBackground(Color.WHITE);
+		cv.setPreferredSize(new Dimension(350,500));
+		aux4.add(cv);
+		pannelbas.add(aux4);
+		
+		JPanel aux5 = new JPanel();
+		model3 = new DefaultListModel();
+		liste_actions_analysees =new JList(model3);
+        // liste_actions.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        // liste_actions.setDragEnabled(true);
+		JScrollPane scrollPane3 = new JScrollPane(liste_actions_analysees);
+        scrollPane3.setPreferredSize(new Dimension(350,500));
+		aux5.add(scrollPane3);
+		pannelbas.add(aux5);
+		
+		JPanel aux6 = new JPanel();
+		model4 = new DefaultListModel();
+		liste_labels =new JList(model4);
+		JScrollPane scrollPane4 = new JScrollPane(liste_labels);
+        scrollPane4.setPreferredSize(new Dimension(350,500));
+		aux6.add(scrollPane4);
+		pannelbas.add(aux6);
+		
+		onglet3.add("Center", pannelbas);
+		
+//////////////////////////////////////////////////////////////////
+
+		// onglet4 pour débuggage
+		JPanel onglet4 = new JPanel(); 
+		JLabel titreOnglet4 = new JLabel("Débuggage"); 
+		onglet4.add(titreOnglet4); 
+		onglet4.setPreferredSize(new Dimension(largeur, hauteur));
+		onglets.addTab("<html><font size=\"4\">Débuggage</font></html>", onglet4); 
+
+/////////////////////////////////////////////////////////////////
+
+		onglets.setOpaque(true); 
+		pannel.add(onglets); 
+		getContentPane().add(pannel); 
+		setVisible(true); 
+		} 
+
+//////////////////////////////////////////////////////////////////
+
+	public void actionPerformed(ActionEvent e) { 
+		SelectionFichier sf ;
+		Object source = e.getSource(); 
+		if (source==bouton1) {System.out.println("couverture"); type="couverture" ; } 
+		else if (source==bouton2) {System.out.println("accessibilité"); type = "accessibilité";} 
+		else if (source==bouton1a) {System.out.println("stratégie OU"); strategie="OU";}
+		else if (source==bouton1b) {System.out.println("stratégie ET");strategie="ET";}
+		else if (source==bouton1c) {System.out.println("stratégie FIRST");strategie="FIRST";}
+		
+		else if(source == reseau1a){ System.out.println("Charger un réseau complet sans graphe.");
+			model1.removeAllElements();
+			model2.removeAllElements();	
+			sf = new SelectionFichier();
+			fullPnName = sf.getNomFichier() ; 
+			System.out.println("fichier de réseau choisi : " + fullPnName);
+			if (type.equalsIgnoreCase("accessibilité")) {
+				fullPn = new PetriNet(false, AccessibleGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+				}
+			else if (type.equalsIgnoreCase("couverture")) {	// couverture	
+				if (strategie.equalsIgnoreCase("OU")) fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+				else if (strategie.equalsIgnoreCase("ET")) fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_AND);
+				else fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_FIRST); 
+				}
+			long stamp = System.currentTimeMillis();
+			try {
+				fullPn.loadPetriNet(fullPnName);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			//System.out.println("full graph size : "+fullPn.getGraph().getAllMarkings().size() + " " + (System.currentTimeMillis()-stamp));
+			for (ITransition tr : fullPn.getTransitions()) {
+					model1.addElement(tr);
+				}
+			reseau1a.setBackground(Color.CYAN);
+ 			} 
+		
+		else if(source == reseau1b){ 
+			System.out.println("Charger un réseau complet avec graphe."); 
+			model1.removeAllElements();
+			model2.removeAllElements();
+			sf = new SelectionFichier();
+			fullPnName = sf.getNomFichier() ; 
+			System.out.println("fichier de réseau choisi : " + fullPnName);
+			
+			if (type.equalsIgnoreCase("accessibilité")) 
+				fullPn = new PetriNet(true, AccessibleGraph.TYPE, CoverabilityGraph.STRATEGY_OR);			
+			else // couverture
+				fullPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+			long stamp = System.currentTimeMillis();
+			try {
+				fullPn.loadPetriNet(fullPnName);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			for (ITransition tr : fullPn.getTransitions()) {
+					model1.addElement(tr);
+				} 
+			reseau1b.setBackground(Color.CYAN);
+			} 
+		
+		else if(source == reseau2){ 
+			System.out.println("Charger un réseau de Petri filtré."); 
+			sf = new SelectionFichier();
+			filteredPnName = sf.getNomFichier() ; 
+			// charger le fichier par IPetriNet - loadPetriNet()
+			System.out.println("fichier de réseau filtré choisi : " + filteredPnName);	
+			
+			filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+			try {
+				filteredPn.loadPetriNet(filteredPnName);
+				}
+			catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				}	
+			// System.out.println("filtered graph size : "+filteredPn.getGraph().getAllMarkings().size() + " " + (System.currentTimeMillis()-stamp));
+			reseau2.setBackground(Color.CYAN);
+			} 
+		
+		else if(source == reseau3){ 
+			System.out.println("Charger les spécificités des réseaux de Pétri."); 
+			features = new Features();
+			sf = new SelectionFichier();
+			featuresName = sf.getNomFichier() ; 
+			// charger le fichier 
+			System.out.println("fichier de spécificités choisi : " + featuresName);	
+			features.loadFile(featuresName);
+			System.out.println("Ligne 442 : " + features.getSystemTransitions());
+			System.out.println("Ligne 443 : " +features.getEndLevelTransitions());
+			reseau3.setBackground(Color.CYAN);
+			}
+		
+		else if (source==trace){ 
+			System.out.println("Charger un fichier de traces.");
+			model2.removeAllElements();	
+			sf = new SelectionFichier();
+			traceName = sf.getNomFichier() ; 
+			System.out.println("fichier de traces choisi : " + traceName);	
+			traces = new Traces();
+			traces.loadFile(traceName);
+			// value va pour sauvegarder les informations complètes, avec tous les attributs des éléments de trace chargés
+			value = new ArrayList<ITrace>();
+			copie_traces = new Traces();
+			for (ITrace tr : traces.getTraces()) { // on parcourt les traces chargées
+				System.out.println(tr);
+				System.out.println(tr.getAction());
+				//pour affichage : l'action seulement
+				model2.addElement(tr.getAction());
+				// mais pour mémorisation, tous les attributs :
+				value.add(tr);
+				}
+			trace.setBackground(Color.CYAN);
+			// copie_traces : sauvegarde des informations complètes sur les éléments de trace chargés
+			copie_traces.setTraces(value);			
+			nb1 = value.size(); 
+			System.out.println("fichier de traces après chargement");
+			for (int k = 0 ; k < nb1 ; k++) System.out.println("en pos " + k + " : "+ value.get(k));
+ 			}
+		
+		else if (source==suppression) {
+			System.out.println("Supprimer.");
+			int indice = liste_actions_realisees.getSelectedIndices()[0];
+			if (indice != -1) model2.remove(indice);
+			}
+		
+		else if (source==analyse1) {
+			System.out.println("Analyser.");
+			// taille de la trace éventuellement complétée
+			nb2 = liste_actions_realisees.getModel().getSize();	
+			System.out.println("nb1 trace d'origine "+nb1 + " nb2 trace après manipulations "+nb2);
+			
+			// reconstruire les traces: on crée un nouveau value1 qui va contenir la reconstruction des traces ligne à ligne
+			value1 = new ArrayList<ITrace>();
+			// on le reconstruit
+			// on lit les transitions une à une
+			for (int k = 0 ; k < nb2 ; k++) {
+				// on lit une ligne de la liste_actions_realisees (trace chargée ou complétée ou reconstruite)
+				String action = liste_actions_realisees.getModel().getElementAt(k).toString();
+				// System.out.println("action : " + action);
+				// existait-elle dans la liste de traces d'origine ? 
+				for (int l = 0 ; l < nb1 ; l++) {
+					if (value.get(l).toString().indexOf(action) !=-1) {
+						// elle existait, on recopie la ligne complète
+						value1.add(value.get(l));
+						System.out.println("ICIIIII transfert de " + value.get(l) + " vers value1");
+						break;
+					}
+					else {
+						// elle n'existait pas dans la trace chargée, donc on crée une nouvelle ligne
+						// mais d'abord il faut rechercher l'origine de l'action : player ou system
+						String origine = "player"; // par défaut
+						ArrayList<String> proprietes=features.getSystemTransitions(); // ensemble des transitions système
+						for (int m = 0 ; m < proprietes.size(); m++) {
+							// System.out.println("propriete : " + proprietes.get(m));
+							if (proprietes.get(m).indexOf(action) != -1) {
+								// si l'action est une action système
+								origine = "system" ;
+								System.out.println("action " + action + " est d'origine system");
+								break;
+								}
+							}			
+						nouvelletrace = new Trace(action, "manual", origine, false);
+						value1.add(nouvelletrace);
+						break ;
+						}
+					}		
+				}
+			// 	nouveau fichier de traces : on vide l'ancien traces et on transfère value1 dans traces
+			traces = new Traces();			
+			traces.setTraces(value1);
+			System.out.println("fichier de traces après re-création");
+			for (int k = 0 ; k < value1.size() ; k++) System.out.println("en pos " + k + " : "+ value1.get(k));
+			
+			// le traitement 
+			Logger monLog = Logger.getLogger(Main.class.getName());
+			monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
+			monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
+			ConsoleHandler ch = new ConsoleHandler();
+			ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau &Ge; INFO
+			monLog.addHandler(ch);
+			Labeling_V9 algo = new Labeling_V9(monLog, false);
+			algo.setCompletePN(fullPn);
+			algo.setFilteredPN(filteredPn);
+			algo.setFeatures(features);
+			try {
+				algo.label(traces);
+			} catch (Exception e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+			
+			// traces and labels envoyés dans l'interface
+				model3.removeAllElements();	
+				model4.removeAllElements();				
+				for (ITrace tr : traces.getTraces()){
+					// System.out.println(tr.getAction()+ " "+tr.getLabels());	
+					model3.addElement(tr.getAction());
+					model4.addElement(tr.getLabels());
+				}
+				analyse1.setBackground(Color.CYAN);
+			
+			}
+		}	
+	}
