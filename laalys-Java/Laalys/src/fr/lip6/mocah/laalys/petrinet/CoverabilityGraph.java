@@ -114,9 +114,12 @@ public class CoverabilityGraph extends AccessibleGraph {
 		}
 
 		// init time
+		int cpt = 0;
 		while (toExplore.size() != 0)
 		{
+			System.out.println(cpt+" "+toExplore.size());
 			IMarking mark = toExplore.remove(toExplore.size() - 1);
+			cpt++;
 			// synchronisation du réseau de pétri sur le marquage en cours de traitement
 			pn.setCurrentMarkings(mark);
 			String code = mark.getCode();
