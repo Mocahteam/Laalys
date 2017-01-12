@@ -174,7 +174,7 @@ public class Traces implements ITraces {
 		Document export = null;
 		if (builder != null){
 			export = builder.newDocument();
-			Element racine = (Element) export.createElement("transitions");
+			Element racine = (Element) export.createElement("map");
 			for (ITrace tr : _traces)
 				racine.appendChild(tr.toXML(export));
 			export.appendChild(racine);

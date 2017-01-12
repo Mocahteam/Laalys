@@ -53,8 +53,8 @@ public class PetriNet implements IPetriNet {
 	private Document xml;
 	
 	/**
-	 * Si "ComputeGraph" est initialisé à "true", le graphe des états possibles atteingnable est généré. En fonction du paramètre "kindOfGraph"
-	 * qui peut avoir comme valeur AccessibilityGraph::TYPE|CoverabilityGraph::TYPE. Le graphe construit sera soit un graphe d'accessibilité,
+	 * Si "ComputeGraph" est initialisé à "true", le graphe des états possibles atteignables est généré. En fonction du paramètre "kindOfGraph"
+	 * qui peut avoir comme valeur AccessibleGraph.TYPE|CoverabilityGraph::TYPE. Le graphe construit sera soit un graphe d'accessibilité,
 	 * soit un graphe de couverture. Dans le cas d'un graphe de couverture, le dernier paramètre "strategy" permet de définir la stratégie de
 	 * parcours du graphe en cas d'ambigüité sur l'identifiaction d'un marquage dans le graphe (voir commentaire du constructeur de la classe
 	 * CoverabilityGraph pour plus de détail).
@@ -230,12 +230,12 @@ public class PetriNet implements IPetriNet {
 					initializeTokens(plId, initialMarking);
 					break;
 				
-				case "t": //it s a transtion so create it
+				case "t": //it s a transition so create it
 					String trName = splittedLine[3];
 					//there is no id given so we generate one
 					String trId = "transition_" + transitionCpt;
 					transitionIdByName.put(trName, trId);
-					//increase the cpt of transtions
+					//increase the cpt of transitions
 					transitionCpt++;
 					createTransition(trId, trName);
 					break;
