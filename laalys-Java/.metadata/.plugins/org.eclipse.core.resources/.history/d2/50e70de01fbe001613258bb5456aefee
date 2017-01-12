@@ -1,0 +1,117 @@
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import fr.lip6.mocah.laalys.features.Features;
+import fr.lip6.mocah.laalys.features.IFeatures;
+import fr.lip6.mocah.laalys.labeling.Labeling_V9;
+import fr.lip6.mocah.laalys.labeling.PathState;
+import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
+import fr.lip6.mocah.laalys.petrinet.IPetriNet;
+import fr.lip6.mocah.laalys.petrinet.PetriNet;
+import fr.lip6.mocah.laalys.traces.ITrace;
+import fr.lip6.mocah.laalys.traces.ITraces;
+import fr.lip6.mocah.laalys.traces.Traces;
+
+public class Main {
+
+	public static void main(String[] args) {
+//		String fullPnName = "murDeGlace.pnml";
+//		String filteredPnName = "murDeGlace_contraintManuellement.pnml";
+//		String featuresName = "murDeGlace.xml";
+//		String traceName = "expe_paris_montagne\\MurDeGlace\\Vivianier.xml";
+		String fullPnName = "Thermometer.pnml";
+		String filteredPnName = "Thermometer.pnml";
+		String featuresName = "Thermometer.xml";
+		String traceName = "expe_paris_montagne\\Thermometer\\Vivianier.xml";
+		
+		// Chargement du Rdp Complet
+		IPetriNet fullPn = new PetriNet(
+, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+		long stamp = System.currentTimeMillis();
+		try {
+			fullPn.loadPetriNet("C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\completeNet\\"+fullPnName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//System.out.println("full graph size : "+fullPn.getGraph().getAllMarkings().size() + " " + (System.currentTimeMillis()-stamp));
+
+		stamp = System.currentTimeMillis();
+		// Chargement du Rdp Filtré
+		IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+		try {
+			filteredPn.loadPetriNet("C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\filtredNet\\"+filteredPnName);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("filtered graph size : "+filteredPn.getGraph().getAllMarkings().size() + " " + (System.currentTimeMillis()-stamp));
+
+		// Chargement des Spécificités
+		
+		IFeatures features = new Features();
+		features.loadFile("C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\specifTransition\\"+featuresName);
+//		System.out.println(features.getSystemTransitions());
+//		System.out.println(features.getEndLevelTransitions());
+
+		// Chargement des traces
+		ITraces traces = new Traces();
+		traces.loadFile("C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\trace\\"
+				+ ""+traceName);
+
+		Logger monLog = Logger.getLogger(Main.class.getName());
+		monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
+		monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
+		ConsoleHandler ch = new ConsoleHandler();
+		ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau &Ge; INFO
+		monLog.addHandler(ch);
+		Labeling_V9 algo = new Labeling_V9(monLog, false);
+		algo.setCompletePN(fullPn);
+		algo.setFilteredPN(filteredPn);
+		algo.setFeatures(features);
+		try {
+			algo.label(traces);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// print traces and labels
+		for (ITrace tr : traces.getTraces()){
+			System.out.println(tr.getAction()+ " "+tr.getLabels());
+		}
+		
+		/*// Test Pour Mathieu
+		System.out.println("Chargement du RdP et calcul de son graphe de couverture...");
+		IPetriNet pn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+		try {
+			long stamp = System.currentTimeMillis();
+			pn.loadPetriNet("C:\\Users\\mmuratet\\Google Drive\\Recherche\\LIP6\\SuiviEtudiants\\Mathieu\\testModelisation4.pnml");
+			System.out.println("temps de calcul : "+(System.currentTimeMillis()-stamp)+"ms, pour un graphe de couverture d'une taille de : "+pn.getAllPossibleMarkings().size()+" états.");
+//			System.out.println("Exportation du graphe de couverture...");
+//			ArrayList<String> ends = new ArrayList<String>();
+//			ends.add("FinMission");
+//			PetriNet.exportToGraphml(	"C:\\Users\\mmuratet\\Downloads\\testModelisation4.graphml",
+//										null, pn, new ArrayList<IPetriNet>(), new ArrayList<PathState> (), ends);
+//			System.out.println("... exportation du graphe de couverture terminée.");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+	}
+
+}

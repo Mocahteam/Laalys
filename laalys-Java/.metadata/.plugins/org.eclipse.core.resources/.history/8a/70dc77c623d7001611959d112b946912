@@ -1,0 +1,35 @@
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import fr.lip6.mocah.laalys.features.Features;
+import fr.lip6.mocah.laalys.features.IFeatures;
+import fr.lip6.mocah.laalys.labeling.Labeling_V9;
+import fr.lip6.mocah.laalys.labeling.PathState;
+import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
+import fr.lip6.mocah.laalys.petrinet.IPetriNet;
+import fr.lip6.mocah.laalys.petrinet.PetriNet;
+import fr.lip6.mocah.laalys.traces.ITrace;
+import fr.lip6.mocah.laalys.traces.ITraces;
+import fr.lip6.mocah.laalys.traces.Traces;
+
+public class Main {
+// transférer le contenu des chargements dans InterfaceLaalys.java ; ne garder que l'appel à InterfaceLaalys()
+
+	public static void main(String[] args) {	
+		InterfaceLaalys ll = new InterfaceLaalys();		
+		}
+	}

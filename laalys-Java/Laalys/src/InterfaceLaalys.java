@@ -41,7 +41,7 @@ import fr.lip6.mocah.laalys.labeling.PathState;
 
 class InterfaceLaalys extends JFrame implements ActionListener
 { 
-	// répertoire de chargement des fichiers du réseau de Patri
+	// répertoire de chargement des fichiers du réseau de Petri
 	String adressereseau = "C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples";
 	// répertoire de sauvegarde de nouveaux fichiers de traces
 	String adress="C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\trace";

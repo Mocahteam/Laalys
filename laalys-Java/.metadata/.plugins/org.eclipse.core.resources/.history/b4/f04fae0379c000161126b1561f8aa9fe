@@ -1,0 +1,66 @@
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Vector;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import fr.lip6.mocah.laalys.features.Features;
+import fr.lip6.mocah.laalys.features.IFeatures;
+import fr.lip6.mocah.laalys.labeling.Labeling_V9;
+import fr.lip6.mocah.laalys.labeling.PathState;
+import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
+import fr.lip6.mocah.laalys.petrinet.IPetriNet;
+import fr.lip6.mocah.laalys.petrinet.PetriNet;
+import fr.lip6.mocah.laalys.traces.ITrace;
+import fr.lip6.mocah.laalys.traces.ITraces;
+import fr.lip6.mocah.laalys.traces.Traces;
+
+public class Main {
+// transférer le contenu des chargements dans InterfaceLaalys.java ; ne garder que l'appel à InterfaceLaalys()
+
+	public static void main(String[] args) {
+		/*String fullPnName = "Thermometer.pnml";
+		String filteredPnName = "Thermometer.pnml";
+		String featuresName = "Thermometer.xml";
+		String traceName = "expe_paris_montagne\\Thermometer\\Vivianier.xml";*/
+		
+		InterfaceLaalys ll = new InterfaceLaalys();
+
+		
+		// le traitement à transférer
+		/* Logger monLog = Logger.getLogger(Main.class.getName());
+		monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
+		monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
+		ConsoleHandler ch = new ConsoleHandler();
+		ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau &Ge; INFO
+		monLog.addHandler(ch);
+		Labeling_V9 algo = new Labeling_V9(monLog, false);
+		algo.setCompletePN(fullPn);
+		algo.setFilteredPN(filteredPn);
+		algo.setFeatures(features);
+		try {
+			algo.label(traces);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
+		// print traces and labels à envoyer dans l'interface
+		/*for (ITrace tr : traces.getTraces()){
+			System.out.println(tr.getAction()+ " "+tr.getLabels());
+		}*/
+		
+	}
+
+}
