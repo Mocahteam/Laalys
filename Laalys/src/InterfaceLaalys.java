@@ -42,13 +42,13 @@ import fr.lip6.mocah.laalys.labeling.PathState;
 class InterfaceLaalys extends JFrame implements ActionListener
 { 
 	// répertoire de chargement des fichiers du réseau de Petri
-	String adressereseau = "C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples";
+	String adressereseau = "C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples";
 	// répertoire de sauvegarde de nouveaux fichiers de traces
-	String adress="C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\trace";
+	String adress="C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples\\trace";
 	// répertoire de sauvegarde des fichiers de traces labellisees
-	String adresselabel="C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\trace-labellisee";
+	String adresselabel="C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples\\trace-labellisee";
 	// répertoire de sauvegarde des fichiers de traces graphml
-	String adressegraphml="C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples\\trace-graphml";
+	String adressegraphml="C:\\Users\\mmuratet\\Documents\\INSHEA\\Recherche\\Mocah\\SVN_Mocah\\laalys-Java\\Laalys\\bin\\exemples\\trace-graphml";
 	
 	
 	// dimensions de la fenêtre
@@ -420,8 +420,19 @@ class InterfaceLaalys extends JFrame implements ActionListener
 	public void actionPerformed(ActionEvent e) { 
 		SelectionFichier sf ;
 		Object source = e.getSource(); 
-		if (source==bouton1) {System.out.println("couverture"); type="couverture" ; } 
-		else if (source==bouton2) {System.out.println("accessibilité"); type = "accessibilité";} 
+		if (source==bouton1) {
+			System.out.println("couverture"); type="couverture" ;
+			bouton1a.getModel().setEnabled(true);
+			bouton1b.getModel().setEnabled(true);
+		} 
+		else if (source==bouton2) {
+			System.out.println("accessibilité"); type = "accessibilité";
+			// interdire le bouton 1b
+			bouton1b.getModel().setEnabled(false);
+			// activer le bouton 1a automatiquement
+			bouton1a.setSelected(true);
+			strategie = "OU";
+		} 
 		else if (source==bouton1a) {System.out.println("stratégie FIRST, en fait, OU"); strategie="OU";}
 		else if (source==bouton1b) {System.out.println("stratégie ALL, en fait, ET");strategie="ET";}
 		// else if (source==bouton1c) {System.out.println("stratégie FIRST");strategie="FIRST";}
