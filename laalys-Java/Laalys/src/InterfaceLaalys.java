@@ -550,7 +550,11 @@ class InterfaceLaalys extends JFrame implements ActionListener
 		else if (source == trac) {
 			System.out.println("Enregistrer la trace.");
 			// nombre d'actions possibles
-			nb1 = value.size(); 
+			try{
+				nb1 = value.size(); 
+			} catch(Exception et){
+				nb1 = 0;
+			}
 			// taille de la trace éventuellement complétée
 			nb3 = liste_actions_realisees.getModel().getSize();	
 			if (nb3 != 0) {
