@@ -392,7 +392,7 @@ public class Labeling_V9 implements ILabeling {
 				} else { // sinon  <=> M'C !c GF
 					if ( this.logAll ) logger.log(Level.INFO, "M'C !c GF");
 					// si M'C c GA
-					if (this.artificialRdp.contains(this.MpC_subset)) {
+					if (this.artificialRdp != null && this.artificialRdp.contains(this.MpC_subset)) {
 						if ( this.logAll ) logger.log(Level.INFO, "M'C c GA");
 						checkBadChoicesBeing(this.artificialRdp);
 					} else { // sinon  <=> M'C !c GA

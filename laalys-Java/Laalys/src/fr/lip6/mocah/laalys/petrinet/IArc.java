@@ -9,4 +9,5 @@ public interface IArc {
 	public INode getTarget();
 	public String getType();
 	public int getWeight();
+	public boolean Equals (IArc compWith);
 }

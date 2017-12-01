@@ -14,12 +14,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import fr.lip6.mocah.laalys.labeling.PathState;
 import fr.lip6.mocah.laalys.traces.ITrace;
+import fr.lip6.mocah.laalys.traces.ITraces;
 
 /**
  * ...
@@ -48,9 +50,9 @@ public class PetriNet implements IPetriNet {
 	 */
 	private DocumentBuilder builder = null;
 	/**
-	 * Le contenu de la trace en xml
+	 * Le contenu du RdP en xml
 	 */
-	private Document xml;
+	public Document xml;
 	
 	/**
 	 * Si "ComputeGraph" est initialisé à "true", le graphe des états possibles atteignables est généré. En fonction du paramètre "kindOfGraph"
@@ -98,7 +100,7 @@ public class PetriNet implements IPetriNet {
 		int i;
 		if (enabledTransition(t))
 		{
-			for (IArc arcIn : t.getArcsIn())
+			for (IArc arcIn : t.getArcsIn()) 
 			{
 				if (arcIn.getType().equals(Arc.REGULAR_ARC))
 				{
@@ -268,6 +270,7 @@ public class PetriNet implements IPetriNet {
 		}
 		return null;
 	}
+	//////////////////////////////////////////////////
 	
 	protected void createPetriNetFromPNMLFile(String url) throws Exception
 	{
@@ -317,10 +320,10 @@ public class PetriNet implements IPetriNet {
 				initializeTokens(id, nbTokens);
 			}
 			
-			NodeList transtitionsXML = xml.getElementsByTagName("transition");
+			NodeList transitionsXML = xml.getElementsByTagName("transition");
 			HashSet<String> transtitionNameById = new HashSet<String> ();
-			for (int i = 0 ; i < transtitionsXML.getLength() ; i++ ){
-				Node transitionXML = transtitionsXML.item(i);
+			for (int i = 0 ; i < transitionsXML.getLength() ; i++ ){
+				Node transitionXML = transitionsXML.item(i);
 				String id = transitionXML.getAttributes().getNamedItem("id").getNodeValue();
 				String name = id;
 				// recherche et enregistrement du nom de cette transition
@@ -395,6 +398,46 @@ public class PetriNet implements IPetriNet {
 		else
 			throw new Exception("A place with \"" + id + "\" id, already exists");
 	}
+
+	@Override
+	public void removePlace(String id) throws Exception {
+		// check if a place with this id is already stored
+		if (refPlaceInfoById.containsKey(id))
+		{
+			// get place id
+			int ref = refPlaceInfoById.get(id); 
+			
+			PlaceInfo place = (PlaceInfo) placesInfo.get(ref);
+			// Remove arcs references from Node connected to this place
+			for (IArc arcInFromPlace : place.getArcsIn()){
+				Transition tr = (Transition) arcInFromPlace.getSource();
+				ArrayList<IArc> arcsOutFromTransition = tr.getArcsOut();
+				for (int i = 0 ; i < arcsOutFromTransition.size() ; i++){
+					if (arcInFromPlace.Equals(arcsOutFromTransition.get(i))){
+						arcsOutFromTransition.remove(i);
+						break;
+					}	
+				}
+			}
+			for (IArc arcOutFromPlace : place.getArcsOut()){
+				Transition tr = (Transition) arcOutFromPlace.getTarget();
+				ArrayList<IArc> arcsInFromTransition = tr.getArcsIn();
+				for (int i = 0 ; i < arcsInFromTransition.size() ; i++){
+					if (arcOutFromPlace.Equals(arcsInFromTransition.get(i))){
+						arcsInFromTransition.remove(i);
+						break;
+					}	
+				}
+			}
+
+			placesInfo.remove(ref);
+			currentMarking.removeTokenAt(ref);
+			initialMarking.removeTokenAt(ref);
+			this.setPlaces(placesInfo); // In order to sync the HashMap
+		}
+		else
+			throw new Exception("A place with \"" + id + "\" id, doesn't exist.");
+	}
 	
 	public void createTransition(String id, String name) throws Exception
 	{
@@ -410,6 +453,45 @@ public class PetriNet implements IPetriNet {
 		}
 		else
 			throw new Exception("A transition with \"" + id + "\" id, already exists");
+	}
+
+	@Override
+	public void removeTransition(String id) throws Exception {
+		// check if a transition with this id is already stored
+		if (refTransitionById.containsKey(id))
+		{
+			// get transition id
+			int ref = refTransitionById.get(id);
+			
+			Transition transition = (Transition) transitions.get(ref);
+			// Remove arcs references from Node connected to this transition
+			for (IArc arcInFromTransition : transition.getArcsIn()){
+				PlaceInfo place = (PlaceInfo) arcInFromTransition.getSource();
+				ArrayList<IArc> arcsOutFromPlace = place.getArcsOut();
+				for (int i = 0 ; i < arcsOutFromPlace.size() ; i++){
+					if (arcInFromTransition.Equals(arcsOutFromPlace.get(i))){
+						arcsOutFromPlace.remove(i);
+						break;
+					}	
+				}
+			}
+			for (IArc arcOutFromTransition : transition.getArcsOut()){
+				PlaceInfo place = (PlaceInfo) arcOutFromTransition.getTarget();
+				ArrayList<IArc> arcsInFromPlace = place.getArcsIn();
+				for (int i = 0 ; i < arcsInFromPlace.size() ; i++){
+					if (arcOutFromTransition.Equals(arcsInFromPlace.get(i))){
+						arcsInFromPlace.remove(i);
+						break;
+					}	
+				}
+			}
+	
+			transitions.remove(ref);
+			this.setTransitions(transitions); // In order to sync the HashMap
+		}
+		else
+			throw new Exception("A transition with \"" + id + "\" id, doesn't exist.");
+		
 	}
 	
 	/** Check if a transition could be fired in the current state of the petri net */
@@ -1408,5 +1490,92 @@ public class PetriNet implements IPetriNet {
 		refTransitionById = new HashMap<String, Integer>();
 		for (int i = 0 ; i < transitions.size() ; i++)
 			refTransitionById.put(transitions.get(i).getId(), i);
+	}
+
+	@Override
+	public void filterXMLWith(ITraces traces) {
+		boolean updated = false;
+		int trCpt = 0;
+		int plCpt = 0;
+		do{
+			updated = false;
+			NodeList transitionsXML = xml.getElementsByTagName("transition");
+			
+			for (int i = 0 ; i < transitionsXML.getLength() ; i++ ){
+				Node transitionXML = transitionsXML.item(i);
+				String transitionId = transitionXML.getAttributes().getNamedItem("id").getNodeValue();
+				String humanTransitionName = transitionId;
+				// look for human name
+				Node nameXML = getChildByName(transitionXML, "name");
+				if (nameXML != null){
+					Node nameContentXML = getChildByName(nameXML, "text");
+					if (nameContentXML != null){
+						humanTransitionName = nameContentXML.getTextContent();
+					}
+				}
+				boolean found = false;
+				for (ITrace trace : traces.getTraces()) {
+					if (humanTransitionName.equals(trace.getAction())){
+						found = true;
+						break;
+					}
+				}
+				if (!found) {
+					// Delete arcs linked with current transition
+					NodeList arcsXML = xml.getElementsByTagName("arc");
+					boolean updated2 = false;
+					do{
+						updated2 = false;
+						for (int j = 0 ; j < arcsXML.getLength() ; j++ ){
+							Node arcXML = arcsXML.item(j);
+							String source = arcXML.getAttributes().getNamedItem("source").getNodeValue();
+							String target = arcXML.getAttributes().getNamedItem("target").getNodeValue();
+							if (source.equals(transitionId) || target.equals(transitionId)){
+								arcXML.getParentNode().removeChild(arcXML);
+								updated2 = true;
+								System.out.println("Suppression de l'arc entre "+source+" et "+target);
+							}
+						}
+					}while(updated2);
+					// Now we can destroy transition
+					try {
+						transitionXML.getParentNode().removeChild(transitionXML);
+						updated = true;
+						trCpt++;
+						//xml.removeChild(transitionXML);
+						System.out.println("Suppression de la transition : "+transitionId);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+			}
+			// Destroy place not connected
+			NodeList placesXML = xml.getElementsByTagName("place");
+			for (int i = 0 ; i < placesXML.getLength() ; i++ ){
+				Node placeXML = placesXML.item(i);
+				String placeId = placeXML.getAttributes().getNamedItem("id").getNodeValue();
+				// Look for arcs connected to the place
+				boolean found = false;
+				NodeList arcsXML = xml.getElementsByTagName("arc");
+				for (int j = 0 ; j < arcsXML.getLength() ; j++ ){
+					Node arcXML = arcsXML.item(j);
+					String source = arcXML.getAttributes().getNamedItem("source").getNodeValue();
+					String target = arcXML.getAttributes().getNamedItem("target").getNodeValue();
+					if (source.equals(placeId) || target.equals(placeId)){
+						found = true;
+						break;
+					}
+				}
+				if (!found){
+					placeXML.getParentNode().removeChild(placeXML);
+					updated = true;
+					plCpt++;
+					System.out.println("Suppression de la place : "+placeId);
+				}
+			}
+		}while (updated);
+		System.out.println("Nb transitions suppr : "+trCpt);
+		System.out.println("Nb places suppr : "+plCpt);
 	}
 }

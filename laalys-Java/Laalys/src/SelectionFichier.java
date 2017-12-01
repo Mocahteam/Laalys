@@ -28,6 +28,9 @@ class SelectionFichier {
          
 			// récupération du fichier sélectionné
 			System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
-			return dialogue.getSelectedFile().toString();
+			if (dialogue.getSelectedFile() != null)
+				return dialogue.getSelectedFile().toString();
+			else
+				return "";
 		}
     }
