@@ -2,6 +2,10 @@ package fr.lip6.mocah.laalys.petrinet;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.Document;
+
+import fr.lip6.mocah.laalys.traces.ITraces;
+
 /**
  * ...
  * @author Mathieu Muratet
@@ -28,7 +32,11 @@ public interface IPetriNet {
 	
 	public void createPlace (String id, String name) throws Exception;
 	
+	public void removePlace (String id) throws Exception;
+	
 	public void createTransition (String id, String name) throws Exception;
+	
+	public void removeTransition (String id) throws Exception;
 	
 	/** Check if a transition could be fired in the current state of the petri net */
 	public boolean enabledTransition (ITransition t);
@@ -233,6 +241,8 @@ public interface IPetriNet {
 	public void setName (String str);
 	
 	public void setPlaces (ArrayList<IPlaceInfo> places);
-	
+
 	public void setTransitions (ArrayList<ITransition> trans);
+	
+	public void filterXMLWith (ITraces traces);
 }

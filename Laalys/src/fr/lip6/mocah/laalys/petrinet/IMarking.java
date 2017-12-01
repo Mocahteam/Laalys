@@ -48,6 +48,8 @@ public interface IMarking {
 	
 	public void setTokenAt (int i, int number);
 	
+	public void removeTokenAt (int i);
+	
 	/** "this" couvre STRICTEMENT "mark" ssi "this" couvre "mark" ET "this" n'est pas égal à "mark" */
 	public boolean strictlyCover (IMarking mark);
 }

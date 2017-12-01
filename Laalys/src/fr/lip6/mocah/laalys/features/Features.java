@@ -78,12 +78,12 @@ public class Features implements IFeatures {
 			for (int i = 0 ; i < transitionsList.getLength() ; i++ ){
 				NamedNodeMap attr = transitionsList.item(i).getAttributes();
 				// Vérifier si c'est une transition système
-				if (attr.getNamedItem("system").getNodeValue().equals("true")){
+				if (attr.getNamedItem("system").getNodeValue().toUpperCase().equals("TRUE")){
 					// Enregistrement de l'id de cette tansition dans le dictionnaire des actions systèmes
 					systems.add(attr.getNamedItem("id").getNodeValue());
 				}
 				// Vérifier si c'est une transition de fin de niveau
-				if (attr.getNamedItem("end").getNodeValue().equals("true")){
+				if (attr.getNamedItem("end").getNodeValue().toUpperCase().equals("TRUE")){
 					// Enregistrement de l'id de cette tansition dans le dictionnaire des actions de fin de niveau
 					ends.add(attr.getNamedItem("id").getNodeValue());
 				}

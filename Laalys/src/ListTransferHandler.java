@@ -1,14 +1,16 @@
 import javax.swing.*; 
 import java.awt.datatransfer.*;
-import javax.swing.JComponent;
+import java.util.List;
 
 //////////////////////////////////////////////////////////////////
 class ListTransferHandler extends TransferHandler {
-/* Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved. */
+/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/* Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved. */
     private int[] indices = null;
-    private int addIndex = -1; //Location where items were added
-    private int addCount = 0;  //Number of items added.
-            
+    private int dropIndice;
     /**
      * We only support importing strings.
      */
@@ -25,16 +27,16 @@ class ListTransferHandler extends TransferHandler {
      * Each line is separated by a newline.
      */
     protected Transferable createTransferable(JComponent c) {
-        JList list = (JList)c;
+        JList<String> list = (JList) c;
         indices = list.getSelectedIndices();
-        Object[] values = list.getSelectedValues();
+        List<String> values = list.getSelectedValuesList();
         
         StringBuffer buff = new StringBuffer();
 
-        for (int i = 0; i < values.length; i++) {
-            Object val = values[i];
+        for (int i = 0; i < values.size(); i++) {
+            Object val = values.get(i);
             buff.append(val == null ? "" : val.toString());
-            if (i != values.length - 1) {
+            if (i != values.size() - 1) {
                 buff.append("\n");
             }
         }
@@ -58,9 +60,10 @@ class ListTransferHandler extends TransferHandler {
         }
 
         JList list = (JList)info.getComponent();
-        DefaultListModel listModel = (DefaultListModel)list.getModel();
+        DefaultListModel<String> listModel = (DefaultListModel)list.getModel();
         JList.DropLocation dl = (JList.DropLocation)info.getDropLocation();
         int index = dl.getIndex();
+        dropIndice = index;
         boolean insert = dl.isInsert();
 
         // Get the string that is being dropped.
@@ -74,9 +77,6 @@ class ListTransferHandler extends TransferHandler {
         // Wherever there is a newline in the incoming data,
         // break it into a separate item in the list.
         String[] values = data.split("\n");
-        
-        addIndex = index;
-        addCount = values.length;
         
         // Perform the actual import.  
         for (int i = 0; i < values.length; i++) {
@@ -103,13 +103,16 @@ class ListTransferHandler extends TransferHandler {
         DefaultListModel listModel  = (DefaultListModel)source.getModel();
 
         if (action == TransferHandler.MOVE) {
+        	int nbElem = indices.length;
             for (int i = indices.length - 1; i >= 0; i--) {
-                listModel.remove(indices[i]);
+                //listModel.remove(indices[i]);
+            	if (indices[i] < dropIndice)
+            		listModel.remove(indices[i]);
+            	else
+            		listModel.remove(indices[i]+nbElem);
             }
         }
         
         indices = null;
-        addCount = 0;
-        addIndex = -1;
     }
 }

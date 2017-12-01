@@ -53,4 +53,11 @@ public class Arc implements IArc {
 	{
 		return weight;
 	}
+
+	public boolean Equals (IArc compWith){
+		return this.src.getId().equals(compWith.getSource().getId())
+				&& this.trg.getId().equals(compWith.getTarget().getId())
+				&& this.weight == compWith.getWeight()
+				&& this.type.equals(compWith.getType());
+	}
 }

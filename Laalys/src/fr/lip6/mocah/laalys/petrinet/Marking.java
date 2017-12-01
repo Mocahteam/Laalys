@@ -164,6 +164,18 @@ public class Marking implements IMarking {
 		}
 	}
 	
+	public void removeTokenAt (int i){
+		marking.remove(i);
+		// update the code
+		String[] tokens = code.split(":");
+		if (tokens.length > 0){
+			code = tokens[0];
+			for (int cpt = 1 ; cpt < tokens.length ; cpt++){
+				code += ":"+tokens[cpt];
+			}
+		}
+	}
+	
 	/** "this" couvre STRICTEMENT "mark" ssi "this" couvre "mark" ET "this" n'est pas égal à "mark" */
 	public boolean strictlyCover(IMarking mark)
 	{
