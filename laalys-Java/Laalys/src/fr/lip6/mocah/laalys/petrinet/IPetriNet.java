@@ -2,8 +2,6 @@ package fr.lip6.mocah.laalys.petrinet;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Document;
-
 import fr.lip6.mocah.laalys.traces.ITraces;
 
 /**

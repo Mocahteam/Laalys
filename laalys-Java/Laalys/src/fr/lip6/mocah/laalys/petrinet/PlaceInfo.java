@@ -2,10 +2,6 @@ package fr.lip6.mocah.laalys.petrinet;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 /**
  * ...
  * @author Mathieu Muratet

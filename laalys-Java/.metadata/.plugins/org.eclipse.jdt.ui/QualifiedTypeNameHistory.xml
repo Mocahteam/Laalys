@@ -9,4 +9,15 @@
 <fullyQualifiedTypeName name="javax.xml.transform.Result"/>
 <fullyQualifiedTypeName name="javax.xml.transform.Source"/>
 <fullyQualifiedTypeName name="javax.xml.transform.dom.DOMSource"/>
+<fullyQualifiedTypeName name="javax.swing.border.Border"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+<fullyQualifiedTypeName name="javax.swing.BorderFactory"/>
+<fullyQualifiedTypeName name="java.awt.Dimension"/>
+<fullyQualifiedTypeName name="java.awt.FlowLayout"/>
+<fullyQualifiedTypeName name="java.awt.BorderLayout"/>
+<fullyQualifiedTypeName name="javax.swing.UIManager"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="javax.swing.event.ListDataListener"/>
+<fullyQualifiedTypeName name="java.util.regex.Pattern"/>
+<fullyQualifiedTypeName name="java.awt.Component"/>
 </qualifiedTypeNameHistroy>

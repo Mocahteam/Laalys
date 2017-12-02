@@ -98,10 +98,6 @@ public class Labeling_V9 implements ILabeling {
 	 */
 	private IMarking MF = null;
 	/**
-	 * marquage du RdP complet avant franchissement de la transition
-	 */
-	private IMarking MC = null;
-	/**
 	 * marquage complet avant franchissement de la transition adapté au RdP filtré
 	 */
 	private IMarking MC_subset = null;
@@ -242,7 +238,6 @@ public class Labeling_V9 implements ILabeling {
 		
 		// enregistre les marquages courants
 		this.MF = this.filteredRdp.getCurrentMarkings().clone();
-		this.MC = this.completeRdp.getCurrentMarkings().clone();
 		this.MC_subset = PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp);
 		this.MpC = null;
 		this.MpC_subset = null;
