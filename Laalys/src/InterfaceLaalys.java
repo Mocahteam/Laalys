@@ -69,18 +69,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 	// réseau filtré, transitions, traces)
 	String adressereseau = "exemples";
 
-	// les répertoires de sauvegarde
-	// répertoire de sauvegarde des fichiers du réseau de Petri que l'on a
-	// filtrés soi-même
-	String adresseReseauFiltre = "exemples/filteredNet";
-	// répertoire de sauvegarde des nouveaux fichiers de traces
-	String adresseTrace = "exemples/trace";
-	// répertoire de sauvegarde des nouveaux fichiers de traces expertes
-	String adresseExpert = "exemples/trace/trace_experte";
-	// répertoire de sauvegarde des fichiers de traces labellisees
-	String adresseLabel = "exemples/trace-labellisee";
-	// répertoire de sauvegarde des fichiers de traces graphml
-	String adresseGraphml = "exemples/trace-graphml";
+	// les répertoires par défaut
+	String adresseReseauComplet = adressereseau+File.separator+"completeNet";
+	String adresseReseauFiltre = adressereseau+File.separator+"filteredNet";
+	String adresseSpec = adressereseau+File.separator+"specifTransition";
+	String adresseTrace = adressereseau+File.separator+"trace";
+	String adresseLabel = adressereseau+File.separator+"trace-labellisee";
+	String adresseGraphml = adressereseau+File.separator+"trace-graphml";
 
 	// dimensions de la fenêtre
 	int largeur = 1000, hauteur = 700;
@@ -105,12 +100,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 	IPetriNet filteredPn;
 	IFeatures features;
 	Labeling_V9 algo;
-	ITraces traces, copie_traces, nouvelles_traces, traces2, traces_expert;
-	ArrayList<ITrace> listeActionsPourAnalyse, value1;
+	ITraces tracesPourAnalyse, copie_traces, nouvelles_traces, traces2, traces_expert;
+	ArrayList<ITrace> listeTracePourAnalyse;
 	PieChart cv;
 	DefaultPieDataset dataset;
 	JTabbedPane onglets;
 
+	boolean loadingTraces = false;
 	//////////////////////////////////////////////////////////////////
 
 	public InterfaceLaalys() {
@@ -398,6 +394,12 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			@Override
 			public void intervalRemoved(ListDataEvent e) {
 				// TODO Auto-generated method stub
+				System.out.println("Remove : "+e.getIndex0()+" "+e.getIndex1());
+				// si on n'est pas en cours de chargement de la trace, on maintient synchronisé les deux listes
+				if (!loadingTraces){
+					for (int i = e.getIndex1() ; i >= e.getIndex0() ; i--)
+						listeTracePourAnalyse.remove(i);
+				}
 				if (listeNomActionsPourAnalyse.isEmpty())
 					enableOngletAnalyse(false);
 			}
@@ -405,6 +407,27 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			@Override
 			public void intervalAdded(ListDataEvent e) {
 				// TODO Auto-generated method stub
+				System.out.println("Add : "+e.getIndex0()+" "+e.getIndex1());
+				// si on n'est pas en cours de chargement de la trace, on maintient synchronisé les deux listes
+				if (!loadingTraces){
+					for (int i = e.getIndex0() ; i <= e.getIndex1() ; i++){
+						String action = listeNomActionsPourAnalyse.getElementAt(i).toString();
+						// Création d'un objet trace pour stocker les données
+						// Vérifier si l'action courante fait référence à une action système
+						String origine = "player"; // par défaut
+						ArrayList<String> proprietes = features.getSystemTransitions(); // ensemble des transitions système
+						for (int m = 0; m < proprietes.size(); m++) {
+							if (proprietes.get(m).indexOf(action) != -1) {
+								// l'action est une action système
+								origine = "system";
+								break;
+							}
+						}
+						// création de la nouvelle ligne de trace
+						ITrace nouvelletrace = new Trace(action, "manual", origine, false);
+						listeTracePourAnalyse.add(i, nouvelletrace);
+					}
+				}
 				enableOngletAnalyse(true);
 			}
 			
@@ -633,7 +656,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			// on choisit le fichier à charger
 			try {
 				sf = new SelectionFichier();
-				String fileName = sf.getNomFichier(adressereseau+"/completeNet");
+				String fileName = sf.getNomFichier(adresseReseauComplet, this);
 				if (!fileName.isEmpty()){
 					// vider tout
 					boutonRdpComplet.setBackground(UIManager.getColor("Bouton.background"));
@@ -659,7 +682,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					boolean success = false;
 					try {
 						fullPn.loadPetriNet(fullPnName);
-						int index = fullPnName.lastIndexOf("\\");
+						int index = fullPnName.lastIndexOf(File.separator);
 						String nomfich = fullPnName.substring(index + 1);
 						infoRdpComplet.setText("<html>Réseau complet chargé : " + nomfich + "</html>");
 						boutonRdpComplet.setBackground(Color.CYAN);
@@ -703,9 +726,9 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			if (correct)
 				try {
 					sf = new SelectionFichier();
-					String traceName2 = sf.getNomFichier(adresseExpert+"/trace/trace_experte");
+					String traceName2 = sf.getNomFichier(adresseTrace, this);
 					if (!traceName2.isEmpty()){
-						int index2 = traceName2.lastIndexOf("\\");
+						int index2 = traceName2.lastIndexOf(File.separator);
 						String nomfich2 = traceName2.substring(index2 + 1);
 						// System.out.println("fichier de trace expert choisi : " +
 						// traceName2);
@@ -766,10 +789,10 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			System.out.println("Choisir un réseau de Petri filtré.");
 			try {
 				sf = new SelectionFichier();
-				String fileName = sf.getNomFichier(adressereseau+"/filteredNet");
+				String fileName = sf.getNomFichier(adresseReseauFiltre, this);
 				if (!fileName.isEmpty()){
 					filteredPnName  = fileName; 
-					int index = filteredPnName.lastIndexOf("\\");
+					int index = filteredPnName.lastIndexOf(File.separator);
 					String nomfich = filteredPnName.substring(index + 1);
 					infoRdpFiltre.setText("<html>Réseau filtré sélectionné : " + nomfich + "</html>");
 					toggleFilteredFields(true);
@@ -848,7 +871,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			features = new Features();
 			try {
 				sf = new SelectionFichier();
-				String fileName = sf.getNomFichier(adressereseau+"/specifTransition");
+				String fileName = sf.getNomFichier(adresseSpec, this);
 				if (!fileName.isEmpty()){
 					featuresName = fileName;
 					// charger le fichier
@@ -857,7 +880,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					// Vérifier s'il y a au moins une action de fin
 					if (!features.getEndLevelTransitions().isEmpty()){
 						boutonChargerCaracteristiques.setBackground(Color.CYAN);
-						int index = fullPnName.lastIndexOf("\\");
+						int index = fullPnName.lastIndexOf(File.separator);
 						String nomfich = fullPnName.substring(index + 1);
 						infoCarateristiques.setText("<html>Caractéristiques chargées : " + nomfich + "</html>");
 						// si le Rdp filtré est aussi chargée, on peut dévérouiller les traces
@@ -884,6 +907,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		else if (source == boutonChargerTraces) {
 			// on arrive au deuxième onglet
 			System.out.println("Charger un fichier de traces.");
+			loadingTraces = true;
 			// on vérifie qu'un fichier de réseau complet a été chargé
 			if (fullPn == null) {
 				JOptionPane.showMessageDialog(this, "Veuillez charger un Rdp complet");
@@ -891,28 +915,28 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				if (!listeActionContent.isEmpty()) {
 					try {
 						sf = new SelectionFichier();
-						String fileName = sf.getNomFichier(adressereseau+"/trace");
+						String fileName = sf.getNomFichier(adresseTrace, this);
 						if (!fileName.isEmpty()){
 							traceName = fileName;
 							listeNomActionsPourAnalyse.removeAllElements();
 							System.out.println("fichier de traces choisi : " + traceName);
-							traces = new Traces();
-							traces.loadFile(traceName);
+							tracesPourAnalyse = new Traces();
+							tracesPourAnalyse.loadFile(traceName);
 							// value va pour sauvegarder les informations complètes,
 							// avec tous les attributs des éléments de trace chargés
-							listeActionsPourAnalyse = new ArrayList<ITrace>();
+							listeTracePourAnalyse = new ArrayList<ITrace>();
 							boolean consistant = true;
 							// ICI copie_traces = new Traces();
-							for (ITrace tr : traces.getTraces()) { // on parcourt
-																	// les traces
-																	// chargées
+							// on parcourt les traces chargées
+							for (ITrace tr : tracesPourAnalyse.getTraces()) { 
 								// pour affichage du nom de l'action seulement
 								listeNomActionsPourAnalyse.addElement(tr.getAction());
 								if (!listeActionContent.contains(tr.getAction()))
 									consistant = false;
-								// mais pour mémorisation, tous les attributs :
-								listeActionsPourAnalyse.add(tr);
+								// mémorisation des traces avec tous les attributs :
+								listeTracePourAnalyse.add(tr);
 							}
+							loadingTraces = false;
 							if (!consistant){
 								JOptionPane.showMessageDialog(this, "Attention, ce fichier de trace contient des actions non\n"
 										+ "incluses dans celles définies par le réseau de Petri complet\n\nChargement avorté");
@@ -930,55 +954,17 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				else
 					JOptionPane.showMessageDialog(this, "Veuillez charger un Rdp complet avec au moins une transition");
 			}
+			loadingTraces = false;
 		}
 
 		else if (source == boutonSauvegarderTrace) {
 			System.out.println("Enregistrer la trace.");
-			// taille de la trace éventuellement complétée
-			int tailleListeUI = listeNomActionsPourAnalyse.getSize();
-			if (tailleListeUI != 0) {
-				System.out.println("nb traces " + tailleListeUI);
-				// reconstruire les traces: on crée un nouveau fullFinalTraces qui va
-				// contenir la reconstruction des traces ligne à ligne
-				ArrayList<ITrace> fullFinalTraces = new ArrayList<ITrace>();
-				// on lit les transitions une à une de la listeNomActionsPourAnalyse (trace
-				// chargée, ou complétée, ou reconstruite)
-				for (int k = 0; k < tailleListeUI; k++) {
-					boolean trouve = false;
-					String action = listeNomActionsPourAnalyse.getElementAt(k).toString();
-					// existait-elle dans la liste de traces d'origine ?
-					if (listeActionsPourAnalyse != null){
-						for (int l = 0; l < listeActionsPourAnalyse.size(); l++) {
-							if (listeActionsPourAnalyse.get(l).toString().indexOf(action) != -1) {
-								// elle existait, on recopie la ligne complète
-								fullFinalTraces.add(listeActionsPourAnalyse.get(l));
-								trouve = true;
-								break;
-							}
-						}
-					}
-					if (!trouve) {
-						// elle n'existe pas dans la trace chargée, donc on crée une nouvelle ligne
-						// mais d'abord il faut rechercher l'origine de l'action : player ou system
-						String origine = "player"; // par défaut
-						ArrayList<String> proprietes = features.getSystemTransitions(); // ensemble des transitions système
-						for (int m = 0; m < proprietes.size(); m++) {
-							if (proprietes.get(m).indexOf(action) != -1) {
-								// l'action est une action système
-								origine = "system";
-								break;
-							}
-						}
-						// création de la nouvelle ligne de trace
-						ITrace nouvelletrace = new Trace(action, "manual", origine, false);
-						fullFinalTraces.add(nouvelletrace);
-					}
-				}
+			if (listeTracePourAnalyse.size() != 0) {
 				// nouveau fichier de traces
 				ITraces itraces = new Traces();
-				itraces.setTraces(fullFinalTraces);
-				for (int k = 0; k < fullFinalTraces.size(); k++)
-					System.out.println("en pos " + k + " : " + fullFinalTraces.get(k));
+				itraces.setTraces(listeTracePourAnalyse);
+				for (int k = 0; k < listeTracePourAnalyse.size(); k++)
+					System.out.println("en pos " + k + " : " + listeTracePourAnalyse.get(k));
 				Document doc = itraces.toXML();
 				// enregistrement du nouveau fichier de traces
 				// choix du fichier
@@ -1019,59 +1005,15 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 
 			System.out.println("Analyser.");
 			// vérifier que l'on a tout : s'il manque quelque chose, le dire
-			if (fullPn == null || filteredPn == null || features == null || traces == null) {
+			if (fullPn == null || filteredPn == null || features == null || tracesPourAnalyse == null) {
 				JOptionPane.showMessageDialog(this,
 						"Fichier de réseau complet ou de réseau filtré ou de caractéristiques ou de traces non choisi");
 			} else {
-				// taille de la trace éventuellement complétée
-				int tailleListeUI = listeNomActionsPourAnalyse.getSize();
-				if (tailleListeUI != 0) {
-					System.out.println("nb1 trace d'origine " + listeActionsPourAnalyse.size() + " nb2 trace après manipulations " + tailleListeUI);
-					// reconstruire les traces: on crée un nouveau value1 qui va
-					// contenir la reconstruction des traces ligne à ligne
-					value1 = new ArrayList<ITrace>();
-					// on lit les transitions une à une
-					for (int k = 0; k < tailleListeUI; k++) {
-						boolean trouve = false;
-						// on lit une ligne de la liste_actions_realisees (trace
-						// chargée ou complétée ou reconstruite)
-						String action = listeNomActionsPourAnalyse.getElementAt(k).toString();
-						// existait-elle dans la liste de traces d'origine ?
-						if (listeActionsPourAnalyse != null){
-							for (int l = 0; l < listeActionsPourAnalyse.size(); l++) {
-								if (listeActionsPourAnalyse.get(l).toString().indexOf(action) != -1) {
-									// elle existait, on recopie la ligne complète
-									value1.add(listeActionsPourAnalyse.get(l));
-									trouve = true;
-									break;
-								}
-							}
-						}
-						if (!trouve) {
-							// elle n'existe pas dans la trace chargée, donc on crée une nouvelle ligne
-							// mais d'abord il faut rechercher l'origine de l'action : player ou system
-							String origine = "player"; // par défaut
-							ArrayList<String> proprietes = features.getSystemTransitions(); // ensemble des transitions système
-							for (int m = 0; m < proprietes.size(); m++) {
-								if (proprietes.get(m).indexOf(action) != -1) {
-									// l'action est une action système
-									origine = "system";
-									break;
-								}
-							}
-							// création de la nouvelle ligne de trace
-							ITrace nouvelletrace = new Trace(action, "manual", origine, false);
-							value1.add(nouvelletrace);
-						}
-					}
-
+				if (listeTracePourAnalyse.size() != 0) {
 					// nouveau fichier de traces : on vide l'ancien traces et on
-					// transfère value1 dans traces
-					traces = new Traces();
-					traces.setTraces(value1);
-					System.out.println("le fichier de traces après re-création : ");
-					for (int k = 0; k < value1.size(); k++)
-						System.out.println("en pos " + k + " : " + value1.get(k));
+					// transfère met à jour les traces
+					tracesPourAnalyse = new Traces();
+					tracesPourAnalyse.setTraces(listeTracePourAnalyse);
 
 					// le traitement
 					Logger monLog = Logger.getLogger(Main.class.getName());
@@ -1080,12 +1022,12 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					ConsoleHandler ch = new ConsoleHandler();
 					ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
 					monLog.addHandler(ch);
-					algo = new Labeling_V9(monLog, false);
+					algo = new Labeling_V9(monLog, true);
 					algo.setCompletePN(fullPn);
 					algo.setFilteredPN(filteredPn);
 					algo.setFeatures(features);
 					try {
-						algo.label(traces);
+						algo.label(tracesPourAnalyse);
 					} catch (Exception e3) {
 						e3.printStackTrace();
 					}
@@ -1120,7 +1062,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					intitule[17] = "mauvais-choix";
 
 					// calcul des effectifs de chaque label
-					for (ITrace tr : traces.getTraces()) {
+					for (ITrace tr : tracesPourAnalyse.getTraces()) {
 						listeActionsAnalysees.addElement(tr.getAction());
 						ArrayList<String> labs = tr.getLabels();
 						listeLabels.addElement(labs);
@@ -1215,9 +1157,9 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					// contenu à écrire récupération de value1 complété par les
 					// labels
 					ITraces itraces = new Traces();
-					itraces.setTraces(value1);
-					for (int k = 0; k < value1.size(); k++)
-						System.out.println("en pos " + k + " : " + value1.get(k));
+					itraces.setTraces(listeTracePourAnalyse);
+					for (int k = 0; k < listeTracePourAnalyse.size(); k++)
+						System.out.println("en pos " + k + " : " + listeTracePourAnalyse.get(k));
 					Document doc = itraces.toXML();
 					Transformer transformer = TransformerFactory.newInstance().newTransformer();
 					Result output = new StreamResult(new File(outputfile + ".xml"));

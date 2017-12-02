@@ -1,6 +1,10 @@
+import java.awt.Component;
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Pattern;
+
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 class SelectionFichier {
         // Boîte de sélection à partir du répertoire courant
@@ -8,7 +12,7 @@ class SelectionFichier {
         // adresse du répertoire d'enregistrement
         // String adresse = "C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples";
 		
-		public String getNomFichier(String adresse) {
+		public String getNomFichier(String adresse, Component parent) {
 			try {
 				// obtention d'un objet File qui désigne le répertoire courant. Le
 				// "getCanonicalFile" n'est pas absolument nécessaire mais permet
@@ -28,8 +32,15 @@ class SelectionFichier {
          
 			// récupération du fichier sélectionné
 			System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
-			if (dialogue.getSelectedFile() != null)
-				return dialogue.getSelectedFile().toString();
+			if (dialogue.getSelectedFile() != null){
+				String filePath =  dialogue.getSelectedFile().getPath();
+				// recherche d'accent dans le path
+				if (Pattern.matches(".*[éèàùäëüïöâêîûôñçÿ].*", filePath)){
+					JOptionPane.showMessageDialog(parent, "Votre chemin d'accès ou le nom de votre fichier contient au moins un accent ou un ç\n\nSélection du fichier annulé");
+					return "";
+				} else
+					return dialogue.getSelectedFile().getPath();
+			}
 			else
 				return "";
 		}

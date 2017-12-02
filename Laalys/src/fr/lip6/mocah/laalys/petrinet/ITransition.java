@@ -1,7 +1,5 @@
 package fr.lip6.mocah.laalys.petrinet;
 
-import java.util.ArrayList;
-
 /**
  * ...
  * @author Mathieu Muratet

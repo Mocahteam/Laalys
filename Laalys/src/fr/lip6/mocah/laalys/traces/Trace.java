@@ -43,7 +43,7 @@ public class Trace implements ITrace
 				this._origin = xml.getAttributes().getNamedItem("type").getNodeValue();
 			//est ce que l'action a ete accepte par le jeu
 			if ( xml.getAttributes().getNamedItem("try") != null )
-				this._isTry = xml.getAttributes().getNamedItem("try").getNodeValue().equals("true");
+				this._isTry = xml.getAttributes().getNamedItem("try").getNodeValue().toUpperCase().equals("TRUE");
 		}
 		this._source = source;
 		this.freeLabels();

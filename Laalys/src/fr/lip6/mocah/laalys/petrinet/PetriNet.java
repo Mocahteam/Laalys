@@ -14,10 +14,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import fr.lip6.mocah.laalys.labeling.PathState;
 import fr.lip6.mocah.laalys.traces.ITrace;
@@ -276,16 +274,9 @@ public class PetriNet implements IPetriNet {
 	{
 		this.xml = null;
 		if (builder != null){
-			try {
-				// Parse document
-				this.xml = builder.parse(url);
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			// Parse document
+			System.out.println(url);
+			this.xml = builder.parse(url);
 		}
 		
 		// Analyse de l'xml

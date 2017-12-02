@@ -1,4 +1,4 @@
-import java.io.StringWriter;
+/*import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.ConsoleHandler;
@@ -24,7 +24,7 @@ import fr.lip6.mocah.laalys.petrinet.IPetriNet;
 import fr.lip6.mocah.laalys.petrinet.PetriNet;
 import fr.lip6.mocah.laalys.traces.ITrace;
 import fr.lip6.mocah.laalys.traces.ITraces;
-import fr.lip6.mocah.laalys.traces.Traces;
+import fr.lip6.mocah.laalys.traces.Traces;*/
 
 public class Main {
 	// transférer le contenu des chargements dans InterfaceLaalys.java ; ne garder que l'appel à InterfaceLaalys()
@@ -114,7 +114,7 @@ public class Main {
 			e.printStackTrace();
 		}*/
 		
-		InterfaceLaalys ll = new InterfaceLaalys();
+		new InterfaceLaalys();
 	}
 
 }
