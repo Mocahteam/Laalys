@@ -36,6 +36,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
+import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -100,7 +101,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 	IPetriNet filteredPn;
 	IFeatures features;
 	Labeling_V9 algo;
-	ITraces tracesPourAnalyse, copie_traces, nouvelles_traces, traces2, traces_expert;
+	ITraces copie_traces, nouvelles_traces, traces2, traces_expert;
 	ArrayList<ITrace> listeTracePourAnalyse;
 	PieChart cv;
 	DefaultPieDataset dataset;
@@ -389,6 +390,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		colonneDroiteTracesContent.setLayout(new BorderLayout());
 		// Liste contenant les actions à analyser
 		listeNomActionsPourAnalyse = new DefaultListModel<Serializable>();
+		listeTracePourAnalyse = new ArrayList<ITrace>();
 		listeNomActionsPourAnalyse.addListDataListener(new ListDataListener() {
 			
 			@Override
@@ -593,15 +595,19 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		radioAll.setEnabled(state);
 		boutonChargerRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
 		boutonChargerRdpFiltre.setEnabled(state);
+		if (!state){
+			filteredPn = null;
+			filteredPnName = null;
+		}
 	}
 	
 	private void enableOngletTraces(boolean state){
 		onglets.setEnabledAt(1, state);
 		if (!state){
-			listeActionContent.clear();
-			listeNomActionsPourAnalyse.clear();
 			enableOngletAnalyse(false);
 		} else {
+			listeActionContent.clear();
+			listeNomActionsPourAnalyse.clear();
 			boutonChargerTraces.setBackground(UIManager.getColor("Bouton.background"));
 			if (fullPn != null){
 				for (ITransition tr : fullPn.getTransitions()) {
@@ -613,11 +619,10 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 	
 	private void enableOngletAnalyse(boolean state){
 		onglets.setEnabledAt(2, state);
-		if (!state){
+		if (state){
 			listeActionsAnalysees.clear();
 			listeLabels.clear();
 			listeSynthese.clear();
-		} else {
 			boutonAnalyserActions.setBackground(UIManager.getColor("Bouton.background"));
 			boutonExporterGraphml.setBackground(UIManager.getColor("Bouton.background"));
 			boutonExporterLabels.setBackground(UIManager.getColor("Bouton.background"));
@@ -672,7 +677,8 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					
 					boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
 					infoCarateristiques.setText("<html>Aucune caractéristique chargée</html>");
-
+					featuresName = null;
+					
 					enableOngletTraces(false);
 					
 					// Chargement
@@ -807,7 +813,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 
 		else if (source == boutonChargerRdpFiltre) {
 			System.out.println("Charger un réseau de Petri filtré.");
-			if ((filteredPnName == null) || (filteredPnName == "")) {
+			if ((filteredPnName == null) || (filteredPnName.isEmpty())) {
 				JOptionPane.showMessageDialog(this,
 						"Veuillez d'abord sélectionner le Réseau de Pétri filtré à charger");
 			} else {
@@ -851,16 +857,12 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							toggleFilteredFields(false);
 							enableOngletTraces(false);
 							infoRdpFiltre.setText("<html>Aucun réseau filtré sélectionné</html>");
-							filteredPnName = null;
-							filteredPn = null;
 						}
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(this, "Echec lors du chargement du Rdp Filtré\n\n"+e2.getMessage());
 						toggleFilteredFields(false);
 						enableOngletTraces(false);
 						infoRdpFiltre.setText("<html>Aucun réseau filtré sélectionné</html>");
-						filteredPnName = null;
-						filteredPn = null;
 					}
 				}
 			}
@@ -919,16 +921,14 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						if (!fileName.isEmpty()){
 							traceName = fileName;
 							listeNomActionsPourAnalyse.removeAllElements();
-							System.out.println("fichier de traces choisi : " + traceName);
-							tracesPourAnalyse = new Traces();
-							tracesPourAnalyse.loadFile(traceName);
-							// value va pour sauvegarder les informations complètes,
-							// avec tous les attributs des éléments de trace chargés
 							listeTracePourAnalyse = new ArrayList<ITrace>();
+							System.out.println("fichier de traces choisi : " + traceName);
+							ITraces tracesToLoad = new Traces();
+							tracesToLoad.loadFile(traceName);
 							boolean consistant = true;
 							// ICI copie_traces = new Traces();
 							// on parcourt les traces chargées
-							for (ITrace tr : tracesPourAnalyse.getTraces()) { 
+							for (ITrace tr : tracesToLoad.getTraces()) { 
 								// pour affichage du nom de l'action seulement
 								listeNomActionsPourAnalyse.addElement(tr.getAction());
 								if (!listeActionContent.contains(tr.getAction()))
@@ -1005,104 +1005,102 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 
 			System.out.println("Analyser.");
 			// vérifier que l'on a tout : s'il manque quelque chose, le dire
-			if (fullPn == null || filteredPn == null || features == null || tracesPourAnalyse == null) {
+			if (fullPn == null || filteredPn == null || features == null || listeTracePourAnalyse.size() == 0) {
 				JOptionPane.showMessageDialog(this,
-						"Fichier de réseau complet ou de réseau filtré ou de caractéristiques ou de traces non choisi");
+						"Réseau complet ou réseau filtré ou caractéristiques ou traces non défini");
 			} else {
-				if (listeTracePourAnalyse.size() != 0) {
-					// nouveau fichier de traces : on vide l'ancien traces et on
-					// transfère met à jour les traces
-					tracesPourAnalyse = new Traces();
-					tracesPourAnalyse.setTraces(listeTracePourAnalyse);
+				// nouveau fichier de traces : on vide l'ancien traces et on
+				// transfère met à jour les traces
+				ITraces tracesPourAnalyse = new Traces();
+				tracesPourAnalyse.setTraces(listeTracePourAnalyse);
 
-					// le traitement
-					Logger monLog = Logger.getLogger(Main.class.getName());
-					monLog.setLevel(Level.ALL); // pour envoyer les messages de tous les niveaux
-					monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
-					ConsoleHandler ch = new ConsoleHandler();
-					ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
-					monLog.addHandler(ch);
-					algo = new Labeling_V9(monLog, true);
-					algo.setCompletePN(fullPn);
-					algo.setFilteredPN(filteredPn);
-					algo.setFeatures(features);
-					try {
-						algo.label(tracesPourAnalyse);
-					} catch (Exception e3) {
-						e3.printStackTrace();
-					}
-
-					// vidage des trois fenêtres
-					listeActionsAnalysees.removeAllElements();
-					listeLabels.removeAllElements();
-					listeSynthese.removeAllElements();
-
-					int nbLabels = 18;
-					int[] effectif = new int[nbLabels];
-					for (int k = 0; k < nbLabels; k++)
-						effectif[k] = 0;
-					String[] intitule = new String[nbLabels];
-					intitule[0] = "autre-branche-de-resolution";
-					intitule[1] = "correcte";
-					intitule[2] = "eloignement";
-					intitule[3] = "equivalente";
-					intitule[4] = "erronee";
-					intitule[5] = "intrusion";
-					intitule[6] = "inutile";
-					intitule[7] = "manquante";
-					intitule[8] = "non-optimale";
-					intitule[9] = "rapprochement";
-					intitule[10] = "rattapage";
-					intitule[11] = "retour_arriere";
-					intitule[12] = "saut-avant";
-					intitule[13] = "stagnation";
-					intitule[14] = "trop-tard";
-					intitule[15] = "trop-tot";
-					intitule[16] = "deja-vu";
-					intitule[17] = "mauvais-choix";
-
-					// calcul des effectifs de chaque label
-					for (ITrace tr : tracesPourAnalyse.getTraces()) {
-						listeActionsAnalysees.addElement(tr.getAction());
-						ArrayList<String> labs = tr.getLabels();
-						listeLabels.addElement(labs);
-						for (String lab : labs) {
-							for (int k = 0; k < nbLabels; k++)
-								if (lab == intitule[k]) {
-									effectif[k] += 1;
-									break;
-								}
-						}
-					}
-
-					// remplir l'analyse globale : traces and labels envoyés
-					// dans l'interface
-					for (int k = 0; k < nbLabels; k++) {
-						if (effectif[k] > 0) {
-							ArrayList<String> ligne = new ArrayList<String>();
-							ligne.add(intitule[k]);
-							ligne.add(new Integer(effectif[k]).toString());
-							listeSynthese.addElement(ligne);
-						}
-					}
-
-					// construire le diagramme
-					boutonAnalyserActions.setBackground(Color.CYAN);
-
-					// on crée d'abord le dataset en éliminant les deja-vu et
-					// mauvais-choix
-					dataset = new DefaultPieDataset();
-					for (int k = 0; k < nbLabels - 2; k++)
-						if (effectif[k] > 0)
-							dataset.setValue(intitule[k], effectif[k]);
-					System.out.println("dataset créé");
-
-					// ensuite le PieChart qui fait tout le reste
-					cv = new PieChart("Résultats de l'analyse", "", dataset);
-					cv.setPreferredSize(new Dimension(500, 270));
-					cv.pack();
-					cv.setVisible(true);
+				// le traitement
+				Logger monLog = Logger.getLogger(Main.class.getName());
+				monLog.setLevel(Level.ALL); // pour envoyer les messages de tous les niveaux
+				monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
+				ConsoleHandler ch = new ConsoleHandler();
+				ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
+				monLog.addHandler(ch);
+				algo = new Labeling_V9(monLog, true);
+				algo.setCompletePN(fullPn);
+				algo.setFilteredPN(filteredPn);
+				algo.setFeatures(features);
+				try {
+					algo.label(tracesPourAnalyse);
+				} catch (Exception e3) {
+					e3.printStackTrace();
 				}
+
+				// vidage des trois fenêtres
+				listeActionsAnalysees.removeAllElements();
+				listeLabels.removeAllElements();
+				listeSynthese.removeAllElements();
+
+				int nbLabels = 18;
+				int[] effectif = new int[nbLabels];
+				for (int k = 0; k < nbLabels; k++)
+					effectif[k] = 0;
+				String[] intitule = new String[nbLabels];
+				intitule[0] = "autre-branche-de-resolution";
+				intitule[1] = "correcte";
+				intitule[2] = "eloignement";
+				intitule[3] = "equivalente";
+				intitule[4] = "erronee";
+				intitule[5] = "intrusion";
+				intitule[6] = "inutile";
+				intitule[7] = "manquante";
+				intitule[8] = "non-optimale";
+				intitule[9] = "rapprochement";
+				intitule[10] = "rattapage";
+				intitule[11] = "retour_arriere";
+				intitule[12] = "saut-avant";
+				intitule[13] = "stagnation";
+				intitule[14] = "trop-tard";
+				intitule[15] = "trop-tot";
+				intitule[16] = "deja-vu";
+				intitule[17] = "mauvais-choix";
+
+				// calcul des effectifs de chaque label
+				for (ITrace tr : tracesPourAnalyse.getTraces()) {
+					listeActionsAnalysees.addElement(features.getPublicName(tr.getAction()));
+					ArrayList<String> labs = tr.getLabels();
+					listeLabels.addElement(labs);
+					for (String lab : labs) {
+						for (int k = 0; k < nbLabels; k++)
+							if (lab == intitule[k]) {
+								effectif[k] += 1;
+								break;
+							}
+					}
+				}
+
+				// remplir l'analyse globale : traces and labels envoyés
+				// dans l'interface
+				for (int k = 0; k < nbLabels; k++) {
+					if (effectif[k] > 0) {
+						ArrayList<String> ligne = new ArrayList<String>();
+						ligne.add(intitule[k]);
+						ligne.add(new Integer(effectif[k]).toString());
+						listeSynthese.addElement(ligne);
+					}
+				}
+
+				// construire le diagramme
+				boutonAnalyserActions.setBackground(Color.CYAN);
+
+				// on crée d'abord le dataset en éliminant les deja-vu et
+				// mauvais-choix
+				dataset = new DefaultPieDataset();
+				for (int k = 0; k < nbLabels - 2; k++)
+					if (effectif[k] > 0)
+						dataset.setValue(intitule[k], effectif[k]);
+				System.out.println("dataset créé");
+
+				// ensuite le PieChart qui fait tout le reste
+				cv = new PieChart("Résultats de l'analyse", "", dataset);
+				cv.setPreferredSize(new Dimension(500, 270));
+				cv.pack();
+				cv.setVisible(true);
 			}
 		}
 

@@ -272,7 +272,7 @@ public class Labeling_V9 implements ILabeling {
 			// enregistre le marquage M' du Rdp Complet adapté pour le Rdp Filtré
 			this.MpC_subset = PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp);
 			//si ce n'est pas une transition systeme
-			if ( !this.systemTransitions.contains(this.currentAction.getAction()) ){
+			if ( !this.systemTransitions.contains(this.currentAction.getAction()) && !this.currentAction.getOrigin().equals(ActionType.SYSTEM) ){
 				if ( this.logAll ) logger.log(Level.INFO, "Action non système");
 				//on passe dans le cas 1 (cas general)
 				analyseTransitionCase1();
@@ -308,7 +308,7 @@ public class Labeling_V9 implements ILabeling {
 			if ( this.logAll ) logger.log(Level.INFO, "L'action est un Try => !sens(t, MC)");
 			// Normalement on ne devrait jamais avoir un transition système non sensibilisée
 			// mais on vérifie quand même au cas où
-			if ( !this.systemTransitions.contains(this.currentAction.getAction()) ){
+			if ( !this.systemTransitions.contains(this.currentAction.getAction()) && !this.currentAction.getOrigin().equals(ActionType.SYSTEM) ){
 				if ( this.logAll ) logger.log(Level.INFO, "Action non système");
 				//on regarde si la transition est presente dans le  rdp filtre
 				if ( this.currentFilteredTransition != null )

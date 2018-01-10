@@ -3,6 +3,7 @@ package fr.lip6.mocah.laalys.features;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -26,6 +27,10 @@ public class Features implements IFeatures {
 	 * dictionary to store all id of end transition
 	 */
 	private HashSet<String> ends;
+	/**
+	 * dictionary to associated transition id to transition label
+	 */
+	private HashMap<String, String> id2Label;
 	
 	public Features() 
 	{
@@ -54,6 +59,13 @@ public class Features implements IFeatures {
 		return ends.contains(id);
 	}
 	
+	
+	public String getPublicName (String id){
+		if (id2Label.containsKey(id))
+			return id2Label.get(id);
+		else
+			return id;
+	}
 	/**
 	 * @inheritDoc
 	 */
@@ -61,6 +73,7 @@ public class Features implements IFeatures {
 	{
 		systems = new HashSet<String>();
 		ends = new HashSet<String>();
+		id2Label = new HashMap<String, String>();
 	}
 	
 	/**
@@ -87,6 +100,11 @@ public class Features implements IFeatures {
 					// Enregistrement de l'id de cette tansition dans le dictionnaire des actions de fin de niveau
 					ends.add(attr.getNamedItem("id").getNodeValue());
 				}
+				// Extraction du label
+				if (attr.getNamedItem("label") != null){
+					id2Label.put(attr.getNamedItem("id").getNodeValue(), attr.getNamedItem("label").getNodeValue());
+				}
+					
 			}
 		} catch (SAXException e) {
 			// TODO Auto-generated catch block
