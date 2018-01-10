@@ -15,7 +15,6 @@ import fr.lip6.mocah.laalys.traces.constants.ActionType;
  */
 public class Trace implements ITrace
 {
-	
 	private String _action = null;
 	private String _source = ActionSource.UNKNOW;
 	private String _origin   = ActionType.UNKNOW;

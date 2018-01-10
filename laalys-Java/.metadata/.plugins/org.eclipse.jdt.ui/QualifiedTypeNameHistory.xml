@@ -20,4 +20,7 @@
 <fullyQualifiedTypeName name="javax.swing.event.ListDataListener"/>
 <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
 <fullyQualifiedTypeName name="java.awt.Component"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.constants.ActionType"/>
 </qualifiedTypeNameHistroy>
