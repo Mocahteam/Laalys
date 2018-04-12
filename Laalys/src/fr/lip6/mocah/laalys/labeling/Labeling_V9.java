@@ -168,7 +168,7 @@ public class Labeling_V9 implements ILabeling {
 			labelAction( trace );
 		}
 		// terminer l'évaluation des actions manquantes
-		analyseTransitionCase0_1();
+		analyseTransitionCase6();
 	}
 	
 	/**
@@ -360,47 +360,6 @@ public class Labeling_V9 implements ILabeling {
 			}
 		}
 	}
-		
-	private void analyseTransitionCase0_1() throws Exception
-	{
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 0.1 :");
-		// si dernière transition de la trace c fn
-		if ( this.expertEndTransitions.contains(this.currentAction.getAction()))
-		{
-			if ( this.logAll ) logger.log(Level.INFO, "dernière transition de la trace c fn");
-			// On n'a rien à faire, on est dans le cas idéal où la dernière transition de la trace est une transition de fin qui
-			// a généré un marquage connu dans GF
-		} else { // sinon  <=> dernière transition de la trace !c fn
-			if ( this.logAll ) logger.log(Level.INFO, "dernière transition de la trace !c fn");
-			// si M'C == null
-			if (this.MpC_subset == null) {
-				if ( this.logAll ) logger.log(Level.INFO, "M'C == null");
-				// On est dans le cas où la dernière transition de la trace était une action refusée par le jeu, M'C == null. On
-				// cherche donc à identifier les transtitions manquantes pour atteindre la fin du niveau
-				storeBadChoices();
-			} else { // sinon  <=> M'C != null
-				if ( this.logAll ) logger.log(Level.INFO, "M'C != null");
-				// si M'C c GF
-				if (this.filteredRdp.contains(this.MpC_subset)) {
-					if ( this.logAll ) logger.log(Level.INFO, "M'C c GF");
-					checkBadChoicesBeing(this.filteredRdp);
-				} else { // sinon  <=> M'C !c GF
-					if ( this.logAll ) logger.log(Level.INFO, "M'C !c GF");
-					// si M'C c GA
-					if (this.artificialRdp != null && this.artificialRdp.contains(this.MpC_subset)) {
-						if ( this.logAll ) logger.log(Level.INFO, "M'C c GA");
-						checkBadChoicesBeing(this.artificialRdp);
-					} else { // sinon  <=> M'C !c GA
-						if ( this.logAll ) logger.log(Level.INFO, "M'C !c GA");
-						// On est dans le cas où la dernière transition de la trace est une action non experte qui place le jeu dans un état
-						// hors des espaces filtrés (GF et GA). On remonte donc le parcours du joueur jusqu'à trouver un marquage à partir
-						// duquel on peut redescendre jusqu'à la fin du niveau.
-						storeBadChoices();
-					}
-				}
-			}
-		}
-	}
 	
 	private void checkBadChoicesBeing(IPetriNet RdpW) throws Exception {
 		//si une des transitions "fin de niveau" peut être franchie a partir du marquage du rdp complet
@@ -420,6 +379,7 @@ public class Labeling_V9 implements ILabeling {
 		}
 	}
 
+	// Cas 1 : Cas des actions acceptées par le jeu
 	// Pré-requis : l'action courante n'est pas un Try et n'est pas une transition système
 	private void analyseTransitionCase1() throws Exception 
 	{
@@ -470,7 +430,7 @@ public class Labeling_V9 implements ILabeling {
 			}
 		}
 		
-		// on vérifie si le joueur a déjà rencontré M'C
+		// POST TRAITEMENT : on vérifie si le joueur a déjà rencontré M'C
 		if (isMarkingSeen(MpC)) {
 			if ( this.logAll ) logger.log(Level.INFO, "M'C c historique joueur");
 			if ( this.logAll ) logger.log(Level.INFO, "\t=> déjà vu");
@@ -479,6 +439,7 @@ public class Labeling_V9 implements ILabeling {
 		completeMarkingSeen.add(new PathState(this.currentAction, MpC.clone(), MpC_subset.clone()));
 	}
 	
+	// Cas 2 : "Dans espace filtré"
 	// Pré-requis : MC == MW && M'C inclus GW
 	private void analyseTransitionCase2(IPetriNet RdpW) throws Exception 
 	{
@@ -525,7 +486,7 @@ public class Labeling_V9 implements ILabeling {
 			}
 		}
 		
-		// Post traitement
+		// POST TRAITEMENT
 		// si RdpW est RdpF : Propager M'C dans MF
 		if (RdpW == this.filteredRdp) {
 			if ( this.logAll ) logger.log(Level.INFO, "RdpW est RdpF avec MiF == MiC");
@@ -539,8 +500,9 @@ public class Labeling_V9 implements ILabeling {
 		}
 	}
 	
+	// Cas 2_1 : "Vers solution"
 	private void analyseTransitionCase2_1(IPetriNet RdpW) throws Exception {
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 2.1 : Vers solution");
+		if ( this.logAll ) logger.log(Level.INFO, "CAS 2_1 : Vers solution");
 		// si t € RdpW
 		if ( RdpW.getTransitionById(this.currentAction.getAction()) != null ) {
 			if ( this.logAll ) logger.log(Level.INFO, "t € RdpF");
@@ -560,8 +522,9 @@ public class Labeling_V9 implements ILabeling {
 		}
 	}
 	
+	// Cas 2_2 : "Stagnation"
 	private void analyseTransitionCase2_2(IPetriNet RdpW, ArrayList<IPathIntersection> shortestPath_MpC, ArrayList<IPathIntersection> shortestPath_MC) {
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 2.2 : Stagnation");
+		if ( this.logAll ) logger.log(Level.INFO, "CAS 2_2 : Stagnation");
 		// si M'C filtré == MC filtré
 		if (MpC_subset.isEqualTo(MC_subset)) {
 			if ( this.logAll ) logger.log(Level.INFO, "M'C filtré == MC filtré");
@@ -596,6 +559,8 @@ public class Labeling_V9 implements ILabeling {
 		}
 	}
 	
+	// Cas 3 "Historique"
+	// Pré-requis : (MC non inclus GF && M'C inclus GW) || (MC inclus GW && M'C inclus GW (éloignement de la solution || sortie d'un puits)) && v(fn, GW, M'C, lSys)
 	private void analyseTransitionCase3(IPetriNet RdpW, ArrayList<IPathIntersection> shortestPath_MpC) throws Exception {
 		if ( this.logAll ) logger.log(Level.INFO, "CAS 3 : Historique");
 		
@@ -659,6 +624,7 @@ public class Labeling_V9 implements ILabeling {
 		return null;
 	}
 	
+	// Cas 4 "Hors espace filtré depuis état initial"
 	private void analyseTransitionCase4() throws Exception {
 		if ( this.logAll ) logger.log(Level.INFO, "CAS 4 : Hors espace filtré depuis état initial");
 		// PRE TRAITEMENT
@@ -697,6 +663,8 @@ public class Labeling_V9 implements ILabeling {
 		}
 	}
 	
+	// Cas 5 "Tendance"
+	// Pré-requis : MC inclus GW & !v(fn, GW, MC, lSys)
 	private void analyseTransitionCase5(IPetriNet RdpW) throws Exception{
 		if ( this.logAll ) logger.log(Level.INFO, "CAS 5 : Dans puits");
 		// calcul de la distance la plus courte pour atteindre la fin du niveau à partir du (ou des)
@@ -744,6 +712,49 @@ public class Labeling_V9 implements ILabeling {
 		}
 	}
 	
+	// Cas 6 "Fin" : gestion des actions manquantes en fin de niveau
+	private void analyseTransitionCase6() throws Exception
+	{
+		if ( this.logAll ) logger.log(Level.INFO, "CAS 6 :");
+		// si dernière transition de la trace c fn
+		if ( this.expertEndTransitions.contains(this.currentAction.getAction()))
+		{
+			if ( this.logAll ) logger.log(Level.INFO, "dernière transition de la trace c fn");
+			// On n'a rien à faire, on est dans le cas idéal où la dernière transition de la trace est une transition de fin qui
+			// a généré un marquage connu dans GF
+		} else { // sinon  <=> dernière transition de la trace !c fn
+			if ( this.logAll ) logger.log(Level.INFO, "dernière transition de la trace !c fn");
+			// si M'C == null
+			if (this.MpC_subset == null) {
+				if ( this.logAll ) logger.log(Level.INFO, "M'C == null");
+				// On est dans le cas où la dernière transition de la trace était une action refusée par le jeu, M'C == null. On
+				// cherche donc à identifier les transtitions manquantes pour atteindre la fin du niveau
+				storeBadChoices();
+			} else { // sinon  <=> M'C != null
+				if ( this.logAll ) logger.log(Level.INFO, "M'C != null");
+				// si M'C c GF
+				if (this.filteredRdp.contains(this.MpC_subset)) {
+					if ( this.logAll ) logger.log(Level.INFO, "M'C c GF");
+					checkBadChoicesBeing(this.filteredRdp);
+				} else { // sinon  <=> M'C !c GF
+					if ( this.logAll ) logger.log(Level.INFO, "M'C !c GF");
+					// si M'C c GA
+					if (this.artificialRdp != null && this.artificialRdp.contains(this.MpC_subset)) {
+						if ( this.logAll ) logger.log(Level.INFO, "M'C c GA");
+						checkBadChoicesBeing(this.artificialRdp);
+					} else { // sinon  <=> M'C !c GA
+						if ( this.logAll ) logger.log(Level.INFO, "M'C !c GA");
+						// On est dans le cas où la dernière transition de la trace est une action non experte qui place le jeu dans un état
+						// hors des espaces filtrés (GF et GA). On remonte donc le parcours du joueur jusqu'à trouver un marquage à partir
+						// duquel on peut redescendre jusqu'à la fin du niveau.
+						storeBadChoices();
+					}
+				}
+			}
+		}
+	}
+
+
 	private boolean isTryAction () {
 		//on verifie si l'action est un try ou non
 		if ( this.currentAction.getIsTry() == null )
