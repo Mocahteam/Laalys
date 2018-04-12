@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="systemTransition" key="selection"/>
+		<item value="System.out" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="System.out"/>
+			<item value="getShortestPaths_rec"/>
+			<item value="getShortestPathsToTransitions"/>
+			<item value="analyseTransitionCase0"/>
+			<item value="analyseTransitionCase1"/>
+			<item value="analyseTransitionCase2"/>
+			<item value="getShortestPathsToTransition"/>
 			<item value="systemTransition"/>
-			<item value="isQuasiAliveFromMarking"/>
-			<item value="systemTransitions"/>
-			<item value="isTryAction"/>
-			<item value="loadFile"/>
-			<item value="new Trace"/>
-			<item value="listeTracePourAnalyse"/>
-			<item value="getSystemTransitions"/>
 		</list>
 		<list key="replacehistory">
 			<item value="UIManager.getColor(&quot;Bouton.background&quot;)"/>
