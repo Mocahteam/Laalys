@@ -59,8 +59,9 @@ public class Traces implements ITraces {
 	/**
 	 * @inheritDoc
 	 * @param	filePath
+	 * @throws IOException 
 	 */
-	public void loadFile(String url)
+	public void loadFile(String url) throws IOException
 	{
 		//remise à zero de l'action courante
 		this.currentIndex = 0;
@@ -75,9 +76,6 @@ public class Traces implements ITraces {
 				//pour le debug seulement A ENLEVER
 				//trace( xml.toString() );
 			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

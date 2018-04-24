@@ -1,5 +1,6 @@
 package fr.lip6.mocah.laalys.features;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -33,8 +34,9 @@ public interface IFeatures {
 	 * load the file for parsing it
 	 * @see parse function
 	 * @param	filePath
+	 * @throws IOException 
 	 */
-	public void loadFile (String url);
+	public void loadFile (String url) throws IOException;
 	/**
 	 * renvoie la liste de toutes les transitions systemes
 	 * @return

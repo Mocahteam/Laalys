@@ -1,5 +1,6 @@
 package fr.lip6.mocah.laalys.traces;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.w3c.dom.Document;
@@ -14,8 +15,9 @@ public interface ITraces {
 	 * load the file which the path is given as argument
 	 * then automatically parse it to create new traces
 	 * @param	url can be a local file (relative or absolute path) or an internet adress
+	 * @throws IOException 
 	 */
-	public void loadFile (String url);
+	public void loadFile (String url) throws IOException;
 	/**
 	 * @return number of action in traces
 	 */
