@@ -36,7 +36,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
-import javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -49,7 +48,7 @@ import org.w3c.dom.Document;
 
 import fr.lip6.mocah.laalys.features.Features;
 import fr.lip6.mocah.laalys.features.IFeatures;
-import fr.lip6.mocah.laalys.labeling.Labeling_V9;
+import fr.lip6.mocah.laalys.labeling.*;
 import fr.lip6.mocah.laalys.petrinet.AccessibleGraph;
 import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
 import fr.lip6.mocah.laalys.petrinet.IPetriNet;
@@ -100,7 +99,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 	IPetriNet fullPn, fullPn_travail, fullPnFiltered;
 	IPetriNet filteredPn;
 	IFeatures features;
-	Labeling_V9 algo;
+	ILabeling algo;
 	ITraces copie_traces, nouvelles_traces, traces2, traces_expert;
 	ArrayList<ITrace> listeTracePourAnalyse;
 	PieChart cv;
@@ -156,7 +155,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoRdpComplet = new JLabel(new String());
 		infoRdpComplet.setFont(font1);
-		infoRdpComplet.setText("<html>Aucun réseau complet chargé</html>");
+		infoRdpComplet.setText("<html><center>Aucun réseau complet chargé<br>&nbsp;</center></html>");
 		tmpPanel.add(infoRdpComplet);
 		pannelColonneRdpComplet.add(tmpPanel);
 		// Espaces vide
@@ -179,7 +178,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoTracesExpertes = new JLabel(new String());
 		infoTracesExpertes.setFont(font1);
-		infoTracesExpertes.setText("<html>Aucune trace experte choisie</html>");
+		infoTracesExpertes.setText("<html><center>Aucune trace experte choisie<br>&nbsp;</center></html>");
 		tmpPanel.add(infoTracesExpertes);
 		pannelColonneRdpComplet.add(tmpPanel);
 		// Bouton : Générer Rdp Filtré
@@ -212,7 +211,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoRdpFiltre = new JLabel(new String());
 		infoRdpFiltre.setFont(font1);
-		infoRdpFiltre.setText("<html>Aucun réseau filtré sélectionné</html>");
+		infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
 		tmpPanel.add(infoRdpFiltre);
 		pannelColonneRdpFiltre.add(tmpPanel);
 		// espace vide
@@ -301,7 +300,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoCarateristiques = new JLabel(new String());
 		infoCarateristiques.setFont(font1);
-		infoCarateristiques.setText("<html>Aucune caractéristique chargée</html>");
+		infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
 		tmpPanel.add(infoCarateristiques);
 		pannelColonneSpecificites.add(tmpPanel);
 		// Ajout de la troisième colonne au panneau principal
@@ -409,7 +408,6 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			@Override
 			public void intervalAdded(ListDataEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("Add : "+e.getIndex0()+" "+e.getIndex1());
 				// si on n'est pas en cours de chargement de la trace, on maintient synchronisé les deux listes
 				if (!loadingTraces){
 					for (int i = e.getIndex0() ; i <= e.getIndex1() ; i++){
@@ -665,18 +663,18 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				if (!fileName.isEmpty()){
 					// vider tout
 					boutonRdpComplet.setBackground(UIManager.getColor("Bouton.background"));
-					infoRdpComplet.setText("<html>Aucun réseau complet chargé</html>");
+					infoRdpComplet.setText("<html><center>Aucun réseau complet chargé<br>&nbsp;</center></html>");
 					boutonTraceExperte.setBackground(UIManager.getColor("Bouton.background"));
-					infoTracesExpertes.setText("<html>Aucune trace experte choisie</html>");
+					infoTracesExpertes.setText("<html><center>Aucune trace experte choisie<br>&nbsp;</center></html>");
 					boutonGenererRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
 					boutonGenererRdpFiltre.setEnabled(false);
 					
 					boutonSelectionnerRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
-					infoRdpFiltre.setText("<html>Aucun réseau filtré sélectionné</html>");
+					infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
 					toggleFilteredFields(false);
 					
 					boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-					infoCarateristiques.setText("<html>Aucune caractéristique chargée</html>");
+					infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
 					featuresName = null;
 					
 					enableOngletTraces(false);
@@ -690,13 +688,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						fullPn.loadPetriNet(fullPnName);
 						int index = fullPnName.lastIndexOf(File.separator);
 						String nomfich = fullPnName.substring(index + 1);
-						infoRdpComplet.setText("<html>Réseau complet chargé : " + nomfich + "</html>");
+						infoRdpComplet.setText("<html><center>Réseau complet chargé :<br>" + nomfich + "</center></html>");
 						boutonRdpComplet.setBackground(Color.CYAN);
 						success = true;
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(this, "Une erreur est survenue lors du chargement du Rdp complet\n\nErreur: "+e1.getMessage());
 						boutonRdpComplet.setBackground(UIManager.getColor("Bouton.background"));
-						infoRdpComplet.setText("<html>Aucun réseau complet chargé</html>");
+						infoRdpComplet.setText("<html><center>Aucun réseau complet chargé<br>&nbsp;</center></html>");
 						listeActionContent.clear();
 						fullPnName = null;
 						fullPn = null;
@@ -738,7 +736,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						String nomfich2 = traceName2.substring(index2 + 1);
 						// System.out.println("fichier de trace expert choisi : " +
 						// traceName2);
-						infoTracesExpertes.setText("<html>Trace experte choisi : " + nomfich2 + "</html>");
+						infoTracesExpertes.setText("<html><center>Trace experte choisi :<br>" + nomfich2 + "</center></html>");
 						traces_expert = new Traces();
 						traces_expert.loadFile(traceName2);
 						System.out.println("--------------------traces_expert-------------------------");
@@ -800,7 +798,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					filteredPnName  = fileName; 
 					int index = filteredPnName.lastIndexOf(File.separator);
 					String nomfich = filteredPnName.substring(index + 1);
-					infoRdpFiltre.setText("<html>Réseau filtré sélectionné : " + nomfich + "</html>");
+					infoRdpFiltre.setText("<html><center>Réseau filtré sélectionné :<br>" + nomfich + "</center></html>");
 					toggleFilteredFields(true);
 					radioCouverture.setSelected(true);
 					radioFirst.setSelected(true);
@@ -856,13 +854,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							JOptionPane.showMessageDialog(this, "Ce Rdp filtré contient des transitions non incluses dans le Rdp complet\n\nChargement avorté");
 							toggleFilteredFields(false);
 							enableOngletTraces(false);
-							infoRdpFiltre.setText("<html>Aucun réseau filtré sélectionné</html>");
+							infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
 						}
 					} catch (Exception e2) {
 						JOptionPane.showMessageDialog(this, "Echec lors du chargement du Rdp Filtré\n\n"+e2.getMessage());
 						toggleFilteredFields(false);
 						enableOngletTraces(false);
-						infoRdpFiltre.setText("<html>Aucun réseau filtré sélectionné</html>");
+						infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
 					}
 				}
 			}
@@ -884,7 +882,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						boutonChargerCaracteristiques.setBackground(Color.CYAN);
 						int index = fullPnName.lastIndexOf(File.separator);
 						String nomfich = fullPnName.substring(index + 1);
-						infoCarateristiques.setText("<html>Caractéristiques chargées : " + nomfich + "</html>");
+						infoCarateristiques.setText("<html><center>Caractéristiques chargées :<br>" + nomfich + "</center></html>");
 						// si le Rdp filtré est aussi chargée, on peut dévérouiller les traces
 						if (filteredPn != null)
 							enableOngletTraces(true);
@@ -893,7 +891,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 								+ "Au moins une tansition de fin doit être définie");
 						featuresName = null;
 						boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-						infoCarateristiques.setText("<html>Aucune caractéristique chargée</html>");
+						infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
 						enableOngletTraces(false);
 					}
 				}
@@ -901,7 +899,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Echec lors du chargement des caractéristiques\n\n"+e5.getMessage());
 				featuresName = null;
 				boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-				infoCarateristiques.setText("<html>Aucune caractéristique chargée</html>");
+				infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
 				enableOngletTraces(false);
 			}
 		}
@@ -1003,7 +1001,6 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 
 		else if (source == boutonAnalyserActions) {
 
-			System.out.println("Analyser.");
 			// vérifier que l'on a tout : s'il manque quelque chose, le dire
 			if (fullPn == null || filteredPn == null || features == null || listeTracePourAnalyse.size() == 0) {
 				JOptionPane.showMessageDialog(this,
@@ -1021,7 +1018,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				ConsoleHandler ch = new ConsoleHandler();
 				ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
 				monLog.addHandler(ch);
-				algo = new Labeling_V9(monLog, true);
+				algo = new Labeling_V10(monLog, true);
 				algo.setCompletePN(fullPn);
 				algo.setFilteredPN(filteredPn);
 				algo.setFeatures(features);
@@ -1094,7 +1091,6 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				for (int k = 0; k < nbLabels - 2; k++)
 					if (effectif[k] > 0)
 						dataset.setValue(intitule[k], effectif[k]);
-				System.out.println("dataset créé");
 
 				// ensuite le PieChart qui fait tout le reste
 				cv = new PieChart("Résultats de l'analyse", "", dataset);

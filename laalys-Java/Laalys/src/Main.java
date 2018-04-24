@@ -1,3 +1,37 @@
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.nio.charset.Charset;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.jfree.chart.labels.IntervalCategoryItemLabelGenerator;
+import org.w3c.dom.Document;
+
+import fr.lip6.mocah.laalys.features.Features;
+import fr.lip6.mocah.laalys.features.IFeatures;
+import fr.lip6.mocah.laalys.labeling.ILabeling;
+import fr.lip6.mocah.laalys.labeling.Labeling_V10;
+import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
+import fr.lip6.mocah.laalys.petrinet.IPetriNet;
+import fr.lip6.mocah.laalys.petrinet.PetriNet;
+import fr.lip6.mocah.laalys.traces.ITrace;
+import fr.lip6.mocah.laalys.traces.ITraces;
+import fr.lip6.mocah.laalys.traces.Trace;
+import fr.lip6.mocah.laalys.traces.Traces;
+
 /*import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -114,7 +148,252 @@ public class Main {
 			e.printStackTrace();
 		}*/
 		
-		new InterfaceLaalys();
+		if (args.length == 0)
+			new InterfaceLaalys();
+		else{
+			// Parse options
+			String fullPnName = null;
+			String filteredPnName = null;
+			String featuresName = null;
+			String traceName = null;
+			String serverIP = null;
+			Integer serverPort = null;
+			String outputName = null;
+			for (int i = 0 ; i < args.length ; i++){
+				switch (args[i]){
+					case "-help":
+					case "-h":
+					case "--help":
+					case "--h":
+						System.out.println("Usage: LaalysV2 [OPTION]");
+						System.out.println("No parameters shows GUI. In command line following options are available:");
+						System.out.println("\tOptions:");
+						System.out.println("\t\t-help\t\t\t\tprint this message");
+						System.out.println("\t\t-fullPn <FILE>\t\t\tload file and use it as full Petri net");
+						System.out.println("\t\t-filteredPn <FILE>\t\tload file and use it as filtered Petri net");
+						System.out.println("\t\t-features <FILE>\t\tload features associated to Petri nets");
+						System.out.println("\t\t-traces <FILE>\t\t\tload file containing traces to analyse");
+						System.out.println("\t\t-o <FILE>\t\t\toutput file to store analysis (xml extension is automaticaly added)");
+						System.out.println("");
+						System.out.println("\t\tIf -traces option is not set, two more options are parsed:");
+						System.out.println("\t\t\t-serverIP <IP_ADRESS>\tTCP address that sends traces");
+						System.out.println("\t\t\t-serverPort <PORT>\tTCP port used by server");
+						return;
+					case "-fullPn":
+						i++;
+						if (i < args.length)
+							fullPnName = args[i];
+						break;
+					case "-filteredPn":
+						i++;
+						if (i < args.length)
+							filteredPnName = args[i];
+						break;
+					case "-features":
+						i++;
+						if (i < args.length)
+							featuresName = args[i];
+						break;
+					case "-traces":
+						i++;
+						if (i < args.length)
+							traceName = args[i];
+						break;
+					case "-serverIP":
+						i++;
+						if (i < args.length)
+							serverIP = args[i];
+						break;
+					case "-serverPort":
+						i++;
+						if (i < args.length)
+							try{
+								serverPort = new Integer(args[i]);
+							} catch (NumberFormatException nfe){
+								System.out.println("Error with -serverPort option: "+args[i]+": it is not a parsable integer");
+								return;
+							}
+						break;
+					case "-o":
+						i++;
+						if (i < args.length)
+							outputName = args[i];
+						break;
+					default:
+						System.out.println("Error invalid option: "+args[i]);
+						System.out.println("Try 'LaalysV2 -help' for more information.");
+						return;
+				}
+			}
+			// Check if all required options are set
+			IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+			if (fullPnName == null){
+				System.out.println("Error: Full Petri net required for command line usage (see -fullPn option).");
+				return;
+			} else {
+				File f = new File(fullPnName);
+				if (!f.exists() || f.isDirectory()){
+					System.out.println("Error with -fullPn option: "+fullPnName+": No such file.");
+					return;
+				} else {
+					try {
+						fullPn.loadPetriNet(fullPnName);
+					} catch (Exception e) {
+						System.out.println("Error with -fullPn option: unable to load "+fullPnName+" file.\n"+e.getMessage());
+						return;
+					}
+				}
+			}
+			IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+			if (filteredPnName == null){
+				System.out.println("Error: Filtered Petri required for command line usage (see -filteredPn option).");
+				return;
+			} else {
+				File f = new File(filteredPnName);
+				if (!f.exists() || f.isDirectory()){
+					System.out.println("Error with -filteredPn option: "+filteredPnName+": No such file.");
+					return;
+				} else {
+					try {
+						filteredPn.loadPetriNet(filteredPnName);
+					} catch (Exception e) {
+						System.out.println("Error with -filteredPn option: unable to load "+filteredPnName+" file.\n"+e.getMessage());
+						return;
+					}
+				}
+			}
+			IFeatures features = new Features();
+			if (featuresName == null){
+				System.out.println("Error: Features required for command line usage (see -features option.");
+				return;
+			} else {
+				File f = new File(featuresName);
+				if (!f.exists() || f.isDirectory()){
+					System.out.println("Error with -features option: "+featuresName+": No such file.");
+					return;
+				} else {
+					try {
+						features.loadFile(featuresName);
+					} catch (IOException e) {
+						System.out.println("Error with -features option: unable to load "+featuresName+" file.\n"+e.getMessage());
+						return;
+					}
+				}
+			}
+			ITraces tracesFromFile = null;
+			Socket tracesFromSocket = null;
+			if (traceName == null && (serverIP == null || serverPort == null)){
+				System.out.println("Error: No input traces defined, you have to set -traces option OR -serverIP and -serverPort options.");
+				return;
+			} else if (traceName != null){
+				File f = new File(traceName);
+				if (!f.exists() || f.isDirectory()){
+					System.out.println("Error with -traces option: "+traceName+": No such file.");
+					return;
+				} else {
+					tracesFromFile = new Traces();
+					try {
+						tracesFromFile.loadFile(traceName);
+					} catch (IOException e) {
+						System.out.println("Error with -traces option: unable to load "+traceName+" file.\n"+e.getMessage());
+						return;
+					}
+				}
+			} else { // serverIP != null && serverPort != null
+				try {
+					tracesFromSocket = new Socket(serverIP, serverPort.intValue());
+				} catch (UnknownHostException e) {
+					System.out.println("Error with -serverIP option: unable to resolve "+serverIP+" host.\n"+e.getMessage());
+					return;
+				} catch (IOException e) {
+					System.out.println("Error with -serverPort option: "+serverPort.intValue()+" port is not open.\n"+e.getMessage());
+					return;
+				}
+			}
+			// Init labeling algorithm
+			Logger monLog = Logger.getLogger(Main.class.getName());
+			monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
+			monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
+			ConsoleHandler ch = new ConsoleHandler();
+			ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
+			monLog.addHandler(ch);
+			ILabeling algo = new Labeling_V10(monLog, false);
+			algo.setCompletePN(fullPn);
+			algo.setFilteredPN(filteredPn);
+			algo.setFeatures(features);
+			try {
+				algo.reset();
+			} catch (Exception e1) {
+				System.out.println("Labeling algorithm initialisation fail. "+e1.getMessage());
+			}
+			
+			if (tracesFromFile != null){
+				try {
+					algo.label(tracesFromFile);
+					if (outputName != null){
+						if (outputName.toLowerCase().endsWith(".xml"))
+							outputName = outputName.substring(0, outputName.length() - 4); // remove user extension
+						Document doc = tracesFromFile.toXML();
+						Transformer transformer = TransformerFactory.newInstance().newTransformer();
+						Result output = new StreamResult(new File(outputName + ".xml"));
+						Source input = new DOMSource(doc);
+						transformer.transform(input, output);
+					} else {
+						System.out.println(tracesFromFile.toString());
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else { // tracesFromSocket != null
+				try {
+					// Get traces send by server
+					BufferedInputStream bis = new BufferedInputStream(tracesFromSocket.getInputStream());
+					PrintWriter out = new PrintWriter(tracesFromSocket.getOutputStream(), true);
+			        
+			        // Il ne nous reste plus qu'à le lire
+			        int stream = -1;
+					do{
+				        String content = "";
+				        if (stream != -1)
+				        	content += (char)stream;
+				        while(bis.available()>0){
+				        	content += (char)bis.read();
+				        }
+			        	System.out.println("Request received: "+content);
+				        // parsing content
+				        String[] tokens = content.split("\t");
+				        if (tokens.length == 2){
+				        	ITrace trace = new Trace(tokens[0], null, tokens[1], null);
+				        	algo.labelAction(trace);
+				        	// merge labels 
+				        	String mergedLabels = ""; 
+				        	for (int i = 0 ; i < trace.getLabels().size() ; i++)
+				        		mergedLabels += trace.getLabels().get(i)+"\t";
+				        	// send back labels
+				        	System.out.println("Send labels: "+mergedLabels); 
+				        	out.println(mergedLabels);
+				        } else if (tokens[0].equalsIgnoreCase("Quit")){
+				        	break;
+				        }
+				        else if (tokens[0].equalsIgnoreCase("NextActionToPerform")){
+				        	out.println(algo.getNextBetterAction());
+				        }
+				        content = "";
+					}while ((stream = bis.read()) != -1); 
+					bis.close();
+					out.close();
+					tracesFromSocket.close();
+			        System.out.println("Fin de lecture du flux");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }

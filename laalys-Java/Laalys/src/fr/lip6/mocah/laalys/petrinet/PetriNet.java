@@ -275,7 +275,6 @@ public class PetriNet implements IPetriNet {
 		this.xml = null;
 		if (builder != null){
 			// Parse document
-			System.out.println(url);
 			this.xml = builder.parse(url);
 		}
 		

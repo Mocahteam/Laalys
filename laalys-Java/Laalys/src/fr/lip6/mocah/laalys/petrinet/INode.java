@@ -11,8 +11,7 @@ public interface INode {
 	public String getId();
 	
 	public void setName (String name);
-	public String getName();
-	
+	public String getName();	
 
 	public ArrayList<IArc> getArcsIn();
 	public ArrayList<IArc> getArcsOut();

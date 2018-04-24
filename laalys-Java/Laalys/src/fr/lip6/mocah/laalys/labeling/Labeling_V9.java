@@ -18,7 +18,7 @@ import fr.lip6.mocah.laalys.traces.constants.ActionSource;
 import fr.lip6.mocah.laalys.traces.constants.ActionType;
 
 public class Labeling_V9 implements ILabeling {
-
+	
 	/**
 	 * looger, on l'utilise afin de pouvoir garder une trace de ce qui a ete
 	 * fait par l'application. Utile pour le debug.
@@ -186,7 +186,8 @@ public class Labeling_V9 implements ILabeling {
 		completeMarkingSeen.add(new PathState(
 				null,
 				this.completeRdp.getCurrentMarkings().clone(),
-				PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp).clone()));
+				PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp).clone(),
+				null));
 		this.traces.reset();
 	}
 	
@@ -302,7 +303,7 @@ public class Labeling_V9 implements ILabeling {
 					}
 				}
 				// On n'oublie pas d'enregistrer cet état comme parcouru par le joueur
-				completeMarkingSeen.add(new PathState(this.currentAction, MpC.clone(), MpC_subset.clone()));
+				completeMarkingSeen.add(new PathState(this.currentAction, MpC.clone(), MpC_subset.clone(), null));
 			}
 		} else {
 			if ( this.logAll ) logger.log(Level.INFO, "L'action est un Try => !sens(t, MC)");
@@ -436,7 +437,7 @@ public class Labeling_V9 implements ILabeling {
 			if ( this.logAll ) logger.log(Level.INFO, "\t=> déjà vu");
 			this.currentAction.addLabel(Labels.DEJA_VU);
 		}
-		completeMarkingSeen.add(new PathState(this.currentAction, MpC.clone(), MpC_subset.clone()));
+		completeMarkingSeen.add(new PathState(this.currentAction, MpC.clone(), MpC_subset.clone(), null));
 	}
 	
 	// Cas 2 : "Dans espace filtré"
@@ -925,6 +926,16 @@ public class Labeling_V9 implements ILabeling {
 			}
 		}
 		return result;
+	}
+
+
+	@Override
+	public String getNextBetterAction() throws Exception {
+		ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( this.filteredRdp, this.MF, this.expertEndTransitions );
+		if (shortestPaths_MC.size() == 0)
+			return "";
+		else
+			return shortestPaths_MC.get(0).getLinks().get(0).getLink().getName();
 	}
 
 }

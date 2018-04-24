@@ -79,8 +79,9 @@ public class Features implements IFeatures {
 	/**
 	 * @inheritDoc
 	 * @param	url
+	 * @throws IOException 
 	 */
-	public void loadFile(String url) 
+	public void loadFile(String url) throws IOException 
 	{
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -107,9 +108,6 @@ public class Features implements IFeatures {
 					
 			}
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {

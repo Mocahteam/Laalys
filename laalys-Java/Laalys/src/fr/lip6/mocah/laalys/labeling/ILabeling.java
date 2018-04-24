@@ -2,6 +2,7 @@ package fr.lip6.mocah.laalys.labeling;
 
 import fr.lip6.mocah.laalys.features.IFeatures;
 import fr.lip6.mocah.laalys.petrinet.IPetriNet;
+import fr.lip6.mocah.laalys.traces.ITrace;
 import fr.lip6.mocah.laalys.traces.ITraces;
 
 /**
@@ -18,13 +19,25 @@ public interface ILabeling {
 	
 	/**
 	 * lance l'analyse de toutes les actions contenu dans "traces"
-	 * l'evenement LabelisationEvents.COMPLETE sera émis quand TOUTES les actions auront ete labellisees
-	 * l'evenement LabelisationEvents.STATUS sera émis a chaque fois qu'une action aura ete labellisee
-	 * l'evenement LabelisationEvents.ERROR sera émis si la labellisation est avortée => consulter les logs
 	 * @param	traces : liste des traces à analyser
 	 * @throws Exception 
 	 */
 	public void label( ITraces traces ) throws Exception;
+	
+
+	/**
+	 * labellise une action
+	 * @param action
+	 * @throws Exception
+	 */
+	public void labelAction( ITrace action ) throws Exception;
+	
+	/**
+	 * Get the name of the next better action to perform
+	 * @return
+	 * @throws Exception 
+	 */
+	public String getNextBetterAction () throws Exception;
 	
 	/**
 	 * re initialise toutes les variables interne pour ne pas
