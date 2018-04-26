@@ -111,6 +111,21 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 
 	public InterfaceLaalys() {
 		super("Laalys");
+		
+		// Vérifier les chemins
+		if (!new File(adresseReseauComplet).exists())
+			adresseReseauComplet = ".";
+		if (!new File(adresseReseauFiltre).exists())
+			adresseReseauFiltre = ".";
+		if (!new File(adresseSpec).exists())
+			adresseSpec = ".";
+		if (!new File(adresseTrace).exists())
+			adresseTrace = ".";
+		if (!new File(adresseLabel).exists())
+			adresseLabel = ".";
+		if (!new File(adresseGraphml).exists())
+			adresseGraphml = ".";
+		
 		// fermeture application
 		WindowListener l = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -131,7 +146,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		JPanel ongletReseaux = new JPanel();
 		ongletReseaux.setPreferredSize(new Dimension(largeur, hauteur));
 		// Ajout de cet onglet
-		onglets.addTab("Type de graphe et chargement des réseaux", ongletReseaux);
+		onglets.addTab("Petri nets management", ongletReseaux);
 		// Création du panneau principal
 		JPanel mainPanelReseaux = new JPanel();
 		mainPanelReseaux.setLayout(new GridLayout(1, 3));
@@ -141,13 +156,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		pannelColonneRdpComplet.setLayout(new GridLayout(11, 1));
 		// Label : Chargement du réseau complet sans graphe
 		JPanel tmpPanel = new JPanel();
-		JLabel tmpLabel = new JLabel("<html><b>Chargement du réseau complet</b></html>");
+		JLabel tmpLabel = new JLabel("<html><b>Full Petri net</b></html>");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelColonneRdpComplet.add(tmpPanel);
 		// Bouton : Charger un Rdp complet
 		tmpPanel = new JPanel();
-		boutonRdpComplet = new JButton("Charger un Rdp complet");
+		boutonRdpComplet = new JButton("Load full Petri net");
 		boutonRdpComplet.addActionListener(this);
 		tmpPanel.add(boutonRdpComplet);
 		pannelColonneRdpComplet.add(tmpPanel);
@@ -155,7 +170,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoRdpComplet = new JLabel(new String());
 		infoRdpComplet.setFont(font1);
-		infoRdpComplet.setText("<html><center>Aucun réseau complet chargé<br>&nbsp;</center></html>");
+		infoRdpComplet.setText("<html><center>No Full Petri net loaded<br>&nbsp;</center></html>");
 		tmpPanel.add(infoRdpComplet);
 		pannelColonneRdpComplet.add(tmpPanel);
 		// Espaces vide
@@ -163,13 +178,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		pannelColonneRdpComplet.add(tmpPanel);
 		// Label : option facultative
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><b>OPTION FACULTATIVE : créer un réseau filtré</b></html>");
+		tmpLabel = new JLabel("<html><b>OPTION: Build filtered Petri net</b></html>");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelColonneRdpComplet.add(tmpPanel);
 		// Bouton : Choisir trace experte
 		tmpPanel = new JPanel();
-		boutonTraceExperte = new JButton("a. Choisir une trace experte");
+		boutonTraceExperte = new JButton("a. Choose expert trace");
 		boutonTraceExperte.addActionListener(this);
 		boutonTraceExperte.setEnabled(false);
 		tmpPanel.add(boutonTraceExperte);
@@ -178,12 +193,12 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoTracesExpertes = new JLabel(new String());
 		infoTracesExpertes.setFont(font1);
-		infoTracesExpertes.setText("<html><center>Aucune trace experte choisie<br>&nbsp;</center></html>");
+		infoTracesExpertes.setText("<html><center>No expert trace selected<br>&nbsp;</center></html>");
 		tmpPanel.add(infoTracesExpertes);
 		pannelColonneRdpComplet.add(tmpPanel);
 		// Bouton : Générer Rdp Filtré
 		tmpPanel = new JPanel();
-		boutonGenererRdpFiltre = new JButton("b. Générer le réseau filtré");
+		boutonGenererRdpFiltre = new JButton("b. Build filtered Petri net");
 		boutonGenererRdpFiltre.addActionListener(this);
 		boutonGenererRdpFiltre.setEnabled(false);
 		tmpPanel.add(boutonGenererRdpFiltre);
@@ -196,13 +211,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		pannelColonneRdpFiltre.setLayout(new GridLayout(11, 1));
 		// Label : Choix du réseau filtré
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><b>1. Choix du réseau filtré</b></html>");
+		tmpLabel = new JLabel("<html><b>1. Choose filtered Petri net</b></html>");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelColonneRdpFiltre.add(tmpPanel);
 		// Bouton : Sélectionner un Rdp Filtré
 		tmpPanel = new JPanel();
-		boutonSelectionnerRdpFiltre = new JButton("Sélectionner un Rdp filtré");
+		boutonSelectionnerRdpFiltre = new JButton("Select filtered Petri net");
 		boutonSelectionnerRdpFiltre.addActionListener(this);
 		boutonSelectionnerRdpFiltre.setEnabled(false);
 		tmpPanel.add(boutonSelectionnerRdpFiltre);
@@ -211,7 +226,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoRdpFiltre = new JLabel(new String());
 		infoRdpFiltre.setFont(font1);
-		infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
+		infoRdpFiltre.setText("<html><center>No filtered Petri net selected<br>&nbsp;</center></html>");
 		tmpPanel.add(infoRdpFiltre);
 		pannelColonneRdpFiltre.add(tmpPanel);
 		// espace vide
@@ -219,20 +234,20 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		pannelColonneRdpFiltre.add(tmpPanel);
 		// Label : Type de graphe
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<HTML><b>2. Type de graphe</b></html>");
+		tmpLabel = new JLabel("<HTML><b>2. Graph properties</b></html>");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelColonneRdpFiltre.add(tmpPanel);
 		// Boutons radio Couverture/Accessibilité
 		tmpPanel = new JPanel();
 		ButtonGroup group = new ButtonGroup();
-		radioCouverture = new JRadioButton("Couverture", true);
+		radioCouverture = new JRadioButton("Coverability", true);
 		radioCouverture.setFont(font1);
 		radioCouverture.addActionListener(this);
 		radioCouverture.setEnabled(false);
 		group.add(radioCouverture);
 		tmpPanel.add(radioCouverture);
-		radioAccessibilite = new JRadioButton("Accessibilité");
+		radioAccessibilite = new JRadioButton("Accessibility");
 		radioAccessibilite.setFont(font1);
 		radioAccessibilite.addActionListener(this);
 		radioAccessibilite.setEnabled(false);
@@ -241,7 +256,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		pannelColonneRdpFiltre.add(tmpPanel);
 		// Label : Stratégie d'analyse
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<HTML><b>Stratégie d'analyse</b></html>");
+		tmpLabel = new JLabel("<HTML><b>Analysis strategy</b></html>");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelColonneRdpFiltre.add(tmpPanel);
@@ -264,15 +279,9 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		// Espace vide
 		tmpPanel = new JPanel();
 		pannelColonneRdpFiltre.add(tmpPanel);
-		// Label : Chargement Rdp Filtré
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><b>3. Chargement du réseau filtré</b></html>");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelColonneRdpFiltre.add(tmpPanel);
 		// Bouton : Charger Rdp filtré
 		tmpPanel = new JPanel();
-		boutonChargerRdpFiltre = new JButton("Charger le Rdp filtré sélectionné");
+		boutonChargerRdpFiltre = new JButton("Load filtered Petri net");
 		boutonChargerRdpFiltre.addActionListener(this);
 		boutonChargerRdpFiltre.setEnabled(false);
 		tmpPanel.add(boutonChargerRdpFiltre);
@@ -285,13 +294,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		pannelColonneSpecificites.setLayout(new GridLayout(11, 1));
 		// Label : Caractéristiques du réseau de Pétri
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><b>Caractéristiques du réseau de Pétri</b></html>");
+		tmpLabel = new JLabel("<html><b>Petri net specifications</b></html>");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelColonneSpecificites.add(tmpPanel);
 		// Bouton : Charger les caractéristiques
 		tmpPanel = new JPanel();
-		boutonChargerCaracteristiques = new JButton("Charger des caractéristiques");
+		boutonChargerCaracteristiques = new JButton("Load specifications");
 		boutonChargerCaracteristiques.addActionListener(this);
 		boutonChargerCaracteristiques.setEnabled(false);
 		tmpPanel.add(boutonChargerCaracteristiques);
@@ -300,7 +309,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		tmpPanel = new JPanel();
 		infoCarateristiques = new JLabel(new String());
 		infoCarateristiques.setFont(font1);
-		infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
+		infoCarateristiques.setText("<html><center>No specification loaded<br>&nbsp;</center></html>");
 		tmpPanel.add(infoCarateristiques);
 		pannelColonneSpecificites.add(tmpPanel);
 		// Ajout de la troisième colonne au panneau principal
@@ -315,7 +324,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		ongletTraces.setPreferredSize(new Dimension(largeur, hauteur));
 		ongletTraces.setLayout(new BorderLayout());
 		// Ajout de cet onglet
-		onglets.addTab("Chargement des traces", ongletTraces);
+		onglets.addTab("Traces management", ongletTraces);
 
 		// ---------- Création de panneau supérieur -----------
 		JPanel pannelTracesNorth = new JPanel();
@@ -323,24 +332,21 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		// ligne 1 : Explication construction trace
 		tmpPanel = new JPanel();
 		tmpLabel = new JLabel(
-				"<html><center>Pour <b>construire</b> ou <b>modifier</b> une trace, choisissez"
-				+ " dans l'ordre souhaité les actions de la liste de gauche et faites-les glisser"
-				+ " dans la fenêtre de droite. <br/>Pour <b>supprimer</b> un élément de trace,"
-				+ " choisissez l'action dans la liste de droite et cliquez sur la touche SUPPR"
-				+ " du clavier.</center></html>");
+				"<html><center>Build trace manually by drag and drop game actions from left panel"
+				+ " to the right one. <br/>Press SUPPR key in the right panel to remove a game action");
 		tmpLabel.setFont(font1);
 		// ligne 2 : OU
 		tmpPanel.add(tmpLabel);
 		pannelTracesNorth.add(tmpPanel);
 		tmpPanel = new JPanel();
 		tmpLabel = new JLabel(
-				"<html><center>OU</center></html>");
+				"<html><center>OR</center></html>");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelTracesNorth.add(tmpPanel);
 		// ligne 3 : Charger un fichier de trace
 		tmpPanel = new JPanel();
-		boutonChargerTraces = new JButton("Charger un fichier de traces");
+		boutonChargerTraces = new JButton("Load traces from file");
 		boutonChargerTraces.addActionListener(this);
 		tmpPanel.add(boutonChargerTraces);
 		pannelTracesNorth.add(tmpPanel);
@@ -349,13 +355,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		titreColonnes.setLayout(new GridLayout(1, 2));
 		// Titre colonne gauche
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><center>Actions de jeu possibles</center></html>");
+		tmpLabel = new JLabel("<html><center>Available game actions</center></html>");
 		tmpLabel.setFont(font1b);
 		tmpPanel.add(tmpLabel);
 		titreColonnes.add(tmpPanel);
 		// Titre colonne droite
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><center>Actions à analyser</center></html>");
+		tmpLabel = new JLabel("<html><center>Game actions for analysis</center></html>");
 		tmpLabel.setFont(font1b);
 		tmpPanel.add(tmpLabel);
 		titreColonnes.add(tmpPanel);
@@ -463,7 +469,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		colonneDroiteTraces.add("Center", colonneDroiteTracesContent);
 		// Bouton : Sauvegarde de la trace
 		tmpPanel = new JPanel();
-		boutonSauvegarderTrace = new JButton("Sauvegarder la trace");
+		boutonSauvegarderTrace = new JButton("Save traces");
 		tmpPanel.add(boutonSauvegarderTrace);
 		boutonSauvegarderTrace.addActionListener(this);
 		colonneDroiteTraces.add("South", tmpPanel);
@@ -479,7 +485,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		ongletAnalyse.setPreferredSize(new Dimension(largeur, hauteur));
 		ongletAnalyse.setLayout(new BorderLayout());
 		// Ajout de cet onglet
-		onglets.addTab("Analyse", ongletAnalyse);
+		onglets.addTab("Analysis", ongletAnalyse);
 
 		// ---------- Création de panneau supérieur -----------
 		JPanel pannelAnalyseNorth = new JPanel();
@@ -490,7 +496,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		pannelAnalyseNorth.add(tmpPanel);
 		// Bouton : Analyser actions
 		tmpPanel = new JPanel();
-		boutonAnalyserActions = new JButton("Lancer l'analyse");
+		boutonAnalyserActions = new JButton("Launch analysis");
 		boutonAnalyserActions.addActionListener(this);
 		tmpPanel.add(boutonAnalyserActions);
 		pannelAnalyseNorth.add(tmpPanel);
@@ -500,19 +506,19 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		// 2ème ligne : Titres colonnes
 		// Label : Actions analysées
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("Actions analysées");
+		tmpLabel = new JLabel("Analysed actions");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelAnalyseNorth.add(tmpPanel);
 		// Label : Labels identifiés
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("Labels identifiés");
+		tmpLabel = new JLabel("computed labels");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelAnalyseNorth.add(tmpPanel);
 		// Label : Compte-rendu d'analyse
 		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("Synthèse de l'analyse");
+		tmpLabel = new JLabel("Synthesis");
 		tmpLabel.setFont(font1);
 		tmpPanel.add(tmpLabel);
 		pannelAnalyseNorth.add(tmpPanel);
@@ -535,7 +541,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		colonneGaucheAnalyse.add("Center", colonneGaucheAnalyseContent);
 		// Bouton : Exporter Graphml
 		tmpPanel = new JPanel();
-		boutonExporterGraphml = new JButton("Exporter au format Graphml");
+		boutonExporterGraphml = new JButton("Export to Graphml format");
 		boutonExporterGraphml.addActionListener(this);
 		tmpPanel.add(boutonExporterGraphml);
 		colonneGaucheAnalyse.add("South", tmpPanel);
@@ -555,7 +561,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		colonneCentreAnalyse.add("Center", colonneCentreAnalyseContent);
 		// Bouton : Exporter les labels
 		tmpPanel = new JPanel();
-		boutonExporterLabels = new JButton("Exporter les labels");
+		boutonExporterLabels = new JButton("Export labels");
 		boutonExporterLabels.addActionListener(this);
 		tmpPanel.add(boutonExporterLabels);
 		colonneCentreAnalyse.add("South", tmpPanel);
@@ -663,18 +669,18 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				if (!fileName.isEmpty()){
 					// vider tout
 					boutonRdpComplet.setBackground(UIManager.getColor("Bouton.background"));
-					infoRdpComplet.setText("<html><center>Aucun réseau complet chargé<br>&nbsp;</center></html>");
+					infoRdpComplet.setText("<html><center>No full Petri net loaded<br>&nbsp;</center></html>");
 					boutonTraceExperte.setBackground(UIManager.getColor("Bouton.background"));
-					infoTracesExpertes.setText("<html><center>Aucune trace experte choisie<br>&nbsp;</center></html>");
+					infoTracesExpertes.setText("<html><center>No expert traces selected<br>&nbsp;</center></html>");
 					boutonGenererRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
 					boutonGenererRdpFiltre.setEnabled(false);
 					
 					boutonSelectionnerRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
-					infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
+					infoRdpFiltre.setText("<html><center>No filtered Petri net selected<br>&nbsp;</center></html>");
 					toggleFilteredFields(false);
 					
 					boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-					infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
+					infoCarateristiques.setText("<html><center>No features loaded<br>&nbsp;</center></html>");
 					featuresName = null;
 					
 					enableOngletTraces(false);
@@ -688,13 +694,14 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						fullPn.loadPetriNet(fullPnName);
 						int index = fullPnName.lastIndexOf(File.separator);
 						String nomfich = fullPnName.substring(index + 1);
-						infoRdpComplet.setText("<html><center>Réseau complet chargé :<br>" + nomfich + "</center></html>");
+						adresseReseauComplet = fullPnName.substring(0, index);
+						infoRdpComplet.setText("<html><center>Full Petri net loaded:<br>" + nomfich + "</center></html>");
 						boutonRdpComplet.setBackground(Color.CYAN);
 						success = true;
 					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(this, "Une erreur est survenue lors du chargement du Rdp complet\n\nErreur: "+e1.getMessage());
+						JOptionPane.showMessageDialog(this, "An error occurs on loading full Petri net\n\nError: "+e1.getMessage());
 						boutonRdpComplet.setBackground(UIManager.getColor("Bouton.background"));
-						infoRdpComplet.setText("<html><center>Aucun réseau complet chargé<br>&nbsp;</center></html>");
+						infoRdpComplet.setText("<html><center>No full Petri net loaded<br>&nbsp;</center></html>");
 						listeActionContent.clear();
 						fullPnName = null;
 						fullPn = null;
@@ -704,7 +711,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					boutonChargerCaracteristiques.setEnabled(success);
 				}
 			} catch (Exception e3) {
-				JOptionPane.showMessageDialog(this, "Une erreur est survenue\n\nErreur: "+e3.getMessage());
+				JOptionPane.showMessageDialog(this, "An error occurs\n\nError: "+e3.getMessage());
 				fullPnName = null;
 				fullPn = null;
 			}
@@ -722,7 +729,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			try {
 				fullPn_travail.loadPetriNet(fullPnName);
 			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(this, "Une erreur est survenue lors du chargement du Rdp complet\nOperation avortée\n\nErreur : "+e1.getMessage());
+				JOptionPane.showMessageDialog(this, "An error occurs on loading full Petri net\nProcess aborted\n\nError : "+e1.getMessage());
 				correct = false;
 			}
 			// on choisit une trace experte pour filtrer le réseau
@@ -733,10 +740,11 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					String traceName2 = sf.getNomFichier(adresseTrace, this);
 					if (!traceName2.isEmpty()){
 						int index2 = traceName2.lastIndexOf(File.separator);
+						adresseTrace = traceName2.substring(0, index2);
 						String nomfich2 = traceName2.substring(index2 + 1);
 						// System.out.println("fichier de trace expert choisi : " +
 						// traceName2);
-						infoTracesExpertes.setText("<html><center>Trace experte choisi :<br>" + nomfich2 + "</center></html>");
+						infoTracesExpertes.setText("<html><center>Expert traces chosen:<br>" + nomfich2 + "</center></html>");
 						traces_expert = new Traces();
 						traces_expert.loadFile(traceName2);
 						System.out.println("--------------------traces_expert-------------------------");
@@ -746,7 +754,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						boutonGenererRdpFiltre.setEnabled(true);
 					}
 				} catch (Exception e4) {
-					JOptionPane.showMessageDialog(this, "Une erreur est survenue lors du chargement du fichier\n\nErreur : "+e4.getMessage());
+					JOptionPane.showMessageDialog(this, "An error occurs on loading file\n\nError : "+e4.getMessage());
 				}
 		}
 
@@ -762,12 +770,13 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				// Dossier de réseaux filtrés
 				chooser.setCurrentDirectory(new File(adresseReseauFiltre + File.separator));
 				// Affichage et récupération de la réponse de l'utilisateur
-				int reponse = chooser.showDialog(chooser, "Enregistrer (extension .pnml)");
+				int reponse = chooser.showDialog(chooser, "Save (.pnml extension)");
 				if (reponse == JFileChooser.APPROVE_OPTION) {
 					// Récupération du chemin du fichier et de son nom
 					filename_new = chooser.getSelectedFile().toString();
 					if (filename_new.toLowerCase().endsWith(".pnml"))
 						filename_new = filename_new.substring(0, filename_new.length() - 5); // remove user extension
+					adresseReseauFiltre = filename_new.substring(0, filename_new.lastIndexOf(File.separator));
 					System.out.println("fichier : " + filename_new + ".pnml");
 				}
 			} catch (HeadlessException he) {
@@ -782,15 +791,15 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					output = new StreamResult(new File(filename_new + ".pnml"));
 					Source input = new DOMSource(((PetriNet) fullPn_travail).xml);
 					transformer.transform(input, output);
-					JOptionPane.showMessageDialog(this, "Enregistrement terminé");
+					JOptionPane.showMessageDialog(this, "Saving OK");
 				} catch (Exception e5) {
-					System.out.println("Erreur d'enregistrement : "+e5.getMessage());
+					System.out.println("Saving error: "+e5.getMessage());
 				}
 			}
 		}
 
 		else if (source == boutonSelectionnerRdpFiltre) {
-			System.out.println("Choisir un réseau de Petri filtré.");
+			System.out.println("Select a filtered Petri net.");
 			try {
 				sf = new SelectionFichier();
 				String fileName = sf.getNomFichier(adresseReseauFiltre, this);
@@ -798,29 +807,30 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					filteredPnName  = fileName; 
 					int index = filteredPnName.lastIndexOf(File.separator);
 					String nomfich = filteredPnName.substring(index + 1);
-					infoRdpFiltre.setText("<html><center>Réseau filtré sélectionné :<br>" + nomfich + "</center></html>");
+					adresseReseauFiltre = filteredPnName.substring(0, index);
+					infoRdpFiltre.setText("<html><center>Filtered Petri net selected:<br>" + nomfich + "</center></html>");
 					toggleFilteredFields(true);
 					radioCouverture.setSelected(true);
 					radioFirst.setSelected(true);
 					enableOngletTraces(false);
 				}
 			} catch (Exception e5) {
-				JOptionPane.showMessageDialog(this, "Une erreur est survenue lors du chargement du fichier\n\nErreur : "+e5.getMessage());
+				JOptionPane.showMessageDialog(this, "An error occurs on loading the file\n\nError : "+e5.getMessage());
 			}
 		}
 
 		else if (source == boutonChargerRdpFiltre) {
-			System.out.println("Charger un réseau de Petri filtré.");
+			System.out.println("Loading filtered Petri net.");
 			if ((filteredPnName == null) || (filteredPnName.isEmpty())) {
 				JOptionPane.showMessageDialog(this,
-						"Veuillez d'abord sélectionner le Réseau de Pétri filtré à charger");
+						"Please, select first the filtered Petri net to load.");
 			} else {
 				boutonChargerRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
 				if (filteredPnName != null && !filteredPnName.isEmpty()) { // test peut-être inutile
 					// charger le fichier par IPetriNet - loadPetriNet()
-					System.out.print("fichier de réseau filtré choisi : " + filteredPnName);
+					System.out.print("Filtered Petri net selected: " + filteredPnName);
 					System.out.print(" - " + type);
-					System.out.println(" - stratégie : " + strategie);
+					System.out.println(" - strategy : " + strategie);
 					if (type.equalsIgnoreCase("accessibilité")) {
 						filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
 					} else if (type.equalsIgnoreCase("couverture")) { // couverture
@@ -851,23 +861,23 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							if (featuresName != null && !featuresName.isEmpty())
 								enableOngletTraces(true);
 						} else {
-							JOptionPane.showMessageDialog(this, "Ce Rdp filtré contient des transitions non incluses dans le Rdp complet\n\nChargement avorté");
+							JOptionPane.showMessageDialog(this, "This filtered Petri net includes transitions not included into full petri net\n\nLoading aborted");
 							toggleFilteredFields(false);
 							enableOngletTraces(false);
-							infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
+							infoRdpFiltre.setText("<html><center>No filtered Petri net selected<br>&nbsp;</center></html>");
 						}
 					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(this, "Echec lors du chargement du Rdp Filtré\n\n"+e2.getMessage());
+						JOptionPane.showMessageDialog(this, "Loading filtered Petri net fail\n\n"+e2.getMessage());
 						toggleFilteredFields(false);
 						enableOngletTraces(false);
-						infoRdpFiltre.setText("<html><center>Aucun réseau filtré sélectionné<br>&nbsp;</center></html>");
+						infoRdpFiltre.setText("<html><center>No filtered Petri net selected<br>&nbsp;</center></html>");
 					}
 				}
 			}
 		}
 
 		else if (source == boutonChargerCaracteristiques) {
-			System.out.println("Charger les caractéristiques du réseau de Pétri.");
+			System.out.println("Loading specifications.");
 			features = new Features();
 			try {
 				sf = new SelectionFichier();
@@ -875,42 +885,43 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				if (!fileName.isEmpty()){
 					featuresName = fileName;
 					// charger le fichier
-					System.out.println("fichier de caractéristiques choisi : " + featuresName);
+					System.out.println("Specification selected: " + featuresName);
 					features.loadFile(featuresName);
+					adresseSpec = featuresName.substring(0, featuresName.lastIndexOf(File.separator));
 					// Vérifier s'il y a au moins une action de fin
 					if (!features.getEndLevelTransitions().isEmpty()){
 						boutonChargerCaracteristiques.setBackground(Color.CYAN);
 						int index = fullPnName.lastIndexOf(File.separator);
 						String nomfich = fullPnName.substring(index + 1);
-						infoCarateristiques.setText("<html><center>Caractéristiques chargées :<br>" + nomfich + "</center></html>");
+						infoCarateristiques.setText("<html><center>Specifications selected:<br>" + nomfich + "</center></html>");
 						// si le Rdp filtré est aussi chargée, on peut dévérouiller les traces
 						if (filteredPn != null)
 							enableOngletTraces(true);
 					} else{
-						JOptionPane.showMessageDialog(this, "Fichier de caractéristiques non compatible.\n\n"
-								+ "Au moins une tansition de fin doit être définie");
+						JOptionPane.showMessageDialog(this, "Incomplet specifications.\n\n"
+								+ "No end transition defined");
 						featuresName = null;
 						boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-						infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
+						infoCarateristiques.setText("<html><center>No specifications loaded<br>&nbsp;</center></html>");
 						enableOngletTraces(false);
 					}
 				}
 			} catch (Exception e5) {
-				JOptionPane.showMessageDialog(this, "Echec lors du chargement des caractéristiques\n\n"+e5.getMessage());
+				JOptionPane.showMessageDialog(this, "Error on loading specifications\n\n"+e5.getMessage());
 				featuresName = null;
 				boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-				infoCarateristiques.setText("<html><center>Aucune caractéristique chargée<br>&nbsp;</center></html>");
+				infoCarateristiques.setText("<html><center>No specifications loaded<br>&nbsp;</center></html>");
 				enableOngletTraces(false);
 			}
 		}
 
 		else if (source == boutonChargerTraces) {
 			// on arrive au deuxième onglet
-			System.out.println("Charger un fichier de traces.");
+			System.out.println("Loading traces file.");
 			loadingTraces = true;
 			// on vérifie qu'un fichier de réseau complet a été chargé
 			if (fullPn == null) {
-				JOptionPane.showMessageDialog(this, "Veuillez charger un Rdp complet");
+				JOptionPane.showMessageDialog(this, "Please, select first a full Petri net");
 			} else {
 				if (!listeActionContent.isEmpty()) {
 					try {
@@ -918,9 +929,10 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						String fileName = sf.getNomFichier(adresseTrace, this);
 						if (!fileName.isEmpty()){
 							traceName = fileName;
+							adresseTrace = traceName.substring(0, traceName.lastIndexOf(File.separator));
 							listeNomActionsPourAnalyse.removeAllElements();
 							listeTracePourAnalyse = new ArrayList<ITrace>();
-							System.out.println("fichier de traces choisi : " + traceName);
+							System.out.println("traces selected: " + traceName);
 							ITraces tracesToLoad = new Traces();
 							tracesToLoad.loadFile(traceName);
 							boolean consistant = true;
@@ -936,33 +948,33 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							}
 							loadingTraces = false;
 							if (!consistant){
-								JOptionPane.showMessageDialog(this, "Attention, ce fichier de trace contient des actions non\n"
-										+ "incluses dans celles définies par le réseau de Petri complet\n\nChargement avorté");
+								JOptionPane.showMessageDialog(this, "Waring, this traces include game actions not\n"
+										+ "included into the full Petri net\n\nLoading aborted");
 								traceName = null;
 								listeNomActionsPourAnalyse.removeAllElements();
 							} else
 								onglets.setEnabledAt(2, true);
 						}
 					} catch (Exception e6) {
-						JOptionPane.showMessageDialog(this, "Echec lors du chargement du fichier de traces\n\n"+e6.getMessage());
+						JOptionPane.showMessageDialog(this, "Error on loading traces file\n\n"+e6.getMessage());
 						traceName = null;
 						listeNomActionsPourAnalyse.removeAllElements();
 					}
 				}
 				else
-					JOptionPane.showMessageDialog(this, "Veuillez charger un Rdp complet avec au moins une transition");
+					JOptionPane.showMessageDialog(this, "Please, load a full Petri net with at least one transition");
 			}
 			loadingTraces = false;
 		}
 
 		else if (source == boutonSauvegarderTrace) {
-			System.out.println("Enregistrer la trace.");
+			System.out.println("Save traces.");
 			if (listeTracePourAnalyse.size() != 0) {
 				// nouveau fichier de traces
 				ITraces itraces = new Traces();
 				itraces.setTraces(listeTracePourAnalyse);
 				for (int k = 0; k < listeTracePourAnalyse.size(); k++)
-					System.out.println("en pos " + k + " : " + listeTracePourAnalyse.get(k));
+					System.out.println("pos " + k + ": " + listeTracePourAnalyse.get(k));
 				Document doc = itraces.toXML();
 				// enregistrement du nouveau fichier de traces
 				// choix du fichier
@@ -972,13 +984,14 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					// Dossier Courant
 					chooser.setCurrentDirectory(new File(adresseTrace + File.separator));
 					// Affichage et récupération de la réponse de l'utilisateur
-					int reponse = chooser.showDialog(chooser, "Enregistrer (extension .xml)");
+					int reponse = chooser.showDialog(chooser, "Save (.xml extension)");
 					// Si l'utilisateur clique sur OK
 					if (reponse == JFileChooser.APPROVE_OPTION) {
 						// Récupération du chemin du fichier et de son nom
 						filename = chooser.getSelectedFile().toString();
 						if (filename.toLowerCase().endsWith(".xml"))
 							filename = filename.substring(0, filename.length() - 4); // remove user extension
+						adresseTrace = filename.substring(0, filename.lastIndexOf(File.separator));
 						// System.out.println("fichier : " + filename+".xml");
 						// enregistrement proprement dit
 						Transformer transformer;
@@ -988,15 +1001,16 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							output = new StreamResult(new File(filename + ".xml"));
 							Source input = new DOMSource(doc);
 							transformer.transform(input, output);
+							JOptionPane.showMessageDialog(this, "Savong OK");
 						} catch (Exception e5) {
-							JOptionPane.showMessageDialog(this, "Erreur lors de l'enregistrement de la trace\n\n"+e5.getMessage());
+							JOptionPane.showMessageDialog(this, "Error on saving traces\n\n"+e5.getMessage());
 						}
 					}
 				} catch (HeadlessException he) {
 					he.printStackTrace();
 				}
 			} else
-				JOptionPane.showMessageDialog(this, "La liste des traces est vide, veuillez construire ou charger une trace avant de la sauvegarder");
+				JOptionPane.showMessageDialog(this, "Traces are empty, build a trace by drag and drop or load an existing trace first");
 		}
 
 		else if (source == boutonAnalyserActions) {
@@ -1004,7 +1018,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 			// vérifier que l'on a tout : s'il manque quelque chose, le dire
 			if (fullPn == null || filteredPn == null || features == null || listeTracePourAnalyse.size() == 0) {
 				JOptionPane.showMessageDialog(this,
-						"Réseau complet ou réseau filtré ou caractéristiques ou traces non défini");
+						"Full Petri net or filtered Petri net or specifications or traces not defined");
 			} else {
 				// nouveau fichier de traces : on vide l'ancien traces et on
 				// transfère met à jour les traces
@@ -1038,24 +1052,24 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				for (int k = 0; k < nbLabels; k++)
 					effectif[k] = 0;
 				String[] intitule = new String[nbLabels];
-				intitule[0] = "autre-branche-de-resolution";
-				intitule[1] = "correcte";
-				intitule[2] = "eloignement";
-				intitule[3] = "equivalente";
-				intitule[4] = "erronee";
+				intitule[0] = "unsynchronized";//"autre-branche-de-resolution";
+				intitule[1] = "correct";//"correcte";
+				intitule[2] = "farther";//"eloignement";
+				intitule[3] = "equivalent";//"equivalente";
+				intitule[4] = "erroneous";//"erronee";
 				intitule[5] = "intrusion";
-				intitule[6] = "inutile";
-				intitule[7] = "manquante";
-				intitule[8] = "non-optimale";
-				intitule[9] = "rapprochement";
-				intitule[10] = "rattapage";
-				intitule[11] = "retour_arriere";
-				intitule[12] = "saut-avant";
+				intitule[6] = "useless";//"inutile";
+				intitule[7] = "missing";//"manquante";
+				intitule[8] = "non-optimal";//"non-optimale";
+				intitule[9] = "becoming-closer";//"rapprochement";
+				intitule[10] = "recovery";//"rattrapage";
+				intitule[11] = "leap-backward";//"retour_arriere";
+				intitule[12] = "leap-forward";//"saut-avant";
 				intitule[13] = "stagnation";
-				intitule[14] = "trop-tard";
-				intitule[15] = "trop-tot";
-				intitule[16] = "deja-vu";
-				intitule[17] = "mauvais-choix";
+				intitule[14] = "too-late";//"trop-tard";
+				intitule[15] = "too-early";//"trop-tot";
+				intitule[16] = "already-seen";//"deja-vu";
+				intitule[17] = "bad-choice";//"mauvais-choix";
 
 				// calcul des effectifs de chaque label
 				for (ITrace tr : tracesPourAnalyse.getTraces()) {
@@ -1093,7 +1107,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 						dataset.setValue(intitule[k], effectif[k]);
 
 				// ensuite le PieChart qui fait tout le reste
-				cv = new PieChart("Résultats de l'analyse", "", dataset);
+				cv = new PieChart("Analysis results", "", dataset);
 				cv.setPreferredSize(new Dimension(500, 270));
 				cv.pack();
 				cv.setVisible(true);
@@ -1101,7 +1115,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		}
 
 		else if (source == boutonExporterGraphml) {
-			System.out.println("Exporter au format Graphml.");
+			System.out.println("Export to Graphml format");
 			if (listeActionsAnalysees.getSize() != 0) {
 				String outputfile = "";
 				try {
@@ -1109,7 +1123,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					// Dossier Courant
 					chooser.setCurrentDirectory(new File(adresseGraphml + File.separator));
 					// Affichage et récupération de la réponse de l'utilisateur
-					int reponse = chooser.showDialog(chooser, "Enregistrer (extension .graphml)");
+					int reponse = chooser.showDialog(chooser, "Save (.graphml extension)");
 					// Si l'utilisateur clique sur OK
 					if (reponse == JFileChooser.APPROVE_OPTION) {
 						// Récupération du chemin du fichier et de son nom
@@ -1118,6 +1132,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							outputfile = outputfile.substring(0, outputfile.length() - 8); // remove
 																							// user
 																							// extension
+						adresseGraphml = outputfile.substring(0, outputfile.lastIndexOf(File.separator));
 						System.out.println("fichier : " + outputfile + ".graphml");
 					}
 					algo.export(outputfile + ".graphml");
@@ -1129,7 +1144,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 		}
 
 		else if (source == boutonExporterLabels) {
-			System.out.println("Exporter les labels.");
+			System.out.println("Export labels.");
 			if (listeLabels.getSize() != 0) {
 				String outputfile = "";
 				try {
@@ -1137,7 +1152,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					// Dossier Courant
 					chooser.setCurrentDirectory(new File(adresseLabel + File.separator));
 					// Affichage et récupération de la réponse de l'utilisateur
-					int reponse = chooser.showDialog(chooser, "Enregistrer (extension .xml)");
+					int reponse = chooser.showDialog(chooser, "Save (.xml extension)");
 					// Si l'utilisateur clique sur OK
 					if (reponse == JFileChooser.APPROVE_OPTION) {
 						// Récupération du chemin du fichier et de son nom
@@ -1146,14 +1161,15 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							outputfile = outputfile.substring(0, outputfile.length() - 4); // remove
 																							// user
 																							// extension
-						System.out.println("fichier : " + outputfile + ".xml");
+						adresseLabel = outputfile.substring(0, outputfile.lastIndexOf(File.separator));
+						System.out.println("file: " + outputfile + ".xml");
 					}
 					// contenu à écrire récupération de value1 complété par les
 					// labels
 					ITraces itraces = new Traces();
 					itraces.setTraces(listeTracePourAnalyse);
 					for (int k = 0; k < listeTracePourAnalyse.size(); k++)
-						System.out.println("en pos " + k + " : " + listeTracePourAnalyse.get(k));
+						System.out.println("pos " + k + " : " + listeTracePourAnalyse.get(k));
 					Document doc = itraces.toXML();
 					Transformer transformer = TransformerFactory.newInstance().newTransformer();
 					Result output = new StreamResult(new File(outputfile + ".xml"));
