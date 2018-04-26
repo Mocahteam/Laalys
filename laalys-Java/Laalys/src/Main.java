@@ -1,11 +1,9 @@
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.nio.charset.Charset;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,7 +15,6 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.jfree.chart.labels.IntervalCategoryItemLabelGenerator;
 import org.w3c.dom.Document;
 
 import fr.lip6.mocah.laalys.features.Features;
@@ -178,7 +175,7 @@ public class Main {
 						System.out.println("\t\tIf -traces option is not set, two more options are parsed:");
 						System.out.println("\t\t\t-serverIP <IP_ADRESS>\tTCP address that sends traces");
 						System.out.println("\t\t\t-serverPort <PORT>\tTCP port used by server");
-						return;
+						System.exit(0);
 					case "-fullPn":
 						i++;
 						if (i < args.length)
@@ -211,7 +208,7 @@ public class Main {
 								serverPort = new Integer(args[i]);
 							} catch (NumberFormatException nfe){
 								System.out.println("Error with -serverPort option: "+args[i]+": it is not a parsable integer");
-								return;
+								System.exit(-15);
 							}
 						break;
 					case "-o":
@@ -222,61 +219,61 @@ public class Main {
 					default:
 						System.out.println("Error invalid option: "+args[i]);
 						System.out.println("Try 'LaalysV2 -help' for more information.");
-						return;
+						System.exit(-17);
 				}
 			}
 			// Check if all required options are set
 			IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
 			if (fullPnName == null){
 				System.out.println("Error: Full Petri net required for command line usage (see -fullPn option).");
-				return;
+				System.exit(-1);
 			} else {
 				File f = new File(fullPnName);
 				if (!f.exists() || f.isDirectory()){
 					System.out.println("Error with -fullPn option: "+fullPnName+": No such file.");
-					return;
+					System.exit(-2);
 				} else {
 					try {
 						fullPn.loadPetriNet(fullPnName);
 					} catch (Exception e) {
 						System.out.println("Error with -fullPn option: unable to load "+fullPnName+" file.\n"+e.getMessage());
-						return;
+						System.exit(-3);
 					}
 				}
 			}
 			IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
 			if (filteredPnName == null){
 				System.out.println("Error: Filtered Petri required for command line usage (see -filteredPn option).");
-				return;
+				System.exit(-4);
 			} else {
 				File f = new File(filteredPnName);
 				if (!f.exists() || f.isDirectory()){
 					System.out.println("Error with -filteredPn option: "+filteredPnName+": No such file.");
-					return;
+					System.exit(-5);
 				} else {
 					try {
 						filteredPn.loadPetriNet(filteredPnName);
 					} catch (Exception e) {
 						System.out.println("Error with -filteredPn option: unable to load "+filteredPnName+" file.\n"+e.getMessage());
-						return;
+						System.exit(-6);
 					}
 				}
 			}
 			IFeatures features = new Features();
 			if (featuresName == null){
 				System.out.println("Error: Features required for command line usage (see -features option.");
-				return;
+				System.exit(-7);
 			} else {
 				File f = new File(featuresName);
 				if (!f.exists() || f.isDirectory()){
 					System.out.println("Error with -features option: "+featuresName+": No such file.");
-					return;
+					System.exit(-8);
 				} else {
 					try {
 						features.loadFile(featuresName);
 					} catch (IOException e) {
 						System.out.println("Error with -features option: unable to load "+featuresName+" file.\n"+e.getMessage());
-						return;
+						System.exit(-9);
 					}
 				}
 			}
@@ -284,19 +281,19 @@ public class Main {
 			Socket tracesFromSocket = null;
 			if (traceName == null && (serverIP == null || serverPort == null)){
 				System.out.println("Error: No input traces defined, you have to set -traces option OR -serverIP and -serverPort options.");
-				return;
+				System.exit(-10);
 			} else if (traceName != null){
 				File f = new File(traceName);
 				if (!f.exists() || f.isDirectory()){
 					System.out.println("Error with -traces option: "+traceName+": No such file.");
-					return;
+					System.exit(-11);
 				} else {
 					tracesFromFile = new Traces();
 					try {
 						tracesFromFile.loadFile(traceName);
 					} catch (IOException e) {
 						System.out.println("Error with -traces option: unable to load "+traceName+" file.\n"+e.getMessage());
-						return;
+						System.exit(-12);
 					}
 				}
 			} else { // serverIP != null && serverPort != null
@@ -304,10 +301,10 @@ public class Main {
 					tracesFromSocket = new Socket(serverIP, serverPort.intValue());
 				} catch (UnknownHostException e) {
 					System.out.println("Error with -serverIP option: unable to resolve "+serverIP+" host.\n"+e.getMessage());
-					return;
+					System.exit(-14);
 				} catch (IOException e) {
 					System.out.println("Error with -serverPort option: "+serverPort.intValue()+" port is not open.\n"+e.getMessage());
-					return;
+					System.exit(-16);
 				}
 			}
 			// Init labeling algorithm
@@ -349,7 +346,7 @@ public class Main {
 				try {
 					// Get traces send by server
 					BufferedInputStream bis = new BufferedInputStream(tracesFromSocket.getInputStream());
-					PrintWriter out = new PrintWriter(tracesFromSocket.getOutputStream(), true);
+					PrintWriter pw = new PrintWriter(tracesFromSocket.getOutputStream(), true);
 			        
 			        // Il ne nous reste plus qu'à le lire
 			        int stream = -1;
@@ -370,19 +367,21 @@ public class Main {
 				        	String mergedLabels = ""; 
 				        	for (int i = 0 ; i < trace.getLabels().size() ; i++)
 				        		mergedLabels += trace.getLabels().get(i)+"\t";
+				        	// removing last \t
+				        	mergedLabels = mergedLabels.substring(0, mergedLabels.length()-1);
 				        	// send back labels
 				        	System.out.println("Send labels: "+mergedLabels); 
-				        	out.println(mergedLabels);
+				        	pw.println(mergedLabels);
 				        } else if (tokens[0].equalsIgnoreCase("Quit")){
 				        	break;
 				        }
 				        else if (tokens[0].equalsIgnoreCase("NextActionToPerform")){
-				        	out.println(algo.getNextBetterAction());
+				        	pw.println(algo.getNextBetterAction());
 				        }
 				        content = "";
 					}while ((stream = bis.read()) != -1); 
 					bis.close();
-					out.close();
+					pw.close();
 					tracesFromSocket.close();
 			        System.out.println("Fin de lecture du flux");
 				} catch (IOException e) {
