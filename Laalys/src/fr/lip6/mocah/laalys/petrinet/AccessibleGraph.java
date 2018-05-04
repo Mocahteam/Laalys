@@ -166,19 +166,19 @@ public class AccessibleGraph implements IGraph {
 	}
 	
 	/**
-	 * Renvoie l'ensemble des marquages les plus proches de "mark" qui permettent d'atteindre la transition "tr".
+	 * Renvoie l'ensemble des marquages les plus proches de "mark" qui permettent d'atteindre la transition "tr" tout en prenant en compte les transitions systèmes "systemTransition".
 	 * Par plus proche on entend les marquages (satisfaisant la contrainte d'atteinte de la transition) pour lesquels
 	 * la distance IMarking::distanceWith() est minimale.
 	 * @throws Exception 
 	 */
-	public ArrayList<IMarking> getNearestMarkings(IMarking mark, ITransition tr) throws Exception {
+	public ArrayList<IMarking> getNearestMarkings(IMarking mark, ITransition tr, ArrayList<String> systemTransition) throws Exception {
 		int d_min = Integer.MAX_VALUE;
 		ArrayList<IMarking> nearestMarkings = new ArrayList<IMarking>();
 		// On parcours tout les marquages
 		for (IMarking m : this.getAllMarkings())
 		{
 			// Vérifier si ce marquage permet d'atteindre la transition "tr"
-			if (isSubsequentlyEnabled(tr, m, null)){
+			if (isSubsequentlyEnabled(tr, m, systemTransition)){
 				// Calcul de la distance entre marking et m
 				int dist = m.distanceWith(mark, 1);
 				if (dist <= d_min){

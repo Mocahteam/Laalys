@@ -1,6 +1,8 @@
 package fr.lip6.mocah.laalys.petrinet;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * ...
@@ -100,20 +102,24 @@ public class PathIntersection implements IPathIntersection {
 		return isEqual;
 	}
 	
-	public void print()
+	public void print(Logger logger)
 	{
 		initSeen_rec();
-		print_rec("");
+		print_rec("", logger);
 	}
 	
 	// Affiche de manière récursive le graphe, l'affichage est stoppée si une intersection n'est
 	// pas défini ou si elle ne contient pas de lien ou si on boucle (on retombe sur une
 	// intersection déjà traité).
-	private void print_rec(String tab)
+	private void print_rec(String tab, Logger logger)
 	{
 		// Vérification d'un cas de boucle
-		if (seen_rec)
-			System.out.println(tab + "Boucle détectée");
+		if (seen_rec){
+			if (logger != null) 
+				logger.log(Level.INFO, tab + "Boucle détectée");
+			else
+				System.out.println(tab + "Boucle détectée");
+		}
 		
 		// indiquer que cette intersection est en cours de traitement
 		seen_rec = true;
@@ -126,14 +132,21 @@ public class PathIntersection implements IPathIntersection {
 				print += "[transition non définie]";
 			else
 				print += link.getLink().getId();
-			if (link.getNextIntersection() == null)
-				System.out.println(print + " (fin de branche)");
+			if (link.getNextIntersection() == null){
+				if (logger != null)
+					logger.log(Level.INFO, print + " (fin de branche)");
+				else
+					System.out.println(print + " (fin de branche)");
+			}
 			else
 			{
 				// Appel récursif
 				PathIntersection nextIntersection = (PathIntersection) link.getNextIntersection();
-				System.out.println(print);
-				nextIntersection.print_rec(tab + "\t");
+				if (logger != null)
+					logger.log(Level.INFO, print);
+				else
+					System.out.println(print);
+				nextIntersection.print_rec(tab + "\t", logger);
 			}
 		}
 		

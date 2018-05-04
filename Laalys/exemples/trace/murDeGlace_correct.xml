@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
 <map id="murDeGlace" nbPrecedingTry="0" Configuration="859" BeginningTime="160" EndingTime="55436">
-<transition time="2876299" action="store-clef;5" origin="player" try="false"/>
-<transition time="2876514" action="get-clef;5" origin="player" try="false"/>
-<transition time="2877984" action="open-porte;2" origin="player" try="false"/>
-<transition time="2879219" action="storeBack-clef;5" origin="player" try="false"/>
-<transition time="2881919" action="store-alumettes;1" origin="player" try="false"/>
-<transition time="2942080" action="get-alumettes;1" origin="player" try="false"/>
-<transition time="2942080" action="activate-chaudiere;3" origin="player" try="false"/>
-<transition time="2978075" action="storeBack-alumettes;1" origin="player" try="false"/>
-<transition time="2995872" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
-<transition time="2995872" action="activate-levier_plus_2_1;9" origin="player" try="false"/>
+<transition time="2876299" action="store-clef;5" origin="player"/>
+<transition time="2876514" action="get-clef;5" origin="player"/>
+<transition time="2877984" action="open-porte;2" origin="player"/>
+<transition time="2879219" action="storeBack-clef;5" origin="player"/>
+<transition time="2881919" action="store-alumettes;1" origin="player"/>
+<transition time="2942080" action="get-alumettes;1" origin="player"/>
+<transition time="2942080" action="activate-chaudiere;3" origin="player"/>
+<transition time="2978075" action="storeBack-alumettes;1" origin="player"/>
+<transition time="2995872" action="activate-levier_plus_2_1;9" origin="player"/>
+<transition time="2995872" action="activate-levier_plus_2_1;9" origin="player"/>
 <transition time="2995872" action="warming_]-inf ; 0[_to_[0]_chaudiere" origin="system"/>
 <transition time="2995872" action="warming_[0]_to_]0; +inf[_chaudiere" origin="system"/>
-<transition time="2879219" action="exit-;6" origin="player" try="false"/>
+<transition time="2879219" action="exit-;6" origin="player"/>
 </map>
 </data>
