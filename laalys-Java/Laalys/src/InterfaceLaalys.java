@@ -15,7 +15,9 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
 import java.util.logging.Level;
+import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
@@ -106,6 +108,17 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 	DefaultPieDataset dataset;
 	JTabbedPane onglets;
 
+	private class MyFormater extends Formatter{
+		@Override
+		public String format(LogRecord record) {
+			StringBuilder sb = new StringBuilder();
+	        sb.append(record.getLevel()).append(':');
+	        sb.append(record.getMessage()).append('\n');
+	        return sb.toString();
+		}
+		
+	}
+	
 	boolean loadingTraces = false;
 	//////////////////////////////////////////////////////////////////
 
@@ -941,14 +954,16 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							for (ITrace tr : tracesToLoad.getTraces()) { 
 								// pour affichage du nom de l'action seulement
 								listeNomActionsPourAnalyse.addElement(tr.getAction());
-								if (!listeActionContent.contains(tr.getAction()))
+								if (!listeActionContent.contains(tr.getAction())){
+									System.out.println("The trace \""+tr.getAction()+"\" is not included into liste of available actions.");
 									consistant = false;
+								}
 								// mémorisation des traces avec tous les attributs :
 								listeTracePourAnalyse.add(tr);
 							}
 							loadingTraces = false;
 							if (!consistant){
-								JOptionPane.showMessageDialog(this, "Waring, this traces include game actions not\n"
+								JOptionPane.showMessageDialog(this, "Warning, this traces include game actions not\n"
 										+ "included into the full Petri net\n\nLoading aborted");
 								traceName = null;
 								listeNomActionsPourAnalyse.removeAllElements();
@@ -1031,6 +1046,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
 				ConsoleHandler ch = new ConsoleHandler();
 				ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
+				ch.setFormatter(new MyFormater()); // define formater
 				monLog.addHandler(ch);
 				algo = new Labeling_V10(monLog, true);
 				algo.setCompletePN(fullPn);
@@ -1041,6 +1057,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 				} catch (Exception e3) {
 					e3.printStackTrace();
 				}
+				monLog.removeHandler(ch);
 
 				// vidage des trois fenêtres
 				listeActionsAnalysees.removeAllElements();

@@ -1109,13 +1109,13 @@ public class PetriNet implements IPetriNet {
 	}
 	
 	/**
-	 * Renvoie l'ensemble des marquages les plus proches de "mark" qui permettent d'atteindre la transition "tr".
+	 * Renvoie l'ensemble des marquages les plus proches de "mark" qui permettent d'atteindre la transition "tr" tout en prenant en compte les transitions systèmes "systemTransition".
 	 * Par plus proche on entend les marquages (satisfaisant la contrainte d'atteinte de la transition) pour lesquels
 	 * la distance IMarking::distanceWith() est minimale.
 	 * @throws Exception 
 	 */
-	public ArrayList<IMarking> getNearestMarkings(IMarking mark, ITransition tr) throws Exception {
-		return this.graph.getNearestMarkings(mark, tr);
+	public ArrayList<IMarking> getNearestMarkings(IMarking mark, ITransition tr, ArrayList<String> systemTransition) throws Exception {
+		return this.graph.getNearestMarkings(mark, tr, systemTransition);
 	}
 	
 	public IPlaceInfo getPlaceById(String placeId)

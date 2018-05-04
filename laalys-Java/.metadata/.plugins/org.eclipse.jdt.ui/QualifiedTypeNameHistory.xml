@@ -5,7 +5,6 @@
 <fullyQualifiedTypeName name="javax.xml.transform.Transformer"/>
 <fullyQualifiedTypeName name="javax.xml.transform.TransformerFactory"/>
 <fullyQualifiedTypeName name="javax.xml.transform.stream.StreamResult"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="javax.xml.transform.Result"/>
 <fullyQualifiedTypeName name="javax.xml.transform.Source"/>
 <fullyQualifiedTypeName name="javax.xml.transform.dom.DOMSource"/>
@@ -23,4 +22,28 @@
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.constants.ActionType"/>
+<fullyQualifiedTypeName name="java.lang.Cloneable"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.IMarking"/>
+<fullyQualifiedTypeName name="org.jfree.chart.labels.IntervalCategoryItemLabelGenerator"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.PetriNet"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.CoverabilityGraph"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.features.IFeatures"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.features.Features"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.ITraces"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Traces"/>
+<fullyQualifiedTypeName name="java.net.Socket"/>
+<fullyQualifiedTypeName name="java.util.logging.Logger"/>
+<fullyQualifiedTypeName name="java.util.logging.Level"/>
+<fullyQualifiedTypeName name="java.util.logging.ConsoleHandler"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.ILabeling"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.Labeling_V10"/>
+<fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Trace"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.ITrace"/>
+<fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
+<fullyQualifiedTypeName name="java.nio.charset.Charset"/>
+<fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.IPetriNet"/>
 </qualifiedTypeNameHistroy>

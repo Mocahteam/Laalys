@@ -899,7 +899,7 @@ public class Labeling_V9 implements ILabeling {
 		for (String trId : expertEndTransitions) {
 			ITransition tr = pn.getTransitionById(trId);
 			if (tr != null)
-				nearestMarkings.addAll(pn.getNearestMarkings(startingMarking, tr));
+				nearestMarkings.addAll(pn.getNearestMarkings(startingMarking, tr, this.systemTransitions));
 		}
 		return nearestMarkings;
 	}

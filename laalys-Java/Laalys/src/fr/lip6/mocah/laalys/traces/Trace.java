@@ -74,10 +74,12 @@ public class Trace implements ITrace
 	{
 		Element tr = (Element) racine.createElement("transition");
 		tr.setAttribute("action", _action);
-		tr.setAttribute("try", (_isTry != null) ? _isTry.toString() : "null");
+		if (_isTry != null)
+			tr.setAttribute("try", _isTry.toString());
 		tr.setAttribute("source", _source);
 		tr.setAttribute("origin", _origin);
-		tr.setAttribute("labels", (_labels != null) ? _labels.toString() : "null");
+		if (_labels != null)
+			tr.setAttribute("labels", _labels.toString());
 		return tr;
 	}
 	

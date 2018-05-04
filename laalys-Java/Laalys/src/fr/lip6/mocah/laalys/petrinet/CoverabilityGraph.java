@@ -114,11 +114,9 @@ public class CoverabilityGraph extends AccessibleGraph {
 		}
 
 		// init time
-		int cpt = 0;
 		while (toExplore.size() != 0)
 		{
 			IMarking mark = toExplore.remove(toExplore.size() - 1);
-			cpt++;
 			// synchronisation du réseau de pétri sur le marquage en cours de traitement
 			pn.setCurrentMarkings(mark);
 			String code = mark.getCode();
@@ -373,9 +371,8 @@ public class CoverabilityGraph extends AccessibleGraph {
 			}
 		}
 		
-		//trace ("Longueur des chemins les plus courts : " + roads.getDistance());
-		
-		//trace ("Affichage des intersections possibles :");
+		//System.out.println ("Longueur des chemins les plus courts : " + roads.size());
+		//System.out.println ("Affichage des intersections possibles :");
 		//roads.print();
 		
 		return roads;
@@ -569,8 +566,9 @@ public class CoverabilityGraph extends AccessibleGraph {
 		// On récupère l'ensemble des références de marquage qui correspondent à "startingMarking"
 		ArrayList<Integer> refMarkings = getRefClosestEquivalentMarkings(startingMarking);
 		// On lance l'analyse sur chaque référence de marquage en fonction de la stratégie
-		if (refMarkings.size() == 1 || globalStrategy.equals(STRATEGY_FIRST))
+		if (refMarkings.size() == 1 || globalStrategy.equals(STRATEGY_FIRST)){
 			return workingFunction.execute(refMarkings.get(0), args);
+		}
 		else
 		{
 			for (int ref : refMarkings)

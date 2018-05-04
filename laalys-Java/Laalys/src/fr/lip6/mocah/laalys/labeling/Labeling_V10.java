@@ -18,7 +18,7 @@ import fr.lip6.mocah.laalys.traces.constants.ActionSource;
 import fr.lip6.mocah.laalys.traces.constants.ActionType;
 
 public class Labeling_V10 implements ILabeling {
-
+	
 	/**
 	 * looger, on l'utilise afin de pouvoir garder une trace de ce qui a ete
 	 * fait par l'application. Utile pour le debug.
@@ -99,10 +99,6 @@ public class Labeling_V10 implements ILabeling {
 	 */
 	private ArrayList<PathState> completeMarkingSeen = null;
 	
-	/**
-	 * marquage du RdP filtree avant franchissement de la transition
-	 */
-	private IMarking MF = null;
 	/**
 	 * marquage complet avant franchissement de la transition adapté au RdP filtré
 	 */
@@ -245,7 +241,6 @@ public class Labeling_V10 implements ILabeling {
 		action.freeLabels();
 		
 		// enregistre les marquages courants
-		this.MF = this.filteredRdp.getCurrentMarkings().clone();
 		this.MC_subset = PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp);
 		if (this.workingRdp1 == null){
 			this.workingRdp1 = this.filteredRdp;
@@ -275,7 +270,7 @@ public class Labeling_V10 implements ILabeling {
 			analyseTransitionCase2();
 		}
 		
-		if ( this.logAll ) logger.log(Level.INFO, "l'action \"" +  this.currentAction.getAction() + "\" a ete labellisee \"" +  this.currentAction.getLabels() + "\"");
+		if ( this.logAll ) logger.log(Level.INFO, "l'action \"" +  this.currentAction.getAction() + "\" a ete labellisee \"" +  this.currentAction.getLabels() + "\"\n");
 	}
 	
 	// Cas 1 : cas des actions acceptées par le jeu
@@ -297,8 +292,14 @@ public class Labeling_V10 implements ILabeling {
 		else
 		{
 			if ( this.logAll ) logger.log(Level.INFO, "Action systeme");
-			// on joue la transition dans le Rdp Filtre si elle est presente dans RdpF et si elle est sensibilisee
-			computeMpF_IfPossible();
+			// on joue la transition dans le Rdp de travail si elle est presente dans RdpF et si elle est sensibilisee dans RdpW1
+			//si t € RdpW1 && sens( t, RdpW1 )
+			if ( this.currentFilteredTransition != null && this.workingRdp1.enabledTransition( this.currentFilteredTransition ) )
+			{
+				if ( this.logAll ) logger.log(Level.INFO, "t € RdpW1 && sens( t, RdpW1 ) => calcul de M'W1");
+				// On calcule M'W1
+				this.workingRdp1.changeStatePetriNet(this.currentFilteredTransition);
+			}
 			// Aucun label n'est a definir dans ce cas (on ne labellise pas les transitions systeme)
 			// En revanche on verifie si le marquage genere par la transition systeme ne produit pas un marquage deja vue
 			// Si tel est le cas, on propage ce label sur la derniere action non systeme jouee (on considere que c'est elle
@@ -336,26 +337,26 @@ public class Labeling_V10 implements ILabeling {
 			if ( this.currentFilteredTransition != null )
 			{
 				if ( this.logAll ) logger.log(Level.INFO, "t € RdpF");
-				// On teste si la transition a pu etre declenchee => amont_t(t, GF, MF)
-				if (this.filteredRdp.isPreviouslyEnabled(this.currentFilteredTransition)) {
-					if ( this.logAll ) logger.log(Level.INFO, "amont_t(t, GF, MF)");
-					// On teste si la transition pourra etre declenchee => v(t, GF, MF, lSys)
-					if (this.filteredRdp.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MF, this.systemTransitions)) {
-						if ( this.logAll ) logger.log(Level.INFO, "v(t, GF, MF, lSys)");
+				// On teste si la transition a pu etre declenchee => amont_t(t, GW1, MC)
+				if (this.workingRdp1.isPreviouslyEnabled(this.currentFilteredTransition)) {
+					if ( this.logAll ) logger.log(Level.INFO, "amont_t(t, GW1, MC)");
+					// On teste si la transition pourra etre declenchee => v(t, GW1, MC, lSys)
+					if (this.workingRdp1.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MC_subset, this.systemTransitions)) {
+						if ( this.logAll ) logger.log(Level.INFO, "v(t, GW1, MC, lSys)");
 						if ( this.logAll ) logger.log(Level.INFO, "\t=> Intrusion");
 						currentAction.addLabel( Labels.INTRUSION );
 					}
 					else {
-						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GF, MF, lSys)");
+						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GW1, MC, lSys)");
 						if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tard");
 						currentAction.addLabel( Labels.TROP_TARD );
 					}
 				}
 				else {
-					if ( this.logAll ) logger.log(Level.INFO, "!amont_t(t, GF, MF)");
-					// On teste si la transition pourra etre declenchee => v(t, GF, MF, lSys)
-					if (this.filteredRdp.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MF, this.systemTransitions)) {
-						if ( this.logAll ) logger.log(Level.INFO, "v(t, GF, MF, lSys)");
+					if ( this.logAll ) logger.log(Level.INFO, "!amont_t(t, GW1, MC)");
+					// On teste si la transition pourra etre declenchee => v(t, GW1, MC, lSys)
+					if (this.workingRdp1.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MC_subset, this.systemTransitions)) {
+						if ( this.logAll ) logger.log(Level.INFO, "v(t, GW1, MC, lSys)");
 						if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tôt");
 						currentAction.addLabel( Labels.TROP_TOT );
 					}
@@ -363,7 +364,7 @@ public class Labeling_V10 implements ILabeling {
 						// Vis-a-vis du marquage courant, on n'a jamais pu jouer cette transition et on ne pourrapas le faire. Mais
 						// comme t ϵ RdpF elle est forcement accessible sinon l'expert n'aurait pas pu la jouer. Donc c'est qu'elle
 						// est sur une autre branche.
-						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GF, MF, lSys)");
+						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GW1, MC, lSys)");
 						if ( this.logAll ) logger.log(Level.INFO, "\t=> Autre branche de resolution");
 						currentAction.addLabel( Labels.AUTRE_BRANCHE_DE_RESOLUTION );
 					}
@@ -464,17 +465,6 @@ public class Labeling_V10 implements ILabeling {
 		}
 		// ajout à l'historique
 		completeMarkingSeen.add(new PathState(this.currentAction, this.MpC.clone(), this.MpC_subset.clone(), this.workingRdp2));
-		// si RdpW1 est RdpF : Propager M'C dans MF
-		if (this.workingRdp1 == this.filteredRdp) {
-			if ( this.logAll ) logger.log(Level.INFO, "RdpW1 est RdpF avec MiF == MiC");
-			//on propage le marquage complet dans le rdp filtré
-			if ( this.logAll ) logger.log(Level.INFO, "\ton propage le marquage complet dans le rdp filtré");
-			this.filteredRdp.setCurrentMarkings(MpC_subset);
-		} else { // sinon <=> RdpW1 n'est pas RdpF
-			if ( this.logAll ) logger.log(Level.INFO, "RdpW1 est RdpF avec MiF != MiC");
-			// on joue la transition dans le Rdp Filtré si elle est présente dans RdpF et si elle est sensibilisée
-			computeMpF_IfPossible();
-		}
 		// On passe le RdpW2 dans le RdpW1 car M'C sera MC pour la prochaine trace
 		this.workingRdp1 = this.workingRdp2;
 	}
@@ -619,7 +609,6 @@ public class Labeling_V10 implements ILabeling {
 			if (paths.size() > 0)
 				mpcMinDist = Math.min(mpcMinDist, paths.get(0).getDistance());
 		}
-		
 		// Idem pour MC, calcul de la distance la plus courte pour atteindre la fin du niveau à partir du (ou des)
 		// marquage(s) le(s) plus proche(s) dans RdpF de MC
 		nearestMarkings = getNearestMarkingsThatBringsToExpertEnds(this.filteredRdp, this.MC_subset);
@@ -629,7 +618,7 @@ public class Labeling_V10 implements ILabeling {
 			// pour chacun d'eux, calcul du plus court chemin
 			paths = getShortestPathsToTransitions(this.filteredRdp, m, this.expertEndTransitions);
 			if (paths.size() > 0)
-				mcMinDist = Math.min(mcMinDist, paths.get(0).getDistance());
+				mcMinDist = Math.min(paths.get(0).getDistance(), mcMinDist);
 		}
 		
 		// si longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) < longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)
@@ -697,16 +686,6 @@ public class Labeling_V10 implements ILabeling {
 			this.currentAction.setIsTry(!this.completeRdp.enabledTransition( this.currentCompleteTransition ));
 		}
 		return this.currentAction.getIsTry().booleanValue();
-	}
-		
-	private void computeMpF_IfPossible() {
-		//si t € rdpF && sens( t, rdpF )
-		if ( this.currentFilteredTransition != null && this.filteredRdp.enabledTransition( this.currentFilteredTransition ) )
-		{
-			if ( this.logAll ) logger.log(Level.INFO, "t € rdpF && sens( t, rdpF ) => calcul de M'F");
-			// On calcule M'F
-			this.filteredRdp.changeStatePetriNet(this.currentFilteredTransition);
-		}
 	}
 	
 	/**
@@ -806,7 +785,7 @@ public class Labeling_V10 implements ILabeling {
 		for (String trId : expertEndTransitions) {
 			ITransition tr = pn.getTransitionById(trId);
 			if (tr != null)
-				nearestMarkings.addAll(pn.getNearestMarkings(startingMarking, tr));
+				nearestMarkings.addAll(pn.getNearestMarkings(startingMarking, tr, this.systemTransitions));
 		}
 		return nearestMarkings;
 	}

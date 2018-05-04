@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 <map id="Thermometre 1" nbPrecedingTry="1" Configuration="" BeginningTime="197345" EndingTime="537740">
-<transition time="241690" action="activate-levier_plus_2_1;6" origin="player" try="false"/>
+<transition time="241690" action="activate-levier_plus_2_1;6" origin="player" />
 <transition time="241691" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
 <transition time="241692" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="245975" action="activate-levier_plus_2_1;6" origin="player" try="false"/>
-<transition time="267840" action="activate-levier_plus_3_1;4" origin="player" try="false"/>
-<transition time="272352" action="activate-levier_plus_3_1;4" origin="player" try="false"/>
-<transition time="291917" action="desactivate-levier_plus_6_1;2" origin="player" try="false"/>
-<transition time="328994" action="desactivate-levier_plus_2_1;6" origin="player" try="false"/>
-<transition time="357174" action="desactivate-levier_plus_2_1;6" origin="player" try="false"/>
+<transition time="245975" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="267840" action="activate-levier_plus_3_1;4" origin="player" />
+<transition time="272352" action="activate-levier_plus_3_1;4" origin="player" />
+<transition time="291917" action="desactivate-levier_plus_6_1;2" origin="player" />
+<transition time="328994" action="desactivate-levier_plus_2_1;6" origin="player" />
+<transition time="357174" action="desactivate-levier_plus_2_1;6" origin="player" />
 <transition time="357175" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
 <transition time="357176" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="392539" action="desactivate-levier_plus_3_1;4" origin="player" try="false"/>
-<transition time="399194" action="activate-levier_plus_2_1;6" origin="player" try="false"/>
-<transition time="411224" action="activate-levier_plus_3_1;4" origin="player" try="false"/>
+<transition time="392539" action="desactivate-levier_plus_3_1;4" origin="player" />
+<transition time="399194" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="411224" action="activate-levier_plus_3_1;4" origin="player" />
 <transition time="411225" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
 <transition time="411226" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="420364" action="desactivate-levier_plus_2_1;6" origin="player" try="false"/>
+<transition time="420364" action="desactivate-levier_plus_2_1;6" origin="player" />
 <transition time="420365" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
 <transition time="420366" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="446219" action="activate-levier_plus_6_1;2" origin="player" try="false"/>
+<transition time="446219" action="activate-levier_plus_6_1;2" origin="player" />
 <transition time="446220" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
 <transition time="446221" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="456424" action="activate-levier_plus_6_1;2" origin="player" try="false"/>
-<transition time="480804" action="desactivate-levier_plus_6_1;2" origin="player" try="false"/>
-<transition time="483439" action="desactivate-levier_plus_6_1;2" origin="player" try="false"/>
+<transition time="456424" action="activate-levier_plus_6_1;2" origin="player" />
+<transition time="480804" action="desactivate-levier_plus_6_1;2" origin="player" />
+<transition time="483439" action="desactivate-levier_plus_6_1;2" origin="player" />
 <transition time="483440" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
 <transition time="483441" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="502994" action="activate-levier_plus_2_1;6" origin="player" try="false"/>
+<transition time="502994" action="activate-levier_plus_2_1;6" origin="player" />
 <transition time="502995" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
 <transition time="502996" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="505449" action="desactivate-levier_plus_2_1;6" origin="player" try="false"/>
+<transition time="505449" action="desactivate-levier_plus_2_1;6" origin="player" />
 <transition time="505450" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
 <transition time="505451" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="513224" action="activate-levier_plus_4_1;7" origin="player" try="false"/>
+<transition time="513224" action="activate-levier_plus_4_1;7" origin="player" />
 <transition time="513225" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
 <transition time="513226" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="526185" action="desactivate-levier_plus_3_1;4" origin="player" try="false"/>
+<transition time="526185" action="desactivate-levier_plus_3_1;4" origin="player" />
 <transition time="526186" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
-<transition time="537740" action="exit-;8" origin="player" try="false"/>
+<transition time="537740" action="exit-;8" origin="player" />
 </map>
 </data>

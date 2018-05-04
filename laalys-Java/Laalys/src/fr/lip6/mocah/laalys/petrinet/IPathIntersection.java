@@ -1,6 +1,7 @@
 package fr.lip6.mocah.laalys.petrinet;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * ...
@@ -20,7 +21,11 @@ public interface IPathIntersection {
 	
 	public void removeLink (IPathLink link);
 	
-	public void print();
+	/**
+	 * Si logger == null affichage sur la sortie standard
+	 * @param logger
+	 */
+	public void print(Logger logger);
 	
 	/**
 	 * Recherche dans cette intersection un (ou plusieurs) lien(s) défini(s) par la transition "tr"
