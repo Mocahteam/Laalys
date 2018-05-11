@@ -904,8 +904,8 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 					// Vérifier s'il y a au moins une action de fin
 					if (!features.getEndLevelTransitions().isEmpty()){
 						boutonChargerCaracteristiques.setBackground(Color.CYAN);
-						int index = fullPnName.lastIndexOf(File.separator);
-						String nomfich = fullPnName.substring(index + 1);
+						int index = featuresName.lastIndexOf(File.separator);
+						String nomfich = featuresName.substring(index + 1);
 						infoCarateristiques.setText("<html><center>Specifications selected:<br>" + nomfich + "</center></html>");
 						// si le Rdp filtré est aussi chargée, on peut dévérouiller les traces
 						if (filteredPn != null)

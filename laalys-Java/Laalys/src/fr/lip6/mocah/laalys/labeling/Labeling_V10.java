@@ -8,6 +8,7 @@ import fr.lip6.mocah.laalys.features.IFeatures;
 import fr.lip6.mocah.laalys.labeling.constants.Labels;
 import fr.lip6.mocah.laalys.petrinet.IMarking;
 import fr.lip6.mocah.laalys.petrinet.IPathIntersection;
+import fr.lip6.mocah.laalys.petrinet.IPathLink;
 import fr.lip6.mocah.laalys.petrinet.IPetriNet;
 import fr.lip6.mocah.laalys.petrinet.ITransition;
 import fr.lip6.mocah.laalys.petrinet.PetriNet;
@@ -210,7 +211,10 @@ public class Labeling_V10 implements ILabeling {
 	
 	public IPetriNet getFilteredPN() 
 	{
-		return filteredRdp;
+		if (this.workingRdp1 != null)
+			return this.workingRdp1;
+		else
+			return this.filteredRdp;
 	}
 	
 	public void setFilteredPN(IPetriNet value) 
@@ -816,14 +820,34 @@ public class Labeling_V10 implements ILabeling {
 
 
 	@Override
-	public String getNextBetterAction() throws Exception {
+	public String getNextBetterActionsToReach(String targetActionName, int maxActions) throws Exception {
 		IPetriNet workingRdp = this.workingRdp1;
 		if (workingRdp == null) workingRdp = this.filteredRdp;
-		ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( workingRdp, PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp), this.expertEndTransitions );
+		ArrayList<String> targets = this.expertEndTransitions;
+		if (!targetActionName.equals("end")){
+			targets = new ArrayList<>();
+			targets.add(targetActionName);
+		}
+		ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( workingRdp, PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp), targets );
 		if (shortestPaths_MC.size() == 0)
 			return "";
-		else
-			return shortestPaths_MC.get(0).getLinks().get(0).getLink().getName();
+		else{
+			String betterActions = "";
+			int cpt = 0;
+			IPathLink currentLink = shortestPaths_MC.get(0).getLinks().get(0);
+			while (cpt < maxActions){
+				if (cpt > 0)
+					betterActions = betterActions+"\t";
+				betterActions = betterActions+currentLink.getLink().getName();
+				if (currentLink.getNextIntersection() != null){
+					currentLink = currentLink.getNextIntersection().getLinks().get(0);
+					cpt++;
+				} else
+					cpt = maxActions; //stop loop
+			}
+			
+			return betterActions;
+		}
 	}
 
 }
