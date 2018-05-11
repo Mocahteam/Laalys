@@ -8,6 +8,7 @@ import fr.lip6.mocah.laalys.features.IFeatures;
 import fr.lip6.mocah.laalys.labeling.constants.Labels;
 import fr.lip6.mocah.laalys.petrinet.IMarking;
 import fr.lip6.mocah.laalys.petrinet.IPathIntersection;
+import fr.lip6.mocah.laalys.petrinet.IPathLink;
 import fr.lip6.mocah.laalys.petrinet.IPetriNet;
 import fr.lip6.mocah.laalys.petrinet.ITransition;
 import fr.lip6.mocah.laalys.petrinet.PetriNet;
@@ -930,12 +931,28 @@ public class Labeling_V9 implements ILabeling {
 
 
 	@Override
-	public String getNextBetterAction() throws Exception {
-		ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( this.filteredRdp, this.MF, this.expertEndTransitions );
+	public String getNextBetterActionsToReach(String targetActionName, int maxActions) throws Exception {
+		ArrayList<String> targets = this.expertEndTransitions;
+		if (targetActionName != null && !targetActionName.isEmpty()){
+			targets = new ArrayList<>();
+			targets.add(targetActionName);
+		}
+		ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( this.filteredRdp, PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp), targets );
 		if (shortestPaths_MC.size() == 0)
 			return "";
-		else
-			return shortestPaths_MC.get(0).getLinks().get(0).getLink().getName();
+		else{
+			String betterActions = "";
+			int cpt = 0;
+			IPathLink currentLink = shortestPaths_MC.get(0).getLinks().get(0);
+			while (cpt < maxActions){
+				betterActions = betterActions+"\t"+currentLink.getLink().getName();
+				if (currentLink.getNextIntersection() != null)
+					currentLink = currentLink.getNextIntersection().getLinks().get(0);
+				cpt++;
+			}
+			
+			return betterActions;
+		}
 	}
 
 }

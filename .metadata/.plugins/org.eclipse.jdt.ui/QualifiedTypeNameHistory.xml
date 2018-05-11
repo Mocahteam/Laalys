@@ -34,11 +34,8 @@
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.ITraces"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Traces"/>
 <fullyQualifiedTypeName name="java.net.Socket"/>
-<fullyQualifiedTypeName name="java.util.logging.Logger"/>
-<fullyQualifiedTypeName name="java.util.logging.Level"/>
 <fullyQualifiedTypeName name="java.util.logging.ConsoleHandler"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.ILabeling"/>
-<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.Labeling_V10"/>
 <fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Trace"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.ITrace"/>
@@ -46,4 +43,8 @@
 <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.IPetriNet"/>
+<fullyQualifiedTypeName name="java.util.logging.Formatter"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.Labeling_V10"/>
+<fullyQualifiedTypeName name="java.util.logging.Logger"/>
+<fullyQualifiedTypeName name="java.util.logging.Level"/>
 </qualifiedTypeNameHistroy>

@@ -33,11 +33,14 @@ public interface ILabeling {
 	public void labelAction( ITrace action ) throws Exception;
 	
 	/**
-	 * Get the name of the next better action to perform
-	 * @return
+	 * Get the name of the next better action to perform to reach target action name. Try to compute a path between current
+	 * state and the target action name. If found returns the first action of this path, if not found returns empty string "".
+	 * @param targetActionName the action name to reach. Use "end" key word to target expertEndTransitions.
+	 * @param maxActions the maximum number of actions returned.
+	 * @return a string containing all name actions separated by "\t" separator
 	 * @throws Exception 
 	 */
-	public String getNextBetterAction () throws Exception;
+	public String getNextBetterActionsToReach (String targetActionName, int maxActions) throws Exception;
 	
 	/**
 	 * re initialise toutes les variables interne pour ne pas

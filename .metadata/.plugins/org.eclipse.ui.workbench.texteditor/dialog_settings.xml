@@ -2,20 +2,20 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="boutonSauvegarderTrace" key="selection"/>
+		<item value="extractSubMarkings" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
-			<item value="boutonSauvegarderTrace"/>
-			<item value="sauvegarder la trace"/>
-			<item value="adresseGraphml"/>
-			<item value="adresseLabel"/>
-			<item value="adresseTrace"/>
-			<item value="adresseSpec"/>
-			<item value="adresseReseauFiltre"/>
-			<item value="adressereseau"/>
+			<item value="extractSubMarkings"/>
+			<item value="Specifications selected"/>
+			<item value="CAS 1_5"/>
+			<item value="debugLog"/>
+			<item value="earest"/>
+			<item value="getNearestMarkingsThatBringsToExpertEnds"/>
+			<item value="Stagnation"/>
+			<item value="STagnation"/>
 		</list>
 		<list key="replacehistory">
 			<item value="UIManager.getColor(&quot;Bouton.background&quot;)"/>
@@ -25,7 +25,7 @@
 		<item value="284" key="DIALOG_WIDTH"/>
 		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
 		<item value="390" key="DIALOG_HEIGHT"/>
-		<item value="873" key="DIALOG_X_ORIGIN"/>
-		<item value="148" key="DIALOG_Y_ORIGIN"/>
+		<item value="1045" key="DIALOG_X_ORIGIN"/>
+		<item value="309" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

@@ -522,7 +522,7 @@ public class PetriNet implements IPetriNet {
 		for (IPlaceInfo p : rdpBase.getPlaces())
 		{
 			if (rdpExtraction.getPlaceById(p.getId()) == null)
-				return null;
+				throw new Exception ("The place with id "+p.getId()+" is not included into base Petri net");
 		}
 		// Toutes les places du rdpBase sont bien incluses dans le rdpExtraction
 		// Création d'un Rdp temporaire pour travailler
