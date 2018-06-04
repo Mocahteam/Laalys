@@ -315,7 +315,7 @@ public class Labeling_V10 implements ILabeling {
 				boolean found = false;
 				for (int i = completeMarkingSeen.size() - 1 ; i >= 0 && !found ; i--) {
 					ITrace tr = completeMarkingSeen.get(i).action;
-					if (!systemTransitions.contains(tr.getAction())) {
+					if (tr != null && !systemTransitions.contains(tr.getAction())) {
 						// ajout du label DEJA_VU s'il n'y est pas deja
 						if (!tr.getLabels().contains(Labels.DEJA_VU))
 							tr.addLabel(Labels.DEJA_VU);

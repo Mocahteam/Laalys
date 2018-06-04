@@ -15,7 +15,6 @@
 <fullyQualifiedTypeName name="java.awt.FlowLayout"/>
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
 <fullyQualifiedTypeName name="javax.swing.UIManager"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="javax.swing.event.ListDataListener"/>
 <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
 <fullyQualifiedTypeName name="java.awt.Component"/>
@@ -26,7 +25,6 @@
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.IMarking"/>
 <fullyQualifiedTypeName name="org.jfree.chart.labels.IntervalCategoryItemLabelGenerator"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.PetriNet"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.CoverabilityGraph"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.features.IFeatures"/>
@@ -42,9 +40,13 @@
 <fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
 <fullyQualifiedTypeName name="java.nio.charset.Charset"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
-<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.IPetriNet"/>
 <fullyQualifiedTypeName name="java.util.logging.Formatter"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.Labeling_V10"/>
 <fullyQualifiedTypeName name="java.util.logging.Logger"/>
 <fullyQualifiedTypeName name="java.util.logging.Level"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.IPetriNet"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.ITransition"/>
+<fullyQualifiedTypeName name="java.io.FileOutputStream"/>
+<fullyQualifiedTypeName name="java.io.File"/>
 </qualifiedTypeNameHistroy>
