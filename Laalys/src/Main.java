@@ -395,7 +395,8 @@ public class Main {
 						        	for (int i = 0 ; i < trace.getLabels().size() ; i++)
 						        		mergedLabels += trace.getLabels().get(i)+"\t";
 						        	// removing last \t
-						        	mergedLabels = mergedLabels.substring(0, mergedLabels.length()-1);
+						        	if (mergedLabels.endsWith("\t"))
+						        		mergedLabels = mergedLabels.substring(0, mergedLabels.length()-1);
 					        	}catch(Exception e){
 					        		System.out.println("Warning!!! Labeling aborted: "+e.getMessage());
 					        	}
