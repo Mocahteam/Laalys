@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -150,9 +152,9 @@ public class Main {
 			new InterfaceLaalys();
 		else{
 			// Parse options
-			String fullPnName = null;
-			String filteredPnName = null;
-			String featuresName = null;
+			String fullDirName = null;
+			String filteredDirName = null;
+			String featuresDirName = null;
 			String traceName = null;
 			String serverIP = null;
 			Integer serverPort = null;
@@ -167,9 +169,9 @@ public class Main {
 						System.out.println("No parameters shows GUI. In command line following options are available:");
 						System.out.println("\tOptions:");
 						System.out.println("\t\t-help\t\t\t\tprint this message");
-						System.out.println("\t\t-fullPn <FILE>\t\t\tload file and use it as full Petri net");
-						System.out.println("\t\t-filteredPn <FILE>\t\tload file and use it as filtered Petri net");
-						System.out.println("\t\t-features <FILE>\t\tload features associated to Petri nets");
+						System.out.println("\t\t-fullPn <DIR>\t\t\tload full Petri nets included into DIR");
+						System.out.println("\t\t-filteredPn <DIR>\t\tload filtered Petri nets included into DIR");
+						System.out.println("\t\t-features <DIR>\t\tload features included into DIR");
 						System.out.println("\t\t-traces <FILE>\t\t\tload file containing traces to analyse");
 						System.out.println("\t\t-o <FILE>\t\t\toutput file to store analysis (xml extension is automaticaly added)");
 						System.out.println("");
@@ -180,17 +182,17 @@ public class Main {
 					case "-fullPn":
 						i++;
 						if (i < args.length)
-							fullPnName = args[i];
+							fullDirName = args[i];
 						break;
 					case "-filteredPn":
 						i++;
 						if (i < args.length)
-							filteredPnName = args[i];
+							filteredDirName = args[i];
 						break;
 					case "-features":
 						i++;
 						if (i < args.length)
-							featuresName = args[i];
+							featuresDirName = args[i];
 						break;
 					case "-traces":
 						i++;
@@ -223,78 +225,115 @@ public class Main {
 						System.exit(-17);
 				}
 			}
-			// Check if all required options are set
-			IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-			if (fullPnName == null){
-				System.err.println("Error: Full Petri net required for command line usage (see -fullPn option).");
+			
+			// Check if required directories are set and exist
+			if (fullDirName == null){
+				System.err.println("Error: Full Petri nets directory required for command line usage (see -fullPn option).");
 				System.exit(-1);
-			} else {
-				File f = new File(fullPnName);
-				if (!f.exists() || f.isDirectory()){
-					System.err.println("Error with -fullPn option: "+fullPnName+": No such file.");
-					System.exit(-2);
-				} else {
-					try {
-						fullPn.loadPetriNet(fullPnName);
-					} catch (Exception e) {
-						System.err.println("Error with -fullPn option: unable to load "+fullPnName+" file.\n"+e.getMessage());
-						System.exit(-3);
-					}
-				}
 			}
-			IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-			if (filteredPnName == null){
-				System.err.println("Error: Filtered Petri required for command line usage (see -filteredPn option).");
+			File fullDir = new File(fullDirName);
+			if (!fullDir.exists() || !fullDir.isDirectory()){
+				System.err.println("Error with -fullPn option: "+fullDirName+": No such directory.");
+				System.exit(-2);
+			}
+			if (filteredDirName == null){
+				System.err.println("Error: Filtered Petri nets directory required for command line usage (see -filteredPn option).");
+				System.exit(-3);
+			}
+			File filteredDir = new File(filteredDirName);
+			if (!filteredDir.exists() || !filteredDir.isDirectory()){
+				System.err.println("Error with -filteredPn option: "+filteredDirName+": No such directory.");
 				System.exit(-4);
-			} else {
-				File f = new File(filteredPnName);
-				if (!f.exists() || f.isDirectory()){
-					System.err.println("Error with -filteredPn option: "+filteredPnName+": No such file.");
-					System.exit(-5);
-				} else {
-					try {
-						filteredPn.loadPetriNet(filteredPnName);
-					} catch (Exception e) {
-						System.err.println("Error with -filteredPn option: unable to load "+filteredPnName+" file.\n"+e.getMessage());
-						System.exit(-6);
-					}
-				}
 			}
-			IFeatures features = new Features();
-			if (featuresName == null){
-				System.err.println("Error: Features required for command line usage (see -features option.");
-				System.exit(-7);
-			} else {
-				File f = new File(featuresName);
-				if (!f.exists() || f.isDirectory()){
-					System.err.println("Error with -features option: "+featuresName+": No such file.");
+			if (featuresDirName == null){
+				System.err.println("Error: Features directory required for command line usage (see -features option.");
+				System.exit(-5);
+			}
+			File featuresDir = new File(featuresDirName);
+			if (!featuresDir.exists() || !featuresDir.isDirectory()){
+				System.err.println("Error with -features option: "+featuresDirName+": No such directory.");
+				System.exit(-6);
+			}
+			
+			// Hash map to associate base Petri net name and labeling algorithm
+			HashMap<String, ILabeling> pnName2labelingAlgo = new HashMap<>();
+
+			// Init logger
+			Logger monLog = Logger.getLogger(Main.class.getName());
+			monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
+			monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
+			ConsoleHandler ch = new ConsoleHandler();
+			ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
+			monLog.addHandler(ch);
+			
+			// Check if for each file inside full Pn directory equivalent files exist in filtered and features directories
+			for (File fullChild : fullDir.listFiles()){
+				// get equivalent file in filtered directory
+				File filteredChild = new File(filteredDir, fullChild.getName());
+				// get equivalent file in features directory
+				File featuresChild = new File(featuresDir, fullChild.getName().substring(0, fullChild.getName().length()-4)+"xml");
+				if (!filteredChild.exists() || !featuresChild.exists()){
+					System.err.println("Error: equivalent file of \""+fullDir.getName()+"/"+fullChild.getName()+"\" doesn't exist in \""+filteredDir.getName()+"\" or \""+featuresDir.getName()+"\".");
+					System.exit(-7);
+				}
+				// Instantiate full Petri net
+				IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+				try {
+					fullPn.loadPetriNet(fullChild.getAbsolutePath());
+				} catch (Exception e) {
+					System.err.println("Error with -fullPn option: unable to load "+fullChild.getAbsolutePath()+" file.\n"+e.getMessage());
 					System.exit(-8);
-				} else {
-					try {
-						features.loadFile(featuresName);
-					} catch (IOException e) {
-						System.err.println("Error with -features option: unable to load "+featuresName+" file.\n"+e.getMessage());
-						System.exit(-9);
-					}
 				}
+				// Instantiate filtered Petri net
+				IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+				try {
+					filteredPn.loadPetriNet(filteredChild.getAbsolutePath());
+				} catch (Exception e) {
+					System.err.println("Error with -filteredPn option: unable to load "+filteredChild.getAbsolutePath()+" file.\n"+e.getMessage());
+					System.exit(-9);
+				}
+				// Instantiate features
+				IFeatures features = new Features();
+				try {
+					features.loadFile(featuresChild.getAbsolutePath());
+				} catch (IOException e) {
+					System.err.println("Error with -features option: unable to load "+featuresChild.getAbsolutePath()+" file.\n"+e.getMessage());
+					System.exit(-10);
+				}
+				
+				// Init labeling algorithm
+				ILabeling algo = new Labeling_V10(monLog, false);
+				algo.setCompletePN(fullPn);
+				algo.setFilteredPN(filteredPn);
+				algo.setFeatures(features);
+				try {
+					algo.reset();
+				} catch (Exception e1) {
+					System.out.println("Labeling algorithm initialisation fail. "+e1.getMessage());
+				}
+				String pnName = fullChild.getName();
+				if (pnName.endsWith(".pnml"))
+					pnName = pnName.substring(0, pnName.length()-5);
+				pnName2labelingAlgo.put(pnName, algo);
 			}
+			
 			ITraces tracesFromFile = null;
 			Socket tracesFromSocket = null;
 			if (traceName == null && (serverIP == null || serverPort == null)){
 				System.err.println("Error: No input traces defined, you have to set -traces option OR -serverIP and -serverPort options.");
-				System.exit(-10);
+				System.exit(-11);
 			} else if (traceName != null){
 				File f = new File(traceName);
 				if (!f.exists() || f.isDirectory()){
 					System.err.println("Error with -traces option: "+traceName+": No such file.");
-					System.exit(-11);
+					System.exit(-12);
 				} else {
 					tracesFromFile = new Traces();
 					try {
 						tracesFromFile.loadFile(traceName);
 					} catch (IOException e) {
 						System.err.println("Error with -traces option: unable to load "+traceName+" file.\n"+e.getMessage());
-						System.exit(-12);
+						System.exit(-13);
 					}
 				}
 			} else { // serverIP != null && serverPort != null
@@ -308,26 +347,19 @@ public class Main {
 					System.exit(-16);
 				}
 			}
-			// Init labeling algorithm
-			Logger monLog = Logger.getLogger(Main.class.getName());
-			monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
-			monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
-			ConsoleHandler ch = new ConsoleHandler();
-			ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
-			monLog.addHandler(ch);
-			ILabeling algo = new Labeling_V10(monLog, false);
-			algo.setCompletePN(fullPn);
-			algo.setFilteredPN(filteredPn);
-			algo.setFeatures(features);
-			try {
-				algo.reset();
-			} catch (Exception e1) {
-				System.out.println("Labeling algorithm initialisation fail. "+e1.getMessage());
-			}
+
 			
 			if (tracesFromFile != null){
 				try {
-					algo.label(tracesFromFile);
+					for (ITrace trace : tracesFromFile.getTraces())
+					{
+						ILabeling algo = pnName2labelingAlgo.get(trace.getPnName());
+						if (algo != null)
+							algo.labelAction( trace );
+						else{
+							System.err.println("Unknown Petri net \""+trace.getPnName()+"\" to label \""+trace.getAction()+"\" action.");
+						}
+					}
 					if (outputName != null){
 						if (outputName.toLowerCase().endsWith(".xml"))
 							outputName = outputName.substring(0, outputName.length() - 4); // remove user extension
@@ -366,37 +398,52 @@ public class Main {
 					        if (tokens[0].equalsIgnoreCase("Quit")){
 					        	break;
 					        } else if (tokens[0].equalsIgnoreCase("TriggerableActions")){
-					        	// get all available transitions
-					        	IPetriNet workingPn = algo.getFilteredPN();
-					        	ArrayList<ITransition> transitions = workingPn.getTransitions();
-					        	// parse all transition and check if they are enabled
 					        	String triggerableActions = "";
-					        	for (int i = 0 ; i < transitions.size() ; i++){
-					        		if (workingPn.enabledTransition(transitions.get(i))){
-					        			// store this enabled transition
-					        			triggerableActions += transitions.get(i).getId();
-					        		}
+					        	for (Map.Entry<String, ILabeling> entry : pnName2labelingAlgo.entrySet()){
+					        		ILabeling algo = entry.getValue();
+						        	// get all available transitions
+						        	IPetriNet workingPn = algo.getFilteredPN();
+						        	ArrayList<ITransition> transitions = workingPn.getTransitions();
+						        	// parse all transition and check if they are enabled
+						        	for (int i = 0 ; i < transitions.size() ; i++){
+						        		if (workingPn.enabledTransition(transitions.get(i))){
+						        			// store this enabled transition
+						        			triggerableActions += transitions.get(i).getId();
+						        		}
+						        	}
 					        	}
 					        	// send back actions
 					        	System.out.println("Send actions: "+triggerableActions);
 					        	pw.println(triggerableActions);
-					        } else if (tokens[0].equalsIgnoreCase("NextActionToReach") && tokens.length == 3){
-				        		// compute and send back next action to perform
-				        		String nextActions = algo.getNextBetterActionsToReach(tokens[1], Integer.parseInt(tokens[2]));
-				        		System.out.println("Send actions: "+nextActions);
-				        		pw.println(nextActions);
-					        } else if (tokens.length == 2){
-					        	// Cas par défaut ou le contenu doit suivre le format suivant : actionName\tperformedBy
+					        } else if (tokens[0].equalsIgnoreCase("NextActionToReach") && tokens.length == 4){
+					        	// found associated labeling algorithm instance
+					        	ILabeling algo = pnName2labelingAlgo.get(tokens[1]);
+					        	if (algo != null){
+					        		// compute and send back next action to perform
+					        		String nextActions = algo.getNextBetterActionsToReach(tokens[2], Integer.parseInt(tokens[3]));
+					        		System.out.println("Send actions: "+nextActions);
+					        		pw.println(nextActions);
+					        	} else {
+					        		System.err.println("Unknown Petri net \""+tokens[1]+"\" to label \""+tokens[2]+"\" action.");
+					        		pw.println("");
+					        	}
+					        } else if (tokens.length == 3){
+					        	// Cas par défaut ou le contenu doit suivre le format suivant : pnName\tactionName\tperformedBy
 					        	String mergedLabels = ""; 
 					        	try{
-						        	ITrace trace = new Trace(tokens[0], null, tokens[1], null);
-					        		algo.labelAction(trace);
-						        	// merge labels 
-						        	for (int i = 0 ; i < trace.getLabels().size() ; i++)
-						        		mergedLabels += trace.getLabels().get(i)+"\t";
-						        	// removing last \t
-						        	if (mergedLabels.endsWith("\t"))
-						        		mergedLabels = mergedLabels.substring(0, mergedLabels.length()-1);
+						        	// found associated labeling algorithm instance
+						        	ILabeling algo = pnName2labelingAlgo.get(tokens[0]);
+						        	if (algo != null){
+							        	ITrace trace = new Trace(tokens[0], tokens[1], null, tokens[2], null);
+						        		algo.labelAction(trace);
+							        	// merge labels 
+							        	for (int i = 0 ; i < trace.getLabels().size() ; i++)
+							        		mergedLabels += trace.getLabels().get(i)+"\t";
+							        	// removing last \t
+							        	if (mergedLabels.endsWith("\t"))
+							        		mergedLabels = mergedLabels.substring(0, mergedLabels.length()-1);
+						        	} else
+						        		System.err.println("Unknown Petri net \""+tokens[0]+"\" to label \""+tokens[1]+"\" action.");
 					        	}catch(Exception e){
 					        		System.out.println("Warning!!! Labeling aborted: "+e.getMessage());
 					        	}

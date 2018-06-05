@@ -878,7 +878,7 @@ public class Labeling_V9 implements ILabeling {
 			}
 			// On enregistre chacune des transitions restantes comme manquante
 			for (ITransition tr : missingTr) {
-				ITrace missing = new Trace(tr.getId(), ActionSource.LABELISATION, ActionType.UNKNOW, false);
+				ITrace missing = new Trace(rdpW.getName(), tr.getId(), ActionSource.LABELISATION, ActionType.UNKNOW, false);
 				missing.addLabel( Labels.MANQUANTE );
 				
 				traces.getTraces().add(missing);

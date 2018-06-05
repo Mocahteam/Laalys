@@ -15,6 +15,7 @@ import fr.lip6.mocah.laalys.traces.constants.ActionType;
  */
 public class Trace implements ITrace
 {
+	private String _pnName = null;
 	private String _action = null;
 	private String _source = ActionSource.UNKNOW;
 	private String _origin   = ActionType.UNKNOW;
@@ -25,6 +26,9 @@ public class Trace implements ITrace
 	{
 		if ( xml != null )
 		{
+			//on fixe la référence au Rdp à utiliser pour l'analyse
+			if (xml.getAttributes().getNamedItem("pnName") != null)
+				this._pnName = xml.getAttributes().getNamedItem("pnName").getNodeValue();
 			//on fixe le nom de l'action
 			if (xml.getAttributes().getNamedItem("action") != null)
 				this._action = xml.getAttributes().getNamedItem("action").getNodeValue();
@@ -48,8 +52,9 @@ public class Trace implements ITrace
 		this.freeLabels();
 	}
 	
-	public Trace(String action, String source, String origin, Boolean isTry) 
+	public Trace(String pnName, String action, String source, String origin, Boolean isTry) 
 	{
+		this._pnName = pnName;
 		this._action = action;
 		this._origin = origin;
 		this._isTry = isTry;
@@ -63,7 +68,7 @@ public class Trace implements ITrace
 	 */
 	public String toString()
 	{
-		return "<transition action=\"" + this._action + "\" try=\"" + this._isTry + "\" source=\"" + this._source + "\" origin=\"" + this._origin + "\" labels=\"" + this._labels +"\"/>";
+		return "<transition pnName=\"" + this._pnName + "\" action=\"" + this._action + "\" try=\"" + this._isTry + "\" source=\"" + this._source + "\" origin=\"" + this._origin + "\" labels=\"" + this._labels +"\"/>";
 	}
 	
 	/**
@@ -73,6 +78,7 @@ public class Trace implements ITrace
 	public Node toXML(Document racine)
 	{
 		Element tr = (Element) racine.createElement("transition");
+		tr.setAttribute("pnName", _pnName);
 		tr.setAttribute("action", _action);
 		if (_isTry != null)
 			tr.setAttribute("try", _isTry.toString());
@@ -113,7 +119,7 @@ public class Trace implements ITrace
 	 * @inheritDoc
 	 */
 	public ITrace cloneWithoutLabels() {
-		return new Trace(_action, _source, _origin, _isTry);
+		return new Trace(_pnName, _action, _source, _origin, _isTry);
 	}
 	
 	/*
@@ -128,6 +134,14 @@ public class Trace implements ITrace
 	public void setAction(String value) 
 	{
 		_action = value;
+	}
+	
+	public String getPnName(){
+		return _pnName;
+	}
+	
+	public void setPnName(String value){
+		_pnName = value;
 	}
 	
 	public String getSource() 
