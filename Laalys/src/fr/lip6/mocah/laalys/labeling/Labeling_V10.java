@@ -84,7 +84,7 @@ public class Labeling_V10 implements ILabeling {
 	 * 	transitions fin de niveaux
 	 * 	transitions systemes
 	 */
-	private IFeatures _specif = null;
+	private IFeatures _features = null;
 	
 	/**
 	 * listes de toutes les transitions systemes
@@ -224,14 +224,14 @@ public class Labeling_V10 implements ILabeling {
 	
 	public IFeatures getFeatures() 
 	{
-		return _specif;
+		return _features;
 	}
 	
 	public void setFeatures(IFeatures value) 
 	{
-		_specif = value;
-		this.systemTransitions = _specif.getSystemTransitions();
-		this.expertEndTransitions   = _specif.getEndLevelTransitions();
+		_features = value;
+		this.systemTransitions = _features.getSystemTransitions();
+		this.expertEndTransitions   = _features.getEndLevelTransitions();
 	}
 	
 	/**
@@ -767,7 +767,7 @@ public class Labeling_V10 implements ILabeling {
 			}
 			// On enregistre chacune des transitions restantes comme manquante
 			for (ITransition tr : missingTr) {
-				ITrace missing = new Trace(tr.getId(), ActionSource.LABELISATION, ActionType.UNKNOW, false);
+				ITrace missing = new Trace(rdpW.getName(), tr.getId(), ActionSource.LABELISATION, ActionType.UNKNOW, false);
 				missing.addLabel( Labels.MANQUANTE );
 				
 				traces.getTraces().add(missing);
@@ -823,11 +823,8 @@ public class Labeling_V10 implements ILabeling {
 	public String getNextBetterActionsToReach(String targetActionName, int maxActions) throws Exception {
 		IPetriNet workingRdp = this.workingRdp1;
 		if (workingRdp == null) workingRdp = this.filteredRdp;
-		ArrayList<String> targets = this.expertEndTransitions;
-		if (!targetActionName.equals("end")){
-			targets = new ArrayList<>();
-			targets.add(targetActionName);
-		}
+		ArrayList<String> targets = new ArrayList<>();
+		targets.add(targetActionName);
 		ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( workingRdp, PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp), targets );
 		if (shortestPaths_MC.size() == 0)
 			return "";

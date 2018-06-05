@@ -63,6 +63,7 @@ public class PetriNet implements IPetriNet {
 	public PetriNet(boolean computeGraph, String kindOfGraph, String strategy)
 	{
 		id = "";
+		name = "";
 		currentMarking = new Marking();
 		initialMarking = new Marking();
 		transitions = new ArrayList<ITransition>();
@@ -163,6 +164,8 @@ public class PetriNet implements IPetriNet {
 		String extension = url.substring(url.lastIndexOf(".")+1);
 
 		setId(url);
+		File f = new File (url);
+		setName(f.getName());
 		
 		switch (extension)
 		{// switch on appropriate functions depending on file extension

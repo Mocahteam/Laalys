@@ -49,6 +49,8 @@ public interface ITrace {
 	/**
 	 * GETTER
 	 */
+	
+	public String getPnName();
 	public String getAction();
 	public String getSource();
 	public String getOrigin();
@@ -60,6 +62,7 @@ public interface ITrace {
 	/**
 	 * SETTER
 	 */
+	public void setPnName(String value);
 	public void setAction(String value);
 	public void setSource(String value);
 	public void setOrigin(String value);

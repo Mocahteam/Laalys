@@ -443,7 +443,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							}
 						}
 						// création de la nouvelle ligne de trace
-						ITrace nouvelletrace = new Trace(action, "manual", origine, false);
+						ITrace nouvelletrace = new Trace(fullPn.getName(), action, "manual", origine, false);
 						listeTracePourAnalyse.add(i, nouvelletrace);
 					}
 				}
