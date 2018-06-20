@@ -18,7 +18,6 @@
 <fullyQualifiedTypeName name="javax.swing.event.ListDataListener"/>
 <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
 <fullyQualifiedTypeName name="java.awt.Component"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="javax.swing.text.html.HTMLDocument.HTMLReader.SpecialAction"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.constants.ActionType"/>
 <fullyQualifiedTypeName name="java.lang.Cloneable"/>
@@ -33,7 +32,6 @@
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Traces"/>
 <fullyQualifiedTypeName name="java.net.Socket"/>
 <fullyQualifiedTypeName name="java.util.logging.ConsoleHandler"/>
-<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.ILabeling"/>
 <fullyQualifiedTypeName name="java.io.BufferedInputStream"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Trace"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.ITrace"/>
@@ -49,4 +47,8 @@
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.ITransition"/>
 <fullyQualifiedTypeName name="java.io.FileOutputStream"/>
 <fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.Map.Entry"/>
+<fullyQualifiedTypeName name="fr.lip6.mocah.laalys.labeling.ILabeling"/>
 </qualifiedTypeNameHistroy>

@@ -1016,7 +1016,7 @@ class InterfaceLaalys extends JFrame implements ActionListener {
 							output = new StreamResult(new File(filename + ".xml"));
 							Source input = new DOMSource(doc);
 							transformer.transform(input, output);
-							JOptionPane.showMessageDialog(this, "Savong OK");
+							JOptionPane.showMessageDialog(this, "Saving OK");
 						} catch (Exception e5) {
 							JOptionPane.showMessageDialog(this, "Error on saving traces\n\n"+e5.getMessage());
 						}
