@@ -6,13 +6,13 @@ import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-class SelectionFichier {
-        // Boîte de sélection à partir du répertoire courant
+class SelectionDossier {
+        // Boîte de sélection à partir du répertoire courant pour récupérer le nom d'un dossier
         File repertoireCourant = null;
         // adresse du répertoire d'enregistrement
         // String adresse = "C:\\Users\\auzende\\Desktop\\Laalys\\Trunk\\LaalysV9\\bin\\exemples";
 		
-		public String getNomFichier(String adresse, Component parent) {
+		public String getNomDossier(String adresse, Component parent) {
 			try {
 				// obtention d'un objet File qui désigne le répertoire courant. Le
 				// "getCanonicalFile" n'est pas absolument nécessaire mais permet
@@ -26,17 +26,18 @@ class SelectionFichier {
 			// (ou dans "home" s'il y a eu une erreur d'entrée/sortie, auquel
 			// cas repertoireCourant vaut null)
 			JFileChooser dialogue = new JFileChooser(repertoireCourant);
+			dialogue.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
          
 			// affichage
 			dialogue.showOpenDialog(null);
          
-			// récupération du fichier sélectionné
-			System.out.println("Fichier choisi : " + dialogue.getSelectedFile());
+			// récupération du dossier sélectionné
+			System.out.println("Dossier choisi : " + dialogue.getSelectedFile());
 			if (dialogue.getSelectedFile() != null){
 				String filePath =  dialogue.getSelectedFile().getPath();
 				// recherche d'accent dans le path
 				if (Pattern.matches(".*[éèàùäëüïöâêîûôñçÿ].*", filePath)){
-					JOptionPane.showMessageDialog(parent, "Selected path includes at least one accented character or ç\n\nFile selection aborted");
+					JOptionPane.showMessageDialog(parent, "Selected path includes at least one accented character or ç\n\nFolder selection aborted");
 					return "";
 				} else
 					return dialogue.getSelectedFile().getPath();
