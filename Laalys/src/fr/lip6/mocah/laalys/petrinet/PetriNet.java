@@ -1508,7 +1508,7 @@ public class PetriNet implements IPetriNet {
 				}
 				boolean found = false;
 				for (ITrace trace : traces.getTraces()) {
-					if (humanTransitionName.equals(trace.getAction())){
+					if (humanTransitionName.equals(trace.getAction()) && trace.getPnName().concat(".pnml").equals(this.name)){
 						found = true;
 						break;
 					}
