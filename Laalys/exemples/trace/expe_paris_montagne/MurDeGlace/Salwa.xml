@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 <map id="Le mur de glace" nbPrecedingTry="0" Configuration="" BeginningTime="186836" EndingTime="234273">
-<transition time="195276" action="store-clef;5" origin="player"/>
-<transition time="196558" action="get-clef;5" origin="player"/>
-<transition time="200960" action="open-porte;2" origin="player"/>
-<transition time="200960" action="storeBack-clef;5" origin="system"/>
-<transition time="202874" action="store-alumettes;1" origin="player"/>
-<transition time="210358" action="get-alumettes;1" origin="player"/>
-<transition time="212378" action="activate-chaudiere;3" origin="player"/>
-<transition time="212378" action="storeBack-alumettes;1" origin="system"/>
-<transition time="214373" action="activate-levier_plus_2_1;9" origin="player"/>
-<transition time="220855" action="activate-levier_plus_2_1;9" origin="player"/>
-<transition time="228958" action="warming_]-inf ; 0[_to_[0]_chaudiere" origin="system"/>
-<transition time="231141" action="warming_[0]_to_]0; +inf[_chaudiere" origin="system"/>
-<transition time="234273" action="exit-;6" origin="player"/>
+<transition time="195276" pnName="murDeGlace" action="store-clef;5" origin="player"/>
+<transition time="196558" pnName="murDeGlace" action="get-clef;5" origin="player"/>
+<transition time="200960" pnName="murDeGlace" action="open-porte;2" origin="player"/>
+<transition time="200960" pnName="murDeGlace" action="storeBack-clef;5" origin="system"/>
+<transition time="202874" pnName="murDeGlace" action="store-alumettes;1" origin="player"/>
+<transition time="210358" pnName="murDeGlace" action="get-alumettes;1" origin="player"/>
+<transition time="212378" pnName="murDeGlace" action="activate-chaudiere;3" origin="player"/>
+<transition time="212378" pnName="murDeGlace" action="storeBack-alumettes;1" origin="system"/>
+<transition time="214373" pnName="murDeGlace" action="activate-levier_plus_2_1;9" origin="player"/>
+<transition time="220855" pnName="murDeGlace" action="activate-levier_plus_2_1;9" origin="player"/>
+<transition time="228958" pnName="murDeGlace" action="warming_]-inf ; 0[_to_[0]_chaudiere" origin="system"/>
+<transition time="231141" pnName="murDeGlace" action="warming_[0]_to_]0; +inf[_chaudiere" origin="system"/>
+<transition time="234273" pnName="murDeGlace" action="exit-;6" origin="player"/>
 </map>
 </data>

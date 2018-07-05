@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
 <map id="thermometer" nbPrecedingTry="0" Configuration="859" BeginningTime="160" EndingTime="55436">
-<transition time="2874779" action="desactivate-levier_plus_6_1;2" origin="player"/>
-<transition time="2876299" action="activate-levier_plus_3_1;4" origin="player"/>
-<transition time="2876514" action="activate-levier_plus_4_1;7" origin="player"/>
-<transition time="2877984" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="2879219" action="exit-;8" origin="player"/>
+<transition time="2874779" pnName="Thermometer" action="desactivate-levier_plus_6_1;2" origin="player"/>
+<transition time="2876299" pnName="Thermometer" action="activate-levier_plus_3_1;4" origin="player"/>
+<transition time="2876514" pnName="Thermometer" action="activate-levier_plus_4_1;7" origin="player"/>
+<transition time="2877984" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="2879219" pnName="Thermometer" action="exit-;8" origin="player"/>
 </map>
 </data>

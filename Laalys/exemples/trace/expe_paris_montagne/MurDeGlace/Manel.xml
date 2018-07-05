@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 <map id="Le mur de glace" nbPrecedingTry="0" Configuration="" BeginningTime="538210" EndingTime="651793">
-<transition time="554388" action="store-clef;5" origin="player"/>
-<transition time="579573" action="get-clef;5" origin="player"/>
-<transition time="581743" action="open-porte;2" origin="player"/>
-<transition time="581743" action="storeBack-clef;5" origin="system"/>
-<transition time="587628" action="get-clef;5" origin="player"/>
-<transition time="589063" action="store-alumettes;1" origin="player"/>
-<transition time="589083" action="drop-clef;5" origin="system"/>
-<transition time="589098" action="store-clef;5" origin="player"/>
-<transition time="602238" action="get-alumettes;1" origin="player"/>
-<transition time="603753" action="activate-chaudiere;3" origin="player"/>
-<transition time="603753" action="storeBack-alumettes;1" origin="system"/>
-<transition time="631278" action="activate-levier_plus_2_1;9" origin="player"/>
-<transition time="633343" action="activate-levier_plus_2_1;9" origin="player"/>
-<transition time="634198" action="warming_]-inf ; 0[_to_[0]_chaudiere" origin="system"/>
-<transition time="634298" action="activate-levier_plus_2_1;9" origin="player"/>
-<transition time="640568" action="warming_[0]_to_]0; +inf[_chaudiere" origin="system"/>
-<transition time="651793" action="exit-;6" origin="player"/>
+<transition time="554388" pnName="murDeGlace" action="store-clef;5" origin="player"/>
+<transition time="579573" pnName="murDeGlace" action="get-clef;5" origin="player"/>
+<transition time="581743" pnName="murDeGlace" action="open-porte;2" origin="player"/>
+<transition time="581743" pnName="murDeGlace" action="storeBack-clef;5" origin="system"/>
+<transition time="587628" pnName="murDeGlace" action="get-clef;5" origin="player"/>
+<transition time="589063" pnName="murDeGlace" action="store-alumettes;1" origin="player"/>
+<transition time="589083" pnName="murDeGlace" action="drop-clef;5" origin="system"/>
+<transition time="589098" pnName="murDeGlace" action="store-clef;5" origin="player"/>
+<transition time="602238" pnName="murDeGlace" action="get-alumettes;1" origin="player"/>
+<transition time="603753" pnName="murDeGlace" action="activate-chaudiere;3" origin="player"/>
+<transition time="603753" pnName="murDeGlace" action="storeBack-alumettes;1" origin="system"/>
+<transition time="631278" pnName="murDeGlace" action="activate-levier_plus_2_1;9" origin="player"/>
+<transition time="633343" pnName="murDeGlace" action="activate-levier_plus_2_1;9" origin="player"/>
+<transition time="634198" pnName="murDeGlace" action="warming_]-inf ; 0[_to_[0]_chaudiere" origin="system"/>
+<transition time="634298" pnName="murDeGlace" action="activate-levier_plus_2_1;9" origin="player"/>
+<transition time="640568" pnName="murDeGlace" action="warming_[0]_to_]0; +inf[_chaudiere" origin="system"/>
+<transition time="651793" pnName="murDeGlace" action="exit-;6" origin="player"/>
 </map>
 </data>

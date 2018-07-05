@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 <map id="Thermometre 1" nbPrecedingTry="1" Configuration="859" BeginningTime="106000" EndingTime="148143">
-<transition time="117931" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="118098" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="118432" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="127813" action="desactivate-levier_plus_6_1;2" origin="player" />
-<transition time="128182" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
-<transition time="128182" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="134564" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="144463" action="activate-levier_plus_3_1;4" origin="player" />
-<transition time="145064" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="148143" action="exit-;8" origin="player" />
+<transition time="117931" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="118098" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="118432" pnName="Thermometer" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
+<transition time="127813" pnName="Thermometer" action="desactivate-levier_plus_6_1;2" origin="player" />
+<transition time="128182" pnName="Thermometer" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
+<transition time="128182" pnName="Thermometer" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
+<transition time="134564" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="144463" pnName="Thermometer" action="activate-levier_plus_3_1;4" origin="player" />
+<transition time="145064" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="148143" pnName="Thermometer" action="exit-;8" origin="player" />
 </map>
 </data>
