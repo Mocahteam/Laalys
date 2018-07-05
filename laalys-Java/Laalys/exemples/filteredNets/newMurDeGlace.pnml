@@ -1,0 +1,855 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?><pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="MatchstickRoom_turnOff_9">
+        <name>
+          <text>MatchstickRoom_turnOff_9</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="115" y="50"/>
+        </graphics>
+      </transition>
+      <transition id="MatchstickRoom_turnOn_9">
+        <name>
+          <text>MatchstickRoom_turnOn_9</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="115" y="145"/>
+        </graphics>
+      </transition>
+      
+      <transition id="InventoryMatchstick_turnOn_5">
+        <name>
+          <text>InventoryMatchstick_turnOn_5</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="365" y="145"/>
+        </graphics>
+      </transition>
+      <transition id="IceCubes_meltingEnd_7">
+        <name>
+          <text>IceCubes_meltingEnd_7</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="800" y="60"/>
+        </graphics>
+      </transition>
+      <transition id="IceCubes_meltingStart_7">
+        <name>
+          <text>IceCubes_meltingStart_7</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="610" y="50"/>
+        </graphics>
+      </transition>
+      
+      
+      
+      
+      <transition id="Teleport_perform_6">
+        <name>
+          <text>Teleport_perform_6</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1030" y="50"/>
+        </graphics>
+      </transition>
+      <transition id="InventoryKey_turnOff_3">
+        <name>
+          <text>InventoryKey_turnOff_3</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1270" y="50"/>
+        </graphics>
+      </transition>
+      <transition id="InventoryKey_turnOn_3">
+        <name>
+          <text>InventoryKey_turnOn_3</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1270" y="145"/>
+        </graphics>
+      </transition>
+      <transition id="Matchstick_perform_4">
+        <name>
+          <text>Matchstick_perform_4</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1515" y="50"/>
+        </graphics>
+      </transition>
+      <transition id="Key_perform_2">
+        <name>
+          <text>Key_perform_2</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1750" y="50"/>
+        </graphics>
+      </transition>
+      
+      <transition id="Boiler_turnOn_0">
+        <name>
+          <text>Boiler_turnOn_0</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1990" y="145"/>
+        </graphics>
+      </transition>
+      
+      <transition id="equivWith_LeverManager_levers_turnOn_8">
+        <name>
+          <text>equivWith_LeverManager_levers_turnOn_8</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2240" y="145"/>
+        </graphics>
+      </transition>
+      
+      <transition id="DoorMesh_turnOn_1">
+        <name>
+          <text>DoorMesh_turnOn_1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <graphics>
+          <position x="2490" y="145"/>
+        </graphics>
+      </transition>
+      <place id="MatchstickRoom_off_9">
+        <name>
+          <text>MatchstickRoom_off_9</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="200" y="80"/>
+        </graphics>
+      </place>
+      <place id="MatchstickRoom_on_9">
+        <name>
+          <text>MatchstickRoom_on_9</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="30" y="85"/>
+        </graphics>
+      </place>
+      <place id="InventoryMatchstick_off_5">
+        <name>
+          <text>InventoryMatchstick_off_5</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="450" y="80"/>
+        </graphics>
+      </place>
+      <place id="InventoryMatchstick_on_5">
+        <name>
+          <text>InventoryMatchstick_on_5</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="280" y="85"/>
+        </graphics>
+      </place>
+      <place id="IceCubes_inTransition_7">
+        <name>
+          <text>IceCubes_inTransition_7</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="695" y="185"/>
+        </graphics>
+      </place>
+      <place id="IceCubes_liquid_7">
+        <name>
+          <text>IceCubes_liquid_7</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="870" y="185"/>
+        </graphics>
+      </place>
+      <place id="IceCubes_solid_7">
+        <name>
+          <text>IceCubes_solid_7</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="530" y="160"/>
+        </graphics>
+      </place>
+      <place id="Teleport_end_6">
+        <name>
+          <text>Teleport_end_6</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1105" y="50"/>
+        </graphics>
+      </place>
+      <place id="Teleport_start_6">
+        <name>
+          <text>Teleport_start_6</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="950" y="50"/>
+        </graphics>
+      </place>
+      <place id="InventoryKey_off_3">
+        <name>
+          <text>InventoryKey_off_3</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1355" y="80"/>
+        </graphics>
+      </place>
+      <place id="InventoryKey_on_3">
+        <name>
+          <text>InventoryKey_on_3</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1185" y="85"/>
+        </graphics>
+      </place>
+      <place id="Matchstick_end_4">
+        <name>
+          <text>Matchstick_end_4</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1590" y="50"/>
+        </graphics>
+      </place>
+      <place id="Matchstick_start_4">
+        <name>
+          <text>Matchstick_start_4</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1435" y="50"/>
+        </graphics>
+      </place>
+      <place id="Key_end_2">
+        <name>
+          <text>Key_end_2</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1825" y="50"/>
+        </graphics>
+      </place>
+      <place id="Key_start_2">
+        <name>
+          <text>Key_start_2</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1670" y="50"/>
+        </graphics>
+      </place>
+      <place id="Boiler_off_0">
+        <name>
+          <text>Boiler_off_0</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2075" y="80"/>
+        </graphics>
+      </place>
+      <place id="Boiler_on_0">
+        <name>
+          <text>Boiler_on_0</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1905" y="85"/>
+        </graphics>
+      </place>
+      <place id="equivWith_LeverManager_levers_off_8">
+        <name>
+          <text>equivWith_LeverManager_levers_off_8</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>6</text>
+        </initialMarking>
+        <graphics>
+          <position x="2325" y="80"/>
+        </graphics>
+      </place>
+      <place id="equivWith_LeverManager_levers_on_8">
+        <name>
+          <text>equivWith_LeverManager_levers_on_8</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2155" y="85"/>
+        </graphics>
+      </place>
+      <place id="DoorMesh_off_1">
+        <name>
+          <text>DoorMesh_off_1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="2575" y="80"/>
+        </graphics>
+      </place>
+      <place id="DoorMesh_on_1">
+        <name>
+          <text>DoorMesh_on_1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="2405" y="85"/>
+        </graphics>
+      </place>
+      <arc id="43" source="MatchstickRoom_turnOff_9" target="MatchstickRoom_off_9">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="44" source="MatchstickRoom_turnOn_9" target="MatchstickRoom_on_9">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="45" source="MatchstickRoom_off_9" target="MatchstickRoom_turnOn_9">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="46" source="MatchstickRoom_on_9" target="MatchstickRoom_turnOff_9">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="47" source="DoorMesh_on_1" target="MatchstickRoom_turnOff_9">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="48" source="DoorMesh_on_1" target="MatchstickRoom_turnOn_9">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      
+      <arc id="50" source="InventoryMatchstick_turnOn_5" target="InventoryMatchstick_on_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="51" source="InventoryMatchstick_off_5" target="InventoryMatchstick_turnOn_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      
+      
+      
+      
+      
+      <arc id="57" source="IceCubes_inTransition_7" target="IceCubes_meltingEnd_7">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="58" source="IceCubes_solid_7" target="IceCubes_meltingStart_7">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="59" source="IceCubes_meltingEnd_7" target="IceCubes_liquid_7">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="60" source="IceCubes_meltingStart_7" target="IceCubes_inTransition_7">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="61" source="Boiler_on_0" target="IceCubes_meltingEnd_7">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="62" source="equivWith_LeverManager_levers_on_8" target="IceCubes_meltingEnd_7">
+        <inscription>
+          <text>2</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="63" source="Boiler_on_0" target="IceCubes_meltingStart_7">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="64" source="equivWith_LeverManager_levers_on_8" target="IceCubes_meltingStart_7">
+        <inscription>
+          <text>2</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      
+      
+      
+      
+      
+      
+      
+      
+      <arc id="73" source="Teleport_perform_6" target="Teleport_end_6">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="74" source="Teleport_start_6" target="Teleport_perform_6">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="75" source="IceCubes_liquid_7" target="Teleport_perform_6">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="76" source="MatchstickRoom_off_9" target="Teleport_perform_6">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="77" source="InventoryKey_turnOff_3" target="InventoryKey_off_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="78" source="InventoryKey_turnOn_3" target="InventoryKey_on_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="79" source="InventoryKey_off_3" target="InventoryKey_turnOn_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="80" source="InventoryKey_on_3" target="InventoryKey_turnOff_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="81" source="Matchstick_perform_4" target="Matchstick_end_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="82" source="Matchstick_start_4" target="Matchstick_perform_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="83" source="MatchstickRoom_on_9" target="Matchstick_perform_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="84" source="Matchstick_perform_4" target="InventoryMatchstick_off_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="85" source="Key_perform_2" target="Key_end_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="86" source="Key_start_2" target="Key_perform_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="87" source="Key_perform_2" target="InventoryKey_off_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="88" source="MatchstickRoom_off_9" target="Key_perform_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      
+      <arc id="90" source="Boiler_turnOn_0" target="Boiler_on_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="91" source="Boiler_off_0" target="Boiler_turnOn_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      
+      
+      <arc id="94" source="InventoryMatchstick_on_5" target="Boiler_turnOn_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      <arc id="95" source="MatchstickRoom_off_9" target="Boiler_turnOn_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      
+      <arc id="97" source="equivWith_LeverManager_levers_turnOn_8" target="equivWith_LeverManager_levers_on_8">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="98" source="equivWith_LeverManager_levers_off_8" target="equivWith_LeverManager_levers_turnOn_8">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      
+      
+      <arc id="101" source="MatchstickRoom_off_9" target="equivWith_LeverManager_levers_turnOn_8">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+      
+      <arc id="103" source="DoorMesh_turnOn_1" target="DoorMesh_on_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      <arc id="104" source="DoorMesh_off_1" target="DoorMesh_turnOn_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="regular"/>
+      </arc>
+      
+      
+      <arc id="107" source="InventoryKey_on_3" target="DoorMesh_turnOn_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10"/>
+          </graphics>
+        </inscription>
+        <type value="test"/>
+      </arc>
+    </page>
+  </net>
+</pnml>

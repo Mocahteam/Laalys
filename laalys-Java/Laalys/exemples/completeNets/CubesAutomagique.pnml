@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-43E7-BB419-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>CubesAutomagique</text>
+  </name>
+ <page id="g-43E7-BB41F-1">
+  <place id="p-43E7-BB421-2">
+  <name>
+   <text>T in [0]</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="450"/>
+   </graphics>
+  </place>
+  <place id="p-43E7-BB42E-3">
+  <name>
+   <text>T in ]-inf ; 0[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="450"/>
+   </graphics>
+  </place>
+  <place id="p-43E7-BB4A4-4">
+  <name>
+   <text>T in ]0; +inf[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="335" y="450"/>
+   </graphics>
+  </place>
+  <transition id="t-43E7-BB4AD-5">
+  <name>
+   <text>activate-chaudiere1;71</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-43E7-BB4B5-6">
+  <name>
+   <text>chaudiere1_Off;71</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="585" y="110"/>
+   </graphics>
+  </place>
+  <place id="p-43E7-BB4BD-7">
+  <name>
+   <text>chaudiere1_On;71</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="485" y="100"/>
+   </graphics>
+  </place>
+  <transition id="t-43E7-BB4C4-8">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="610"/>
+   </graphics>
+  </transition>
+  <transition id="t-43E7-BB4CD-9">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="255" y="600"/>
+   </graphics>
+  </transition>
+  <transition id="t-43E7-BB4D5-10">
+  <name>
+   <text>desactivate-chaudiere1;71</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="535" y="70"/>
+   </graphics>
+  </transition>
+  <place id="p-43E7-BB4DE-11">
+  <name>
+   <text>endLevel-;72</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="665" y="150"/>
+   </graphics>
+  </place>
+  <transition id="t-43E7-BB4E5-12">
+  <name>
+   <text>exit-;72</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="695" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-43E7-BB4EC-13">
+  <name>
+   <text>liquid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="335" y="700"/>
+   </graphics>
+  </place>
+  <place id="p-43E7-BB4F3-14">
+  <name>
+   <text>solid_liquid_transition_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="680"/>
+   </graphics>
+  </place>
+  <place id="p-43E7-BB4FD-15">
+  <name>
+   <text>solid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="650"/>
+   </graphics>
+  </place>
+  <place id="p-43E7-BB503-16">
+  <name>
+   <text>sortie;72</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="725" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-43E7-BB50B-17">
+  <name>
+   <text>warming_[0]_to_]0; +inf[_chaudiere1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="255" y="340"/>
+   </graphics>
+  </transition>
+  <transition id="t-43E7-BB513-18">
+  <name>
+   <text>warming_]-inf ; 0[_to_[0]_chaudiere1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="135" y="350"/>
+   </graphics>
+  </transition>
+  <arc id="e-43E7-BB52A-19" source="p-43E7-BB421-2" target="t-43E7-BB4C4-8">
+  </arc>
+  <arc id="e-43E7-BB52C-20" source="p-43E7-BB4BD-7" target="t-43E7-BB50B-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-43E7-BB52E-21" source="p-43E7-BB4BD-7" target="t-43E7-BB513-18">
+   <type value="test"/>
+  </arc>
+  <arc id="e-43E7-BB530-22" source="t-43E7-BB4C4-8" target="p-43E7-BB42E-3">
+  </arc>
+  <arc id="e-43E7-BB532-23" source="t-43E7-BB4C4-8" target="p-43E7-BB4FD-15">
+  </arc>
+  <arc id="e-43E7-BB534-24" source="t-43E7-BB4CD-9" target="p-43E7-BB421-2">
+  </arc>
+  <arc id="e-43E7-BB535-25" source="t-43E7-BB4CD-9" target="p-43E7-BB4F3-14">
+  </arc>
+  <arc id="e-43E7-BB537-26" source="t-43E7-BB4D5-10" target="p-43E7-BB4B5-6">
+  </arc>
+  <arc id="e-43E7-BB538-27" source="t-43E7-BB4E5-12" target="p-43E7-BB4DE-11">
+  </arc>
+  <arc id="e-43E7-BB53A-28" source="p-43E7-BB4EC-13" target="t-43E7-BB4CD-9">
+  </arc>
+  <arc id="e-43E7-BB53C-29" source="p-43E7-BB4F3-14" target="t-43E7-BB4C4-8">
+  </arc>
+  <arc id="e-43E7-BB53E-30" source="p-43E7-BB421-2" target="t-43E7-BB50B-17">
+  </arc>
+  <arc id="e-43E7-BB540-31" source="p-43E7-BB4F3-14" target="t-43E7-BB50B-17">
+  </arc>
+  <arc id="e-43E7-BB542-32" source="p-43E7-BB4FD-15" target="t-43E7-BB513-18">
+  </arc>
+  <arc id="e-43E7-BB543-33" source="p-43E7-BB503-16" target="t-43E7-BB4E5-12">
+  </arc>
+  <arc id="e-43E7-BB545-34" source="t-43E7-BB50B-17" target="p-43E7-BB4A4-4">
+  </arc>
+  <arc id="e-43E7-BB546-35" source="t-43E7-BB50B-17" target="p-43E7-BB4EC-13">
+  </arc>
+  <arc id="e-43E7-BB548-36" source="t-43E7-BB513-18" target="p-43E7-BB421-2">
+  </arc>
+  <arc id="e-43E7-BB54A-37" source="t-43E7-BB513-18" target="p-43E7-BB4F3-14">
+  </arc>
+  <arc id="e-43E7-BB54B-38" source="p-43E7-BB4FD-15" target="t-43E7-BB4E5-12">
+   <type value="test"/>
+  </arc>
+  <arc id="e-43E7-BB54D-39" source="p-43E7-BB42E-3" target="t-43E7-BB513-18">
+  </arc>
+  <arc id="e-43E7-BB54F-40" source="p-43E7-BB4A4-4" target="t-43E7-BB4CD-9">
+  </arc>
+  <arc id="e-43E7-BB551-41" source="t-43E7-BB4AD-5" target="p-43E7-BB4BD-7">
+  </arc>
+  <arc id="e-43E7-BB553-42" source="p-43E7-BB4B5-6" target="t-43E7-BB4AD-5">
+  </arc>
+  <arc id="e-43E7-BB554-43" source="p-43E7-BB4BD-7" target="t-43E7-BB4C4-8">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-43E7-BB556-44" source="p-43E7-BB4BD-7" target="t-43E7-BB4CD-9">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-43E7-BB558-45" source="p-43E7-BB4BD-7" target="t-43E7-BB4D5-10">
+  </arc>
+ </page>
+ </net>
+</pnml>

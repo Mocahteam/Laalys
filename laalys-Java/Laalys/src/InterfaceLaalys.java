@@ -1,22 +1,9 @@
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -26,25 +13,13 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import javax.xml.transform.Result;
@@ -73,7 +48,7 @@ import fr.lip6.mocah.laalys.traces.Traces;
 import fr.lip6.mocah.laalys.traces.constants.ActionSource;
 import fr.lip6.mocah.laalys.traces.constants.ActionType;
 
-class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, ComponentListener {
+class InterfaceLaalys extends JFrame implements ItemListener {
 	/**
 	 * 
 	 */
@@ -85,18 +60,12 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 
 	// les répertoires par défaut
 	String adresseReseauComplet = adressereseau+File.separator+"completeNets";
+	String adresseReseauCompletPourFiltrage = adressereseau+File.separator+"completeNets";
 	String adresseReseauFiltre = adressereseau+File.separator+"filteredNets";
 	String adresseSpec = adressereseau+File.separator+"features";
 	String adresseTrace = adressereseau+File.separator+"trace";
 	String adresseLabel = adressereseau+File.separator+"trace-labellisee";
 	String adresseGraphml = adressereseau+File.separator+"trace-graphml";
-
-	// dimensions de la fenêtre
-	int largeur = 1100, hauteur = 700;
-	// taille des textes si non standard (standard : 12)
-	int tailleTexte1 = 12;
-	int tailleTexte2 = 16;
-	int indice;	
 
     private javax.swing.JTabbedPane jTabbedPane;
     
@@ -104,7 +73,7 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
     private javax.swing.JPanel tab_PnSelection;
     // Full Pn selection
     private javax.swing.JPanel pan_FullPnSelection;
-    private javax.swing.JToggleButton bt_FullPnSelection;
+    private javax.swing.JButton bt_FullPnSelection;
     private javax.swing.JLabel lab_FullPnSelection;
     // Filtered Pn selection
     private javax.swing.JPanel pan_FilteredPnSelection;
@@ -116,11 +85,11 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 	private javax.swing.ButtonGroup analysisStrategyGroup;
     private javax.swing.JRadioButton opt_First;
     private javax.swing.JRadioButton opt_All;
-    private javax.swing.JToggleButton bt_FilteredPnSelection;
+    private javax.swing.JButton bt_FilteredPnSelection;
     private javax.swing.JLabel lab_FilteredPnSelection;
     // Features selection
     private javax.swing.JPanel pan_SpecificationsSelection;
-    private javax.swing.JToggleButton bt_SpecificationSelection;
+    private javax.swing.JButton bt_SpecificationSelection;
     private javax.swing.JLabel lab_SpecificationSelection;
     // loading button
     private javax.swing.JButton bt_LoadPnAndSpecif;
@@ -167,47 +136,24 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
     
     // UI for the fourth tab
     private javax.swing.JPanel tab_FilteredPnManagement;
-
+    // Full Pn selection
+    private javax.swing.JPanel pan_FullPnSelection2;
+    private javax.swing.JButton bt_FullPnSelection2;
+    private javax.swing.JLabel lab_FullPnSelection2;
+    // Expert trace selection
+    private javax.swing.JPanel pan_ExpertTraceSelection;
+    private javax.swing.JButton bt_ExpertTraceSelection;
+    private javax.swing.JLabel lab_ExpertTraceSelection;
+    // Build filtered Petri net
+    private javax.swing.JButton bt_BuildFilteredPn;
+    
 	public HashMap<String, ILabeling> pnName2labelingAlgo = new HashMap<>();
-	ArrayList<ITrace> listeTracePourAnalyse;
-	DefaultListModel<Serializable> listeLabels, listeSynthese;
+	private ArrayList<ITrace> listeTracePourAnalyse;
 	
 	
+	//DefaultListModel<Serializable> listeActionContent, listeNomActionsPourAnalyse;
+	String type = CoverabilityGraph.TYPE, strategie = CoverabilityGraph.STRATEGY_OR; // par défaut
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*JLabel infoRdpComplet, infoFullFolderSelected, infoTracesExpertes, infoFilteredFolderSelected, infoCaracteristiques;
-	JButton boutonRdpComplet,bt_SelectFolderFullPn, bt_SelectExpertTraces, bt_BuildFilteredPn, bt_SelectFolderFilteredPn, boutonChargerRdpFiltre, bt_SelectFolderFeatures,
-	boutonChargerTraces, boutonSauvegarderTrace;
-	JButton boutonAnalyserActions, boutonExporterGraphml, boutonExporterLabels;
-	JRadioButton radioCouverture, radioAccessibilite, radioFirst, radioAll;
-	JPanel aux4;
-	JTabbedPane onglets;
-	JPanel panel_fullPnSelection, panel_filteredPnSelection;*/
-	
-	DefaultListModel<Serializable> listeActionContent, listeNomActionsPourAnalyse;
-	String choix = "", type = "accessibilité", strategie = "OU"; // par défaut
-	String fullPnName;
-	String filteredPnName;
-	String featuresName;
-	/*IPetriNet fullPn, fullPn_travail, filteredPn, fullPnFiltered;
-	IFeatures features;
-	ILabeling algo;*/
-	ITraces copie_traces, nouvelles_traces, traces2, traces_expert;
 	PieChart cv;
 	DefaultPieDataset dataset;
 
@@ -220,6 +166,8 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 		// Vérifier les chemins
 		if (!new File(adresseReseauComplet).exists())
 			adresseReseauComplet = ".";
+		if (!new File(adresseReseauCompletPourFiltrage).exists())
+			adresseReseauCompletPourFiltrage = ".";
 		if (!new File(adresseReseauFiltre).exists())
 			adresseReseauFiltre = ".";
 		if (!new File(adresseSpec).exists())
@@ -237,7 +185,7 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
         jTabbedPane = new javax.swing.JTabbedPane();
         tab_PnSelection = new javax.swing.JPanel();
         pan_FullPnSelection = new javax.swing.JPanel();
-        bt_FullPnSelection = new javax.swing.JToggleButton();
+        bt_FullPnSelection = new javax.swing.JButton();
         lab_FullPnSelection = new javax.swing.JLabel();
         pan_FilteredPnSelection = new javax.swing.JPanel();
         pan_GraphProperties = new javax.swing.JPanel();
@@ -246,10 +194,10 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
         pan_AnalysisStrategy = new javax.swing.JPanel();
         opt_First = new javax.swing.JRadioButton();
         opt_All = new javax.swing.JRadioButton();
-        bt_FilteredPnSelection = new javax.swing.JToggleButton();
+        bt_FilteredPnSelection = new javax.swing.JButton();
         lab_FilteredPnSelection = new javax.swing.JLabel();
         pan_SpecificationsSelection = new javax.swing.JPanel();
-        bt_SpecificationSelection = new javax.swing.JToggleButton();
+        bt_SpecificationSelection = new javax.swing.JButton();
         lab_SpecificationSelection = new javax.swing.JLabel();
         bt_LoadPnAndSpecif = new javax.swing.JButton();
         tab_TracesManagement = new javax.swing.JPanel();
@@ -283,9 +231,18 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
         pan_Synthesis = new javax.swing.JPanel();
         scrollPan_Synthesis = new javax.swing.JScrollPane();
         synthesis = new DefaultListModel<Serializable>();
+        pan_FullPnSelection2 = new javax.swing.JPanel();
+        bt_FullPnSelection2 = new javax.swing.JButton();
+        lab_FullPnSelection2 = new javax.swing.JLabel();
+        pan_ExpertTraceSelection = new javax.swing.JPanel();
+        bt_ExpertTraceSelection = new javax.swing.JButton();
+        lab_ExpertTraceSelection = new javax.swing.JLabel();
+        bt_BuildFilteredPn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        this.setMinimumSize(new java.awt.Dimension(550, 410));
+        
         //////////////////////////////////////
         // Tab 1: Petri nets and features selection
         jTabbedPane.addTab("Petri nets selection", tab_PnSelection);
@@ -800,17 +757,87 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 		//////////////////////////////////////
 		// Tab 4: Filtered nets management
         jTabbedPane.addTab("Filtered nets management", tab_FilteredPnManagement);
-
-        // ---------- Add blocs to the fourth tab ----------
+        // ---------- first bloc ----------
+        pan_FullPnSelection2.setBorder(javax.swing.BorderFactory.createTitledBorder("Full Petri net selection"));
+        pan_FullPnSelection2.setMinimumSize(new java.awt.Dimension(50, 100));
+        bt_FullPnSelection2.setText("Select file");
+        bt_FullPnSelection2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_FullPnSelection2ActionPerformed(evt);
+            }
+        });
+        lab_FullPnSelection2.setText("No file selected");
+        lab_FullPnSelection2.setMinimumSize(new java.awt.Dimension(270, 14));
+        javax.swing.GroupLayout pan_FullPnSelection2Layout = new javax.swing.GroupLayout(pan_FullPnSelection2);
+        pan_FullPnSelection2.setLayout(pan_FullPnSelection2Layout);
+        pan_FullPnSelection2Layout.setHorizontalGroup(
+            pan_FullPnSelection2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_FullPnSelection2Layout.createSequentialGroup()
+                .addComponent(bt_FullPnSelection2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lab_FullPnSelection2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pan_FullPnSelection2Layout.setVerticalGroup(
+            pan_FullPnSelection2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_FullPnSelection2Layout.createSequentialGroup()
+                .addGroup(pan_FullPnSelection2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_FullPnSelection2)
+                    .addComponent(lab_FullPnSelection2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        // ---------- second bloc ----------
+        pan_ExpertTraceSelection.setBorder(javax.swing.BorderFactory.createTitledBorder("Expert trace selection"));
+        pan_ExpertTraceSelection.setMinimumSize(new java.awt.Dimension(50, 100));
+        bt_ExpertTraceSelection.setText("Select file");
+        bt_ExpertTraceSelection.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_ExpertTraceSelectionActionPerformed(evt);
+            }
+        });
+        lab_ExpertTraceSelection.setText("No file selected");
+        lab_ExpertTraceSelection.setMinimumSize(new java.awt.Dimension(270, 14));
+        javax.swing.GroupLayout pan_ExpertTraceSelectionLayout = new javax.swing.GroupLayout(pan_ExpertTraceSelection);
+        pan_ExpertTraceSelection.setLayout(pan_ExpertTraceSelectionLayout);
+        pan_ExpertTraceSelectionLayout.setHorizontalGroup(
+            pan_ExpertTraceSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_ExpertTraceSelectionLayout.createSequentialGroup()
+                .addComponent(bt_ExpertTraceSelection)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lab_ExpertTraceSelection, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
+        );
+        pan_ExpertTraceSelectionLayout.setVerticalGroup(
+            pan_ExpertTraceSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pan_ExpertTraceSelectionLayout.createSequentialGroup()
+                .addGroup(pan_ExpertTraceSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_ExpertTraceSelection)
+                    .addComponent(lab_ExpertTraceSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        // ---------- buil button ----------
+        bt_BuildFilteredPn.setText("Build filtered Petri net");
+        bt_BuildFilteredPn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bt_BuildFilteredPnActionPerformed(evt);
+            }
+        });
         javax.swing.GroupLayout tab_FilteredPnManagementLayout = new javax.swing.GroupLayout(tab_FilteredPnManagement);
         tab_FilteredPnManagement.setLayout(tab_FilteredPnManagementLayout);
         tab_FilteredPnManagementLayout.setHorizontalGroup(
             tab_FilteredPnManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, tab_FilteredPnManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addComponent(pan_ExpertTraceSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(bt_BuildFilteredPn))
+            .addComponent(pan_FullPnSelection2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         tab_FilteredPnManagementLayout.setVerticalGroup(
             tab_FilteredPnManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
+            .addGroup(tab_FilteredPnManagementLayout.createSequentialGroup()
+                .addComponent(pan_FullPnSelection2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(pan_ExpertTraceSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(bt_BuildFilteredPn)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
 
 		//////////////////////////////////////
@@ -834,585 +861,6 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
         pack();
 		
 		setVisible(true);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/*
-		
-		// fermeture application
-		WindowListener l = new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		};
-		addWindowListener(l);
-		addComponentListener(this);
-		// taille et structure générale en onglets
-		setSize(largeur, hauteur);
-		JPanel mainPanel = new JPanel(new BorderLayout());
-		onglets = new JTabbedPane();
-		// polices de caractères
-		Font font1 = new Font("Arial", Font.PLAIN, tailleTexte1);
-		JPanel tmpPanel;
-		TitledBorder tmpBorder;
-		JLabel tmpLabel;
-
-		///////////////////////////////////////////////////////////////	
-		// onglet1 (ongletReseaux) pour le chargement des réseaux de Petri complets, filtrés et des spécifications
-		JPanel ongletSelectionReseaux = new JPanel();
-		//ongletSelectionReseaux.setPreferredSize(n	ew Dimension(largeur, hauteur));
-		// Ajout de cet onglet
-		onglets.addTab("Petri nets selection", ongletSelectionReseaux);
-
-		// -------- 1ère ligne pour gérer le dossier des Rdp Complets --------
-		panel_fullPnSelection = new JPanel();
-		tmpBorder = new TitledBorder("Full Petri nets selection");
-		panel_fullPnSelection.setBorder(tmpBorder);
-		panel_fullPnSelection.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// Bouton : Charger un dossier de Rdp complet
-		tmpPanel = new JPanel();
-		bt_SelectFolderFullPn = new JButton("Select folder");
-		bt_SelectFolderFullPn.addActionListener(this);
-		tmpPanel.add(bt_SelectFolderFullPn);
-		panel_fullPnSelection.add(tmpPanel, BorderLayout.LINE_START);
-		// Info sur le chargement du Rdp Complet
-		tmpPanel = new JPanel();
-		infoFullFolderSelected = new JLabel(new String());
-		infoFullFolderSelected.setFont(font1);
-		infoFullFolderSelected.setText("<html><font color=\"red\">No folder selected</font></html>");
-		tmpPanel.add(infoFullFolderSelected);
-		panel_fullPnSelection.add(tmpPanel);
-		panel_fullPnSelection.setPreferredSize(new Dimension(largeur-40, 200));
-		// Ajout de la première ligne au panneau global
-		ongletSelectionReseaux.add(panel_fullPnSelection); 
-
-		// -------- 2ème ligne pour gérer le dossier des Rdp Filtrés --------
-		panel_filteredPnSelection = new JPanel();
-		tmpBorder = new TitledBorder("Filtered Petri nets selection");
-		panel_filteredPnSelection.setBorder(tmpBorder);
-		panel_filteredPnSelection.setLayout(new FlowLayout(FlowLayout.LEFT));		
-		// Bouton pour sélectionner un dossier de Rdp Filtré
-		tmpPanel = new JPanel();
-		bt_SelectFolderFilteredPn = new JButton("Select folder");
-		bt_SelectFolderFilteredPn.addActionListener(this);
-		tmpPanel.add(bt_SelectFolderFilteredPn);
-		panel_filteredPnSelection.add(tmpPanel);
-		// Info sur le chargement du Rdp filtré
-		tmpPanel = new JPanel();
-		infoFilteredFolderSelected = new JLabel(new String());
-		infoFilteredFolderSelected.setFont(font1);
-		infoFilteredFolderSelected.setText("<html><font color=\"red\">No folder selected</font></html>");
-		tmpPanel.add(infoFilteredFolderSelected);
-		panel_filteredPnSelection.add(tmpPanel);
-		panel_filteredPnSelection.setPreferredSize(new Dimension(largeur-40, 70));
-		ongletSelectionReseaux.add(panel_filteredPnSelection);
-
-		// -------- 3ème ligne pour annoncer qu'il y a des spécifications --------
-		JPanel pannelFiltre = new JPanel();
-		pannelFiltre.setLayout(new GridLayout(1, 3));	
-		// Label : Type de graphe
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<HTML><b>Graph properties</b></html>");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelFiltre.add(tmpPanel);		
-		ongletSelectionReseaux.add(pannelFiltre);		
-
-		// -------- 4ème ligne pour choisir couverture ou accessibilité --------
-		JPanel pannelFiltre2 = new JPanel();
-		tmpPanel = new JPanel();
-		ButtonGroup group = new ButtonGroup();
-		radioCouverture = new JRadioButton("Coverability", true);
-		radioCouverture.setFont(font1);
-		radioCouverture.addActionListener(this);
-		radioCouverture.setEnabled(true);
-		group.add(radioCouverture);
-		tmpPanel.add(radioCouverture);
-		radioAccessibilite = new JRadioButton("Accessibility");
-		radioAccessibilite.setFont(font1);
-		radioAccessibilite.addActionListener(this);
-		radioAccessibilite.setEnabled(true);
-		group.add(radioAccessibilite);
-		tmpPanel.add(radioAccessibilite);
-		pannelFiltre2.add(tmpPanel);	
-		ongletSelectionReseaux.add(pannelFiltre2);			
-
-		// -------- 5ème ligne pour annoncer le choix de stratégie --------
-		JPanel pannelFiltre3 = new JPanel();
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<HTML><b>Analysis strategy</b></html>");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);		
-		pannelFiltre3.add(tmpPanel);
-		ongletSelectionReseaux.add(pannelFiltre3);
-
-		// -------- 6ème ligne pour boutons FIRST ou All --------		
-		JPanel pannelFiltre4 = new JPanel();
-		tmpPanel = new JPanel();
-		group = new ButtonGroup();
-		radioFirst = new JRadioButton("FIRST", true); // en fait, FIRST == OU
-		radioFirst.setFont(font1);
-		radioFirst.addActionListener(this);
-		radioFirst.setEnabled(true);
-		group.add(radioFirst);
-		tmpPanel.add(radioFirst);
-		radioAll = new JRadioButton("ALL", true); // en fait, ALL == ET
-		radioAll.setFont(font1);
-		radioAll.addActionListener(this);
-		radioAll.setEnabled(true);
-		group.add(radioAll);
-		tmpPanel.add(radioAll);
-		pannelFiltre4.add(tmpPanel);
-		ongletSelectionReseaux.add(pannelFiltre4);		
-
-		// -------- 7ème ligne pour choisir le dossier des spécificités --------
-		JPanel pannelColonneSpecificites = new JPanel();
-		pannelColonneSpecificites.setLayout(new GridLayout(1, 3));
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><b>Folder of Petri net specifications</b></html>");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelColonneSpecificites.add(tmpPanel);
-		tmpPanel = new JPanel();
-		bt_SelectFolderFeatures = new JButton("Select folder of specifications");
-		bt_SelectFolderFeatures.addActionListener(this);
-		bt_SelectFolderFeatures.setEnabled(true);
-		tmpPanel.add(bt_SelectFolderFeatures);
-		pannelColonneSpecificites.add(tmpPanel);
-		tmpPanel = new JPanel();
-		infoCaracteristiques = new JLabel(new String());
-		infoCaracteristiques.setFont(font1);
-		infoCaracteristiques.setText("<html><center>No folder of Petri Net specification selected<br>&nbsp;</center></html>");
-		tmpPanel.add(infoCaracteristiques);
-		pannelColonneSpecificites.add(tmpPanel);
-		ongletSelectionReseaux.add(pannelColonneSpecificites); 
-
-		// ---------- 8ème ligne vide pour aérer ------------
-		JPanel panelVide = new JPanel();
-		ongletSelectionReseaux.add(panelVide);	
-
-		// ---------- 9ème ligne pour le bouton de confirmation : charger les réseaux et les spécifications -----------
-		JPanel panelBouton = new JPanel();
-		tmpPanel = new JPanel();
-		boutonChargerRdpFiltre = new JButton("Load Petri nets and specifications");
-		boutonChargerRdpFiltre.addActionListener(this);
-		boutonChargerRdpFiltre.setEnabled(true);
-		tmpPanel.add(boutonChargerRdpFiltre);
-		panelBouton.add(tmpPanel); 
-		ongletSelectionReseaux.add(panelBouton);
-
-		//////////////////////////////////////////////////////////////////
-		// onglet2 pour traces
-		JPanel ongletTraces = new JPanel();
-		//ongletTraces.setPreferredSize(new Dimension(largeur, hauteur));
-		ongletTraces.setLayout(new BorderLayout());
-		// Ajout de cet onglet
-		onglets.addTab("Traces management", ongletTraces);
-
-		// ---------- Création de panneau supérieur -----------
-		JPanel pannelTracesNorth = new JPanel();
-		pannelTracesNorth.setLayout(new BorderLayout());
-
-		// Panel nord : Explication de la construction de la trace
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel(
-				"<html><center>Build trace manually by drag and drop game actions from left panel"
-						+ " to the right one. <br/>Press SUPPR key in the right panel to remove a game action");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelTracesNorth.add("North", tmpPanel);
-
-		// un tableau 3x3 au centre
-		JPanel pannelTracesNorthSouth = new JPanel();
-		pannelTracesNorthSouth.setLayout(new GridLayout(3,3));
-
-		// ligne 1 : texte de choix du full Petri Net et texte "OR"		
-		tmpPanel = new JPanel();
-		JLabel tmpLabel1 = new JLabel("Full Petri Net");
-		tmpLabel1.setFont(font1);
-		tmpPanel.add(tmpLabel1);
-		pannelTracesNorthSouth.add(tmpPanel);	
-		pannelTracesNorthSouth.add(new JPanel()); // une case vide	
-		JPanel tmpPanel2 = new JPanel();
-		JLabel tmpLabel2 = new JLabel("Traces");
-		tmpLabel2.setFont(font1);
-		tmpPanel2.add(tmpLabel2);
-		pannelTracesNorthSouth.add(tmpPanel2); 
-
-		// ligne 2 : choix d'un Full Petri Net et chargement d'un fichier de trace
-		tmpPanel2 = new JPanel();// pour liste de sélection
-		// Object[] elements = new Object[]{"murDeGlace", "FrozenDoor", "Thermometer"};
-		petriNetsCombo = new JComboBox<String>();
-		petriNetsCombo.addItemListener(this);
-		tmpPanel2.add(petriNetsCombo);
-		pannelTracesNorthSouth.add(tmpPanel2); 	
-		pannelTracesNorthSouth.add(new JPanel()); // une case vide
-		JPanel tmpPanel3 = new JPanel();
-		boutonChargerTraces = new JButton("Load traces from file");
-		boutonChargerTraces.addActionListener(this);
-		tmpPanel3.add(boutonChargerTraces);
-		pannelTracesNorthSouth.add(tmpPanel3);
-
-		// ligne 3 : Titre des colonnes
-		// Titre colonne gauche
-		tmpPanel = new JPanel();
-		tmpPanel.setLayout(new FlowLayout());
-		tmpPanel.add(new JLabel("Available game actions"));
-		pannelTracesNorthSouth.add(tmpPanel);
-		// milieu
-		pannelTracesNorthSouth.add(new JPanel());
-		// Titre colonne droite
-		tmpPanel = new JPanel();
-		tmpPanel.setLayout(new FlowLayout());
-		tmpPanel.add(new JLabel("Game actions for analysis"));
-		pannelTracesNorthSouth.add(tmpPanel);
-		// Ajout des titres de colonne
-		pannelTracesNorth.add("Center", pannelTracesNorthSouth);
-
-		// Ajout du panneau supérieur à l'onglet des traces 
-		ongletTraces.add(pannelTracesNorth, BorderLayout.NORTH);
-
-		// ---------- Création du panneau central -----------
-		JPanel pannelTracesCenter = new JPanel();
-		pannelTracesCenter.setLayout(new GridLayout(1, 3));
-		// colonne de gauche : Actions de jeu possible
-		JPanel colonneGaucheTraces = new JPanel();
-		JPanel colonneGaucheTracesContent = new JPanel();
-		colonneGaucheTracesContent.setLayout(new BorderLayout());
-		// Liste contenant les actions possibles
-		listeActionContent = new DefaultListModel<Serializable>();
-		JList<Serializable> listeActionsConteneur = new JList<Serializable>(listeActionContent);
-		listeActionsConteneur.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		listeActionsConteneur.setDragEnabled(true);
-		JScrollPane scrollPane = new JScrollPane(listeActionsConteneur);
-		//scrollPane.setPreferredSize(new Dimension(320, 385));
-		colonneGaucheTracesContent.add(scrollPane, BorderLayout.CENTER);
-		colonneGaucheTraces.add("Center", colonneGaucheTracesContent);
-		// Ajout de la colonne de gauche
-		pannelTracesCenter.add(colonneGaucheTraces);
-
-		// colonne du centre
-		JPanel panelBoutons = new JPanel();
-		panelBoutons.setLayout(new GridLayout(10,1));
-		panelBoutons.add(new JPanel());
-		JPanel p0 = new JPanel();
-		p0.add(new JLabel("<html>By moving an action from left to right, <br/>select option \"system\" or option \"player\"</html>"));
-		panelBoutons.add(p0);
-		JPanel p1 = new JPanel();
-		ButtonGroup systemPlayer = new ButtonGroup();
-		radioSystem = new JRadioButton("system", false);
-		radioSystem.setFont(font1);
-		radioSystem.addActionListener(this);
-		radioSystem.setEnabled(true);
-		systemPlayer.add(radioSystem);
-		p1.add(radioSystem);
-		panelBoutons.add(p1);
-		JPanel p2 = new JPanel();		
-		radioPlayer = new JRadioButton(ActionType.PLAYER, true);
-		radioPlayer.setFont(font1);
-		radioPlayer.addActionListener(this);
-		radioPlayer.setEnabled(true);
-		systemPlayer.add(radioPlayer);
-		p2.add(radioPlayer);
-		panelBoutons.add(p2);
-		panelBoutons.add(new JPanel());	
-		panelBoutons.add(new JPanel());
-		panelBoutons.add(new JPanel());
-		panelBoutons.add(new JPanel());
-		panelBoutons.add(new JPanel());
-		panelBoutons.add(new JPanel());
-		pannelTracesCenter.add(panelBoutons);
-
-		// colonne de droite : actions à analyser
-		JPanel colonneDroiteTraces = new JPanel();
-		JPanel colonneDroiteTracesContent = new JPanel();
-		colonneDroiteTracesContent.setLayout(new BorderLayout());
-		// Liste contenant les actions à analyser
-		listeNomActionsPourAnalyse = new DefaultListModel<Serializable>();
-		listeTracePourAnalyse = new ArrayList<ITrace>();
-		listeNomActionsPourAnalyse.addListDataListener(new ListDataListener() {
-
-			@Override
-			public void intervalRemoved(ListDataEvent e) {
-				// TODO Auto-generated method stub
-				System.out.println("Remove : "+e.getIndex0()+" "+e.getIndex1());
-				// si on n'est pas en cours de chargement de la trace, on maintient synchronisé les deux listes
-				if (!loadingTraces){
-					for (int i = e.getIndex1() ; i >= e.getIndex0() ; i--)
-						listeTracePourAnalyse.remove(i);
-				}
-				if (listeNomActionsPourAnalyse.isEmpty())
-					enableOngletAnalyse(false);
-			}
-
-			@Override
-			public void intervalAdded(ListDataEvent e) {
-				// TODO Auto-generated method stub
-				// si on n'est pas en cours de chargement de la trace, on maintient synchronisé les deux listes
-				if (!loadingTraces){
-					for (int i = e.getIndex0() ; i <= e.getIndex1() ; i++){
-						String action = listeNomActionsPourAnalyse.getElementAt(i).toString();
-						// Création d'un objet trace pour stocker les données
-						// Vérifier si l'action courante fait référence à une action système
-						String origine = "player"; // par défaut
-						ArrayList<String> proprietes = features.getSystemTransitions(); // ensemble des transitions système
-						for (int m = 0; m < proprietes.size(); m++) {
-							if (proprietes.get(m).indexOf(action) != -1) {
-								// l'action est une action système
-								origine = "system";
-								break;
-							}
-						}
-						// création de la nouvelle ligne de trace
-						ITrace nouvelletrace = new Trace(fullPn.getName(), action, "manual", origine, false);
-						listeTracePourAnalyse.add(i, nouvelletrace);
-					}
-				}
-				enableOngletAnalyse(true);
-			}
-
-			@Override
-			public void contentsChanged(ListDataEvent e) {
-				// TODO Auto-generated method stub
-			}
-		});
-
-		JList<Serializable> listeNomActionsPourAnalyseConteneur = new JList<Serializable>(listeNomActionsPourAnalyse);
-		listeNomActionsPourAnalyseConteneur.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		scrollPane = new JScrollPane(listeNomActionsPourAnalyseConteneur);
-		//scrollPane.setPreferredSize(new Dimension(320, 350));
-		listeNomActionsPourAnalyseConteneur.setDragEnabled(true);
-		listeNomActionsPourAnalyseConteneur.setDropMode(DropMode.INSERT);
-		listeNomActionsPourAnalyseConteneur.setTransferHandler(new ListTransferHandler());
-		listeNomActionsPourAnalyseConteneur.addKeyListener(new KeyListener() {
-			public void keyPressed(KeyEvent e) {
-				// System.out.println("Touche pressée : " + e.getKeyCode());
-				if (e.getKeyCode()== KeyEvent.VK_DELETE){
-					for (int i = listeNomActionsPourAnalyseConteneur.getSelectedIndices().length-1 ; i >= 0 ; i--){
-						listeNomActionsPourAnalyse.remove(listeNomActionsPourAnalyseConteneur.getSelectedIndices()[i]);
-					}
-				}
-			}
-
-			public void keyReleased(KeyEvent e) {
-			}
-
-			public void keyTyped(KeyEvent e) {
-			}
-		});
-		colonneDroiteTracesContent.add(scrollPane);
-		colonneDroiteTraces.add("Center", colonneDroiteTracesContent);
-		// Bouton : Sauvegarde de la trace
-		tmpPanel = new JPanel();
-		boutonSauvegarderTrace = new JButton("Save traces");
-		tmpPanel.add(boutonSauvegarderTrace);
-		boutonSauvegarderTrace.addActionListener(this);
-		colonneDroiteTraces.add("South", tmpPanel);
-		// Ajout de la colonne de droite
-		pannelTracesCenter.add(colonneDroiteTraces);
-
-		// Ajout du panneau principal à son onglet
-		ongletTraces.add(pannelTracesCenter, BorderLayout.CENTER);
-
-		/////////////////////////////////////////////////////////////////
-		// onglet3 pour analyse
-		JPanel ongletAnalyse = new JPanel();
-		//ongletAnalyse.setPreferredSize(new Dimension(largeur, hauteur));
-		ongletAnalyse.setLayout(new BorderLayout());
-		// Ajout de cet onglet
-		onglets.addTab("Analysis", ongletAnalyse);
-
-		// ---------- Création de panneau supérieur -----------
-		JPanel pannelAnalyseNorth = new JPanel();
-		pannelAnalyseNorth.setLayout(new GridLayout(2, 3));
-		// 1ère ligne : vide / bouton / vide
-		// espace vide
-		tmpPanel = new JPanel();
-		pannelAnalyseNorth.add(tmpPanel);
-		// Bouton : Analyser actions
-		tmpPanel = new JPanel();
-		boutonAnalyserActions = new JButton("Launch analysis");
-		boutonAnalyserActions.addActionListener(this);
-		tmpPanel.add(boutonAnalyserActions);
-		pannelAnalyseNorth.add(tmpPanel);
-		// espace vide
-		tmpPanel = new JPanel();
-		pannelAnalyseNorth.add(tmpPanel);
-		// 2ème ligne : Titres colonnes
-		// Label : Actions analysées
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("Analysed actions");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelAnalyseNorth.add(tmpPanel);
-		// Label : Labels identifiés
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("computed labels");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelAnalyseNorth.add(tmpPanel);
-		// Label : Compte-rendu d'analyse
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("Synthesis");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelAnalyseNorth.add(tmpPanel);
-		// Ajout du panneau supérieur  l'onglet d'analyse
-		ongletAnalyse.add(pannelAnalyseNorth, BorderLayout.NORTH);
-
-		// ---------- Création de panneau central -----------
-		JPanel pannelAnalyseCenter = new JPanel();
-		pannelAnalyseCenter.setLayout(new GridLayout(1, 3));
-		// colonne de gauche : Actions analysées
-		JPanel colonneGaucheAnalyse = new JPanel();
-		JPanel colonneGaucheAnalyseContent = new JPanel();
-		colonneGaucheAnalyseContent.setLayout(new BorderLayout());
-		// Liste contenant les actions analysées
-		listeActionsAnalysees = new DefaultListModel<Serializable>();
-		JList<Serializable> listeActionsAnalyseesConteneur = new JList<Serializable>(listeActionsAnalysees);
-		scrollPane = new JScrollPane(listeActionsAnalyseesConteneur);
-		//scrollPane.setPreferredSize(new Dimension(300, 470));
-		colonneGaucheAnalyseContent.add(scrollPane);
-		colonneGaucheAnalyse.add("Center", colonneGaucheAnalyseContent);
-		// Bouton : Exporter Graphml
-		tmpPanel = new JPanel();
-		boutonExporterGraphml = new JButton("Export to Graphml format");
-		boutonExporterGraphml.addActionListener(this);
-		tmpPanel.add(boutonExporterGraphml);
-		colonneGaucheAnalyse.add("South", tmpPanel);
-		// Ajout de la colonne de gauche
-		pannelAnalyseCenter.add(colonneGaucheAnalyse);
-
-		// colonne du centre : Labels identifiés
-		JPanel colonneCentreAnalyse = new JPanel();
-		JPanel colonneCentreAnalyseContent = new JPanel();
-		colonneCentreAnalyseContent.setLayout(new BorderLayout());
-		// Liste contenant les labels identifiés
-		listeLabels = new DefaultListModel<Serializable>();
-		JList<Serializable> listeLabelsConteneur = new JList<Serializable>(listeLabels);
-		scrollPane = new JScrollPane(listeLabelsConteneur);
-		//scrollPane.setPreferredSize(new Dimension(300, 470));
-		colonneCentreAnalyseContent.add(scrollPane);
-		colonneCentreAnalyse.add("Center", colonneCentreAnalyseContent);
-		// Bouton : Exporter les labels
-		tmpPanel = new JPanel();
-		boutonExporterLabels = new JButton("Export labels");
-		boutonExporterLabels.addActionListener(this);
-		tmpPanel.add(boutonExporterLabels);
-		colonneCentreAnalyse.add("South", tmpPanel);
-		// Ajout de la colonne du centre
-		pannelAnalyseCenter.add(colonneCentreAnalyse);
-
-		// colonne de droite : Résultats
-		JPanel colonneDroiteAnalyse = new JPanel();
-		JPanel colonneDroiteAnalyseContent = new JPanel();
-		colonneDroiteAnalyseContent.setLayout(new BorderLayout());
-		// Liste contentant la synthèse de l'analyse
-		listeSynthese = new DefaultListModel<Serializable>();
-		JList<Serializable> listeSyntheseConteneur = new JList<Serializable>(listeSynthese);
-		scrollPane = new JScrollPane(listeSyntheseConteneur);
-		//scrollPane.setPreferredSize(new Dimension(300, 470));
-		colonneDroiteAnalyseContent.add(scrollPane);
-		colonneDroiteAnalyse.add("Center", colonneDroiteAnalyseContent);
-		// Ajout de la colonne de droite
-		pannelAnalyseCenter.add(colonneDroiteAnalyse);
-
-		// Ajout du panneau principal à son onglet
-		ongletAnalyse.add("Center", pannelAnalyseCenter);
-		enableOngletTraces(false);
-		// enableOngletTraces(true);
-
-		//////////////////////////////////////////////////////////////////		
-		// 4ème onglet (dit à tort onglet0) pour la création d'un filtré à partir d'un complet et d'une trace experte
-		JPanel ongletReseaux0 = new JPanel();
-		//ongletReseaux0.setPreferredSize(new Dimension(largeur, hauteur));
-		// onglets.addTab("Filtered nets management", ongletReseaux0); reporté à la fin, pour qu'il soit le dernier	
-		// son contenu : 
-		JPanel mainPanelReseaux0 = new JPanel();
-		mainPanelReseaux0.setLayout(new GridLayout(1, 1));  // -------- une  colonne suffit --------
-		JPanel pannelColonneRdpComplet = new JPanel();
-		pannelColonneRdpComplet.setLayout(new GridLayout(11, 1));
-		// Label : Chargement du réseau complet sans graphe
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><b>Full Petri net</b></html>");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelColonneRdpComplet.add(tmpPanel);
-		// Bouton : Charger un Rdp complet
-		tmpPanel = new JPanel();
-		boutonRdpComplet = new JButton("Load full Petri net");
-		boutonRdpComplet.addActionListener(this);
-		tmpPanel.add(boutonRdpComplet);
-		pannelColonneRdpComplet.add(tmpPanel);
-		// Info chargement Rdp Complet
-		tmpPanel = new JPanel();
-		infoRdpComplet = new JLabel(new String());
-		infoRdpComplet.setFont(font1);
-		infoRdpComplet.setText("<html><center>No Full Petri net loaded<br>&nbsp;</center></html>");
-		tmpPanel.add(infoRdpComplet);
-		pannelColonneRdpComplet.add(tmpPanel);
-		// espace vide pour aérer
-		tmpPanel = new JPanel();
-		pannelColonneRdpComplet.add(tmpPanel);
-		// Label : option facultative pour créer un réseau filtré
-		tmpPanel = new JPanel();
-		tmpLabel = new JLabel("<html><b>OPTION: Build filtered Petri net</b></html>");
-		tmpLabel.setFont(font1);
-		tmpPanel.add(tmpLabel);
-		pannelColonneRdpComplet.add(tmpPanel);
-		// Bouton : Choisir trace experte
-		tmpPanel = new JPanel();
-		bt_SelectExpertTraces = new JButton("a. Choose expert trace");
-		bt_SelectExpertTraces.addActionListener(this);
-		bt_SelectExpertTraces.setEnabled(false);
-		tmpPanel.add(bt_SelectExpertTraces);
-		pannelColonneRdpComplet.add(tmpPanel);
-		// Info chargement trace experte
-		tmpPanel = new JPanel();
-		infoTracesExpertes = new JLabel(new String());
-		infoTracesExpertes.setFont(font1);
-		infoTracesExpertes.setText("<html><center>No expert trace selected<br>&nbsp;</center></html>");
-		tmpPanel.add(infoTracesExpertes);
-		pannelColonneRdpComplet.add(tmpPanel);
-		// Bouton : Générer Rdp Filtré
-		tmpPanel = new JPanel();
-		bt_BuildFilteredPn = new JButton("b. Build filtered Petri net");
-		bt_BuildFilteredPn.addActionListener(this);
-		bt_BuildFilteredPn.setEnabled(false);
-		tmpPanel.add(bt_BuildFilteredPn);
-		pannelColonneRdpComplet.add(tmpPanel);
-		// Ajout au panneau global
-		mainPanelReseaux0.add(pannelColonneRdpComplet);
-		ongletReseaux0.add(mainPanelReseaux0);
-		// ajout de l'onglet0 en tout dernier lieu
-		onglets.addTab("Filtered nets management", ongletReseaux0);
-		
-		// Ajout de tous les onglets au panneau principal
-		mainPanel.add(onglets);
-		// Ajout du panneau principal à this
-		getContentPane().add(mainPanel);
-		setVisible(true);*/
 	}
 	
 
@@ -1428,7 +876,6 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 			enableOngletAnalyse(false);
 			enableOngletTraces(false);
 		}
-		bt_FullPnSelection.setSelected(false);
     } 
 	
     private void bt_FilteredPnSelectionActionPerformed(java.awt.event.ActionEvent evt) {                                                   
@@ -1443,7 +890,6 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 			enableOngletAnalyse(false);
 			enableOngletTraces(false);
 		}
-		bt_FilteredPnSelection.setSelected(false);
     }   
 	
     private void optActionPerformed(java.awt.event.ActionEvent evt) {                                                   
@@ -1452,23 +898,23 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 		// les 4 boutons de configuration
 		if (source == opt_Coverability) {
 			System.out.println("couverture");
-			type = "couverture";
+			type = CoverabilityGraph.TYPE;
 			opt_First.setEnabled(true);
 			opt_All.setEnabled(true);
 		} else if (source == opt_Accessibility) {
 			System.out.println("accessibilité");
-			type = "accessibilité";
+			type = AccessibleGraph.TYPE;
 			// interdire le bouton1b
 			opt_All.setEnabled(false);
 			// activer le bouton1a automatiquement
 			opt_First.setSelected(true);
-			strategie = "OU";
+			strategie = CoverabilityGraph.STRATEGY_OR;
 		} else if (source == opt_First) {
 			System.out.println("stratégie FIRST, en fait, OU");
-			strategie = "OU";
+			strategie = CoverabilityGraph.STRATEGY_OR;
 		} else if (source == opt_All) {
 			System.out.println("stratégie ALL, en fait, ET");
-			strategie = "ET";
+			strategie = CoverabilityGraph.STRATEGY_AND;
 		}
     }                                           
 
@@ -1484,7 +930,6 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 			enableOngletAnalyse(false);
 			enableOngletTraces(false);
 		}
-		bt_SpecificationSelection.setSelected(false);
     }                                           
 
     private void bt_loadTracesFromFileActionPerformed(java.awt.event.ActionEvent evt) {
@@ -1538,13 +983,15 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 					tracesActions.addElement(tr.getAction() + " ("+ tr.getPnName() + ") ("+ tr.getOrigin()+ ")");
 				}
 				if (!consistant) {
-					listeNomActionsPourAnalyse.removeAllElements();								
+					tracesActions.removeAllElements();
+					listeTracePourAnalyse = new ArrayList<ITrace>();
 				}
 				enableOngletAnalyse(true);
 			}
 		} catch (Exception e6) {
 			JOptionPane.showMessageDialog(this, "Error on loading traces file\n\n"+e6.getMessage());
 			tracesActions.removeAllElements();
+			listeTracePourAnalyse = new ArrayList<ITrace>();
 		}
 		loadingTraces = false;
     }                                         
@@ -1585,7 +1032,7 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 				return ;
 			}
 			// Instantiate filtered Petri net
-			IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+			IPetriNet filteredPn = new PetriNet(true, type, strategie);
 			try {
 				filteredPn.loadPetriNet(filteredChild.getAbsolutePath());
 			} catch (Exception e2) {
@@ -1859,6 +1306,86 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 			JOptionPane.showMessageDialog(this,	"Please, launch analysis first.");
 		}
     }
+
+    private void bt_FullPnSelection2ActionPerformed(java.awt.event.ActionEvent evt) {
+		System.out.println("Selection d'un rdp complet.");
+		String fullPath = new SelectionFichier().getNomFichier(adresseReseauCompletPourFiltrage, this);
+		if (!fullPath.isEmpty()){
+			adresseReseauCompletPourFiltrage = fullPath;
+			System.out.println("fichier de réseau choisi : " + adresseReseauCompletPourFiltrage);
+			lab_FullPnSelection2.setText("File selected: "+adresseReseauCompletPourFiltrage);
+			lab_FullPnSelection2.setToolTipText(adresseReseauCompletPourFiltrage);
+		}
+    } 
+
+    private void bt_ExpertTraceSelectionActionPerformed(java.awt.event.ActionEvent evt) {
+		System.out.println("Selection d'une trace experte.");
+		String fullPath = new SelectionFichier().getNomFichier(adresseTrace, this);
+		if (!fullPath.isEmpty()){
+			adresseTrace = fullPath;
+			System.out.println("fichier de réseau choisi : " + adresseTrace);
+			lab_ExpertTraceSelection.setText("File selected: "+adresseTrace);
+			lab_ExpertTraceSelection.setToolTipText(adresseTrace);
+		}
+    }
+
+    private void bt_BuildFilteredPnActionPerformed(java.awt.event.ActionEvent evt) {
+		try {
+			// Load full Pn
+			System.out.println("Chargement du Rdp complet");
+			IPetriNet fullPn = new PetriNet(false, AccessibleGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+			fullPn.loadPetriNet(adresseReseauCompletPourFiltrage);
+			try {
+				// Load traces
+				System.out.println("Chargement des traces");
+				ITraces traces_expert = new Traces();
+				traces_expert.loadFile(adresseTrace);
+				
+				System.out.println("Généreration du réseau filtré");
+				// pour l'onglet 0
+				fullPn.filterXMLWith(traces_expert);
+
+				String filename_new = "";
+				// choisir le nom du réseau filtré
+				try {
+					JFileChooser chooser = new JFileChooser();
+					// Dossier de réseaux filtrés
+					chooser.setCurrentDirectory(new File(adresseReseauFiltre + File.separator));
+					// Affichage et récupération de la réponse de l'utilisateur
+					int reponse = chooser.showDialog(chooser, "Save (.pnml extension)");
+					if (reponse == JFileChooser.APPROVE_OPTION) {
+						// Récupération du chemin du fichier et de son nom
+						filename_new = chooser.getSelectedFile().toString();
+						if (filename_new.toLowerCase().endsWith(".pnml"))
+							filename_new = filename_new.substring(0, filename_new.length() - 5); // remove user extension
+						adresseReseauFiltre = filename_new.substring(0, filename_new.lastIndexOf(File.separator));
+						System.out.println("fichier : " + filename_new + ".pnml");
+					}
+				} catch (HeadlessException he) {
+					he.printStackTrace();
+				}
+				// enregistrement proprement dit
+				if (!filename_new.isEmpty()){
+					Transformer transformer;
+					Result output;
+					try {
+						transformer = TransformerFactory.newInstance().newTransformer();
+						output = new StreamResult(new File(filename_new + ".pnml"));
+						Source input = new DOMSource(((PetriNet) fullPn).xml);
+						transformer.transform(input, output);
+						JOptionPane.showMessageDialog(this, "Saving OK");
+					} catch (Exception e5) {
+						System.out.println("Saving error: "+e5.getMessage());
+					}
+				}
+			} catch (Exception e4) {
+				JOptionPane.showMessageDialog(this, "An error occurs on loading traces\n\nError : "+e4.getMessage());
+				e4.printStackTrace();
+			}
+		} catch (Exception e1) {
+			JOptionPane.showMessageDialog(this, "An error occurs on loading full Petri net\n\nError: "+e1.getMessage());
+		}
+    }
     
 	private void enableOngletTraces(boolean state){
 		jTabbedPane.setEnabledAt(1, state);
@@ -1888,837 +1415,21 @@ class InterfaceLaalys extends JFrame implements ActionListener, ItemListener, Co
 	public void itemStateChanged(ItemEvent e) {
 		// attaché au combo
 		// nom du full choisi
-		fullPnName = (String)combo_FullPnFilter.getSelectedItem();
+		String fullPnName = (String)combo_FullPnFilter.getSelectedItem();
 		if (pnName2labelingAlgo.containsKey(fullPnName)){
 			fullPnActions.clear();
 			// on rempli la liste des actions incluses dans ce Rdp
 			IPetriNet fullPn = pnName2labelingAlgo.get(fullPnName).getCompletePN();
 			if (fullPn != null){
-				System.out.println("START");
 				for (ITransition tr : fullPn.getTransitions()) {
 					System.out.println(tr.getName());
 					fullPnActions.addElement(tr.getName());
 				}
-				System.out.println("END");
 			} else {
 				JOptionPane.showMessageDialog(this, "Error, No full Petri net loaded for \""+fullPnName+"\".");
 			}
 		} else {
 			JOptionPane.showMessageDialog(this, "Error, Unknown full Petri net named \""+fullPnName+"\".");
 		}
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		SelectionFichier sf;
-		Object source = e.getSource();
-
-		// les 4 boutons de configuration
-		if (source == radioCouverture) {
-			System.out.println("couverture");
-			type = "couverture";
-			radioFirst.setEnabled(true);
-			radioAll.setEnabled(true);
-		} else if (source == radioAccessibilite) {
-			System.out.println("accessibilité");
-			type = "accessibilité";
-			// interdire le bouton1b
-			radioAll.setEnabled(false);
-			// activer le bouton1a automatiquement
-			radioFirst.setSelected(true);
-			strategie = "OU";
-		} else if (source == radioFirst) {
-			System.out.println("stratégie FIRST, en fait, OU");
-			strategie = "OU";
-		} else if (source == radioAll) {
-			System.out.println("stratégie ALL, en fait, ET");
-			strategie = "ET";
-		}
-
-		else if (source == boutonRdpComplet) {
-			System.out.println("Charger un réseau complet sans graphe.");
-			// seulement pour créer un réseau de Petri filtré à partir de traces expertes
-			// pour l'onglet0
-			// on choisit le FICHIER à charger
-			try {
-				sf = new SelectionFichier();
-				String fileName = sf.getNomFichier(adresseReseauComplet, this);
-				if (!fileName.isEmpty()){
-					// vider tout
-					boutonRdpComplet.setBackground(UIManager.getColor("Bouton.background"));
-					infoRdpComplet.setText("<html><center>No full Petri net loaded<br>&nbsp;</center></html>");
-					bt_SelectExpertTraces.setBackground(UIManager.getColor("Bouton.background"));
-					infoTracesExpertes.setText("<html><center>No expert traces selected<br>&nbsp;</center></html>");
-					bt_BuildFilteredPn.setBackground(UIManager.getColor("Bouton.background"));
-					bt_BuildFilteredPn.setEnabled(false);
-
-					bt_SelectFolderFilteredPn.setBackground(UIManager.getColor("Bouton.background"));
-					infoFilteredFolderSelected.setText("<html><center>No filtered Petri net selected<br>&nbsp;</center></html>");
-					// toggleFilteredFields(false);
-
-					bt_SelectFolderFeatures.setBackground(UIManager.getColor("Bouton.background"));
-					infoCaracteristiques.setText("<html><center>No features loaded<br>&nbsp;</center></html>");
-					featuresName = null;
-
-					enableOngletTraces(false);
-					// enableOngletTraces(true);
-
-					// Chargement
-					fullPnName = fileName;
-					System.out.println("fichier de réseau choisi : " + fullPnName);
-					infoRdpComplet.setText("<html><center>Full Petri net loaded:<br>" + fileName + "</center></html>");
-					fullPn = new PetriNet(false, AccessibleGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-					boolean success = false;
-					try {
-						fullPn.loadPetriNet(fullPnName);
-						int index = fullPnName.lastIndexOf(File.separator);
-						String nomfich = fullPnName.substring(index + 1);
-						adresseReseauComplet = fullPnName.substring(0, index);
-						infoRdpComplet.setText("<html><center>Full Petri net loaded:<br>" + nomfich + "</center></html>");
-						boutonRdpComplet.setBackground(Color.CYAN);
-						success = true;
-					} catch (Exception e1) {
-						JOptionPane.showMessageDialog(this, "An error occurs on loading full Petri net\n\nError: "+e1.getMessage());
-						boutonRdpComplet.setBackground(UIManager.getColor("Bouton.background"));
-						infoRdpComplet.setText("<html><center>No full Petri net loaded<br>"+fileName+"</center></html>");
-						listeActionContent.clear();
-						fullPnName = null;
-						fullPn = null;
-					}
-					bt_SelectExpertTraces.setEnabled(success);
-					// boutonSelectionnerRdpFiltre.setEnabled(success);
-					// boutonChargerCaracteristiques.setEnabled(success);
-				}
-			} catch (Exception e3) {
-				JOptionPane.showMessageDialog(this, "An error occurs\n\nError: "+e3.getMessage());
-				fullPnName = null;
-				fullPn = null;
-			}
-		}
-
-
-		else if (source == bt_SelectExpertTraces) {
-			System.out.println("Choisir la trace");
-			// pour l'onglet0, on recharge le même réseau complet
-			// mais cette fois pour filtrer le XML associé avant de le
-			// réenregister sous un autre nom
-			// on l'appelle fullPn_travail
-			boolean correct = true;
-			// rechargement sous un autre nom
-			fullPn_travail = new PetriNet(false, AccessibleGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-			try {
-				fullPn_travail.loadPetriNet(fullPnName);
-			} catch (Exception e1) {
-				JOptionPane.showMessageDialog(this, "An error occurs on loading full Petri net\nProcess aborted\n\nError : "+e1.getMessage());
-				correct = false;
-			}
-			// on choisit une trace experte pour filtrer le réseau
-			// fullPn_travail
-			if (correct)
-				try {
-					sf = new SelectionFichier();
-					String traceName2 = sf.getNomFichier(adresseTrace, this);
-					if (!traceName2.isEmpty()){
-						int index2 = traceName2.lastIndexOf(File.separator);
-						adresseTrace = traceName2.substring(0, index2);
-						String nomfich2 = traceName2.substring(index2 + 1);
-						// System.out.println("fichier de trace expert choisi : " +
-						// traceName2);
-						infoTracesExpertes.setText("<html><center>Expert traces chosen:<br>" + nomfich2 + "</center></html>");
-						traces_expert = new Traces();
-						traces_expert.loadFile(traceName2);
-						System.out.println("--------------------traces_expert-------------------------");
-						System.out.println(traces_expert.toString());
-						System.out.println("---------------------------------------------");
-						bt_SelectExpertTraces.setBackground(Color.CYAN);
-						bt_BuildFilteredPn.setEnabled(true);
-					}
-				} catch (Exception e4) {
-					JOptionPane.showMessageDialog(this, "An error occurs on loading file\n\nError : "+e4.getMessage());
-				}
-		}
-
-		else if (source == bt_BuildFilteredPn) {
-			// toujours pour l'onglet0
-			System.out.println("Générer le réseau filtré");
-			// pour l'onglet 0
-			fullPn_travail.filterXMLWith(traces_expert);
-
-			String filename_new = "";
-			// choisir le nom du réseau filtré
-			try {
-				JFileChooser chooser = new JFileChooser();
-				// Dossier de réseaux filtrés
-				chooser.setCurrentDirectory(new File(adresseReseauFiltre + File.separator));
-				// Affichage et récupération de la réponse de l'utilisateur
-				int reponse = chooser.showDialog(chooser, "Save (.pnml extension)");
-				if (reponse == JFileChooser.APPROVE_OPTION) {
-					// Récupération du chemin du fichier et de son nom
-					filename_new = chooser.getSelectedFile().toString();
-					if (filename_new.toLowerCase().endsWith(".pnml"))
-						filename_new = filename_new.substring(0, filename_new.length() - 5); // remove user extension
-					adresseReseauFiltre = filename_new.substring(0, filename_new.lastIndexOf(File.separator));
-					System.out.println("fichier : " + filename_new + ".pnml");
-				}
-			} catch (HeadlessException he) {
-				he.printStackTrace();
-			}
-			// enregistrement proprement dit
-			if (!filename_new.isEmpty()){
-				Transformer transformer;
-				Result output;
-				try {
-					transformer = TransformerFactory.newInstance().newTransformer();
-					output = new StreamResult(new File(filename_new + ".pnml"));
-					Source input = new DOMSource(((PetriNet) fullPn_travail).xml);
-					transformer.transform(input, output);
-					JOptionPane.showMessageDialog(this, "Saving OK");
-				} catch (Exception e5) {
-					System.out.println("Saving error: "+e5.getMessage());
-				}
-			}
-		}
-
-
-		else if (source == bt_SelectFolderFullPn) {
-			// choisir un DOSSIER de réseaux complets
-			System.out.println("Choisir un dossier de réseau complet sans graphe.");
-			String folderName = new SelectionDossier().getNomDossier(adresseReseauComplet, this);
-			if (!folderName.isEmpty() && !folderName.equals(adresseReseauComplet)){
-				adresseReseauComplet = folderName;
-				System.out.println("dossier choisi : " + adresseReseauComplet);
-				infoFullFolderSelected.setText("<html>Folder selected: <b>"+adresseReseauComplet+"</b></html>");
-				enableOngletAnalyse(false);
-				enableOngletTraces(false);
-			}
-		}
-
-		else if (source == bt_SelectFolderFilteredPn) {
-			// onglet1 : ancienne version de sélection d'un réseau filtré 
-			/* System.out.println("Select a filtered Petri net.");
-			try {
-				sf = new SelectionFichier();
-				String fileName = sf.getNomFichier(adresseReseauFiltre, this);
-				if (!fileName.isEmpty()){
-					filteredPnName  = fileName; 
-					int index = filteredPnName.lastIndexOf(File.separator);
-					String nomfich = filteredPnName.substring(index + 1);
-					adresseReseauFiltre = filteredPnName.substring(0, index);
-					infoRdpFiltre.setText("<html><center>Filtered Petri net selected:<br>" + nomfich + "</center></html>");
-					toggleFilteredFields(true);
-					radioCouverture.setSelected(true);
-					radioFirst.setSelected(true);
-					boutonSelectionnerRdpFiltre.setBackground(Color.CYAN);
-					// enableOngletTraces(false);
-					enableOngletTraces(true);
-				}
-			} catch (Exception e5) {
-				JOptionPane.showMessageDialog(this, "An error occurs on loading the file\n\nError : "+e5.getMessage());
-			}  */
-
-			// onglet1 : choisir un DOSSIER pour les réseaux filtrés
-			System.out.println("Choisir un dossier de réseaux filtrés");
-			String folderName = new SelectionDossier().getNomDossier(adresseReseauFiltre, this);
-			if (!folderName.isEmpty() && !folderName.equals(adresseReseauFiltre)){
-				adresseReseauFiltre = folderName;
-				System.out.println("dossier choisi : " + adresseReseauFiltre);
-				infoFilteredFolderSelected.setText("<html>Folder selected: <b>"+adresseReseauFiltre+"</b></html>");
-				enableOngletAnalyse(false);
-				enableOngletTraces(false);
-			}
-		}
-
-		else if (source == bt_SelectFolderFeatures) {
-			// onglet1 : ancienne version pour charger un fichier de spécifications
-			/* System.out.println("Loading specifications.");
-			features = new Features();
-			try {
-				sf = new SelectionFichier();
-				String fileName = sf.getNomFichier(adresseSpec, this);
-				if (!fileName.isEmpty()){
-					featuresName = fileName;
-					// charger le fichier
-					System.out.println("Specification selected: " + featuresName);
-					features.loadFile(featuresName);
-					adresseSpec = featuresName.substring(0, featuresName.lastIndexOf(File.separator));
-					// Vérifier s'il y a au moins une action de fin
-					if (!features.getEndLevelTransitions().isEmpty()){
-						boutonChargerCaracteristiques.setBackground(Color.CYAN);
-						int index = featuresName.lastIndexOf(File.separator);
-						String nomfich = featuresName.substring(index + 1);
-						infoCaracteristiques.setText("<html><center>Specifications selected:<br>" + nomfich + "</center></html>");
-						// si le Rdp filtré est aussi chargée, on peut dévérouiller les traces
-						boutonChargerCaracteristiques.setBackground(Color.CYAN);
-						if (filteredPn != null)
-							enableOngletTraces(true);
-					} else{
-						JOptionPane.showMessageDialog(this, "Incomplet specifications.\n\n"
-								+ "No end transition defined");
-						featuresName = null;
-						boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-						infoCaracteristiques.setText("<html><center>No specifications loaded<br>&nbsp;</center></html>");
-						// enableOngletTraces(false);
-						enableOngletTraces(true);
-					}
-				}
-			} catch (Exception e5) {
-				JOptionPane.showMessageDialog(this, "Error on loading specifications\n\n"+e5.getMessage());
-				featuresName = null;
-				boutonChargerCaracteristiques.setBackground(UIManager.getColor("Bouton.background"));
-				infoCaracteristiques.setText("<html><center>No specifications loaded<br>&nbsp;</center></html>");
-				// enableOngletTraces(false);
-				enableOngletTraces(true);
-			} */
-
-			// nouvelle version pour choisir un dossier de caractéristiques
-			/*System.out.println("Choisir un dossier de caractéristiques");
-			boutonChargerRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
-			nomDossierCaracteristiques = new SelectionDossier().getNomDossier(adressereseau, this) ;
-			System.out.println("dossier choisi : " + nomDossierCaracteristiques);
-			int index = nomDossierCaracteristiques.lastIndexOf(File.separator);
-			String nomfich = nomDossierCaracteristiques.substring(index + 1);
-			infoCaracteristiques.setText("<html><center>Folder of specifications selected:<br>"+nomfich+"<br/></center></html>");
-			bt_SelectFolderFeatures.setBackground(Color.CYAN);*/
-		}
-
-
-		else if (source == boutonChargerRdpFiltre) {
-			// onglet1 : ancienne version qui chargeait seulement le réseau filtré
-			/* if ((filteredPnName == null) || (filteredPnName.isEmpty())) {
-				JOptionPane.showMessageDialog(this,
-						"Please, select first the filtered Petri net to load.");
-			} else {
-				boutonChargerRdpFiltre.setBackground(UIManager.getColor("Bouton.background"));
-				if (filteredPnName != null && !filteredPnName.isEmpty()) { // test peut-être inutile
-					// charger le fichier par IPetriNet - loadPetriNet()
-					System.out.print("Filtered Petri net selected: " + filteredPnName);
-					System.out.print(" - " + type);
-					System.out.println(" - strategy : " + strategie);
-					if (type.equalsIgnoreCase("accessibilité")) {
-						filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-					} else if (type.equalsIgnoreCase("couverture")) { // couverture
-						if (strategie.equalsIgnoreCase("OU"))
-							filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-						else if (strategie.equalsIgnoreCase("ET"))
-						
-							filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_AND);
-						else
-							filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_FIRST);
-					}
-					try {
-						filteredPn.loadPetriNet(filteredPnName);
-						// Vérifier que toutes les transitions du Rdp filtré sont bien incluses dans le Rdp Complet
-						System.out.println("filteredPn chargé");
-						boolean consistant = true;
-						ArrayList<ITransition> filteredTransitions = filteredPn.getTransitions();
-						for (int i = 0 ; i < filteredTransitions.size() ; i++){
-							if (fullPn.getTransitionById(filteredTransitions.get(i).getName()) == null){
-								consistant = false;
-								break;
-							}
-						}
-						if (consistant){		
-							// System.out.println("filtered graph size :
-							// "+filteredPn.getGraph().getAllMarkings().size() + " "
-							// + (System.currentTimeMillis()-stamp));
-							boutonChargerRdpFiltre.setBackground(Color.CYAN);
-							// si les features sont aussi chargées, on peut dévérouiller les traces
-							if (featuresName != null && !featuresName.isEmpty())
-								enableOngletTraces(true);
-						} else {
-							JOptionPane.showMessageDialog(this, "This filtered Petri net includes transitions not included into full petri net\n\nLoading aborted");
-							toggleFilteredFields(false);
-							// enableOngletTraces(false);
-							enableOngletTraces(true);
-							infoRdpFiltre.setText("<html><center>No filtered Petri net selected<br>&nbsp;</center></html>");
-						}
-					} catch (Exception e2) {
-						JOptionPane.showMessageDialog(this, "Loading filtered Petri net fail\n\n"+e2.getMessage());
-						toggleFilteredFields(false);
-						// enableOngletTraces(false);
-						enableOngletTraces(true);
-						infoRdpFiltre.setText("<html><center>No filtered Petri net selected<br>&nbsp;</center></html>");
-					}
-				}
-			} */
-
-			// onglet1 : nouvelle version qui charge tous les fichiers des trois dossiers
-			/*System.out.println(adresseReseauComplet);
-			System.out.println(nomDossierRdpFiltre);
-			System.out.println(nomDossierCaracteristiques);
-
-			Logger monLog = Logger.getLogger(Main.class.getName());
-			monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
-			monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
-			ConsoleHandler ch = new ConsoleHandler();
-			ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
-			monLog.addHandler(ch);
-			File fullDir = new File(adresseReseauComplet);
-			for (File fullChild : fullDir.listFiles()){
-				// get equivalent file in filtered folder
-				File filteredDir = new File(nomDossierRdpFiltre);
-				File filteredChild = new File(filteredDir, fullChild.getName());
-				// get equivalent file in features folder
-				File featuresDir = new File(nomDossierCaracteristiques);
-				File featuresChild = new File(featuresDir, fullChild.getName().substring(0, fullChild.getName().length()-4)+"xml");
-				if (!filteredChild.exists() || !featuresChild.exists()){
-					System.err.println("Error: equivalent files of full Petri net don't exist in selected folders\n\nLoading aborted");
-					JOptionPane.showMessageDialog(this, "Error, files of full Petri net don't exist in selected folders\n\nLoading aborted");
-					pnName2labelingAlgo.clear();
-					return ;
-				}
-				// Instantiate full Petri net
-				fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-				try {
-					fullPn.loadPetriNet(fullChild.getAbsolutePath());
-				} catch (Exception e0) {
-					System.err.println("Error with -fullPn option: unable to load "+fullChild.getAbsolutePath()+" file.\n"+e0.getMessage());
-					JOptionPane.showMessageDialog(this, "Warning, unable to load the full Petri net\n\nLoading aborted");
-					pnName2labelingAlgo.clear();
-					return ;
-				}
-				// Instantiate filtered Petri net
-				filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-				try {
-					filteredPn.loadPetriNet(filteredChild.getAbsolutePath());
-				} catch (Exception e2) {
-					System.err.println("Error with -filteredPn option: unable to load "+filteredChild.getAbsolutePath()+" file.\n"+e2.getMessage());
-					JOptionPane.showMessageDialog(this, "Warning, unable to load the filtered Petri net\n\nLoading aborted");
-					pnName2labelingAlgo.clear();
-					return;
-				}
-				// Instantiate features
-				features = new Features();
-				try {
-					features.loadFile(featuresChild.getAbsolutePath());
-				} catch (IOException e1) {
-					System.err.println("Error with -features option: unable to load "+featuresChild.getAbsolutePath()+" file.\n"+e1.getMessage());
-					JOptionPane.showMessageDialog(this, "Warning, unable to load the features\n\nLoading aborted");
-					pnName2labelingAlgo.clear();
-					return ;
-				}
-
-				// Init labeling algorithm
-				algo = new Labeling_V10(monLog, false);
-				algo.setCompletePN(fullPn);
-				algo.setFilteredPN(filteredPn);
-				algo.setFeatures(features);
-				try {
-					algo.reset();
-				} catch (Exception e2) {
-					System.out.println("Labeling algorithm initialisation fail. "+e2.getMessage());
-					JOptionPane.showMessageDialog(this, "Warning, Labeling algorithm initialisation fail.\n\nInitialization aborted");
-					pnName2labelingAlgo.clear();
-					return ;
-				}
-				String pnName = fullChild.getName();
-				if (pnName.endsWith(".pnml"))
-					pnName = pnName.substring(0, pnName.length()-5);
-				pnName2labelingAlgo.put(pnName, algo);
-			}
-			// System.out.println("Nb Full found: "+pnName2labelingAlgo.size());
-
-			// initialisation du combo et de la liste des actions possibles de l'onglet2
-			for (HashMap.Entry<String,ILabeling> elem : pnName2labelingAlgo.entrySet()){
-				algo = elem.getValue() ;
-				fullPn = algo.getCompletePN();
-				// on a trouvé le premier fullPn qui apparaitra dans le combo
-				break; 			
-			}
-			// on remplit la listeActionContent correspondant à ce premier fullPn
-			listeActionContent.clear();
-			listeNomActionsPourAnalyse.clear();
-			if (fullPn != null){
-				for (ITransition tr : fullPn.getTransitions()) {
-					listeActionContent.addElement(tr.getName());
-				}
-			}
-			// ensuite on les parcourt tous pour remplir les intitulés du combo
-			for (HashMap.Entry<String,ILabeling> elem : pnName2labelingAlgo.entrySet()){
-				System.out.println("elem : " + elem.getKey() + " : " + elem.getValue());
-				petriNetsCombo.addItem(elem.getKey());			
-			}
-			boutonChargerRdpFiltre.setBackground(Color.CYAN);
-			enableOngletTraces(true);	*/
-		}
-
-		else if (source == boutonChargerTraces) {
-			// onglet2 : charger un fichier de traces
-			System.out.println("Loading traces file.");
-			loadingTraces = true;
-			// on vérifie qu'un fichier de réseau complet a été chargé
-			if (fullPn == null) {
-				JOptionPane.showMessageDialog(this, "Please, select first a full Petri net");
-			} else {
-				if (!listeActionContent.isEmpty()) {
-					try {
-						sf = new SelectionFichier();
-						String fileName = sf.getNomFichier(adresseTrace, this);
-						if (!fileName.isEmpty()){
-							traceName = fileName;
-							adresseTrace = traceName.substring(0, traceName.lastIndexOf(File.separator));
-							listeNomActionsPourAnalyse.removeAllElements();
-							listeTracePourAnalyse = new ArrayList<ITrace>();
-							System.out.println("traces selected: " + traceName);
-							ITraces tracesToLoad = new Traces();
-							tracesToLoad.loadFile(traceName);
-							boolean consistant1 =true ;
-							boolean consistant = true ;
-							// ICI copie_traces = new Traces();
-							// on parcourt les traces chargées
-							for (ITrace tr : tracesToLoad.getTraces()) { 
-								// pour chaque trace
-								algo = pnName2labelingAlgo.get(tr.getPnName());
-								if (algo == null) {						
-									JOptionPane.showMessageDialog(this, "Warning, this traces correspond to not existing\n"
-											+ " full Petri net\n\nLoading aborted");
-									consistant1 = false ;
-								} else {
-									ITransition trans = algo.getCompletePN().getTransitionById(tr.getAction());
-									if (trans == null){
-										JOptionPane.showMessageDialog(this, "Warning, this traces include game actions not\n"
-												+ "included into the full Petri nets\n\nLoading aborted");
-										consistant = false;
-									}
-								}
-
-								// mémorisation des traces avec tous les attributs :
-								listeTracePourAnalyse.add(tr);
-								// pour affichage, on ajoute le nom du fullPn et l'origine (player ou system)
-								listeNomActionsPourAnalyse.addElement(tr.getAction() + " ("+ tr.getPnName() + ") ("+ tr.getOrigin()+ ")");
-							}
-							if ((!consistant1) || (!consistant)) { 
-								traceName = null;
-								listeNomActionsPourAnalyse.removeAllElements();								
-							}
-							// boutonChargerTraces.setBackground(Color.CYAN);
-							onglets.setEnabledAt(2, true);
-						}
-					} catch (Exception e6) {
-						JOptionPane.showMessageDialog(this, "Error on loading traces file\n\n"+e6.getMessage());
-						traceName = null;
-						listeNomActionsPourAnalyse.removeAllElements();
-					}
-				}
-				else
-					JOptionPane.showMessageDialog(this, "Please, load a full Petri net with at least one transition");
-			}
-			loadingTraces = false;
-		}
-
-		else if (source == boutonSauvegarderTrace) {
-			// onglet2 : sauvegarde de la trace
-			// ITrace it ; 
-			System.out.println("Save traces.");
-			if (listeTracePourAnalyse.size() != 0) {
-				// nouveau fichier de traces
-				for (int k = 0; k < listeTracePourAnalyse.size(); k++) {
-					// System.out.println("k : " + listeTracePourAnalyse.get(k));
-					// le nettoyer : il ne faut pas de .pnml dans pnName
-					// ITrace it = listeTracePourAnalyse.get(k) ;
-					String nom = listeTracePourAnalyse.get(k).getPnName() ;
-					int pos = nom.indexOf(".pnml");
-					if (pos != -1) { // on l'enlève
-						listeTracePourAnalyse.get(k).setPnName(nom.substring(0,pos));
-					}
-					// il ne pas le nom du full entre parenthèses, ni les mots player ou system
-					String act = listeTracePourAnalyse.get(k).getAction();
-					pos = act.indexOf(" (");
-					if (pos != -1) {
-						listeTracePourAnalyse.get(k).setAction(act.substring(0,pos));
-					}
-				}
-				System.out.println("Resultat : ");
-				for (int k = 0; k < listeTracePourAnalyse.size(); k++) {
-					System.out.println(listeTracePourAnalyse.get(k));
-				}
-				ITraces itraces = new Traces();
-				itraces.setTraces(listeTracePourAnalyse);
-				Document doc = itraces.toXML();
-				// enregistrement du nouveau fichier de traces
-				// choix du fichier
-				String filename = "";
-				try {
-					JFileChooser chooser = new JFileChooser();
-					// Dossier Courant
-					chooser.setCurrentDirectory(new File(adresseTrace + File.separator));
-					// Affichage et récupération de la réponse de l'utilisateur
-					int reponse = chooser.showDialog(chooser, "Save (.xml extension)");
-					// Si l'utilisateur clique sur OK
-					if (reponse == JFileChooser.APPROVE_OPTION) {
-						// Récupération du chemin du fichier et de son nom
-						filename = chooser.getSelectedFile().toString();
-						if (filename.toLowerCase().endsWith(".xml"))
-							filename = filename.substring(0, filename.length() - 4); // remove user extension
-						adresseTrace = filename.substring(0, filename.lastIndexOf(File.separator));
-						// System.out.println("fichier : " + filename+".xml");
-						// enregistrement proprement dit
-						Transformer transformer;
-						Result output;
-						try {
-							transformer = TransformerFactory.newInstance().newTransformer();
-							output = new StreamResult(new File(filename + ".xml"));
-							Source input = new DOMSource(doc);
-							transformer.transform(input, output);
-							JOptionPane.showMessageDialog(this, "Save OK");
-						} catch (Exception e5) {
-							JOptionPane.showMessageDialog(this, "Error on saving traces\n\n"+e5.getMessage());
-						}
-					}
-				} catch (HeadlessException he) {
-					he.printStackTrace();
-				}
-			} else
-				JOptionPane.showMessageDialog(this, "Traces are empty, build a trace by drag and drop or load an existing trace first");
-		}
-
-		else if (source == boutonAnalyserActions) {
-			// onglet3 : lancement de l'analyse
-			// vérifier que l'on a tout : s'il manque quelque chose, le dire
-			if (pnName2labelingAlgo.size() <= 0 || listeTracePourAnalyse.size() == 0) {
-				JOptionPane.showMessageDialog(this,
-						"Full Petri nets or filtered Petri nets or specifications or traces not defined");
-			} else {
-				// Réinitialisation des algos
-				for (ILabeling algo : pnName2labelingAlgo.values())
-					try {
-						algo.reset();
-					} catch (Exception e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-				
-				// nouveau fichier de traces : on vide l'ancien traces et on y transfère les traces	
-				for (int i = 0 ; i < listeTracePourAnalyse.size(); i++) {
-					// nettoyer les .pnml dans les noms des full des traces importées
-					String nom = listeTracePourAnalyse.get(i).getPnName() ;
-					int pos = nom.indexOf(".pnml");
-					if (pos != -1) { // on l'enlève
-						listeTracePourAnalyse.get(i).setPnName(nom.substring(0,pos));
-					}
-					// nettoyer (fullPn) (system/player) dans les traces importées
-					String act = listeTracePourAnalyse.get(i).getAction();
-					pos = act.indexOf(" (");
-					if (pos != -1) {
-						listeTracePourAnalyse.get(i).setAction(act.substring(0,pos));
-					}
-					// System.out.println("tr "+listeTracePourAnalyse.get(i));
-				} 
-				
-				ITraces tracesPourAnalyse = new Traces();
-				tracesPourAnalyse.setTraces(listeTracePourAnalyse);				
-				for (ITrace trace : tracesPourAnalyse.getTraces())
-				{
-					ILabeling algo = pnName2labelingAlgo.get(trace.getPnName());
-					if (algo != null)
-						try {
-							algo.labelAction( trace );
-						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-					else{
-						System.err.println("Unknown Petri net \""+trace.getPnName()+"\" to label \""+trace.getAction()+"\" action.");
-					}
-				}
-				
-				/* for (ITrace tr : tracesPourAnalyse.getTraces()) {
-					System.out.println("tr "+tr);
-				} */
-
-				/*// Ancien traitement
-				Logger monLog = Logger.getLogger(Main.class.getName());
-				monLog.setLevel(Level.ALL); // pour envoyer les messages de tous les niveaux
-				monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
-				ConsoleHandler ch = new ConsoleHandler();
-				ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
-				ch.setFormatter(new MyFormater()); // define formater
-				monLog.addHandler(ch);
-				algo = new Labeling_V10(monLog, true);
-				algo.setCompletePN(fullPn);
-				algo.setFilteredPN(filteredPn);
-				algo.setFeatures(features);
-				try {
-					algo.label(tracesPourAnalyse); 
-				} catch (Exception e3) {
-					e3.printStackTrace();
-				}
-				monLog.removeHandler(ch);*/
-
-				// vidage des trois fenêtres
-				listeActionsAnalysees.removeAllElements();
-				listeLabels.removeAllElements();
-				listeSynthese.removeAllElements();
-
-				int nbLabels = 18;
-				int[] effectif = new int[nbLabels];
-				for (int k = 0; k < nbLabels; k++)
-					effectif[k] = 0;
-				String[] intitule = new String[nbLabels];
-				intitule[0] = "useless";//"inutile";				
-				intitule[1] = "non-optimal";//"non-optimale";
-				intitule[2] = "correct";//"correcte";
-				intitule[3] = "equivalent";//"equivalente";
-				intitule[4] = "erroneous";//"erronee";
-				intitule[5] = "intrusion";
-				intitule[6] = "farther";//"eloignement";
-				intitule[7] = "missing";//"manquante";
-				intitule[8] = "unsynchronized";//"autre-branche-de-resolution";
-				intitule[9] = "becoming-closer";//"rapprochement";
-				intitule[10] = "recovery";//"rattrapage";
-				intitule[11] = "leap-backward";//"retour_arriere";
-				intitule[12] = "leap-forward";//"saut-avant";
-				intitule[13] = "stagnation";
-				intitule[14] = "too-late";//"trop-tard";
-				intitule[15] = "too-early";//"trop-tot";
-				intitule[16] = "already-seen";//"deja-vu";
-				intitule[17] = "bad-choice";//"mauvais-choix";
-
-				// calcul des effectifs de chaque label
-				for (ITrace tr : tracesPourAnalyse.getTraces()) {
-					// System.out.println("tr "+tr);
-					// System.out.println("tr.getAction : " + tr.getAction());
-					listeActionsAnalysees.addElement(features.getPublicName(tr.getAction()));
-					ArrayList<String> labs = tr.getLabels(); // ERREUR : est vide
-					// System.out.println("labs " + labs);
-					listeLabels.addElement(labs);
-					for (String lab : labs) {
-						for (int k = 0; k < nbLabels; k++)
-							if (lab == intitule[k]) {
-								effectif[k] += 1;
-								break;
-							}
-					}
-				}
-
-				// remplir l'analyse globale : traces and labels envoyés dans l'interface
-				for (int k = 0; k < nbLabels; k++) {
-					if (effectif[k] > 0) {
-						ArrayList<String> ligne = new ArrayList<String>();
-						ligne.add(intitule[k]);
-						ligne.add(new Integer(effectif[k]).toString());
-						listeSynthese.addElement(ligne);
-					}
-				}
-
-				// construire le diagramme
-				// boutonAnalyserActions.setBackground(Color.CYAN);
-
-				// on crée d'abord le dataset en éliminant les deja-vu et
-				// mauvais-choix
-				dataset = new DefaultPieDataset();
-				for (int k = 0; k < nbLabels - 2; k++)
-					if (effectif[k] > 0)
-						dataset.setValue(intitule[k], effectif[k]);
-
-				// ensuite le PieChart qui fait tout le reste
-				cv = new PieChart("Analysis results", "", dataset);
-				//cv.setPreferredSize(new Dimension(500, 270));
-				cv.pack();
-				cv.setVisible(true);
-			}
-		}
-
-		else if (source == boutonExporterGraphml) {
-			System.out.println("Export to Graphml format");
-			if (listeActionsAnalysees.getSize() != 0) {
-				String outputfile = "";
-				try {
-					JFileChooser chooser = new JFileChooser();
-					// Dossier Courant
-					chooser.setCurrentDirectory(new File(adresseGraphml + File.separator));
-					// Affichage et récupération de la réponse de l'utilisateur
-					int reponse = chooser.showDialog(chooser, "Save (.graphml extension)");
-					// Si l'utilisateur clique sur OK
-					if (reponse == JFileChooser.APPROVE_OPTION) {
-						// Récupération du chemin du fichier et de son nom
-						outputfile = chooser.getSelectedFile().toString();
-						if (outputfile.toLowerCase().endsWith(".graphml"))
-							outputfile = outputfile.substring(0, outputfile.length() - 8); // remove
-						// user
-						// extension
-						adresseGraphml = outputfile.substring(0, outputfile.lastIndexOf(File.separator));
-						System.out.println("fichier : " + outputfile + ".graphml");
-					}
-					algo.export(outputfile + ".graphml");
-				} catch (Exception he) {
-					he.printStackTrace();
-				}
-				boutonExporterGraphml.setBackground(Color.CYAN);
-			}
-		}
-
-		else if (source == boutonExporterLabels) {
-			System.out.println("Export labels.");
-			if (listeLabels.getSize() != 0) {
-				String outputfile = "";
-				try {
-					JFileChooser chooser = new JFileChooser();
-					// Dossier Courant
-					chooser.setCurrentDirectory(new File(adresseLabel + File.separator));
-					// Affichage et récupération de la réponse de l'utilisateur
-					int reponse = chooser.showDialog(chooser, "Save (.xml extension)");
-					// Si l'utilisateur clique sur OK
-					if (reponse == JFileChooser.APPROVE_OPTION) {
-						// Récupération du chemin du fichier et de son nom
-						outputfile = chooser.getSelectedFile().toString();
-						if (outputfile.toLowerCase().endsWith(".xml"))
-							outputfile = outputfile.substring(0, outputfile.length() - 4); // remove
-						// user
-						// extension
-						adresseLabel = outputfile.substring(0, outputfile.lastIndexOf(File.separator));
-						System.out.println("file: " + outputfile + ".xml");
-					}
-					// contenu à écrire récupération de value1 complété par les
-					// labels
-					ITraces itraces = new Traces();
-					itraces.setTraces(listeTracePourAnalyse);
-					for (int k = 0; k < listeTracePourAnalyse.size(); k++)
-						System.out.println("pos " + k + " : " + listeTracePourAnalyse.get(k));
-					Document doc = itraces.toXML();
-					Transformer transformer = TransformerFactory.newInstance().newTransformer();
-					Result output = new StreamResult(new File(outputfile + ".xml"));
-					Source input = new DOMSource(doc);
-					transformer.transform(input, output);
-				} catch (Exception he) {
-					he.printStackTrace();
-				}
-				boutonExporterLabels.setBackground(Color.CYAN);
-			}
-		}
-	}
-
-	@Override
-	public void componentHidden(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentMoved(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void componentResized(ComponentEvent e) {
-		if (panel_fullPnSelection != null){
-			panel_fullPnSelection.setPreferredSize(new Dimension(this.getWidth()-40, panel_fullPnSelection.getHeight()));
-			/*String txt = "<html>Folder selected: <b>"+adresseReseauComplet+"</b></html>";
-			infoFullFolderSelected.setText(txt);
-			infoFullFolderSelected.validate();
-			int size = txt.length()-4;
-			while (infoFullFolderSelected.getAlignmentX()+infoFullFolderSelected.getWidth() > this.getWidth()-40){
-				txt = txt.substring(0, size)+"...";
-				infoFullFolderSelected.setText(txt);
-				infoFullFolderSelected.validate();
-			}*/
-		}
-		if (panel_filteredPnSelection != null) panel_filteredPnSelection.setPreferredSize(new Dimension(this.getWidth()-40, panel_filteredPnSelection.getHeight()));
-	}
-
-	@Override
-	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }

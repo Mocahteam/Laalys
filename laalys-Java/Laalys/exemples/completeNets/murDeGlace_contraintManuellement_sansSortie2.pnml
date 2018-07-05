@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-30CC-A0906-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>murDeGlace_contraintManuellement_sansSortie2</text>
+  </name>
+ <page id="g-30CC-A091B-1">
+  <place id="p-30CC-A0923-2">
+  <name>
+   <text>T chaudiere = -3 + x</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="410"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0946-3">
+  <name>
+   <text>T in [0]</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0949-4">
+  <name>
+   <text>T in ]-inf ; 0[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="110" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A094E-5">
+  <name>
+   <text>T in ]0; +inf[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="310" y="640"/>
+   </graphics>
+  </place>
+  <transition id="t-30CC-A0952-6">
+  <name>
+   <text>activate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="710" y="120"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0957-7">
+  <name>
+   <text>activate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="320" y="300"/>
+   </graphics>
+  </transition>
+  <place id="p-30CC-A095D-8">
+  <name>
+   <text>alumettes_floor;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="250" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0961-9">
+  <name>
+   <text>alumettes_hand;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0965-10">
+  <name>
+   <text>alumettes_inv;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0969-11">
+  <name>
+   <text>chaudiere_Off;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="750" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A096D-12">
+  <name>
+   <text>chaudiere_On;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="650" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A098A-13">
+  <name>
+   <text>clef_floor;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1050" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A09C1-14">
+  <name>
+   <text>clef_hand;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A09CB-15">
+  <name>
+   <text>clef_inv;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1130" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-30CC-A09CF-16">
+  <name>
+   <text>close-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="60"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A09D3-17">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="800"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A09D8-18">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="790"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0A72-19">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="780"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0A7A-20">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="770"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0AA7-21">
+  <name>
+   <text>desactivate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="710" y="60"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0AAC-22">
+  <name>
+   <text>desactivate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="180" y="250"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0AE4-23">
+  <name>
+   <text>drop-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="130"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0AE8-24">
+  <name>
+   <text>drop-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1130" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-30CC-A0AED-25">
+  <name>
+   <text>endLevel-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="680" y="720"/>
+   </graphics>
+  </place>
+  <transition id="t-30CC-A0B16-26">
+  <name>
+   <text>exit-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="640" y="780"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0B18-27">
+  <name>
+   <text>get-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="100"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0B25-28">
+  <name>
+   <text>get-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1170" y="100"/>
+   </graphics>
+  </transition>
+  <place id="p-30CC-A0B28-29">
+  <name>
+   <text>levier_plus_2_1_Off;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>6</text>
+   </initialMarking>
+   <graphics>
+    <position x="300" y="230"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0B2F-30">
+  <name>
+   <text>levier_plus_2_1_On;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="330"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0B5B-31">
+  <name>
+   <text>liquid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="890"/>
+   </graphics>
+  </place>
+  <transition id="t-30CC-A0B5F-32">
+  <name>
+   <text>open-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-30CC-A0B63-33">
+  <name>
+   <text>porte_closed;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0B8F-34">
+  <name>
+   <text>porte_open;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0B93-35">
+  <name>
+   <text>solid_liquid_transition_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="870"/>
+   </graphics>
+  </place>
+  <place id="p-30CC-A0B98-36">
+  <name>
+   <text>solid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="410" y="840"/>
+   </graphics>
+  </place>
+  <transition id="t-30CC-A0BD4-37">
+  <name>
+   <text>store-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="290" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0BD9-38">
+  <name>
+   <text>store-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1090" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0BDC-39">
+  <name>
+   <text>storeBack-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0BE2-40">
+  <name>
+   <text>storeBack-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0BE6-41">
+  <name>
+   <text>warming_[0]_to_]0; +inf[_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="530"/>
+   </graphics>
+  </transition>
+  <transition id="t-30CC-A0BEB-42">
+  <name>
+   <text>warming_]-inf ; 0[_to_[0]_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="540"/>
+   </graphics>
+  </transition>
+  <arc id="e-30CC-A0BF2-43" source="t-30CC-A0BDC-39" target="p-30CC-A0965-10">
+  </arc>
+  <arc id="e-30CC-A0BFD-44" source="t-30CC-A0BE6-41" target="p-30CC-A094E-5">
+  </arc>
+  <arc id="e-30CC-A0BFE-45" source="p-30CC-A096D-12" target="t-30CC-A09D3-17">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-30CC-A0C02-46" source="t-30CC-A0BE2-40" target="p-30CC-A09CB-15">
+  </arc>
+  <arc id="e-30CC-A0C03-47" source="p-30CC-A096D-12" target="t-30CC-A0A72-19">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-30CC-A0C04-48" source="p-30CC-A096D-12" target="t-30CC-A0AA7-21">
+  </arc>
+  <arc id="e-30CC-A0C06-49" source="p-30CC-A096D-12" target="t-30CC-A0BE6-41">
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C08-50" source="p-30CC-A096D-12" target="t-30CC-A0BEB-42">
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C09-51" source="p-30CC-A0923-2" target="t-30CC-A0AAC-22">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <graphics>
+    <position x="114" y="358" />
+    <position x="152" y="274" />
+   </graphics>  </arc>
+  <arc id="e-30CC-A0C17-52" source="p-30CC-A098A-13" target="t-30CC-A0BD9-38">
+  </arc>
+  <arc id="e-30CC-A0C19-53" source="p-30CC-A09C1-14" target="t-30CC-A09CF-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C1A-54" source="p-30CC-A0961-9" target="t-30CC-A0952-6">
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C1D-55" source="p-30CC-A09C1-14" target="t-30CC-A0AE8-24">
+  </arc>
+  <arc id="e-30CC-A0C1D-56" source="p-30CC-A09C1-14" target="t-30CC-A0B5F-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C1F-57" source="t-30CC-A0BE6-41" target="p-30CC-A0B5B-31">
+  </arc>
+  <arc id="e-30CC-A0C20-58" source="p-30CC-A0923-2" target="t-30CC-A09D8-18">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-30CC-A0C22-59" source="p-30CC-A09C1-14" target="t-30CC-A0BE2-40">
+  </arc>
+  <arc id="e-30CC-A0C23-60" source="p-30CC-A09CB-15" target="t-30CC-A0B25-28">
+  </arc>
+  <arc id="e-30CC-A0C23-61" source="t-30CC-A09CF-16" target="p-30CC-A0B63-33">
+  </arc>
+  <arc id="e-30CC-A0C26-62" source="t-30CC-A09D3-17" target="p-30CC-A0949-4">
+  </arc>
+  <arc id="e-30CC-A0C27-63" source="t-30CC-A09D3-17" target="p-30CC-A0B98-36">
+  </arc>
+  <arc id="e-30CC-A0C28-64" source="t-30CC-A09D8-18" target="p-30CC-A0949-4">
+  </arc>
+  <arc id="e-30CC-A0C29-65" source="p-30CC-A0961-9" target="t-30CC-A0AE4-23">
+  </arc>
+  <arc id="e-30CC-A0C3E-66" source="p-30CC-A0923-2" target="t-30CC-A0BE6-41">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C41-67" source="t-30CC-A09D8-18" target="p-30CC-A0B98-36">
+  </arc>
+  <arc id="e-30CC-A0C43-68" source="t-30CC-A0A72-19" target="p-30CC-A0946-3">
+  </arc>
+  <arc id="e-30CC-A0C44-69" source="t-30CC-A0A72-19" target="p-30CC-A0B93-35">
+  </arc>
+  <arc id="e-30CC-A0C45-70" source="p-30CC-A094E-5" target="t-30CC-A0A72-19">
+  </arc>
+  <arc id="e-30CC-A0C46-71" source="t-30CC-A0BEB-42" target="p-30CC-A0946-3">
+  </arc>
+  <arc id="e-30CC-A0C47-72" source="t-30CC-A0A7A-20" target="p-30CC-A0946-3">
+  </arc>
+  <arc id="e-30CC-A0C48-73" source="t-30CC-A0A7A-20" target="p-30CC-A0B93-35">
+  </arc>
+  <arc id="e-30CC-A0C49-74" source="t-30CC-A0AA7-21" target="p-30CC-A0969-11">
+  </arc>
+  <arc id="e-30CC-A0C4A-75" source="t-30CC-A0AAC-22" target="p-30CC-A0B28-29">
+  </arc>
+  <arc id="e-30CC-A0C4D-76" source="p-30CC-A0923-2" target="t-30CC-A0A7A-20">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-30CC-A0C4F-77" source="t-30CC-A0AE4-23" target="p-30CC-A095D-8">
+  </arc>
+  <arc id="e-30CC-A0C50-78" source="p-30CC-A0923-2" target="t-30CC-A0BEB-42">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C52-79" source="t-30CC-A0AE8-24" target="p-30CC-A098A-13">
+  </arc>
+  <arc id="e-30CC-A0C53-80" source="t-30CC-A0B16-26" target="p-30CC-A0AED-25">
+  </arc>
+  <arc id="e-30CC-A0C54-81" source="t-30CC-A0B18-27" target="p-30CC-A0961-9">
+  </arc>
+  <arc id="e-30CC-A0C56-82" source="p-30CC-A094E-5" target="t-30CC-A0A7A-20">
+  </arc>
+  <arc id="e-30CC-A0C57-83" source="t-30CC-A0BEB-42" target="p-30CC-A0B93-35">
+  </arc>
+  <arc id="e-30CC-A0C58-84" source="t-30CC-A0B25-28" target="p-30CC-A09C1-14">
+  </arc>
+  <arc id="e-30CC-A0C59-85" source="p-30CC-A0B28-29" target="t-30CC-A0957-7">
+  </arc>
+  <arc id="e-30CC-A0C5A-86" source="p-30CC-A0B2F-30" target="t-30CC-A0AAC-22">
+  </arc>
+  <arc id="e-30CC-A0C5B-87" source="p-30CC-A0961-9" target="t-30CC-A0BDC-39">
+  </arc>
+  <arc id="e-30CC-A0C5C-88" source="p-30CC-A0B5B-31" target="t-30CC-A0A72-19">
+  </arc>
+  <arc id="e-30CC-A0C5E-89" source="p-30CC-A0B5B-31" target="t-30CC-A0A7A-20">
+  </arc>
+  <arc id="e-30CC-A0C5F-90" source="p-30CC-A0946-3" target="t-30CC-A09D3-17">
+  </arc>
+  <arc id="e-30CC-A0C60-91" source="t-30CC-A0B5F-32" target="p-30CC-A0B8F-34">
+  </arc>
+  <arc id="e-30CC-A0C61-92" source="p-30CC-A0946-3" target="t-30CC-A09D8-18">
+  </arc>
+  <arc id="e-30CC-A0C62-93" source="p-30CC-A0949-4" target="t-30CC-A0BEB-42">
+  </arc>
+  <arc id="e-30CC-A0C64-94" source="t-30CC-A0952-6" target="p-30CC-A096D-12">
+  </arc>
+  <arc id="e-30CC-A0C64-95" source="p-30CC-A0B63-33" target="t-30CC-A0B5F-32">
+  </arc>
+  <arc id="e-30CC-A0C65-96" source="p-30CC-A0B8F-34" target="t-30CC-A09CF-16">
+  </arc>
+  <arc id="e-30CC-A0C67-97" source="p-30CC-A0B93-35" target="t-30CC-A09D3-17">
+  </arc>
+  <arc id="e-30CC-A0C69-98" source="p-30CC-A0965-10" target="t-30CC-A0B18-27">
+  </arc>
+  <arc id="e-30CC-A0C6A-99" source="p-30CC-A0B93-35" target="t-30CC-A09D8-18">
+  </arc>
+  <arc id="e-30CC-A0C6B-100" source="p-30CC-A0B93-35" target="t-30CC-A0BE6-41">
+  </arc>
+  <arc id="e-30CC-A0C6C-101" source="p-30CC-A0B98-36" target="t-30CC-A0BEB-42">
+  </arc>
+  <arc id="e-30CC-A0C6D-102" source="t-30CC-A0BD4-37" target="p-30CC-A0965-10">
+  </arc>
+  <arc id="e-30CC-A0C6E-103" source="p-30CC-A0946-3" target="t-30CC-A0BE6-41">
+  </arc>
+  <arc id="e-30CC-A0C6F-104" source="t-30CC-A0BD9-38" target="p-30CC-A09CB-15">
+  </arc>
+  <arc id="e-30CC-A0C71-105" source="p-30CC-A0B5B-31" target="t-30CC-A0B16-26">
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C72-106" source="t-30CC-A0957-7" target="p-30CC-A0923-2">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-30CC-A0C99-107" source="t-30CC-A0957-7" target="p-30CC-A0B2F-30">
+  </arc>
+  <arc id="e-30CC-A0C9A-108" source="p-30CC-A095D-8" target="t-30CC-A0BD4-37">
+  </arc>
+  <arc id="e-30CC-A0C9B-109" source="p-30CC-A0969-11" target="t-30CC-A0952-6">
+  </arc>
+  <arc id="e-30CC-A0C9C-110" source="p-30CC-A096D-12" target="t-30CC-A0957-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-30CC-A0C9F-111" source="p-30CC-A0969-11" target="t-30CC-A09D8-18">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-30CC-A0CA0-112" source="p-30CC-A0969-11" target="t-30CC-A0A7A-20">
+   <type value="inhibitor"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

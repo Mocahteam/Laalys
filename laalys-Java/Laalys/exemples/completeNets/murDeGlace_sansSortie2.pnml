@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-4B8C-D4580-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>murDeGlace_sansSortie2</text>
+  </name>
+ <page id="g-4B8C-D4590-1">
+  <place id="p-4B8C-D4596-2">
+  <name>
+   <text>T chaudiere = -3 + x</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="410"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45A8-3">
+  <name>
+   <text>T in [0]</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45AC-4">
+  <name>
+   <text>T in ]-inf ; 0[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="110" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45B1-5">
+  <name>
+   <text>T in ]0; +inf[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="310" y="640"/>
+   </graphics>
+  </place>
+  <transition id="t-4B8C-D45B5-6">
+  <name>
+   <text>activate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="710" y="120"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D45BA-7">
+  <name>
+   <text>activate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="320" y="300"/>
+   </graphics>
+  </transition>
+  <place id="p-4B8C-D45C0-8">
+  <name>
+   <text>alumettes_floor;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="250" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45C5-9">
+  <name>
+   <text>alumettes_hand;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45C8-10">
+  <name>
+   <text>alumettes_inv;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45CC-11">
+  <name>
+   <text>chaudiere_Off;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="750" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45D0-12">
+  <name>
+   <text>chaudiere_On;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="650" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45D3-13">
+  <name>
+   <text>clef_floor;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1050" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45D7-14">
+  <name>
+   <text>clef_hand;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D45DB-15">
+  <name>
+   <text>clef_inv;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1130" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-4B8C-D45DE-16">
+  <name>
+   <text>close-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="60"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D45E2-17">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="800"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D45E6-18">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="790"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D4643-19">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="780"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D4648-20">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="770"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D464E-21">
+  <name>
+   <text>desactivate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="710" y="60"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D4652-22">
+  <name>
+   <text>desactivate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="180" y="250"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D4658-23">
+  <name>
+   <text>drop-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="130"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D465C-24">
+  <name>
+   <text>drop-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1130" y="130"/>
+   </graphics>
+  </transition>
+  <place id="p-4B8C-D465F-25">
+  <name>
+   <text>endLevel-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="680" y="720"/>
+   </graphics>
+  </place>
+  <transition id="t-4B8C-D4663-26">
+  <name>
+   <text>exit-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="635" y="785"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D4665-27">
+  <name>
+   <text>get-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="100"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D4669-28">
+  <name>
+   <text>get-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1170" y="100"/>
+   </graphics>
+  </transition>
+  <place id="p-4B8C-D466C-29">
+  <name>
+   <text>levier_plus_2_1_Off;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>6</text>
+   </initialMarking>
+   <graphics>
+    <position x="300" y="230"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D4672-30">
+  <name>
+   <text>levier_plus_2_1_On;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="220" y="330"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D4676-31">
+  <name>
+   <text>liquid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="890"/>
+   </graphics>
+  </place>
+  <transition id="t-4B8C-D467A-32">
+  <name>
+   <text>open-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-4B8C-D467D-33">
+  <name>
+   <text>porte_closed;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D4681-34">
+  <name>
+   <text>porte_open;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D4684-35">
+  <name>
+   <text>solid_liquid_transition_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="870"/>
+   </graphics>
+  </place>
+  <place id="p-4B8C-D4689-36">
+  <name>
+   <text>solid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="410" y="840"/>
+   </graphics>
+  </place>
+  <transition id="t-4B8C-D46B8-37">
+  <name>
+   <text>store-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="290" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D46BE-38">
+  <name>
+   <text>store-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1090" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D46C1-39">
+  <name>
+   <text>storeBack-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D46C6-40">
+  <name>
+   <text>storeBack-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D46CB-41">
+  <name>
+   <text>warming_[0]_to_]0; +inf[_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="530"/>
+   </graphics>
+  </transition>
+  <transition id="t-4B8C-D46D1-42">
+  <name>
+   <text>warming_]-inf ; 0[_to_[0]_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="540"/>
+   </graphics>
+  </transition>
+  <arc id="e-4B8C-D46D9-43" source="t-4B8C-D46C1-39" target="p-4B8C-D45C8-10">
+  </arc>
+  <arc id="e-4B8C-D46DE-44" source="p-4B8C-D45C5-9" target="t-4B8C-D45B5-6">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D46E1-45" source="p-4B8C-D45C5-9" target="t-4B8C-D4658-23">
+  </arc>
+  <arc id="e-4B8C-D46E2-46" source="p-4B8C-D4596-2" target="t-4B8C-D4648-20">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-4B8C-D46E5-47" source="p-4B8C-D45C5-9" target="t-4B8C-D46C1-39">
+  </arc>
+  <arc id="e-4B8C-D46E6-48" source="p-4B8C-D45C8-10" target="t-4B8C-D4665-27">
+  </arc>
+  <arc id="e-4B8C-D46E8-49" source="p-4B8C-D45CC-11" target="t-4B8C-D45B5-6">
+  </arc>
+  <arc id="e-4B8C-D46EA-50" source="p-4B8C-D45CC-11" target="t-4B8C-D45E6-18">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-4B8C-D46EB-51" source="p-4B8C-D45CC-11" target="t-4B8C-D4648-20">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-4B8C-D46ED-52" source="t-4B8C-D46CB-41" target="p-4B8C-D45B1-5">
+  </arc>
+  <arc id="e-4B8C-D46EE-53" source="p-4B8C-D45D0-12" target="t-4B8C-D45E2-17">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-4B8C-D46EF-54" source="t-4B8C-D46C6-40" target="p-4B8C-D45DB-15">
+  </arc>
+  <arc id="e-4B8C-D46F0-55" source="p-4B8C-D45D0-12" target="t-4B8C-D4643-19">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-4B8C-D46F1-56" source="p-4B8C-D45D0-12" target="t-4B8C-D464E-21">
+  </arc>
+  <arc id="e-4B8C-D46F4-57" source="p-4B8C-D45D0-12" target="t-4B8C-D46CB-41">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D46F5-58" source="p-4B8C-D45D0-12" target="t-4B8C-D46D1-42">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D46F6-59" source="p-4B8C-D4596-2" target="t-4B8C-D4652-22">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <graphics>
+    <position x="114" y="358" />
+    <position x="152" y="274" />
+   </graphics>  </arc>
+  <arc id="e-4B8C-D46FD-60" source="p-4B8C-D45D3-13" target="t-4B8C-D46BE-38">
+  </arc>
+  <arc id="e-4B8C-D46FF-61" source="p-4B8C-D45D7-14" target="t-4B8C-D45DE-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D4700-62" source="p-4B8C-D45D7-14" target="t-4B8C-D465C-24">
+  </arc>
+  <arc id="e-4B8C-D4702-63" source="p-4B8C-D45D7-14" target="t-4B8C-D467A-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D4703-64" source="t-4B8C-D46CB-41" target="p-4B8C-D4676-31">
+  </arc>
+  <arc id="e-4B8C-D4719-65" source="p-4B8C-D4596-2" target="t-4B8C-D45E6-18">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-4B8C-D471C-66" source="p-4B8C-D45D7-14" target="t-4B8C-D46C6-40">
+  </arc>
+  <arc id="e-4B8C-D471D-67" source="p-4B8C-D45DB-15" target="t-4B8C-D4669-28">
+  </arc>
+  <arc id="e-4B8C-D471F-68" source="t-4B8C-D45DE-16" target="p-4B8C-D467D-33">
+  </arc>
+  <arc id="e-4B8C-D4720-69" source="t-4B8C-D45E2-17" target="p-4B8C-D45AC-4">
+  </arc>
+  <arc id="e-4B8C-D4721-70" source="t-4B8C-D45E2-17" target="p-4B8C-D4689-36">
+  </arc>
+  <arc id="e-4B8C-D4723-71" source="t-4B8C-D45E6-18" target="p-4B8C-D45AC-4">
+  </arc>
+  <arc id="e-4B8C-D4724-72" source="p-4B8C-D4596-2" target="t-4B8C-D46CB-41">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D4726-73" source="t-4B8C-D45E6-18" target="p-4B8C-D4689-36">
+  </arc>
+  <arc id="e-4B8C-D4727-74" source="t-4B8C-D4643-19" target="p-4B8C-D45A8-3">
+  </arc>
+  <arc id="e-4B8C-D4729-75" source="t-4B8C-D4643-19" target="p-4B8C-D4684-35">
+  </arc>
+  <arc id="e-4B8C-D472A-76" source="p-4B8C-D45B1-5" target="t-4B8C-D4643-19">
+  </arc>
+  <arc id="e-4B8C-D472C-77" source="t-4B8C-D46D1-42" target="p-4B8C-D45A8-3">
+  </arc>
+  <arc id="e-4B8C-D472C-78" source="t-4B8C-D4648-20" target="p-4B8C-D45A8-3">
+  </arc>
+  <arc id="e-4B8C-D472E-79" source="t-4B8C-D4648-20" target="p-4B8C-D4684-35">
+  </arc>
+  <arc id="e-4B8C-D472F-80" source="t-4B8C-D464E-21" target="p-4B8C-D45CC-11">
+  </arc>
+  <arc id="e-4B8C-D4730-81" source="t-4B8C-D4652-22" target="p-4B8C-D466C-29">
+  </arc>
+  <arc id="e-4B8C-D4731-82" source="t-4B8C-D4658-23" target="p-4B8C-D45C0-8">
+  </arc>
+  <arc id="e-4B8C-D4733-83" source="p-4B8C-D4596-2" target="t-4B8C-D46D1-42">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D4735-84" source="t-4B8C-D465C-24" target="p-4B8C-D45D3-13">
+  </arc>
+  <arc id="e-4B8C-D4736-85" source="t-4B8C-D4663-26" target="p-4B8C-D465F-25">
+  </arc>
+  <arc id="e-4B8C-D4737-86" source="t-4B8C-D4665-27" target="p-4B8C-D45C5-9">
+  </arc>
+  <arc id="e-4B8C-D4738-87" source="p-4B8C-D45B1-5" target="t-4B8C-D4648-20">
+  </arc>
+  <arc id="e-4B8C-D4739-88" source="t-4B8C-D46D1-42" target="p-4B8C-D4684-35">
+  </arc>
+  <arc id="e-4B8C-D473B-89" source="t-4B8C-D4669-28" target="p-4B8C-D45D7-14">
+  </arc>
+  <arc id="e-4B8C-D473C-90" source="p-4B8C-D466C-29" target="t-4B8C-D45BA-7">
+  </arc>
+  <arc id="e-4B8C-D473E-91" source="p-4B8C-D4672-30" target="t-4B8C-D4652-22">
+  </arc>
+  <arc id="e-4B8C-D473F-92" source="p-4B8C-D4676-31" target="t-4B8C-D4643-19">
+  </arc>
+  <arc id="e-4B8C-D4740-93" source="p-4B8C-D4676-31" target="t-4B8C-D4648-20">
+  </arc>
+  <arc id="e-4B8C-D4740-94" source="p-4B8C-D45A8-3" target="t-4B8C-D45E2-17">
+  </arc>
+  <arc id="e-4B8C-D4742-95" source="t-4B8C-D467A-32" target="p-4B8C-D4681-34">
+  </arc>
+  <arc id="e-4B8C-D4743-96" source="p-4B8C-D45A8-3" target="t-4B8C-D45E6-18">
+  </arc>
+  <arc id="e-4B8C-D4745-97" source="p-4B8C-D45AC-4" target="t-4B8C-D46D1-42">
+  </arc>
+  <arc id="e-4B8C-D4747-98" source="t-4B8C-D45B5-6" target="p-4B8C-D45D0-12">
+  </arc>
+  <arc id="e-4B8C-D4749-99" source="p-4B8C-D467D-33" target="t-4B8C-D467A-32">
+  </arc>
+  <arc id="e-4B8C-D474A-100" source="p-4B8C-D4681-34" target="t-4B8C-D45DE-16">
+  </arc>
+  <arc id="e-4B8C-D474C-101" source="p-4B8C-D4684-35" target="t-4B8C-D45E2-17">
+  </arc>
+  <arc id="e-4B8C-D474D-102" source="p-4B8C-D4684-35" target="t-4B8C-D45E6-18">
+  </arc>
+  <arc id="e-4B8C-D474F-103" source="p-4B8C-D4684-35" target="t-4B8C-D46CB-41">
+  </arc>
+  <arc id="e-4B8C-D4751-104" source="p-4B8C-D4689-36" target="t-4B8C-D46D1-42">
+  </arc>
+  <arc id="e-4B8C-D4754-105" source="t-4B8C-D46B8-37" target="p-4B8C-D45C8-10">
+  </arc>
+  <arc id="e-4B8C-D4756-106" source="p-4B8C-D45A8-3" target="t-4B8C-D46CB-41">
+  </arc>
+  <arc id="e-4B8C-D4790-107" source="t-4B8C-D46BE-38" target="p-4B8C-D45DB-15">
+  </arc>
+  <arc id="e-4B8C-D4792-108" source="p-4B8C-D4676-31" target="t-4B8C-D4663-26">
+   <type value="test"/>
+  </arc>
+  <arc id="e-4B8C-D4794-109" source="t-4B8C-D45BA-7" target="p-4B8C-D4596-2">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-4B8C-D4797-110" source="t-4B8C-D45BA-7" target="p-4B8C-D4672-30">
+  </arc>
+  <arc id="e-4B8C-D4799-111" source="p-4B8C-D45C0-8" target="t-4B8C-D46B8-37">
+  </arc>
+ </page>
+ </net>
+</pnml>

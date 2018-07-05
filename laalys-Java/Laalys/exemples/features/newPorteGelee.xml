@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="DoorMesh_turnOff_2" label="close DoorMesh" system="False" end="False" />
+  <transition id="DoorMesh_turnOn_2" label="open DoorMesh" system="False" end="False" />
+  <transition id="Teleport_perform_3" label="use Teleport" system="False" end="True" />
+  <transition id="Boiler_turnOff_1" label="turnOff Boiler" system="False" end="False" />
+  <transition id="Boiler_turnOn_1" label="turnOn Boiler" system="False" end="False" />
+  <transition id="Key_perform_0" label="pick Key" system="False" end="False" />
+  <transition id="InventoryKey_turnOff_5" label="store InventoryKey" system="False" end="False" />
+  <transition id="InventoryKey_turnOn_5" label="get InventoryKey" system="False" end="False" />
+  <transition id="TeleportRoom_turnOff_4" label="exit TeleportRoom" system="False" end="False" />
+  <transition id="TeleportRoom_turnOn_4" label="enter TeleportRoom" system="False" end="False" />
+</transitions>

@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+  <net id="A-A-0" type="http://www.laas.fr/tina/tpn">
+    <name>
+      <text>gen0</text>
+    </name>
+    <page id="A-A-1">
+      <transition id="DoorMesh_turnOff_2">
+        <name>
+          <text>DoorMesh_turnOff_2</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="115" y="50" />
+        </graphics>
+      </transition>
+      <transition id="DoorMesh_turnOn_2">
+        <name>
+          <text>DoorMesh_turnOn_2</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="115" y="145" />
+        </graphics>
+      </transition>
+      <transition id="Teleport_perform_3">
+        <name>
+          <text>Teleport_perform_3</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="360" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Boiler_turnOff_1">
+        <name>
+          <text>Boiler_turnOff_1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="600" y="50" />
+        </graphics>
+      </transition>
+      <transition id="Boiler_turnOn_1">
+        <name>
+          <text>Boiler_turnOn_1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="600" y="145" />
+        </graphics>
+      </transition>
+      <transition id="Key_perform_0">
+        <name>
+          <text>Key_perform_0</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="845" y="50" />
+        </graphics>
+      </transition>
+      <transition id="InventoryKey_turnOff_5">
+        <name>
+          <text>InventoryKey_turnOff_5</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1085" y="50" />
+        </graphics>
+      </transition>
+      <transition id="InventoryKey_turnOn_5">
+        <name>
+          <text>InventoryKey_turnOn_5</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1085" y="145" />
+        </graphics>
+      </transition>
+      <transition id="TeleportRoom_turnOff_4">
+        <name>
+          <text>TeleportRoom_turnOff_4</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1335" y="50" />
+        </graphics>
+      </transition>
+      <transition id="TeleportRoom_turnOn_4">
+        <name>
+          <text>TeleportRoom_turnOn_4</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <graphics>
+          <position x="1335" y="145" />
+        </graphics>
+      </transition>
+      <place id="DoorMesh_off_2">
+        <name>
+          <text>DoorMesh_off_2</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="200" y="80" />
+        </graphics>
+      </place>
+      <place id="DoorMesh_on_2">
+        <name>
+          <text>DoorMesh_on_2</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="30" y="85" />
+        </graphics>
+      </place>
+      <place id="Teleport_end_3">
+        <name>
+          <text>Teleport_end_3</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="435" y="50" />
+        </graphics>
+      </place>
+      <place id="Teleport_start_3">
+        <name>
+          <text>Teleport_start_3</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="280" y="50" />
+        </graphics>
+      </place>
+      <place id="Boiler_off_1">
+        <name>
+          <text>Boiler_off_1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="685" y="80" />
+        </graphics>
+      </place>
+      <place id="Boiler_on_1">
+        <name>
+          <text>Boiler_on_1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="515" y="85" />
+        </graphics>
+      </place>
+      <place id="Key_end_0">
+        <name>
+          <text>Key_end_0</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="920" y="50" />
+        </graphics>
+      </place>
+      <place id="Key_start_0">
+        <name>
+          <text>Key_start_0</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="765" y="50" />
+        </graphics>
+      </place>
+      <place id="InventoryKey_off_5">
+        <name>
+          <text>InventoryKey_off_5</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1170" y="80" />
+        </graphics>
+      </place>
+      <place id="InventoryKey_on_5">
+        <name>
+          <text>InventoryKey_on_5</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1000" y="85" />
+        </graphics>
+      </place>
+      <place id="TeleportRoom_off_4">
+        <name>
+          <text>TeleportRoom_off_4</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+        <graphics>
+          <position x="1420" y="80" />
+        </graphics>
+      </place>
+      <place id="TeleportRoom_on_4">
+        <name>
+          <text>TeleportRoom_on_4</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </name>
+        <initialMarking>
+          <text>0</text>
+        </initialMarking>
+        <graphics>
+          <position x="1250" y="85" />
+        </graphics>
+      </place>
+      <arc id="23" source="DoorMesh_turnOff_2" target="DoorMesh_off_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="24" source="DoorMesh_turnOn_2" target="DoorMesh_on_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="25" source="DoorMesh_off_2" target="DoorMesh_turnOn_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="26" source="DoorMesh_on_2" target="DoorMesh_turnOff_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="27" source="InventoryKey_on_5" target="DoorMesh_turnOn_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="28" source="Boiler_on_1" target="DoorMesh_turnOn_2">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="29" source="Teleport_perform_3" target="Teleport_end_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="30" source="Teleport_start_3" target="Teleport_perform_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="31" source="TeleportRoom_on_4" target="Teleport_perform_3">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="32" source="Boiler_turnOff_1" target="Boiler_off_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="33" source="Boiler_turnOn_1" target="Boiler_on_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="34" source="Boiler_off_1" target="Boiler_turnOn_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="35" source="Boiler_on_1" target="Boiler_turnOff_1">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="36" source="Key_perform_0" target="Key_end_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="37" source="Key_start_0" target="Key_perform_0">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="38" source="Key_perform_0" target="InventoryKey_off_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="39" source="InventoryKey_turnOff_5" target="InventoryKey_off_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="40" source="InventoryKey_turnOn_5" target="InventoryKey_on_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="41" source="InventoryKey_off_5" target="InventoryKey_turnOn_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="42" source="InventoryKey_on_5" target="InventoryKey_turnOff_5">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="43" source="TeleportRoom_turnOff_4" target="TeleportRoom_off_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="44" source="TeleportRoom_turnOn_4" target="TeleportRoom_on_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="45" source="TeleportRoom_off_4" target="TeleportRoom_turnOn_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="46" source="TeleportRoom_on_4" target="TeleportRoom_turnOff_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="regular" />
+      </arc>
+      <arc id="47" source="DoorMesh_on_2" target="TeleportRoom_turnOff_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+      <arc id="48" source="DoorMesh_on_2" target="TeleportRoom_turnOn_4">
+        <inscription>
+          <text>1</text>
+          <graphics>
+            <offset x="0" y="-10" />
+          </graphics>
+        </inscription>
+        <type value="test" />
+      </arc>
+    </page>
+  </net>
+</pnml>
