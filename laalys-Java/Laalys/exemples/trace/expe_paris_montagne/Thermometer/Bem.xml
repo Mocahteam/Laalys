@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 <map id="Thermometre 1" nbPrecedingTry="0" Configuration="859" BeginningTime="180" EndingTime="161553">
-<transition time="54480" action="desactivate-levier_plus_6_1;2" origin="player" />
-<transition time="58170" action="activate-levier_plus_6_1;2" origin="player" />
-<transition time="59300" action="activate-levier_plus_6_1;2" origin="player" />
-<transition time="60300" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="60300" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="66180" action="activate-levier_plus_3_1;4" origin="player" />
-<transition time="66760" action="activate-levier_plus_3_1;4" origin="player" />
-<transition time="73670" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="74550" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="93230" action="activate-levier_plus_4_1;7" origin="player" />
-<transition time="93750" action="activate-levier_plus_4_1;7" origin="player" />
-<transition time="98180" action="desactivate-levier_plus_4_1;7" origin="player" />
-<transition time="98830" action="activate-levier_plus_4_1;7" origin="player" />
-<transition time="112931" action="desactivate-levier_plus_6_1;2" origin="player" />
-<transition time="114831" action="desactivate-levier_plus_6_1;2" origin="player" />
-<transition time="121441" action="desactivate-levier_plus_3_1;4" origin="player" />
-<transition time="122041" action="desactivate-levier_plus_3_1;4" origin="player" />
-<transition time="140101" action="desactivate-levier_plus_2_1;6" origin="player" />
-<transition time="142021" action="desactivate-levier_plus_2_1;6" origin="player" />
-<transition time="150993" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="154033" action="desactivate-levier_plus_4_1;7" origin="player" />
-<transition time="159683" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
-<transition time="159683" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="159684" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="159685" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="159686" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="159687" action="activate-levier_plus_3_1;4" origin="player" />
-<transition time="159688" action="desactivate-levier_plus_2_1;6" origin="player" />
-<transition time="159689" action="desactivate-levier_plus_2_1;6" origin="player" />
-<transition time="159690" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
-<transition time="159691" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="159692" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="159693" action="desactivate-levier_plus_4_1;7" origin="player" />
-<transition time="159694" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
-<transition time="159695" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="159696" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="159697" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="159698" action="exit-;8" origin="player" />
+<transition time="54480" pnName="Thermometer" action="desactivate-levier_plus_6_1;2" origin="player" />
+<transition time="58170" pnName="Thermometer" action="activate-levier_plus_6_1;2" origin="player" />
+<transition time="59300" pnName="Thermometer" action="activate-levier_plus_6_1;2" origin="player" />
+<transition time="60300" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="60300" pnName="Thermometer" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
+<transition time="66180" pnName="Thermometer" action="activate-levier_plus_3_1;4" origin="player" />
+<transition time="66760" pnName="Thermometer" action="activate-levier_plus_3_1;4" origin="player" />
+<transition time="73670" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="74550" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="93230" pnName="Thermometer" action="activate-levier_plus_4_1;7" origin="player" />
+<transition time="93750" pnName="Thermometer" action="activate-levier_plus_4_1;7" origin="player" />
+<transition time="98180" pnName="Thermometer" action="desactivate-levier_plus_4_1;7" origin="player" />
+<transition time="98830" pnName="Thermometer" action="activate-levier_plus_4_1;7" origin="player" />
+<transition time="112931" pnName="Thermometer" action="desactivate-levier_plus_6_1;2" origin="player" />
+<transition time="114831" pnName="Thermometer" action="desactivate-levier_plus_6_1;2" origin="player" />
+<transition time="121441" pnName="Thermometer" action="desactivate-levier_plus_3_1;4" origin="player" />
+<transition time="122041" pnName="Thermometer" action="desactivate-levier_plus_3_1;4" origin="player" />
+<transition time="140101" pnName="Thermometer" action="desactivate-levier_plus_2_1;6" origin="player" />
+<transition time="142021" pnName="Thermometer" action="desactivate-levier_plus_2_1;6" origin="player" />
+<transition time="150993" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="154033" pnName="Thermometer" action="desactivate-levier_plus_4_1;7" origin="player" />
+<transition time="159683" pnName="Thermometer" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
+<transition time="159683" pnName="Thermometer" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
+<transition time="159684" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="159685" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="159686" pnName="Thermometer" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
+<transition time="159687" pnName="Thermometer" action="activate-levier_plus_3_1;4" origin="player" />
+<transition time="159688" pnName="Thermometer" action="desactivate-levier_plus_2_1;6" origin="player" />
+<transition time="159689" pnName="Thermometer" action="desactivate-levier_plus_2_1;6" origin="player" />
+<transition time="159690" pnName="Thermometer" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
+<transition time="159691" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="159692" pnName="Thermometer" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
+<transition time="159693" pnName="Thermometer" action="desactivate-levier_plus_4_1;7" origin="player" />
+<transition time="159694" pnName="Thermometer" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
+<transition time="159695" pnName="Thermometer" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
+<transition time="159696" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="159697" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="159698" pnName="Thermometer" action="exit-;8" origin="player" />
 </map>
 </data>

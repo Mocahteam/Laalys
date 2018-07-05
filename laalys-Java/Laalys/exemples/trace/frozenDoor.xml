@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
 <map id="frozenDoor" nbPrecedingTry="0" Configuration="859" BeginningTime="160" EndingTime="55436">
-<transition action="open door - exit" origin="player"/>
-<transition action="turn on boiler" origin="player"/>
-<transition action="turn off boiler" origin="player"/>
-<transition action="discard key" origin="player"/>
-<transition action="turn on boiler" origin="player"/>
-<transition action="grab key" origin="player"/>
-<transition action="turn off boiler" origin="player"/>
-<transition action="turn on boiler" origin="player"/>
+<transition pnName="frozenDoor" action="open door - exit" origin="player"/>
+<transition pnName="frozenDoor" action="turn on boiler" origin="player"/>
+<transition pnName="frozenDoor" action="turn off boiler" origin="player"/>
+<transition pnName="frozenDoor" action="discard key" origin="player"/>
+<transition pnName="frozenDoor" action="turn on boiler" origin="player"/>
+<transition pnName="frozenDoor" action="grab key" origin="player"/>
+<transition pnName="frozenDoor" action="turn off boiler" origin="player"/>
+<transition pnName="frozenDoor" action="turn on boiler" origin="player"/>
 </map>
 </data>

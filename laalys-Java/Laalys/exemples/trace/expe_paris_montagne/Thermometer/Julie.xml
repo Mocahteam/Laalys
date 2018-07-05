@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
 <map id="Thermometre 1" nbPrecedingTry="0" Configuration="859" BeginningTime="190" EndingTime="35981">
-<transition time="10530" action="activate-levier_plus_2_1;6" origin="player" />
-<transition time="11010" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="11010" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
-<transition time="11080" action="desactivate-levier_plus_2_1;6" origin="player" />
-<transition time="11450" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
-<transition time="11450" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
-<transition time="17301" action="desactivate-levier_plus_6_1;2" origin="player" />
-<transition time="22701" action="activate-levier_plus_3_1;4" origin="player" />
-<transition time="30011" action="activate-levier_plus_4_1;7" origin="player" />
-<transition time="30561" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
-<transition time="35981" action="exit-;8" origin="player" />
+<transition time="10530" pnName="Thermometer" action="activate-levier_plus_2_1;6" origin="player" />
+<transition time="11010" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="11010" pnName="Thermometer" action="warming_[-9]_to_]-9; +inf[_chaudiere" origin="system"/>
+<transition time="11080" pnName="Thermometer" action="desactivate-levier_plus_2_1;6" origin="player" />
+<transition time="11450" pnName="Thermometer" action="cooling_]-9; +inf[_to_[-9]_4" origin="system"/>
+<transition time="11450" pnName="Thermometer" action="cooling_[-9]_to_]-inf ; -9[_2" origin="system"/>
+<transition time="17301" pnName="Thermometer" action="desactivate-levier_plus_6_1;2" origin="player" />
+<transition time="22701" pnName="Thermometer" action="activate-levier_plus_3_1;4" origin="player" />
+<transition time="30011" pnName="Thermometer" action="activate-levier_plus_4_1;7" origin="player" />
+<transition time="30561" pnName="Thermometer" action="warming_]-inf ; -9[_to_[-9]_chaudiere" origin="system"/>
+<transition time="35981" pnName="Thermometer" action="exit-;8" origin="player" />
 </map>
 </data>
