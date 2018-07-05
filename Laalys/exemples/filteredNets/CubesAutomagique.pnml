@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-5CBC-2B23C-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>CubesAutomagique</text>
+  </name>
+ <page id="g-5CBC-2B24A-1">
+  <place id="p-5CBC-2B24D-2">
+  <name>
+   <text>T in [0]</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="455"/>
+   </graphics>
+  </place>
+  <place id="p-5CBC-2B25D-3">
+  <name>
+   <text>T in ]-inf ; 0[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="455"/>
+   </graphics>
+  </place>
+  <place id="p-5CBC-2B261-4">
+  <name>
+   <text>T in ]0; +inf[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="315" y="455"/>
+   </graphics>
+  </place>
+  <place id="p-5CBC-2B267-5">
+  <name>
+   <text>chaudiere1_Off;71</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="555" y="115"/>
+   </graphics>
+  </place>
+  <place id="p-5CBC-2B26B-6">
+  <name>
+   <text>chaudiere1_On;71</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="455" y="105"/>
+   </graphics>
+  </place>
+  <transition id="t-5CBC-2B270-7">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="615"/>
+   </graphics>
+  </transition>
+  <transition id="t-5CBC-2B279-8">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="605"/>
+   </graphics>
+  </transition>
+  <transition id="t-5CBC-2B27F-9">
+  <name>
+   <text>desactivate-chaudiere1;71</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-5CBC-2B284-10">
+  <name>
+   <text>endLevel-;72</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="635" y="155"/>
+   </graphics>
+  </place>
+  <transition id="t-5CBC-2B288-11">
+  <name>
+   <text>exit-;72</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="675" y="125"/>
+   </graphics>
+  </transition>
+  <place id="p-5CBC-2B28B-12">
+  <name>
+   <text>liquid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="315" y="705"/>
+   </graphics>
+  </place>
+  <place id="p-5CBC-2B28F-13">
+  <name>
+   <text>solid_liquid_transition_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="215" y="685"/>
+   </graphics>
+  </place>
+  <place id="p-5CBC-2B294-14">
+  <name>
+   <text>solid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="655"/>
+   </graphics>
+  </place>
+  <place id="p-5CBC-2B297-15">
+  <name>
+   <text>sortie;72</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="695" y="55"/>
+   </graphics>
+  </place>
+  <transition id="t-5CBC-2B29C-16">
+  <name>
+   <text>warming_[0]_to_]0; +inf[_chaudiere1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="235" y="345"/>
+   </graphics>
+  </transition>
+  <transition id="t-5CBC-2B2A2-17">
+  <name>
+   <text>warming_]-inf ; 0[_to_[0]_chaudiere1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="115" y="355"/>
+   </graphics>
+  </transition>
+  <arc id="e-5CBC-2B2AA-18" source="t-5CBC-2B27F-9" target="p-5CBC-2B267-5">
+  </arc>
+  <arc id="e-5CBC-2B373-19" source="t-5CBC-2B29C-16" target="p-5CBC-2B28B-12">
+  </arc>
+  <arc id="e-5CBC-2B377-20" source="t-5CBC-2B29C-16" target="p-5CBC-2B261-4">
+  </arc>
+  <arc id="e-5CBC-2B378-21" source="p-5CBC-2B297-15" target="t-5CBC-2B288-11">
+  </arc>
+  <arc id="e-5CBC-2B37A-22" source="p-5CBC-2B294-14" target="t-5CBC-2B2A2-17">
+  </arc>
+  <arc id="e-5CBC-2B37E-23" source="p-5CBC-2B28F-13" target="t-5CBC-2B29C-16">
+  </arc>
+  <arc id="e-5CBC-2B380-24" source="p-5CBC-2B24D-2" target="t-5CBC-2B29C-16">
+  </arc>
+  <arc id="e-5CBC-2B382-25" source="p-5CBC-2B28F-13" target="t-5CBC-2B270-7">
+  </arc>
+  <arc id="e-5CBC-2B383-26" source="p-5CBC-2B28B-12" target="t-5CBC-2B279-8">
+  </arc>
+  <arc id="e-5CBC-2B385-27" source="t-5CBC-2B288-11" target="p-5CBC-2B284-10">
+  </arc>
+  <arc id="e-5CBC-2B387-28" source="t-5CBC-2B279-8" target="p-5CBC-2B28F-13">
+  </arc>
+  <arc id="e-5CBC-2B389-29" source="p-5CBC-2B26B-6" target="t-5CBC-2B27F-9">
+  </arc>
+  <arc id="e-5CBC-2B38C-30" source="t-5CBC-2B279-8" target="p-5CBC-2B24D-2">
+  </arc>
+  <arc id="e-5CBC-2B38F-31" source="t-5CBC-2B270-7" target="p-5CBC-2B294-14">
+  </arc>
+  <arc id="e-5CBC-2B390-32" source="t-5CBC-2B270-7" target="p-5CBC-2B25D-3">
+  </arc>
+  <arc id="e-5CBC-2B392-33" source="p-5CBC-2B26B-6" target="t-5CBC-2B2A2-17">
+   <type value="test"/>
+  </arc>
+  <arc id="e-5CBC-2B398-34" source="p-5CBC-2B26B-6" target="t-5CBC-2B29C-16">
+   <type value="test"/>
+  </arc>
+  <arc id="e-5CBC-2B399-35" source="p-5CBC-2B24D-2" target="t-5CBC-2B270-7">
+  </arc>
+  <arc id="e-5CBC-2B39B-36" source="p-5CBC-2B26B-6" target="t-5CBC-2B279-8">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-5CBC-2B39E-37" source="p-5CBC-2B26B-6" target="t-5CBC-2B270-7">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-5CBC-2B3A1-38" source="p-5CBC-2B261-4" target="t-5CBC-2B279-8">
+  </arc>
+  <arc id="e-5CBC-2B3A3-39" source="p-5CBC-2B25D-3" target="t-5CBC-2B2A2-17">
+  </arc>
+  <arc id="e-5CBC-2B3A5-40" source="p-5CBC-2B294-14" target="t-5CBC-2B288-11">
+   <type value="test"/>
+  </arc>
+  <arc id="e-5CBC-2B3A7-41" source="t-5CBC-2B2A2-17" target="p-5CBC-2B28F-13">
+  </arc>
+  <arc id="e-5CBC-2B3A9-42" source="t-5CBC-2B2A2-17" target="p-5CBC-2B24D-2">
+  </arc>
+ </page>
+ </net>
+</pnml>

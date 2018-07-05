@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-1A0C-80CE-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>LaMachineACube</text>
+  </name>
+ <page id="g-1A0C-80D4-1">
+  <place id="p-1A0C-80D6-2">
+  <name>
+   <text>T chaudiere2 = -1 + x</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>5</text>
+   </initialMarking>
+   <graphics>
+    <position x="815" y="400"/>
+   </graphics>
+  </place>
+  <transition id="t-1A0C-80E7-3">
+  <name>
+   <text>activate-machineGalconEau;24</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="315" y="270"/>
+   </graphics>
+  </transition>
+  <place id="p-1A0C-80F0-4">
+  <name>
+   <text>chaudiere1_Off;19</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1275" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-1A0C-80F8-5">
+  <name>
+   <text>chaudiere1_On;19</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="975" y="90"/>
+   </graphics>
+  </place>
+  <transition id="t-1A0C-8101-6">
+  <name>
+   <text>desactivate-chaudiere1;19</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1115" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-1A0C-8109-7">
+  <name>
+   <text>desactivate-levier_plus_1_2;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="975" y="200"/>
+   </graphics>
+  </transition>
+  <transition id="t-1A0C-8113-8">
+  <name>
+   <text>desactivate-levier_plus_3_2;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="515" y="50"/>
+   </graphics>
+  </transition>
+  <place id="p-1A0C-811B-9">
+  <name>
+   <text>endLevel-;21</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="55" y="390"/>
+   </graphics>
+  </place>
+  <transition id="t-1A0C-8126-10">
+  <name>
+   <text>exit-;21</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="75" y="300"/>
+   </graphics>
+  </transition>
+  <place id="p-1A0C-8197-11">
+  <name>
+   <text>levier_plus_1_2_Off;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1175" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-1A0C-81A0-12">
+  <name>
+   <text>levier_plus_1_2_On;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="855" y="250"/>
+   </graphics>
+  </place>
+  <place id="p-1A0C-81A8-13">
+  <name>
+   <text>levier_plus_3_2_Off;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="695" y="80"/>
+   </graphics>
+  </place>
+  <place id="p-1A0C-81B1-14">
+  <name>
+   <text>levier_plus_3_2_On;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="435" y="120"/>
+   </graphics>
+  </place>
+  <place id="p-1A0C-81B9-15">
+  <name>
+   <text>machineGalconEau;24</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="315" y="190"/>
+   </graphics>
+  </place>
+  <place id="p-1A0C-81C2-16">
+  <name>
+   <text>nbbloc;25</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="415" y="320"/>
+   </graphics>
+  </place>
+  <place id="p-1A0C-81C8-17">
+  <name>
+   <text>teleporteur;21</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="115" y="230"/>
+   </graphics>
+  </place>
+  <arc id="e-1A0C-81E0-18" source="t-1A0C-8113-8" target="p-1A0C-81A8-13">
+  </arc>
+  <arc id="e-1A0C-81E4-19" source="p-1A0C-81C8-17" target="t-1A0C-8126-10">
+  </arc>
+  <arc id="e-1A0C-81E6-20" source="p-1A0C-80F8-5" target="t-1A0C-8101-6">
+  </arc>
+  <arc id="e-1A0C-81E8-21" source="t-1A0C-8101-6" target="p-1A0C-80F0-4">
+  </arc>
+  <arc id="e-1A0C-81E9-22" source="t-1A0C-8109-7" target="p-1A0C-8197-11">
+  </arc>
+  <arc id="e-1A0C-81EB-23" source="p-1A0C-80D6-2" target="t-1A0C-8126-10">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-1A0C-81ED-24" source="p-1A0C-80F0-4" target="t-1A0C-8126-10">
+   <type value="test"/>
+  </arc>
+  <arc id="e-1A0C-81EF-25" source="t-1A0C-8126-10" target="p-1A0C-811B-9">
+  </arc>
+  <arc id="e-1A0C-81F0-26" source="p-1A0C-81A0-12" target="t-1A0C-8109-7">
+  </arc>
+  <arc id="e-1A0C-81F2-27" source="p-1A0C-80D6-2" target="t-1A0C-8113-8">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-1A0C-81F5-28" source="t-1A0C-80E7-3" target="p-1A0C-81C2-16">
+  </arc>
+  <arc id="e-1A0C-81F6-29" source="p-1A0C-80D6-2" target="t-1A0C-8109-7">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-1A0C-81F9-30" source="p-1A0C-81C2-16" target="t-1A0C-8126-10">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-1A0C-81FC-31" source="p-1A0C-81B1-14" target="t-1A0C-8113-8">
+  </arc>
+  <arc id="e-1A0C-81FE-32" source="p-1A0C-81B9-15" target="t-1A0C-80E7-3">
+   <type value="test"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transitions>
+	<transition id="exit-;72"                               system="false" end="true" />
+	<transition id="activate-chaudiere1;71"                 system="false" end="false" />
+	<transition id="desactivate-chaudiere1;71"                 system="false" end="false" />
+	<transition id="cooling_[0]_to_]-inf ; 0[_1"  system="true" end="false" />
+	<transition id="cooling_]0; +inf[_to_[0]_2"   system="true" end="false" />
+	<transition id="warming_[0]_to_]0; +inf[_chaudiere1"          system="true" end="false" />
+	<transition id="warming_]-inf ; 0[_to_[0]_chaudiere1"          system="true" end="false" />
+</transitions>

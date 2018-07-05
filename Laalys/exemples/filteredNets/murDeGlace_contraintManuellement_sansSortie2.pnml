@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-2B64-39BAB-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>murDeGlace_contraintManuellement_sansSortie2</text>
+  </name>
+ <page id="g-2B64-39BBA-1">
+  <place id="p-2B64-39BBF-2">
+  <name>
+   <text>T chaudiere = -3 + x</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="410"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BD1-3">
+  <name>
+   <text>T in [0]</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BD5-4">
+  <name>
+   <text>T in ]-inf ; 0[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="110" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BD9-5">
+  <name>
+   <text>T in ]0; +inf[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="310" y="640"/>
+   </graphics>
+  </place>
+  <transition id="t-2B64-39BDD-6">
+  <name>
+   <text>activate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="710" y="120"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39BE3-7">
+  <name>
+   <text>activate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="320"/>
+   </graphics>
+  </transition>
+  <place id="p-2B64-39BE8-8">
+  <name>
+   <text>alumettes_floor;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="250" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BEC-9">
+  <name>
+   <text>alumettes_hand;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BF0-10">
+  <name>
+   <text>alumettes_inv;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BF4-11">
+  <name>
+   <text>chaudiere_Off;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="750" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BF8-12">
+  <name>
+   <text>chaudiere_On;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="650" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BFB-13">
+  <name>
+   <text>clef_floor;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1050" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39BFF-14">
+  <name>
+   <text>clef_hand;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39C03-15">
+  <name>
+   <text>clef_inv;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1130" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-2B64-39C07-16">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="800"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39C0B-17">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="790"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39C10-18">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="780"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39C8F-19">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="770"/>
+   </graphics>
+  </transition>
+  <place id="p-2B64-39C95-20">
+  <name>
+   <text>endLevel-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="970" y="770"/>
+   </graphics>
+  </place>
+  <transition id="t-2B64-39C99-21">
+  <name>
+   <text>exit-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="870" y="630"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39C9C-22">
+  <name>
+   <text>get-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="100"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39CA0-23">
+  <name>
+   <text>get-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1170" y="100"/>
+   </graphics>
+  </transition>
+  <place id="p-2B64-39CA3-24">
+  <name>
+   <text>levier_plus_2_1_Off;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>6</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39CA9-25">
+  <name>
+   <text>levier_plus_2_1_On;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="290"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39CAC-26">
+  <name>
+   <text>liquid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="890"/>
+   </graphics>
+  </place>
+  <transition id="t-2B64-39CB0-27">
+  <name>
+   <text>open-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-2B64-39CB3-28">
+  <name>
+   <text>porte_closed;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39CB8-29">
+  <name>
+   <text>porte_open;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39CBB-30">
+  <name>
+   <text>solid_liquid_transition_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="870"/>
+   </graphics>
+  </place>
+  <place id="p-2B64-39CBF-31">
+  <name>
+   <text>solid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="410" y="840"/>
+   </graphics>
+  </place>
+  <transition id="t-2B64-39CC3-32">
+  <name>
+   <text>store-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="290" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39CC9-33">
+  <name>
+   <text>store-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1090" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39CCB-34">
+  <name>
+   <text>storeBack-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39CD0-35">
+  <name>
+   <text>storeBack-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39CD4-36">
+  <name>
+   <text>warming_[0]_to_]0; +inf[_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="530"/>
+   </graphics>
+  </transition>
+  <transition id="t-2B64-39D08-37">
+  <name>
+   <text>warming_]-inf ; 0[_to_[0]_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="540"/>
+   </graphics>
+  </transition>
+  <arc id="e-2B64-39D0F-38" source="t-2B64-39BE3-7" target="p-2B64-39CA9-25">
+  </arc>
+  <arc id="e-2B64-39D13-39" source="p-2B64-39BF8-12" target="t-2B64-39CD4-36">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D16-40" source="p-2B64-39BF8-12" target="t-2B64-39D08-37">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D17-41" source="p-2B64-39BFB-13" target="t-2B64-39CC9-33">
+  </arc>
+  <arc id="e-2B64-39D19-42" source="p-2B64-39BD9-5" target="t-2B64-39C10-18">
+  </arc>
+  <arc id="e-2B64-39D1A-43" source="p-2B64-39BFF-14" target="t-2B64-39CB0-27">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D1C-44" source="p-2B64-39BFF-14" target="t-2B64-39CD0-35">
+  </arc>
+  <arc id="e-2B64-39D1D-45" source="p-2B64-39CB8-29" target="t-2B64-39CC3-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D1F-46" source="p-2B64-39C03-15" target="t-2B64-39CA0-23">
+  </arc>
+  <arc id="e-2B64-39D20-47" source="t-2B64-39C07-16" target="p-2B64-39BD5-4">
+  </arc>
+  <arc id="e-2B64-39D21-48" source="t-2B64-39C07-16" target="p-2B64-39CBF-31">
+  </arc>
+  <arc id="e-2B64-39D22-49" source="p-2B64-39BBF-2" target="t-2B64-39C0B-17">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-2B64-39D25-50" source="t-2B64-39C0B-17" target="p-2B64-39BD5-4">
+  </arc>
+  <arc id="e-2B64-39D27-51" source="p-2B64-39BBF-2" target="t-2B64-39CD4-36">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D29-52" source="t-2B64-39C0B-17" target="p-2B64-39CBF-31">
+  </arc>
+  <arc id="e-2B64-39D2A-53" source="t-2B64-39C10-18" target="p-2B64-39BD1-3">
+  </arc>
+  <arc id="e-2B64-39D2B-54" source="t-2B64-39C10-18" target="p-2B64-39CBB-30">
+  </arc>
+  <arc id="e-2B64-39D2C-55" source="p-2B64-39BD9-5" target="t-2B64-39C8F-19">
+  </arc>
+  <arc id="e-2B64-39D2D-56" source="t-2B64-39C8F-19" target="p-2B64-39BD1-3">
+  </arc>
+  <arc id="e-2B64-39D2E-57" source="p-2B64-39BE8-8" target="t-2B64-39CC3-32">
+  </arc>
+  <arc id="e-2B64-39D31-58" source="t-2B64-39C8F-19" target="p-2B64-39CBB-30">
+  </arc>
+  <arc id="e-2B64-39D32-59" source="p-2B64-39BBF-2" target="t-2B64-39D08-37">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D34-60" source="p-2B64-39BEC-9" target="t-2B64-39CCB-34">
+  </arc>
+  <arc id="e-2B64-39D35-61" source="t-2B64-39C99-21" target="p-2B64-39C95-20">
+  </arc>
+  <arc id="e-2B64-39D36-62" source="t-2B64-39C9C-22" target="p-2B64-39BEC-9">
+  </arc>
+  <arc id="e-2B64-39D37-63" source="t-2B64-39CA0-23" target="p-2B64-39BFF-14">
+  </arc>
+  <arc id="e-2B64-39D3A-64" source="p-2B64-39CA3-24" target="t-2B64-39BE3-7">
+  </arc>
+  <arc id="e-2B64-39D3B-65" source="p-2B64-39CAC-26" target="t-2B64-39C10-18">
+  </arc>
+  <arc id="e-2B64-39D3C-66" source="p-2B64-39CAC-26" target="t-2B64-39C8F-19">
+  </arc>
+  <arc id="e-2B64-39D3D-67" source="p-2B64-39BD1-3" target="t-2B64-39C07-16">
+  </arc>
+  <arc id="e-2B64-39D3E-68" source="t-2B64-39BDD-6" target="p-2B64-39BF8-12">
+  </arc>
+  <arc id="e-2B64-39D40-69" source="p-2B64-39BEC-9" target="t-2B64-39BDD-6">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D40-70" source="t-2B64-39CB0-27" target="p-2B64-39CB8-29">
+  </arc>
+  <arc id="e-2B64-39D42-71" source="p-2B64-39BF0-10" target="t-2B64-39C9C-22">
+  </arc>
+  <arc id="e-2B64-39D44-72" source="p-2B64-39BD1-3" target="t-2B64-39C0B-17">
+  </arc>
+  <arc id="e-2B64-39D45-73" source="p-2B64-39CB3-28" target="t-2B64-39CB0-27">
+  </arc>
+  <arc id="e-2B64-39D57-74" source="p-2B64-39CBB-30" target="t-2B64-39C07-16">
+  </arc>
+  <arc id="e-2B64-39D58-75" source="p-2B64-39CBB-30" target="t-2B64-39C0B-17">
+  </arc>
+  <arc id="e-2B64-39D5A-76" source="p-2B64-39CBB-30" target="t-2B64-39CD4-36">
+  </arc>
+  <arc id="e-2B64-39D5B-77" source="p-2B64-39CBF-31" target="t-2B64-39D08-37">
+  </arc>
+  <arc id="e-2B64-39D5C-78" source="t-2B64-39CC3-32" target="p-2B64-39BF0-10">
+  </arc>
+  <arc id="e-2B64-39D5E-79" source="p-2B64-39BD1-3" target="t-2B64-39CD4-36">
+  </arc>
+  <arc id="e-2B64-39D60-80" source="t-2B64-39CC9-33" target="p-2B64-39C03-15">
+  </arc>
+  <arc id="e-2B64-39D61-81" source="p-2B64-39BBF-2" target="t-2B64-39C8F-19">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-2B64-39D63-82" source="p-2B64-39BF4-11" target="t-2B64-39BDD-6">
+  </arc>
+  <arc id="e-2B64-39D64-83" source="t-2B64-39BE3-7" target="p-2B64-39BBF-2">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-2B64-39D65-84" source="t-2B64-39CCB-34" target="p-2B64-39BF0-10">
+  </arc>
+  <arc id="e-2B64-39D67-85" source="t-2B64-39CD0-35" target="p-2B64-39C03-15">
+  </arc>
+  <arc id="e-2B64-39D68-86" source="t-2B64-39CD4-36" target="p-2B64-39BD9-5">
+  </arc>
+  <arc id="e-2B64-39D69-87" source="t-2B64-39CD4-36" target="p-2B64-39CAC-26">
+  </arc>
+  <arc id="e-2B64-39D6A-88" source="t-2B64-39D08-37" target="p-2B64-39BD1-3">
+  </arc>
+  <arc id="e-2B64-39D6C-89" source="t-2B64-39D08-37" target="p-2B64-39CBB-30">
+  </arc>
+  <arc id="e-2B64-39D6C-90" source="p-2B64-39BD5-4" target="t-2B64-39D08-37">
+  </arc>
+  <arc id="e-2B64-39D6E-91" source="p-2B64-39CAC-26" target="t-2B64-39C99-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D6F-92" source="p-2B64-39BF8-12" target="t-2B64-39BE3-7">
+   <type value="test"/>
+  </arc>
+  <arc id="e-2B64-39D71-93" source="p-2B64-39BF4-11" target="t-2B64-39C0B-17">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-2B64-39D72-94" source="p-2B64-39BF4-11" target="t-2B64-39C8F-19">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-2B64-39D73-95" source="p-2B64-39BF8-12" target="t-2B64-39C07-16">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-2B64-39D75-96" source="p-2B64-39BF8-12" target="t-2B64-39C10-18">
+   <type value="inhibitor"/>
+  </arc>
+ </page>
+ </net>
+</pnml>

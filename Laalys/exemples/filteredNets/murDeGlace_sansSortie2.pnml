@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pnml xmlns="http://www.pnml.org/version-2009/grammar/pnml">
+ <net id="n-3DFC-72B6F-0" type ="http://www.laas.fr/tina/tpn">
+  <name>
+   <text>murDeGlace_sansSortie2</text>
+  </name>
+ <page id="g-3DFC-72B88-1">
+  <place id="p-3DFC-72B8F-2">
+  <name>
+   <text>T chaudiere = -3 + x</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="410"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72BB2-3">
+  <name>
+   <text>T in [0]</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="210" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72BBC-4">
+  <name>
+   <text>T in ]-inf ; 0[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="110" y="640"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72BC5-5">
+  <name>
+   <text>T in ]0; +inf[</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="310" y="640"/>
+   </graphics>
+  </place>
+  <transition id="t-3DFC-72BCC-6">
+  <name>
+   <text>activate-chaudiere;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="710" y="120"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72BD6-7">
+  <name>
+   <text>activate-levier_plus_2_1;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="320"/>
+   </graphics>
+  </transition>
+  <place id="p-3DFC-72BDE-8">
+  <name>
+   <text>alumettes_floor;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="250" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72BE8-9">
+  <name>
+   <text>alumettes_hand;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72BEE-10">
+  <name>
+   <text>alumettes_inv;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="330" y="50"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72BF6-11">
+  <name>
+   <text>chaudiere_Off;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="750" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72BFC-12">
+  <name>
+   <text>chaudiere_On;3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="650" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72C03-13">
+  <name>
+   <text>clef_floor;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="1050" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72C0A-14">
+  <name>
+   <text>clef_hand;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="140"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72C11-15">
+  <name>
+   <text>clef_inv;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1130" y="50"/>
+   </graphics>
+  </place>
+  <transition id="t-3DFC-72C14-16">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="800"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72C1E-17">
+  <name>
+   <text>cooling_[0]_to_]-inf ; 0[_2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="790"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72C29-18">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_3</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="350" y="780"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72CC5-19">
+  <name>
+   <text>cooling_]0; +inf[_to_[0]_4</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="490" y="770"/>
+   </graphics>
+  </transition>
+  <place id="p-3DFC-72CD2-20">
+  <name>
+   <text>endLevel-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="970" y="770"/>
+   </graphics>
+  </place>
+  <transition id="t-3DFC-72CD7-21">
+  <name>
+   <text>exit-;6</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="870" y="630"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72CDD-22">
+  <name>
+   <text>get-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="370" y="100"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72CED-23">
+  <name>
+   <text>get-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1170" y="100"/>
+   </graphics>
+  </transition>
+  <place id="p-3DFC-72CF4-24">
+  <name>
+   <text>levier_plus_2_1_Off;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>6</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="300"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72CFC-25">
+  <name>
+   <text>levier_plus_2_1_On;9</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="290"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72D06-26">
+  <name>
+   <text>liquid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="610" y="890"/>
+   </graphics>
+  </place>
+  <transition id="t-3DFC-72D0C-27">
+  <name>
+   <text>open-porte;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="120"/>
+   </graphics>
+  </transition>
+  <place id="p-3DFC-72D10-28">
+  <name>
+   <text>porte_closed;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="550" y="100"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72D17-29">
+  <name>
+   <text>porte_open;2</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="450" y="90"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72D1E-30">
+  <name>
+   <text>solid_liquid_transition_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="510" y="870"/>
+   </graphics>
+  </place>
+  <place id="p-3DFC-72D27-31">
+  <name>
+   <text>solid_water</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <initialMarking>
+    <text>1</text>
+   </initialMarking>
+   <graphics>
+    <position x="410" y="840"/>
+   </graphics>
+  </place>
+  <transition id="t-3DFC-72D2E-32">
+  <name>
+   <text>store-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="290" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72D34-33">
+  <name>
+   <text>store-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1090" y="80"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72D3B-34">
+  <name>
+   <text>storeBack-alumettes;1</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="390" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72D41-35">
+  <name>
+   <text>storeBack-clef;5</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="1190" y="50"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72D48-36">
+  <name>
+   <text>warming_[0]_to_]0; +inf[_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="230" y="530"/>
+   </graphics>
+  </transition>
+  <transition id="t-3DFC-72DA2-37">
+  <name>
+   <text>warming_]-inf ; 0[_to_[0]_chaudiere</text>
+    <graphics>
+     <offset x="0" y="-10" />
+    </graphics>
+  </name>
+   <graphics>
+    <position x="110" y="540"/>
+   </graphics>
+  </transition>
+  <arc id="e-3DFC-72DAE-38" source="p-3DFC-72BFC-12" target="t-3DFC-72D48-36">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72DBA-39" source="p-3DFC-72D06-26" target="t-3DFC-72CD7-21">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72DBE-40" source="p-3DFC-72BBC-4" target="t-3DFC-72DA2-37">
+  </arc>
+  <arc id="e-3DFC-72DC1-41" source="t-3DFC-72DA2-37" target="p-3DFC-72D1E-30">
+  </arc>
+  <arc id="e-3DFC-72DC3-42" source="t-3DFC-72DA2-37" target="p-3DFC-72BB2-3">
+  </arc>
+  <arc id="e-3DFC-72DC5-43" source="t-3DFC-72D48-36" target="p-3DFC-72D06-26">
+  </arc>
+  <arc id="e-3DFC-72DC7-44" source="p-3DFC-72BF6-11" target="t-3DFC-72C1E-17">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-3DFC-72DC9-45" source="t-3DFC-72D48-36" target="p-3DFC-72BC5-5">
+  </arc>
+  <arc id="e-3DFC-72DCB-46" source="t-3DFC-72D41-35" target="p-3DFC-72C11-15">
+  </arc>
+  <arc id="e-3DFC-72DCF-47" source="t-3DFC-72D3B-34" target="p-3DFC-72BEE-10">
+  </arc>
+  <arc id="e-3DFC-72DD2-48" source="t-3DFC-72BD6-7" target="p-3DFC-72B8F-2">
+   <inscription>
+    <text>2</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+  </arc>
+  <arc id="e-3DFC-72DD6-49" source="p-3DFC-72BFC-12" target="t-3DFC-72C29-18">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-3DFC-72DD8-50" source="t-3DFC-72D34-33" target="p-3DFC-72C11-15">
+  </arc>
+  <arc id="e-3DFC-72DDA-51" source="p-3DFC-72BB2-3" target="t-3DFC-72D48-36">
+  </arc>
+  <arc id="e-3DFC-72DDC-52" source="t-3DFC-72D2E-32" target="p-3DFC-72BEE-10">
+  </arc>
+  <arc id="e-3DFC-72DDE-53" source="p-3DFC-72D27-31" target="t-3DFC-72DA2-37">
+  </arc>
+  <arc id="e-3DFC-72DE3-54" source="p-3DFC-72D1E-30" target="t-3DFC-72D48-36">
+  </arc>
+  <arc id="e-3DFC-72DE5-55" source="p-3DFC-72BF6-11" target="t-3DFC-72BCC-6">
+  </arc>
+  <arc id="e-3DFC-72DE7-56" source="p-3DFC-72D1E-30" target="t-3DFC-72C1E-17">
+  </arc>
+  <arc id="e-3DFC-72DE9-57" source="p-3DFC-72D1E-30" target="t-3DFC-72C14-16">
+  </arc>
+  <arc id="e-3DFC-72DEB-58" source="p-3DFC-72D10-28" target="t-3DFC-72D0C-27">
+  </arc>
+  <arc id="e-3DFC-72DED-59" source="p-3DFC-72BB2-3" target="t-3DFC-72C1E-17">
+  </arc>
+  <arc id="e-3DFC-72DEF-60" source="p-3DFC-72BFC-12" target="t-3DFC-72C14-16">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-3DFC-72DF4-61" source="t-3DFC-72D0C-27" target="p-3DFC-72D17-29">
+  </arc>
+  <arc id="e-3DFC-72DF6-62" source="t-3DFC-72BCC-6" target="p-3DFC-72BFC-12">
+  </arc>
+  <arc id="e-3DFC-72DF8-63" source="p-3DFC-72BB2-3" target="t-3DFC-72C14-16">
+  </arc>
+  <arc id="e-3DFC-72DFA-64" source="p-3DFC-72D06-26" target="t-3DFC-72CC5-19">
+  </arc>
+  <arc id="e-3DFC-72DFC-65" source="p-3DFC-72D06-26" target="t-3DFC-72C29-18">
+  </arc>
+  <arc id="e-3DFC-72DFE-66" source="p-3DFC-72CF4-24" target="t-3DFC-72BD6-7">
+  </arc>
+  <arc id="e-3DFC-72E00-67" source="p-3DFC-72BEE-10" target="t-3DFC-72CDD-22">
+  </arc>
+  <arc id="e-3DFC-72E02-68" source="t-3DFC-72CED-23" target="p-3DFC-72C0A-14">
+  </arc>
+  <arc id="e-3DFC-72E05-69" source="t-3DFC-72CDD-22" target="p-3DFC-72BE8-9">
+  </arc>
+  <arc id="e-3DFC-72E07-70" source="t-3DFC-72CD7-21" target="p-3DFC-72CD2-20">
+  </arc>
+  <arc id="e-3DFC-72E09-71" source="p-3DFC-72BF6-11" target="t-3DFC-72CC5-19">
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-3DFC-72E0B-72" source="p-3DFC-72B8F-2" target="t-3DFC-72DA2-37">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72E0E-73" source="t-3DFC-72CC5-19" target="p-3DFC-72D1E-30">
+  </arc>
+  <arc id="e-3DFC-72E10-74" source="t-3DFC-72CC5-19" target="p-3DFC-72BB2-3">
+  </arc>
+  <arc id="e-3DFC-72E31-75" source="p-3DFC-72BC5-5" target="t-3DFC-72CC5-19">
+  </arc>
+  <arc id="e-3DFC-72E35-76" source="t-3DFC-72C29-18" target="p-3DFC-72D1E-30">
+  </arc>
+  <arc id="e-3DFC-72E37-77" source="t-3DFC-72C29-18" target="p-3DFC-72BB2-3">
+  </arc>
+  <arc id="e-3DFC-72E39-78" source="t-3DFC-72C1E-17" target="p-3DFC-72D27-31">
+  </arc>
+  <arc id="e-3DFC-72E3A-79" source="p-3DFC-72BE8-9" target="t-3DFC-72D3B-34">
+  </arc>
+  <arc id="e-3DFC-72E3D-80" source="p-3DFC-72B8F-2" target="t-3DFC-72D48-36">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72E40-81" source="t-3DFC-72C1E-17" target="p-3DFC-72BBC-4">
+  </arc>
+  <arc id="e-3DFC-72E43-82" source="p-3DFC-72B8F-2" target="t-3DFC-72CC5-19">
+   <inscription>
+    <text>4</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-3DFC-72E46-83" source="t-3DFC-72C14-16" target="p-3DFC-72D27-31">
+  </arc>
+  <arc id="e-3DFC-72E48-84" source="t-3DFC-72C14-16" target="p-3DFC-72BBC-4">
+  </arc>
+  <arc id="e-3DFC-72E4A-85" source="p-3DFC-72C11-15" target="t-3DFC-72CED-23">
+  </arc>
+  <arc id="e-3DFC-72E4C-86" source="p-3DFC-72C0A-14" target="t-3DFC-72D41-35">
+  </arc>
+  <arc id="e-3DFC-72E4E-87" source="p-3DFC-72C0A-14" target="t-3DFC-72D0C-27">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72E50-88" source="p-3DFC-72BC5-5" target="t-3DFC-72C29-18">
+  </arc>
+  <arc id="e-3DFC-72E54-89" source="p-3DFC-72C03-13" target="t-3DFC-72D34-33">
+  </arc>
+  <arc id="e-3DFC-72E56-90" source="p-3DFC-72BFC-12" target="t-3DFC-72DA2-37">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72E58-91" source="p-3DFC-72B8F-2" target="t-3DFC-72C1E-17">
+   <inscription>
+    <text>3</text>
+    <graphics>
+     <offset x="10" y="0" />
+    </graphics>
+   </inscription>
+   <type value="inhibitor"/>
+  </arc>
+  <arc id="e-3DFC-72E5A-92" source="p-3DFC-72BE8-9" target="t-3DFC-72BCC-6">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72E5D-93" source="p-3DFC-72BDE-8" target="t-3DFC-72D2E-32">
+  </arc>
+  <arc id="e-3DFC-72E5F-94" source="p-3DFC-72D17-29" target="t-3DFC-72D2E-32">
+   <type value="test"/>
+  </arc>
+  <arc id="e-3DFC-72E63-95" source="t-3DFC-72BD6-7" target="p-3DFC-72CFC-25">
+  </arc>
+ </page>
+ </net>
+</pnml>

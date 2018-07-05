@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<transitions>
+  <transition id="InventoryMatchstick_turnOff_5" label="store InventoryMatchstick" system="False" end="False" />
+  <transition id="InventoryMatchstick_turnOn_5" label="take InventoryMatchstick" system="False" end="False" />
+  <transition id="IceCubes_meltingEnd_7" label="meltingEnd IceCubes" system="True" end="False" />
+  <transition id="IceCubes_meltingStart_7" label="meltingStart IceCubes" system="True" end="False" />
+  <transition id="IceCubes_solidifyingEnd_7" label="solidifyingEnd IceCubes" system="True" end="False" />
+  <transition id="or0_IceCubes_solidifyingEnd_7" label="solidifyingEnd IceCubes" system="True" end="False" />
+  <transition id="IceCubes_solidifyingStart_7" label="solidifyingStart IceCubes" system="True" end="False" />
+  <transition id="or0_IceCubes_solidifyingStart_7" label="solidifyingStart IceCubes" system="True" end="False" />
+  <transition id="Teleport_perform_6" label="use Teleport" system="False" end="True" />
+  <transition id="InventoryKey_turnOff_3" label="store InventoryKey" system="False" end="False" />
+  <transition id="InventoryKey_turnOn_3" label="take InventoryKey" system="False" end="False" />
+  <transition id="Matchstick_perform_4" label="pick Matchstick" system="False" end="False" />
+  <transition id="Key_perform_2" label="pick Key" system="False" end="False" />
+  <transition id="MatchstickRoom_turnOff_9" label="exit MatchstickRoom" system="False" end="False" />
+  <transition id="MatchstickRoom_turnOn_9" label="enter MatchstickRoom" system="False" end="False" />
+  <transition id="Boiler_turnOff_0" label="turnOff Boiler" system="False" end="False" />
+  <transition id="Boiler_turnOn_0" label="turnOn Boiler" system="False" end="False" />
+  <transition id="equivWith_LeverManager_levers_turnOff_8" label="turnOff levers" system="False" end="False" />
+  <transition id="equivWith_LeverManager_levers_turnOn_8" label="turnOn levers" system="False" end="False" />
+  <transition id="DoorMesh_turnOff_1" label="close DoorMesh" system="False" end="False" />
+  <transition id="DoorMesh_turnOn_1" label="open DoorMesh" system="False" end="False" />
+</transitions>
