@@ -96,10 +96,10 @@ class ListTransferHandler extends TransferHandler {
         	newContent = values[i];
         	// ajout du complément que s'il n'y est pas déjà
         	if (!(newContent.endsWith("(player)") || newContent.endsWith("(system)"))){
-        		String pnName = (String)laalys.combo_FullPnFilter.getSelectedItem();
+        		String pnName = (String)laalys.combo_fullPnSelection.getSelectedItem();
         		IFeatures features = laalys.pnName2labelingAlgo.get(pnName).getFeatures();
         		String origin = ActionType.SYSTEM;
-        		if (laalys.opt_Player.isSelected()){
+        		if (laalys.opt_player.isSelected()){
 					origin = ActionType.PLAYER;
 	        		// surcharger l'origine s'il s'agit d'une action système du Rdp (Note : une action non identifiée
 					// comme "system" dans le Rdp peut être définie comme "system" dans la trace (cas d'une action de

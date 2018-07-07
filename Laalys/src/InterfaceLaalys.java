@@ -56,103 +56,103 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 
 	// répertoire de base pour le chargement des fichiers (réseau complet,
 	// réseau filtré, transitions, traces)
-	String adressereseau = "exemples";
+	String basePathNet = "exemples";
 
 	// les répertoires par défaut
-	String adresseReseauComplet = adressereseau+File.separator+"completeNets";
-	String adresseReseauCompletPourFiltrage = adressereseau+File.separator+"completeNets";
-	String adresseReseauFiltre = adressereseau+File.separator+"filteredNets";
-	String adresseSpec = adressereseau+File.separator+"features";
-	String adresseTrace = adressereseau+File.separator+"trace";
-	String adresseLabel = adressereseau+File.separator+"trace-labellisee";
-	String adresseGraphml = adressereseau+File.separator+"trace-graphml";
+	String fullPnPath = basePathNet+File.separator+"completeNets";
+	String fullPnPathForFiltering = basePathNet+File.separator+"completeNets";
+	String filteredPnPath = basePathNet+File.separator+"filteredNets";
+	String featuresPath = basePathNet+File.separator+"features";
+	String tracesPath = basePathNet+File.separator+"trace";
+	String labelsPath = basePathNet+File.separator+"trace-labellisee";
+	String graphmlPath = basePathNet+File.separator+"trace-graphml";
 
     private javax.swing.JTabbedPane jTabbedPane;
     
 	// UI for the first tab
-    private javax.swing.JPanel tab_PnSelection;
+    private javax.swing.JPanel tab_pnFoldersSelection;
     // Full Pn selection
-    private javax.swing.JPanel pan_FullPnSelection;
-    private javax.swing.JButton bt_FullPnSelection;
-    private javax.swing.JLabel lab_FullPnSelection;
+    private javax.swing.JPanel pan_fullPnFolder;
+    private javax.swing.JButton bt_fullPnFolder;
+    private javax.swing.JLabel lab_fullPnFolder;
     // Filtered Pn selection
-    private javax.swing.JPanel pan_FilteredPnSelection;
-    private javax.swing.JPanel pan_GraphProperties;
-    private javax.swing.ButtonGroup graphPropertiesGroup;
-    private javax.swing.JRadioButton opt_Coverability;
-    private javax.swing.JRadioButton opt_Accessibility;
-    private javax.swing.JPanel pan_AnalysisStrategy;
-	private javax.swing.ButtonGroup analysisStrategyGroup;
-    private javax.swing.JRadioButton opt_First;
-    private javax.swing.JRadioButton opt_All;
-    private javax.swing.JButton bt_FilteredPnSelection;
-    private javax.swing.JLabel lab_FilteredPnSelection;
+    private javax.swing.JPanel pan_filteredPnFolder;
+    private javax.swing.JPanel pan_graphProperties;
+    private javax.swing.ButtonGroup grp_graphProperties;
+    private javax.swing.JRadioButton opt_coverability;
+    private javax.swing.JRadioButton opt_accessibility;
+    private javax.swing.JPanel pan_analysisStrategy;
+	private javax.swing.ButtonGroup grp_analysisStrategy;
+    private javax.swing.JRadioButton opt_first;
+    private javax.swing.JRadioButton opt_all;
+    private javax.swing.JButton bt_filteredPnFolder;
+    private javax.swing.JLabel lab_filteredPnFolder;
     // Features selection
-    private javax.swing.JPanel pan_SpecificationsSelection;
-    private javax.swing.JButton bt_SpecificationSelection;
-    private javax.swing.JLabel lab_SpecificationSelection;
+    private javax.swing.JPanel pan_specificationsFolder;
+    private javax.swing.JButton bt_specificationsFolder;
+    private javax.swing.JLabel lab_specificationsFolder;
     // loading button
-    private javax.swing.JButton bt_LoadPnAndSpecif;
+    private javax.swing.JButton bt_loadPnAndSpecif;
     
     // UI for the second tab
-    private javax.swing.JPanel tab_TracesManagement;
+    private javax.swing.JPanel tab_tracesManagement;
     // Full Pn filter
-    private javax.swing.JPanel pan_FullPnFilter;
-    private javax.swing.JLabel lab_FullPnFilter;
-    public javax.swing.JComboBox<String> combo_FullPnFilter;
-    private javax.swing.JScrollPane scrollPan_FullPnActions;
-    private DefaultListModel<Serializable> fullPnActions;
+    private javax.swing.JPanel pan_fullPnSelection;
+    private javax.swing.JLabel lab_fullPnSelection;
+    public javax.swing.JComboBox<String> combo_fullPnSelection;
+    private javax.swing.JScrollPane scrollPan_fullPnActions;
+    private DefaultListModel<Serializable> list_fullPnActions;
     // Drag&Drop options
     private javax.swing.JPanel pan_dragDropOptions;
     private javax.swing.JLabel lab_dragDropInfo;
-    private javax.swing.ButtonGroup playerSystemGroup;
-    public javax.swing.JRadioButton opt_Player;
-    public javax.swing.JRadioButton opt_System;
+    private javax.swing.ButtonGroup grp_playerSystem;
+    public javax.swing.JRadioButton opt_player;
+    public javax.swing.JRadioButton opt_system;
     // Traces building
     private javax.swing.JPanel pan_tracesBuilding;
     private javax.swing.JButton bt_loadTracesFromFile;
     private javax.swing.JScrollPane scrollPan_tracesActions;
-    private DefaultListModel<Serializable> tracesActions;
-    private javax.swing.JButton bt_SaveTraces;
+    private DefaultListModel<Serializable> list_tracesActions;
+    private javax.swing.JButton bt_saveTraces;
     
     // UI for the third tab
-    private javax.swing.JPanel tab_Analysis;
-    private javax.swing.JButton bt_LaunchAnalysis;
+    private javax.swing.JPanel tab_analysis;
+    private javax.swing.JButton bt_launchAnalysis;
     private javax.swing.JPanel pan_analysisColumns;
     // First column
     private javax.swing.JPanel pan_actionsAnalysed;
-    private javax.swing.JScrollPane scrollPan_AnalysedActions;
-	private DefaultListModel<Serializable> analysedActions;
+    private javax.swing.JScrollPane scrollPan_analysedActions;
+	private DefaultListModel<Serializable> list_analysedActions;
     private javax.swing.JButton bt_exportGraphml;
     // Second column
-    private javax.swing.JPanel pan_LabelsComputed;
-    private javax.swing.JScrollPane scrollPan_LabelsComputed;
+    private javax.swing.JPanel pan_labelsComputed;
+    private javax.swing.JScrollPane scrollPan_labelsComputed;
+    private DefaultListModel<Serializable> list_labelsComputed;
     private javax.swing.JButton bt_exportLabels;
-    private DefaultListModel<Serializable> labelsComputed;
     // Third column
-    private javax.swing.JPanel pan_Synthesis;
-    private javax.swing.JScrollPane scrollPan_Synthesis;
-    private DefaultListModel<Serializable> synthesis;
+    private javax.swing.JPanel pan_synthesis;
+    private javax.swing.JScrollPane scrollPan_synthesis;
+    private DefaultListModel<Serializable> list_synthesis;
     
     // UI for the fourth tab
-    private javax.swing.JPanel tab_FilteredPnManagement;
+    private javax.swing.JPanel tab_filteredPnManagement;
     // Full Pn selection
-    private javax.swing.JPanel pan_FullPnSelection2;
-    private javax.swing.JButton bt_FullPnSelection2;
-    private javax.swing.JLabel lab_FullPnSelection2;
+    private javax.swing.JPanel pan_fullPnFile;
+    private javax.swing.JButton bt_fullPnFile;
+    private javax.swing.JLabel lab_fullPnFile;
     // Expert trace selection
-    private javax.swing.JPanel pan_ExpertTraceSelection;
-    private javax.swing.JButton bt_ExpertTraceSelection;
-    private javax.swing.JLabel lab_ExpertTraceSelection;
+    private javax.swing.JPanel pan_expertTraceFile;
+    private javax.swing.JButton bt_expertTraceFile;
+    private javax.swing.JLabel lab_expertTraceFile;
     // Build filtered Petri net
     private javax.swing.JButton bt_BuildFilteredPn;
     
 	public HashMap<String, ILabeling> pnName2labelingAlgo = new HashMap<>();
-	private ArrayList<ITrace> listeTracePourAnalyse;
+	private ArrayList<ITrace> list_tracesForAnalysis;
 	
 	
 	//DefaultListModel<Serializable> listeActionContent, listeNomActionsPourAnalyse;
-	String type = CoverabilityGraph.TYPE, strategie = CoverabilityGraph.STRATEGY_OR; // par défaut
+	String type = CoverabilityGraph.TYPE, strategy = CoverabilityGraph.STRATEGY_OR; // par défaut
 	
 	PieChart cv;
 	DefaultPieDataset dataset;
@@ -164,79 +164,79 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 		super("Laalys");
 
 		// Vérifier les chemins
-		if (!new File(adresseReseauComplet).exists())
-			adresseReseauComplet = ".";
-		if (!new File(adresseReseauCompletPourFiltrage).exists())
-			adresseReseauCompletPourFiltrage = ".";
-		if (!new File(adresseReseauFiltre).exists())
-			adresseReseauFiltre = ".";
-		if (!new File(adresseSpec).exists())
-			adresseSpec = ".";
-		if (!new File(adresseTrace).exists())
-			adresseTrace = ".";
-		if (!new File(adresseLabel).exists())
-			adresseLabel = ".";
-		if (!new File(adresseGraphml).exists())
-			adresseGraphml = ".";
+		if (!new File(fullPnPath).exists())
+			fullPnPath = ".";
+		if (!new File(fullPnPathForFiltering).exists())
+			fullPnPathForFiltering = ".";
+		if (!new File(filteredPnPath).exists())
+			filteredPnPath = ".";
+		if (!new File(featuresPath).exists())
+			featuresPath = ".";
+		if (!new File(tracesPath).exists())
+			tracesPath = ".";
+		if (!new File(labelsPath).exists())
+			labelsPath = ".";
+		if (!new File(graphmlPath).exists())
+			graphmlPath = ".";
 
-		graphPropertiesGroup = new javax.swing.ButtonGroup();
-        analysisStrategyGroup = new javax.swing.ButtonGroup();
-        playerSystemGroup = new javax.swing.ButtonGroup();
+		grp_graphProperties = new javax.swing.ButtonGroup();
+        grp_analysisStrategy = new javax.swing.ButtonGroup();
+        grp_playerSystem = new javax.swing.ButtonGroup();
         jTabbedPane = new javax.swing.JTabbedPane();
-        tab_PnSelection = new javax.swing.JPanel();
-        pan_FullPnSelection = new javax.swing.JPanel();
-        bt_FullPnSelection = new javax.swing.JButton();
-        lab_FullPnSelection = new javax.swing.JLabel();
-        pan_FilteredPnSelection = new javax.swing.JPanel();
-        pan_GraphProperties = new javax.swing.JPanel();
-        opt_Coverability = new javax.swing.JRadioButton();
-        opt_Accessibility = new javax.swing.JRadioButton();
-        pan_AnalysisStrategy = new javax.swing.JPanel();
-        opt_First = new javax.swing.JRadioButton();
-        opt_All = new javax.swing.JRadioButton();
-        bt_FilteredPnSelection = new javax.swing.JButton();
-        lab_FilteredPnSelection = new javax.swing.JLabel();
-        pan_SpecificationsSelection = new javax.swing.JPanel();
-        bt_SpecificationSelection = new javax.swing.JButton();
-        lab_SpecificationSelection = new javax.swing.JLabel();
-        bt_LoadPnAndSpecif = new javax.swing.JButton();
-        tab_TracesManagement = new javax.swing.JPanel();
-        pan_FullPnFilter = new javax.swing.JPanel();
-        lab_FullPnFilter = new javax.swing.JLabel();
-        combo_FullPnFilter = new javax.swing.JComboBox<>();
-        scrollPan_FullPnActions = new javax.swing.JScrollPane();
-        fullPnActions = new DefaultListModel<Serializable>();
+        tab_pnFoldersSelection = new javax.swing.JPanel();
+        pan_fullPnFolder = new javax.swing.JPanel();
+        bt_fullPnFolder = new javax.swing.JButton();
+        lab_fullPnFolder = new javax.swing.JLabel();
+        pan_filteredPnFolder = new javax.swing.JPanel();
+        pan_graphProperties = new javax.swing.JPanel();
+        opt_coverability = new javax.swing.JRadioButton();
+        opt_accessibility = new javax.swing.JRadioButton();
+        pan_analysisStrategy = new javax.swing.JPanel();
+        opt_first = new javax.swing.JRadioButton();
+        opt_all = new javax.swing.JRadioButton();
+        bt_filteredPnFolder = new javax.swing.JButton();
+        lab_filteredPnFolder = new javax.swing.JLabel();
+        pan_specificationsFolder = new javax.swing.JPanel();
+        bt_specificationsFolder = new javax.swing.JButton();
+        lab_specificationsFolder = new javax.swing.JLabel();
+        bt_loadPnAndSpecif = new javax.swing.JButton();
+        tab_tracesManagement = new javax.swing.JPanel();
+        pan_fullPnSelection = new javax.swing.JPanel();
+        lab_fullPnSelection = new javax.swing.JLabel();
+        combo_fullPnSelection = new javax.swing.JComboBox<>();
+        scrollPan_fullPnActions = new javax.swing.JScrollPane();
+        list_fullPnActions = new DefaultListModel<Serializable>();
         pan_dragDropOptions = new javax.swing.JPanel();
         lab_dragDropInfo = new javax.swing.JLabel();
-        opt_Player = new javax.swing.JRadioButton();
-        opt_System = new javax.swing.JRadioButton();
+        opt_player = new javax.swing.JRadioButton();
+        opt_system = new javax.swing.JRadioButton();
         pan_tracesBuilding = new javax.swing.JPanel();
         bt_loadTracesFromFile = new javax.swing.JButton();
         scrollPan_tracesActions = new javax.swing.JScrollPane();
-        tracesActions = new DefaultListModel<Serializable>();
-        bt_SaveTraces = new javax.swing.JButton();
-        tab_Analysis = new javax.swing.JPanel();
-        tab_FilteredPnManagement = new javax.swing.JPanel();
-        listeTracePourAnalyse = new ArrayList<ITrace>();
-        bt_LaunchAnalysis = new javax.swing.JButton();
+        list_tracesActions = new DefaultListModel<Serializable>();
+        bt_saveTraces = new javax.swing.JButton();
+        tab_analysis = new javax.swing.JPanel();
+        tab_filteredPnManagement = new javax.swing.JPanel();
+        list_tracesForAnalysis = new ArrayList<ITrace>();
+        bt_launchAnalysis = new javax.swing.JButton();
         pan_analysisColumns = new javax.swing.JPanel();
         pan_actionsAnalysed = new javax.swing.JPanel();
-        scrollPan_AnalysedActions = new javax.swing.JScrollPane();
-    	analysedActions = new DefaultListModel<Serializable>();
+        scrollPan_analysedActions = new javax.swing.JScrollPane();
+    	list_analysedActions = new DefaultListModel<Serializable>();
         bt_exportGraphml = new javax.swing.JButton();
-        pan_LabelsComputed = new javax.swing.JPanel();
-        scrollPan_LabelsComputed = new javax.swing.JScrollPane();
+        pan_labelsComputed = new javax.swing.JPanel();
+        scrollPan_labelsComputed = new javax.swing.JScrollPane();
         bt_exportLabels = new javax.swing.JButton();
-        labelsComputed = new DefaultListModel<Serializable>();
-        pan_Synthesis = new javax.swing.JPanel();
-        scrollPan_Synthesis = new javax.swing.JScrollPane();
-        synthesis = new DefaultListModel<Serializable>();
-        pan_FullPnSelection2 = new javax.swing.JPanel();
-        bt_FullPnSelection2 = new javax.swing.JButton();
-        lab_FullPnSelection2 = new javax.swing.JLabel();
-        pan_ExpertTraceSelection = new javax.swing.JPanel();
-        bt_ExpertTraceSelection = new javax.swing.JButton();
-        lab_ExpertTraceSelection = new javax.swing.JLabel();
+        list_labelsComputed = new DefaultListModel<Serializable>();
+        pan_synthesis = new javax.swing.JPanel();
+        scrollPan_synthesis = new javax.swing.JScrollPane();
+        list_synthesis = new DefaultListModel<Serializable>();
+        pan_fullPnFile = new javax.swing.JPanel();
+        bt_fullPnFile = new javax.swing.JButton();
+        lab_fullPnFile = new javax.swing.JLabel();
+        pan_expertTraceFile = new javax.swing.JPanel();
+        bt_expertTraceFile = new javax.swing.JButton();
+        lab_expertTraceFile = new javax.swing.JLabel();
         bt_BuildFilteredPn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -245,257 +245,257 @@ class InterfaceLaalys extends JFrame implements ItemListener {
         
         //////////////////////////////////////
         // Tab 1: Petri nets and features selection
-        jTabbedPane.addTab("Petri nets selection", tab_PnSelection);
+        jTabbedPane.addTab("Petri nets selection", tab_pnFoldersSelection);
         
         //---------- First Bloc: Select Full Pn folder ----------
-        pan_FullPnSelection.setBorder(javax.swing.BorderFactory.createTitledBorder("Full Petri nets selection"));
-        pan_FullPnSelection.setMinimumSize(new java.awt.Dimension(400, 100));
-        bt_FullPnSelection.setText("Select folder");
-        bt_FullPnSelection.addActionListener(new java.awt.event.ActionListener() {
+        pan_fullPnFolder.setBorder(javax.swing.BorderFactory.createTitledBorder("Full Petri nets selection"));
+        pan_fullPnFolder.setMinimumSize(new java.awt.Dimension(400, 100));
+        bt_fullPnFolder.setText("Select folder");
+        bt_fullPnFolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_FullPnSelectionActionPerformed(evt);
             }
         });
-        lab_FullPnSelection.setText("No folder selected");
-        lab_FullPnSelection.setForeground(Color.RED);
-        lab_FullPnSelection.setMinimumSize(new java.awt.Dimension(270, 14));
-        javax.swing.GroupLayout pan_FullPnSelectionLayout = new javax.swing.GroupLayout(pan_FullPnSelection);
-        pan_FullPnSelection.setLayout(pan_FullPnSelectionLayout);
+        lab_fullPnFolder.setText("No folder selected");
+        lab_fullPnFolder.setForeground(Color.RED);
+        lab_fullPnFolder.setMinimumSize(new java.awt.Dimension(270, 14));
+        javax.swing.GroupLayout pan_FullPnSelectionLayout = new javax.swing.GroupLayout(pan_fullPnFolder);
+        pan_fullPnFolder.setLayout(pan_FullPnSelectionLayout);
         pan_FullPnSelectionLayout.setHorizontalGroup(
             pan_FullPnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_FullPnSelectionLayout.createSequentialGroup()
-                .addComponent(bt_FullPnSelection)
+                .addComponent(bt_fullPnFolder)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lab_FullPnSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lab_fullPnFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pan_FullPnSelectionLayout.setVerticalGroup(
             pan_FullPnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_FullPnSelectionLayout.createSequentialGroup()
                 .addGroup(pan_FullPnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_FullPnSelection)
-                    .addComponent(lab_FullPnSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_fullPnFolder)
+                    .addComponent(lab_fullPnFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
         // ---------- Second Bloc: Select Filtered Pn folder ----------
-        pan_FilteredPnSelection.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtered Petri nets selection"));
-        pan_FilteredPnSelection.setMinimumSize(new java.awt.Dimension(400, 100));
-        pan_GraphProperties.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph properties"));
-        graphPropertiesGroup.add(opt_Coverability);
-        opt_Coverability.setSelected(true);
-        opt_Coverability.setText("Coverability");
-        graphPropertiesGroup.add(opt_Accessibility);
-        opt_Accessibility.setText("Accessibility");
-        javax.swing.GroupLayout pan_GraphPropertiesLayout = new javax.swing.GroupLayout(pan_GraphProperties);
-        pan_GraphProperties.setLayout(pan_GraphPropertiesLayout);
+        pan_filteredPnFolder.setBorder(javax.swing.BorderFactory.createTitledBorder("Filtered Petri nets selection"));
+        pan_filteredPnFolder.setMinimumSize(new java.awt.Dimension(400, 100));
+        pan_graphProperties.setBorder(javax.swing.BorderFactory.createTitledBorder("Graph properties"));
+        grp_graphProperties.add(opt_coverability);
+        opt_coverability.setSelected(true);
+        opt_coverability.setText("Coverability");
+        grp_graphProperties.add(opt_accessibility);
+        opt_accessibility.setText("Accessibility");
+        javax.swing.GroupLayout pan_GraphPropertiesLayout = new javax.swing.GroupLayout(pan_graphProperties);
+        pan_graphProperties.setLayout(pan_GraphPropertiesLayout);
         pan_GraphPropertiesLayout.setHorizontalGroup(
             pan_GraphPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_GraphPropertiesLayout.createSequentialGroup()
                 .addGroup(pan_GraphPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(opt_Coverability)
-                    .addComponent(opt_Accessibility))
+                    .addComponent(opt_coverability)
+                    .addComponent(opt_accessibility))
                 .addGap(0, 32, Short.MAX_VALUE))
         );
         pan_GraphPropertiesLayout.setVerticalGroup(
             pan_GraphPropertiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_GraphPropertiesLayout.createSequentialGroup()
-                .addComponent(opt_Coverability)
+                .addComponent(opt_coverability)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opt_Accessibility))
+                .addComponent(opt_accessibility))
         );
-        opt_Coverability.addActionListener(new java.awt.event.ActionListener() {
+        opt_coverability.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	optActionPerformed(evt);
             }
         });
-        opt_Accessibility.addActionListener(new java.awt.event.ActionListener() {
+        opt_accessibility.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	optActionPerformed(evt);
             }
         });
-        pan_AnalysisStrategy.setBorder(javax.swing.BorderFactory.createTitledBorder("Analysis strategy"));
-        analysisStrategyGroup.add(opt_First);
-        opt_First.setSelected(true);
-        opt_First.setText("FIRST");
-        analysisStrategyGroup.add(opt_All);
-        opt_All.setText("ALL");
-        javax.swing.GroupLayout pan_AnalysisStrategyLayout = new javax.swing.GroupLayout(pan_AnalysisStrategy);
-        pan_AnalysisStrategy.setLayout(pan_AnalysisStrategyLayout);
+        pan_analysisStrategy.setBorder(javax.swing.BorderFactory.createTitledBorder("Analysis strategy"));
+        grp_analysisStrategy.add(opt_first);
+        opt_first.setSelected(true);
+        opt_first.setText("FIRST");
+        grp_analysisStrategy.add(opt_all);
+        opt_all.setText("ALL");
+        javax.swing.GroupLayout pan_AnalysisStrategyLayout = new javax.swing.GroupLayout(pan_analysisStrategy);
+        pan_analysisStrategy.setLayout(pan_AnalysisStrategyLayout);
         pan_AnalysisStrategyLayout.setHorizontalGroup(
             pan_AnalysisStrategyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_AnalysisStrategyLayout.createSequentialGroup()
                 .addGroup(pan_AnalysisStrategyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(opt_First)
-                    .addComponent(opt_All))
+                    .addComponent(opt_first)
+                    .addComponent(opt_all))
                 .addGap(0, 63, Short.MAX_VALUE))
         );
         pan_AnalysisStrategyLayout.setVerticalGroup(
             pan_AnalysisStrategyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_AnalysisStrategyLayout.createSequentialGroup()
-                .addComponent(opt_First)
+                .addComponent(opt_first)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opt_All))
+                .addComponent(opt_all))
         );
-        opt_First.addActionListener(new java.awt.event.ActionListener() {
+        opt_first.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	optActionPerformed(evt);
             }
         });
-        opt_All.addActionListener(new java.awt.event.ActionListener() {
+        opt_all.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	optActionPerformed(evt);
             }
         });
-        bt_FilteredPnSelection.setText("Select folder");
-        bt_FilteredPnSelection.addActionListener(new java.awt.event.ActionListener() {
+        bt_filteredPnFolder.setText("Select folder");
+        bt_filteredPnFolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	bt_FilteredPnSelectionActionPerformed(evt);
             }
         });
-        lab_FilteredPnSelection.setText("No folder selected");
-        lab_FilteredPnSelection.setForeground(Color.RED);
-        lab_FilteredPnSelection.setMinimumSize(new java.awt.Dimension(270, 14));
-        javax.swing.GroupLayout pan_FilteredPnSelectionLayout = new javax.swing.GroupLayout(pan_FilteredPnSelection);
-        pan_FilteredPnSelection.setLayout(pan_FilteredPnSelectionLayout);
+        lab_filteredPnFolder.setText("No folder selected");
+        lab_filteredPnFolder.setForeground(Color.RED);
+        lab_filteredPnFolder.setMinimumSize(new java.awt.Dimension(270, 14));
+        javax.swing.GroupLayout pan_FilteredPnSelectionLayout = new javax.swing.GroupLayout(pan_filteredPnFolder);
+        pan_filteredPnFolder.setLayout(pan_FilteredPnSelectionLayout);
         pan_FilteredPnSelectionLayout.setHorizontalGroup(
             pan_FilteredPnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_FilteredPnSelectionLayout.createSequentialGroup()
-                .addComponent(pan_GraphProperties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_graphProperties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pan_AnalysisStrategy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_analysisStrategy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(pan_FilteredPnSelectionLayout.createSequentialGroup()
-                .addComponent(bt_FilteredPnSelection)
+                .addComponent(bt_filteredPnFolder)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lab_FilteredPnSelection, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+                .addComponent(lab_filteredPnFolder, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
         );
         pan_FilteredPnSelectionLayout.setVerticalGroup(
             pan_FilteredPnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pan_FilteredPnSelectionLayout.createSequentialGroup()
                 .addGroup(pan_FilteredPnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pan_GraphProperties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pan_AnalysisStrategy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pan_graphProperties, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pan_analysisStrategy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pan_FilteredPnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_FilteredPnSelection)
-                    .addComponent(lab_FilteredPnSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(bt_filteredPnFolder)
+                    .addComponent(lab_filteredPnFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
 		// ---------- Third Bloc: Select Specifications folder ----------
-        pan_SpecificationsSelection.setBorder(javax.swing.BorderFactory.createTitledBorder("Petri nets specifications selection"));
-        pan_SpecificationsSelection.setMinimumSize(new java.awt.Dimension(400, 100));
-        bt_SpecificationSelection.setText("Select folder");
-        bt_SpecificationSelection.addActionListener(new java.awt.event.ActionListener() {
+        pan_specificationsFolder.setBorder(javax.swing.BorderFactory.createTitledBorder("Petri nets specifications selection"));
+        pan_specificationsFolder.setMinimumSize(new java.awt.Dimension(400, 100));
+        bt_specificationsFolder.setText("Select folder");
+        bt_specificationsFolder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_SpecificationSelectionActionPerformed(evt);
             }
         });
-        lab_SpecificationSelection.setText("No folder selected");
-        lab_SpecificationSelection.setForeground(Color.RED);
-        lab_SpecificationSelection.setMinimumSize(new java.awt.Dimension(270, 14));
-        javax.swing.GroupLayout pan_SpecificationsSelectionLayout = new javax.swing.GroupLayout(pan_SpecificationsSelection);
-        pan_SpecificationsSelection.setLayout(pan_SpecificationsSelectionLayout);
+        lab_specificationsFolder.setText("No folder selected");
+        lab_specificationsFolder.setForeground(Color.RED);
+        lab_specificationsFolder.setMinimumSize(new java.awt.Dimension(270, 14));
+        javax.swing.GroupLayout pan_SpecificationsSelectionLayout = new javax.swing.GroupLayout(pan_specificationsFolder);
+        pan_specificationsFolder.setLayout(pan_SpecificationsSelectionLayout);
         pan_SpecificationsSelectionLayout.setHorizontalGroup(
             pan_SpecificationsSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_SpecificationsSelectionLayout.createSequentialGroup()
-                .addComponent(bt_SpecificationSelection)
+                .addComponent(bt_specificationsFolder)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lab_SpecificationSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lab_specificationsFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pan_SpecificationsSelectionLayout.setVerticalGroup(
             pan_SpecificationsSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_SpecificationsSelectionLayout.createSequentialGroup()
                 .addGroup(pan_SpecificationsSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_SpecificationSelection)
-                    .addComponent(lab_SpecificationSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_specificationsFolder)
+                    .addComponent(lab_specificationsFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         
 		// ---------- Fourth Bloc: loading button ----------
-        bt_LoadPnAndSpecif.setText("Load Petri nets and specifications");
-        bt_LoadPnAndSpecif.addActionListener(new java.awt.event.ActionListener() {
+        bt_loadPnAndSpecif.setText("Load Petri nets and specifications");
+        bt_loadPnAndSpecif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_LoadPnAndSpecifActionPerformed(evt);
             }
         });
         
         // ---------- Add blocs to the first tab ----------
-        javax.swing.GroupLayout tab_PnSelectionLayout = new javax.swing.GroupLayout(tab_PnSelection);
-        tab_PnSelection.setLayout(tab_PnSelectionLayout);
+        javax.swing.GroupLayout tab_PnSelectionLayout = new javax.swing.GroupLayout(tab_pnFoldersSelection);
+        tab_pnFoldersSelection.setLayout(tab_PnSelectionLayout);
         tab_PnSelectionLayout.setHorizontalGroup(
             tab_PnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pan_FullPnSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pan_FilteredPnSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pan_SpecificationsSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pan_fullPnFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pan_filteredPnFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pan_specificationsFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(tab_PnSelectionLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bt_LoadPnAndSpecif)
+                .addComponent(bt_loadPnAndSpecif)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tab_PnSelectionLayout.setVerticalGroup(
             tab_PnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab_PnSelectionLayout.createSequentialGroup()
-                .addComponent(pan_FullPnSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_fullPnFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(pan_FilteredPnSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_filteredPnFolder, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(pan_SpecificationsSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_specificationsFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(bt_LoadPnAndSpecif))
+                .addComponent(bt_loadPnAndSpecif))
         );
         
 		//////////////////////////////////////
 		// Tab 2: Traces management
-        jTabbedPane.addTab("Traces management", tab_TracesManagement);
-        tab_TracesManagement.setLayout(new java.awt.GridLayout(1, 3));
+        jTabbedPane.addTab("Traces management", tab_tracesManagement);
+        tab_tracesManagement.setLayout(new java.awt.GridLayout(1, 3));
         
         // ---------- first column ----------
-        lab_FullPnFilter.setText("Full Petri net filter");
-        lab_FullPnFilter.setMinimumSize(new java.awt.Dimension(50, 14));
-        combo_FullPnFilter.setMinimumSize(new java.awt.Dimension(50, 20));
-        combo_FullPnFilter.addItemListener(this);
-        JList<Serializable> listeActionsConteneur = new JList<Serializable>(fullPnActions);
+        lab_fullPnSelection.setText("Full Petri net filter");
+        lab_fullPnSelection.setMinimumSize(new java.awt.Dimension(50, 14));
+        combo_fullPnSelection.setMinimumSize(new java.awt.Dimension(50, 20));
+        combo_fullPnSelection.addItemListener(this);
+        JList<Serializable> listeActionsConteneur = new JList<Serializable>(list_fullPnActions);
         listeActionsConteneur.setBorder(javax.swing.BorderFactory.createTitledBorder("Available game actions"));
 		listeActionsConteneur.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		listeActionsConteneur.setDragEnabled(true);
 		listeActionsConteneur.setMinimumSize(new java.awt.Dimension(50, 103));
-		scrollPan_FullPnActions.setViewportView(listeActionsConteneur);
+		scrollPan_fullPnActions.setViewportView(listeActionsConteneur);
 
-        javax.swing.GroupLayout pan_FullPnFilterLayout = new javax.swing.GroupLayout(pan_FullPnFilter);
-        pan_FullPnFilter.setLayout(pan_FullPnFilterLayout);
+        javax.swing.GroupLayout pan_FullPnFilterLayout = new javax.swing.GroupLayout(pan_fullPnSelection);
+        pan_fullPnSelection.setLayout(pan_FullPnFilterLayout);
         pan_FullPnFilterLayout.setHorizontalGroup(
             pan_FullPnFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_FullPnFilterLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pan_FullPnFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(combo_FullPnFilter, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lab_FullPnFilter, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                    .addComponent(scrollPan_FullPnActions, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(combo_fullPnSelection, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lab_fullPnSelection, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
+                    .addComponent(scrollPan_fullPnActions, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         pan_FullPnFilterLayout.setVerticalGroup(
             pan_FullPnFilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_FullPnFilterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lab_FullPnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lab_fullPnSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(combo_FullPnFilter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(combo_fullPnSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPan_FullPnActions, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addComponent(scrollPan_fullPnActions, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        tab_TracesManagement.add(pan_FullPnFilter);
+        tab_tracesManagement.add(pan_fullPnSelection);
 
         // ---------- second column ----------
         lab_dragDropInfo.setText("<html><center>Drag and drop game actions from the left panel to the right one to complete manually traces.<br/>Select below the simulated game action source (player or system)</center></html>");
         lab_dragDropInfo.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
 
-        playerSystemGroup.add(opt_Player);
-        opt_Player.setText(ActionType.PLAYER);
-        playerSystemGroup.add(opt_System);
-        opt_System.setText(ActionType.SYSTEM);
-        opt_Player.setSelected(true);
+        grp_playerSystem.add(opt_player);
+        opt_player.setText(ActionType.PLAYER);
+        grp_playerSystem.add(opt_system);
+        opt_system.setText(ActionType.SYSTEM);
+        opt_player.setSelected(true);
 
         javax.swing.GroupLayout pan_dragDropOptionsLayout = new javax.swing.GroupLayout(pan_dragDropOptions);
         pan_dragDropOptions.setLayout(pan_dragDropOptionsLayout);
@@ -504,8 +504,8 @@ class InterfaceLaalys extends JFrame implements ItemListener {
             .addGroup(pan_dragDropOptionsLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pan_dragDropOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(opt_Player, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(opt_System, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(opt_player, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(opt_system, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lab_dragDropInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -515,13 +515,13 @@ class InterfaceLaalys extends JFrame implements ItemListener {
                 .addContainerGap()
                 .addComponent(lab_dragDropInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(opt_Player)
+                .addComponent(opt_player)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(opt_System)
+                .addComponent(opt_system)
                 .addContainerGap(137, Short.MAX_VALUE))
         );
 
-        tab_TracesManagement.add(pan_dragDropOptions);
+        tab_tracesManagement.add(pan_dragDropOptions);
 
         // ---------- third column ----------
         bt_loadTracesFromFile.setText("Load traces from files");
@@ -532,16 +532,16 @@ class InterfaceLaalys extends JFrame implements ItemListener {
             }
         });
 		
-		tracesActions.addListDataListener(new ListDataListener() {
+		list_tracesActions.addListDataListener(new ListDataListener() {
 			@Override
 			public void intervalRemoved(ListDataEvent e) {
 				System.out.println("Remove : "+e.getIndex0()+" "+e.getIndex1());
 				// si on n'est pas en cours de chargement de la trace, on maintient synchronisé les deux listes
 				if (!loadingTraces){
 					for (int i = e.getIndex1() ; i >= e.getIndex0() ; i--)
-						listeTracePourAnalyse.remove(i);
+						list_tracesForAnalysis.remove(i);
 				}
-				if (tracesActions.isEmpty())
+				if (list_tracesActions.isEmpty())
 					enableOngletAnalyse(false);
 			}
 
@@ -551,7 +551,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 				// si on n'est pas en cours de chargement de la trace, on maintient synchronisé les deux listes
 				if (!loadingTraces){
 					for (int i = e.getIndex0() ; i <= e.getIndex1() ; i++){
-						String action = tracesActions.getElementAt(i).toString();
+						String action = list_tracesActions.getElementAt(i).toString();
 						// Extraction du nom du Rdp inclus de l'action. Format : nomAction (nomRdp) (origin)
 						String [] tokens = action.split(" \\(");
 						// extraction du nom de l'action
@@ -570,7 +570,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 						origin = origin.substring(0, origin.indexOf(')'));
 						// Création d'un objet trace pour stocker les données
 						ITrace nouvelletrace = new Trace(pnName, actionName, ActionSource.MANUAL, origin, false);
-						listeTracePourAnalyse.add(i, nouvelletrace);
+						list_tracesForAnalysis.add(i, nouvelletrace);
 					}
 				}
 				enableOngletAnalyse(true);
@@ -582,7 +582,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 			}
 		});
 
-		JList<Serializable> listeNomActionsPourAnalyseConteneur = new JList<Serializable>(tracesActions);
+		JList<Serializable> listeNomActionsPourAnalyseConteneur = new JList<Serializable>(list_tracesActions);
 		listeNomActionsPourAnalyseConteneur.setBorder(javax.swing.BorderFactory.createTitledBorder("Game actions for analysis"));
 		listeNomActionsPourAnalyseConteneur.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		listeNomActionsPourAnalyseConteneur.setDragEnabled(true);
@@ -594,7 +594,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 				// System.out.println("Touche pressée : " + e.getKeyCode());
 				if (e.getKeyCode()== KeyEvent.VK_DELETE){
 					for (int i = listeNomActionsPourAnalyseConteneur.getSelectedIndices().length-1 ; i >= 0 ; i--){
-						tracesActions.remove(listeNomActionsPourAnalyseConteneur.getSelectedIndices()[i]);
+						list_tracesActions.remove(listeNomActionsPourAnalyseConteneur.getSelectedIndices()[i]);
 					}
 				}
 			}
@@ -607,9 +607,9 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 		});
 		scrollPan_tracesActions.setViewportView(listeNomActionsPourAnalyseConteneur);
 
-        bt_SaveTraces.setText("Save traces");
-        bt_SaveTraces.setMinimumSize(new java.awt.Dimension(50, 23));
-        bt_SaveTraces.addActionListener(new java.awt.event.ActionListener() {
+        bt_saveTraces.setText("Save traces");
+        bt_saveTraces.setMinimumSize(new java.awt.Dimension(50, 23));
+        bt_saveTraces.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	bt_SaveTracesActionPerformed(evt);
             }
@@ -624,7 +624,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
                 .addGroup(pan_tracesBuildingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(bt_loadTracesFromFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(scrollPan_tracesActions)
-                    .addComponent(bt_SaveTraces, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_saveTraces, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         pan_tracesBuildingLayout.setVerticalGroup(
@@ -635,18 +635,18 @@ class InterfaceLaalys extends JFrame implements ItemListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrollPan_tracesActions, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bt_SaveTraces, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bt_saveTraces, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         
-        tab_TracesManagement.add(pan_tracesBuilding);
+        tab_tracesManagement.add(pan_tracesBuilding);
 
 		//////////////////////////////////////
 		// Tab 3: Analysis
-        jTabbedPane.addTab("Analysis", tab_Analysis);
+        jTabbedPane.addTab("Analysis", tab_analysis);
 
-        bt_LaunchAnalysis.setText("Launch analysis");
-        bt_LaunchAnalysis.addActionListener(new java.awt.event.ActionListener() {
+        bt_launchAnalysis.setText("Launch analysis");
+        bt_launchAnalysis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
             	bt_LaunchAnalysisActionPerformed(evt);
             }
@@ -655,10 +655,10 @@ class InterfaceLaalys extends JFrame implements ItemListener {
         pan_analysisColumns.setLayout(new java.awt.GridLayout(1, 3, 10, 0));
 
         // ---------- first column ----------
-        JList<Serializable> listeActionsAnalyseesConteneur = new JList<Serializable>(analysedActions);
+        JList<Serializable> listeActionsAnalyseesConteneur = new JList<Serializable>(list_analysedActions);
         listeActionsAnalyseesConteneur.setBorder(javax.swing.BorderFactory.createTitledBorder("Actions analysed"));
         listeActionsAnalyseesConteneur.setMinimumSize(new java.awt.Dimension(50, 50));
-        scrollPan_AnalysedActions.setViewportView(listeActionsAnalyseesConteneur);
+        scrollPan_analysedActions.setViewportView(listeActionsAnalyseesConteneur);
 
         bt_exportGraphml.setText("Export to Graphml");
         bt_exportGraphml.addActionListener(new java.awt.event.ActionListener() {
@@ -673,12 +673,12 @@ class InterfaceLaalys extends JFrame implements ItemListener {
             pan_actionsAnalysedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_actionsAnalysedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                 .addComponent(bt_exportGraphml, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(scrollPan_AnalysedActions))
+                .addComponent(scrollPan_analysedActions))
         );
         pan_actionsAnalysedLayout.setVerticalGroup(
             pan_actionsAnalysedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_actionsAnalysedLayout.createSequentialGroup()
-                .addComponent(scrollPan_AnalysedActions, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addComponent(scrollPan_analysedActions, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_exportGraphml))
         );
@@ -686,10 +686,10 @@ class InterfaceLaalys extends JFrame implements ItemListener {
         pan_analysisColumns.add(pan_actionsAnalysed);
 
         // ---------- second column ----------
-        JList<Serializable> listeLabelsConteneur = new JList<Serializable>(labelsComputed);
+        JList<Serializable> listeLabelsConteneur = new JList<Serializable>(list_labelsComputed);
         listeLabelsConteneur.setBorder(javax.swing.BorderFactory.createTitledBorder("Labels computed"));
         listeLabelsConteneur.setMinimumSize(new java.awt.Dimension(50, 50));
-        scrollPan_LabelsComputed.setViewportView(listeLabelsConteneur);
+        scrollPan_labelsComputed.setViewportView(listeLabelsConteneur);
 
         bt_exportLabels.setText("Export labels");
         bt_exportLabels.addActionListener(new java.awt.event.ActionListener() {
@@ -698,119 +698,119 @@ class InterfaceLaalys extends JFrame implements ItemListener {
             }
         });
 
-        javax.swing.GroupLayout pan_LabelsComputedLayout = new javax.swing.GroupLayout(pan_LabelsComputed);
-        pan_LabelsComputed.setLayout(pan_LabelsComputedLayout);
+        javax.swing.GroupLayout pan_LabelsComputedLayout = new javax.swing.GroupLayout(pan_labelsComputed);
+        pan_labelsComputed.setLayout(pan_LabelsComputedLayout);
         pan_LabelsComputedLayout.setHorizontalGroup(
             pan_LabelsComputedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_LabelsComputedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                 .addComponent(bt_exportLabels)
-                .addComponent(scrollPan_LabelsComputed))
+                .addComponent(scrollPan_labelsComputed))
         );
         pan_LabelsComputedLayout.setVerticalGroup(
             pan_LabelsComputedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_LabelsComputedLayout.createSequentialGroup()
-                .addComponent(scrollPan_LabelsComputed, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addComponent(scrollPan_labelsComputed, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bt_exportLabels))
         );
 
-        pan_analysisColumns.add(pan_LabelsComputed);
+        pan_analysisColumns.add(pan_labelsComputed);
 
         // ---------- third column ----------
-        JList<Serializable> listeSyntheseConteneur = new JList<Serializable>(synthesis);
+        JList<Serializable> listeSyntheseConteneur = new JList<Serializable>(list_synthesis);
         listeSyntheseConteneur.setBorder(javax.swing.BorderFactory.createTitledBorder("Synthesis"));
         listeSyntheseConteneur.setMinimumSize(new java.awt.Dimension(50, 50));
-        scrollPan_Synthesis.setViewportView(listeSyntheseConteneur);
+        scrollPan_synthesis.setViewportView(listeSyntheseConteneur);
 
-        javax.swing.GroupLayout pan_SynthesisLayout = new javax.swing.GroupLayout(pan_Synthesis);
-        pan_Synthesis.setLayout(pan_SynthesisLayout);
+        javax.swing.GroupLayout pan_SynthesisLayout = new javax.swing.GroupLayout(pan_synthesis);
+        pan_synthesis.setLayout(pan_SynthesisLayout);
         pan_SynthesisLayout.setHorizontalGroup(
             pan_SynthesisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(scrollPan_Synthesis, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
+            .addComponent(scrollPan_synthesis, javax.swing.GroupLayout.DEFAULT_SIZE, 166, Short.MAX_VALUE)
         );
         pan_SynthesisLayout.setVerticalGroup(
             pan_SynthesisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_SynthesisLayout.createSequentialGroup()
-                .addComponent(scrollPan_Synthesis, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addComponent(scrollPan_synthesis, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                 .addGap(29, 29, 29))
         );
 
-        pan_analysisColumns.add(pan_Synthesis);
+        pan_analysisColumns.add(pan_synthesis);
 
-        javax.swing.GroupLayout tab_AnalysisLayout = new javax.swing.GroupLayout(tab_Analysis);
-        tab_Analysis.setLayout(tab_AnalysisLayout);
+        javax.swing.GroupLayout tab_AnalysisLayout = new javax.swing.GroupLayout(tab_analysis);
+        tab_analysis.setLayout(tab_AnalysisLayout);
         tab_AnalysisLayout.setHorizontalGroup(
             tab_AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab_AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(bt_LaunchAnalysis, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(bt_launchAnalysis, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(pan_analysisColumns, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         tab_AnalysisLayout.setVerticalGroup(
             tab_AnalysisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab_AnalysisLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(bt_LaunchAnalysis)
+                .addComponent(bt_launchAnalysis)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pan_analysisColumns, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE))
         );
 
 		//////////////////////////////////////
 		// Tab 4: Filtered nets management
-        jTabbedPane.addTab("Filtered nets management", tab_FilteredPnManagement);
+        jTabbedPane.addTab("Filtered nets management", tab_filteredPnManagement);
         // ---------- first bloc ----------
-        pan_FullPnSelection2.setBorder(javax.swing.BorderFactory.createTitledBorder("Full Petri net selection"));
-        pan_FullPnSelection2.setMinimumSize(new java.awt.Dimension(50, 100));
-        bt_FullPnSelection2.setText("Select file");
-        bt_FullPnSelection2.addActionListener(new java.awt.event.ActionListener() {
+        pan_fullPnFile.setBorder(javax.swing.BorderFactory.createTitledBorder("Full Petri net selection"));
+        pan_fullPnFile.setMinimumSize(new java.awt.Dimension(50, 100));
+        bt_fullPnFile.setText("Select file");
+        bt_fullPnFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_FullPnSelection2ActionPerformed(evt);
             }
         });
-        lab_FullPnSelection2.setText("No file selected");
-        lab_FullPnSelection2.setMinimumSize(new java.awt.Dimension(270, 14));
-        javax.swing.GroupLayout pan_FullPnSelection2Layout = new javax.swing.GroupLayout(pan_FullPnSelection2);
-        pan_FullPnSelection2.setLayout(pan_FullPnSelection2Layout);
+        lab_fullPnFile.setText("No file selected");
+        lab_fullPnFile.setMinimumSize(new java.awt.Dimension(270, 14));
+        javax.swing.GroupLayout pan_FullPnSelection2Layout = new javax.swing.GroupLayout(pan_fullPnFile);
+        pan_fullPnFile.setLayout(pan_FullPnSelection2Layout);
         pan_FullPnSelection2Layout.setHorizontalGroup(
             pan_FullPnSelection2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_FullPnSelection2Layout.createSequentialGroup()
-                .addComponent(bt_FullPnSelection2)
+                .addComponent(bt_fullPnFile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lab_FullPnSelection2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(lab_fullPnFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pan_FullPnSelection2Layout.setVerticalGroup(
             pan_FullPnSelection2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_FullPnSelection2Layout.createSequentialGroup()
                 .addGroup(pan_FullPnSelection2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_FullPnSelection2)
-                    .addComponent(lab_FullPnSelection2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_fullPnFile)
+                    .addComponent(lab_fullPnFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         // ---------- second bloc ----------
-        pan_ExpertTraceSelection.setBorder(javax.swing.BorderFactory.createTitledBorder("Expert trace selection"));
-        pan_ExpertTraceSelection.setMinimumSize(new java.awt.Dimension(50, 100));
-        bt_ExpertTraceSelection.setText("Select file");
-        bt_ExpertTraceSelection.addActionListener(new java.awt.event.ActionListener() {
+        pan_expertTraceFile.setBorder(javax.swing.BorderFactory.createTitledBorder("Expert trace selection"));
+        pan_expertTraceFile.setMinimumSize(new java.awt.Dimension(50, 100));
+        bt_expertTraceFile.setText("Select file");
+        bt_expertTraceFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bt_ExpertTraceSelectionActionPerformed(evt);
             }
         });
-        lab_ExpertTraceSelection.setText("No file selected");
-        lab_ExpertTraceSelection.setMinimumSize(new java.awt.Dimension(270, 14));
-        javax.swing.GroupLayout pan_ExpertTraceSelectionLayout = new javax.swing.GroupLayout(pan_ExpertTraceSelection);
-        pan_ExpertTraceSelection.setLayout(pan_ExpertTraceSelectionLayout);
+        lab_expertTraceFile.setText("No file selected");
+        lab_expertTraceFile.setMinimumSize(new java.awt.Dimension(270, 14));
+        javax.swing.GroupLayout pan_ExpertTraceSelectionLayout = new javax.swing.GroupLayout(pan_expertTraceFile);
+        pan_expertTraceFile.setLayout(pan_ExpertTraceSelectionLayout);
         pan_ExpertTraceSelectionLayout.setHorizontalGroup(
             pan_ExpertTraceSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_ExpertTraceSelectionLayout.createSequentialGroup()
-                .addComponent(bt_ExpertTraceSelection)
+                .addComponent(bt_expertTraceFile)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lab_ExpertTraceSelection, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
+                .addComponent(lab_expertTraceFile, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE))
         );
         pan_ExpertTraceSelectionLayout.setVerticalGroup(
             pan_ExpertTraceSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pan_ExpertTraceSelectionLayout.createSequentialGroup()
                 .addGroup(pan_ExpertTraceSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bt_ExpertTraceSelection)
-                    .addComponent(lab_ExpertTraceSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(bt_expertTraceFile)
+                    .addComponent(lab_expertTraceFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         // ---------- buil button ----------
@@ -820,21 +820,21 @@ class InterfaceLaalys extends JFrame implements ItemListener {
                 bt_BuildFilteredPnActionPerformed(evt);
             }
         });
-        javax.swing.GroupLayout tab_FilteredPnManagementLayout = new javax.swing.GroupLayout(tab_FilteredPnManagement);
-        tab_FilteredPnManagement.setLayout(tab_FilteredPnManagementLayout);
+        javax.swing.GroupLayout tab_FilteredPnManagementLayout = new javax.swing.GroupLayout(tab_filteredPnManagement);
+        tab_filteredPnManagement.setLayout(tab_FilteredPnManagementLayout);
         tab_FilteredPnManagementLayout.setHorizontalGroup(
             tab_FilteredPnManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.CENTER, tab_FilteredPnManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(pan_ExpertTraceSelection, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pan_expertTraceFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(bt_BuildFilteredPn))
-            .addComponent(pan_FullPnSelection2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pan_fullPnFile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         tab_FilteredPnManagementLayout.setVerticalGroup(
             tab_FilteredPnManagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab_FilteredPnManagementLayout.createSequentialGroup()
-                .addComponent(pan_FullPnSelection2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_fullPnFile, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(pan_ExpertTraceSelection, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pan_expertTraceFile, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(bt_BuildFilteredPn)
                 .addContainerGap(162, Short.MAX_VALUE))
@@ -866,13 +866,13 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 
     private void bt_FullPnSelectionActionPerformed(java.awt.event.ActionEvent evt) {                                                   
     	System.out.println("Choisir un dossier de réseau complet sans graphe.");
-		String folderName = new SelectionDossier().getNomDossier(adresseReseauComplet, this);
-		if (!folderName.isEmpty() && !folderName.equals(adresseReseauComplet)){
-			adresseReseauComplet = folderName;
-			System.out.println("dossier choisi : " + adresseReseauComplet);
-			lab_FullPnSelection.setText("Folder selected: "+adresseReseauComplet);
-			lab_FullPnSelection.setForeground(Color.BLACK);
-			lab_FullPnSelection.setToolTipText(adresseReseauComplet);
+		String folderName = new SelectionDossier().getNomDossier(fullPnPath, this);
+		if (!folderName.isEmpty() && !folderName.equals(fullPnPath)){
+			fullPnPath = folderName;
+			System.out.println("dossier choisi : " + fullPnPath);
+			lab_fullPnFolder.setText("Folder selected: "+fullPnPath);
+			lab_fullPnFolder.setForeground(Color.BLACK);
+			lab_fullPnFolder.setToolTipText(fullPnPath);
 			enableOngletAnalyse(false);
 			enableOngletTraces(false);
 		}
@@ -880,13 +880,13 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 	
     private void bt_FilteredPnSelectionActionPerformed(java.awt.event.ActionEvent evt) {                                                   
     	System.out.println("Choisir un dossier de réseaux filtrés");
-		String folderName = new SelectionDossier().getNomDossier(adresseReseauFiltre, this);
-		if (!folderName.isEmpty() && !folderName.equals(adresseReseauFiltre)){
-			adresseReseauFiltre = folderName;
-			System.out.println("dossier choisi : " + adresseReseauFiltre);
-			lab_FilteredPnSelection.setText("Folder selected: "+adresseReseauFiltre);
-			lab_FilteredPnSelection.setForeground(Color.BLACK);
-			lab_FilteredPnSelection.setToolTipText(adresseReseauFiltre);
+		String folderName = new SelectionDossier().getNomDossier(filteredPnPath, this);
+		if (!folderName.isEmpty() && !folderName.equals(filteredPnPath)){
+			filteredPnPath = folderName;
+			System.out.println("dossier choisi : " + filteredPnPath);
+			lab_filteredPnFolder.setText("Folder selected: "+filteredPnPath);
+			lab_filteredPnFolder.setForeground(Color.BLACK);
+			lab_filteredPnFolder.setToolTipText(filteredPnPath);
 			enableOngletAnalyse(false);
 			enableOngletTraces(false);
 		}
@@ -896,37 +896,37 @@ class InterfaceLaalys extends JFrame implements ItemListener {
     	Object source = evt.getSource();
 
 		// les 4 boutons de configuration
-		if (source == opt_Coverability) {
+		if (source == opt_coverability) {
 			System.out.println("couverture");
 			type = CoverabilityGraph.TYPE;
-			opt_First.setEnabled(true);
-			opt_All.setEnabled(true);
-		} else if (source == opt_Accessibility) {
+			opt_first.setEnabled(true);
+			opt_all.setEnabled(true);
+		} else if (source == opt_accessibility) {
 			System.out.println("accessibilité");
 			type = AccessibleGraph.TYPE;
 			// interdire le bouton1b
-			opt_All.setEnabled(false);
+			opt_all.setEnabled(false);
 			// activer le bouton1a automatiquement
-			opt_First.setSelected(true);
-			strategie = CoverabilityGraph.STRATEGY_OR;
-		} else if (source == opt_First) {
+			opt_first.setSelected(true);
+			strategy = CoverabilityGraph.STRATEGY_OR;
+		} else if (source == opt_first) {
 			System.out.println("stratégie FIRST, en fait, OU");
-			strategie = CoverabilityGraph.STRATEGY_OR;
-		} else if (source == opt_All) {
+			strategy = CoverabilityGraph.STRATEGY_OR;
+		} else if (source == opt_all) {
 			System.out.println("stratégie ALL, en fait, ET");
-			strategie = CoverabilityGraph.STRATEGY_AND;
+			strategy = CoverabilityGraph.STRATEGY_AND;
 		}
     }                                           
 
     private void bt_SpecificationSelectionActionPerformed(java.awt.event.ActionEvent evt) {
     	System.out.println("Choisir un dossier de caractéristiques");
-		String folderName = new SelectionDossier().getNomDossier(adresseSpec, this);
-		if (!folderName.isEmpty() && !folderName.equals(adresseSpec)){
-			adresseSpec = folderName;
-			System.out.println("dossier choisi : " + adresseSpec);
-			lab_SpecificationSelection.setText("Folder selected: "+adresseSpec);
-			lab_SpecificationSelection.setForeground(Color.BLACK);
-			lab_SpecificationSelection.setToolTipText(adresseSpec);
+		String folderName = new SelectionDossier().getNomDossier(featuresPath, this);
+		if (!folderName.isEmpty() && !folderName.equals(featuresPath)){
+			featuresPath = folderName;
+			System.out.println("dossier choisi : " + featuresPath);
+			lab_specificationsFolder.setText("Folder selected: "+featuresPath);
+			lab_specificationsFolder.setForeground(Color.BLACK);
+			lab_specificationsFolder.setToolTipText(featuresPath);
 			enableOngletAnalyse(false);
 			enableOngletTraces(false);
 		}
@@ -936,11 +936,11 @@ class InterfaceLaalys extends JFrame implements ItemListener {
     	System.out.println("Loading traces file.");
 		loadingTraces = true;
 		try {
-			String fileName = new SelectionFichier().getNomFichier(adresseTrace, this);
+			String fileName = new SelectionFichier().getNomFichier(tracesPath, this);
 			if (!fileName.isEmpty()){
-				adresseTrace = fileName.substring(0, fileName.lastIndexOf(File.separator));
-				tracesActions.removeAllElements();
-				listeTracePourAnalyse = new ArrayList<ITrace>();
+				tracesPath = fileName.substring(0, fileName.lastIndexOf(File.separator));
+				list_tracesActions.removeAllElements();
+				list_tracesForAnalysis = new ArrayList<ITrace>();
 				System.out.println("traces selected: " + fileName);
 				ITraces tracesToLoad = new Traces();
 				tracesToLoad.loadFile(fileName);
@@ -978,29 +978,29 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 					}
 
 					// mémorisation des traces avec tous les attributs :
-					listeTracePourAnalyse.add(tr);
+					list_tracesForAnalysis.add(tr);
 					// pour affichage, on ajoute le nom du fullPn et l'origine (player ou system)
-					tracesActions.addElement(tr.getAction() + " ("+ tr.getPnName() + ") ("+ tr.getOrigin()+ ")");
+					list_tracesActions.addElement(tr.getAction() + " ("+ tr.getPnName() + ") ("+ tr.getOrigin()+ ")");
 				}
 				if (!consistant) {
-					tracesActions.removeAllElements();
-					listeTracePourAnalyse = new ArrayList<ITrace>();
+					list_tracesActions.removeAllElements();
+					list_tracesForAnalysis = new ArrayList<ITrace>();
 				}
 				enableOngletAnalyse(true);
 			}
 		} catch (Exception e6) {
 			JOptionPane.showMessageDialog(this, "Error on loading traces file\n\n"+e6.getMessage());
-			tracesActions.removeAllElements();
-			listeTracePourAnalyse = new ArrayList<ITrace>();
+			list_tracesActions.removeAllElements();
+			list_tracesForAnalysis = new ArrayList<ITrace>();
 		}
 		loadingTraces = false;
     }                                         
 
     private void bt_LoadPnAndSpecifActionPerformed(java.awt.event.ActionEvent evt) {
     	// onglet1 : charge tous les fichiers des trois dossiers
-		System.out.println(adresseReseauComplet);
-		System.out.println(adresseReseauFiltre);
-		System.out.println(adresseSpec);
+		System.out.println(fullPnPath);
+		System.out.println(filteredPnPath);
+		System.out.println(featuresPath);
 
 		Logger monLog = Logger.getLogger(Main.class.getName());
 		monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
@@ -1008,14 +1008,14 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 		ConsoleHandler ch = new ConsoleHandler();
 		ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
 		monLog.addHandler(ch);
-		File fullDir = new File(adresseReseauComplet);
+		File fullDir = new File(fullPnPath);
 		pnName2labelingAlgo.clear();
 		for (File fullChild : fullDir.listFiles()){
 			// get equivalent file in filtered folder
-			File filteredDir = new File(adresseReseauFiltre);
+			File filteredDir = new File(filteredPnPath);
 			File filteredChild = new File(filteredDir, fullChild.getName());
 			// get equivalent file in features folder
-			File featuresDir = new File(adresseSpec);
+			File featuresDir = new File(featuresPath);
 			File featuresChild = new File(featuresDir, fullChild.getName().substring(0, fullChild.getName().length()-4)+"xml");
 			if (!filteredChild.exists() || !featuresChild.exists()){
 				JOptionPane.showMessageDialog(this, "Error, equivalent file of full Petri net named \""+fullChild.getName()+"\" doesn't exist in selected folders\n\nLoading aborted");
@@ -1032,7 +1032,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 				return ;
 			}
 			// Instantiate filtered Petri net
-			IPetriNet filteredPn = new PetriNet(true, type, strategie);
+			IPetriNet filteredPn = new PetriNet(true, type, strategy);
 			try {
 				filteredPn.loadPetriNet(filteredChild.getAbsolutePath());
 			} catch (Exception e2) {
@@ -1087,9 +1087,9 @@ class InterfaceLaalys extends JFrame implements ItemListener {
     
     private void bt_SaveTracesActionPerformed(java.awt.event.ActionEvent evt) {
     	System.out.println("Save traces.");
-		if (listeTracePourAnalyse.size() > 0) {
+		if (list_tracesForAnalysis.size() > 0) {
 			ITraces itraces = new Traces();
-			itraces.setTraces(listeTracePourAnalyse);
+			itraces.setTraces(list_tracesForAnalysis);
 			Document doc = itraces.toXML();
 			// enregistrement du nouveau fichier de traces
 			// choix du fichier
@@ -1097,7 +1097,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 			try {
 				JFileChooser chooser = new JFileChooser();
 				// Dossier Courant
-				chooser.setCurrentDirectory(new File(adresseTrace + File.separator));
+				chooser.setCurrentDirectory(new File(tracesPath + File.separator));
 				// Affichage et récupération de la réponse de l'utilisateur
 				int reponse = chooser.showDialog(chooser, "Save (.xml extension)");
 				// Si l'utilisateur clique sur OK
@@ -1106,7 +1106,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 					filename = chooser.getSelectedFile().toString();
 					if (filename.toLowerCase().endsWith(".xml"))
 						filename = filename.substring(0, filename.length() - 4); // remove user extension
-					adresseTrace = filename.substring(0, filename.lastIndexOf(File.separator));
+					tracesPath = filename.substring(0, filename.lastIndexOf(File.separator));
 					// System.out.println("fichier : " + filename+".xml");
 					// enregistrement proprement dit
 					Transformer transformer;
@@ -1131,7 +1131,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
     private void bt_LaunchAnalysisActionPerformed(java.awt.event.ActionEvent evt) {
     	// onglet3 : lancement de l'analyse
 		// vérifier que l'on a tout : s'il manque quelque chose, le dire
-		if (pnName2labelingAlgo.size() <= 0 || listeTracePourAnalyse.size() == 0) {
+		if (pnName2labelingAlgo.size() <= 0 || list_tracesForAnalysis.size() == 0) {
 			JOptionPane.showMessageDialog(this,
 					"Full Petri nets or filtered Petri nets or specifications or traces not defined");
 		} else {
@@ -1146,7 +1146,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 			}
 			
 			ITraces tracesPourAnalyse = new Traces();
-			tracesPourAnalyse.setTraces(listeTracePourAnalyse);				
+			tracesPourAnalyse.setTraces(list_tracesForAnalysis);				
 			for (ITrace trace : tracesPourAnalyse.getTraces())
 			{
 				ILabeling algo = pnName2labelingAlgo.get(trace.getPnName());
@@ -1164,9 +1164,9 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 			}
 
 			// vidage des trois colonnes
-			analysedActions.removeAllElements();
-			labelsComputed.removeAllElements();
-			synthesis.removeAllElements();
+			list_analysedActions.removeAllElements();
+			list_labelsComputed.removeAllElements();
+			list_synthesis.removeAllElements();
 
 			int nbLabels = 18;
 			int[] effectif = new int[nbLabels];
@@ -1195,9 +1195,9 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 			// calcul des effectifs de chaque label
 			for (ITrace tr : tracesPourAnalyse.getTraces()) {
 				IFeatures features = pnName2labelingAlgo.get(tr.getPnName()).getFeatures();
-				analysedActions.addElement(features.getPublicName(tr.getAction()));
+				list_analysedActions.addElement(features.getPublicName(tr.getAction()));
 				ArrayList<String> labs = tr.getLabels();
-				labelsComputed.addElement(labs);
+				list_labelsComputed.addElement(labs);
 				for (String lab : labs) {
 					for (int k = 0; k < nbLabels; k++){
 						if (lab == intitule[k]) {
@@ -1214,7 +1214,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 					ArrayList<String> ligne = new ArrayList<String>();
 					ligne.add(intitule[k]);
 					ligne.add(new Integer(effectif[k]).toString());
-					synthesis.addElement(ligne);
+					list_synthesis.addElement(ligne);
 				}
 			}
 
@@ -1235,10 +1235,10 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 
     private void bt_exportGraphmlActionPerformed(java.awt.event.ActionEvent evt) {
     	System.out.println("Export to Graphml format");
-		if (analysedActions.getSize() != 0) {
+		if (list_analysedActions.getSize() != 0) {
 			String outputfolder = "";
 			try {
-				JFileChooser chooser = new JFileChooser(new File(adresseGraphml + File.separator).getCanonicalFile());
+				JFileChooser chooser = new JFileChooser(new File(graphmlPath + File.separator).getCanonicalFile());
 				chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				// Affichage et récupération de la réponse de l'utilisateur
 				int reponse = chooser.showSaveDialog(null);
@@ -1248,7 +1248,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 					outputfolder = chooser.getSelectedFile().toString();
 					// Identification dans les traces des Rdp utilisés
 					ArrayList<String> pnUsed = new ArrayList<String>();
-					for (ITrace t : listeTracePourAnalyse){
+					for (ITrace t : list_tracesForAnalysis){
 						if (!pnUsed.contains(t.getPnName()))
 							pnUsed.add(t.getPnName());
 					}
@@ -1269,12 +1269,12 @@ class InterfaceLaalys extends JFrame implements ItemListener {
     
     private void bt_exportLabelsActionPerformed(java.awt.event.ActionEvent evt) {
     	System.out.println("Export labels.");
-		if (labelsComputed.getSize() != 0) {
+		if (list_labelsComputed.getSize() != 0) {
 			String outputfile = "";
 			try {
 				JFileChooser chooser = new JFileChooser();
 				// Dossier Courant
-				chooser.setCurrentDirectory(new File(adresseLabel + File.separator));
+				chooser.setCurrentDirectory(new File(labelsPath + File.separator));
 				// Affichage et récupération de la réponse de l'utilisateur
 				int reponse = chooser.showDialog(chooser, "Save (.xml extension)");
 				// Si l'utilisateur clique sur OK
@@ -1285,15 +1285,15 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 						outputfile = outputfile.substring(0, outputfile.length() - 4); // remove
 					// user
 					// extension
-					adresseLabel = outputfile.substring(0, outputfile.lastIndexOf(File.separator));
+					labelsPath = outputfile.substring(0, outputfile.lastIndexOf(File.separator));
 					System.out.println("file: " + outputfile + ".xml");
 				}
 				// contenu à écrire récupération de value1 complété par les
 				// labels
 				ITraces itraces = new Traces();
-				itraces.setTraces(listeTracePourAnalyse);
-				for (int k = 0; k < listeTracePourAnalyse.size(); k++)
-					System.out.println("pos " + k + " : " + listeTracePourAnalyse.get(k));
+				itraces.setTraces(list_tracesForAnalysis);
+				for (int k = 0; k < list_tracesForAnalysis.size(); k++)
+					System.out.println("pos " + k + " : " + list_tracesForAnalysis.get(k));
 				Document doc = itraces.toXML();
 				Transformer transformer = TransformerFactory.newInstance().newTransformer();
 				Result output = new StreamResult(new File(outputfile + ".xml"));
@@ -1309,23 +1309,23 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 
     private void bt_FullPnSelection2ActionPerformed(java.awt.event.ActionEvent evt) {
 		System.out.println("Selection d'un rdp complet.");
-		String fullPath = new SelectionFichier().getNomFichier(adresseReseauCompletPourFiltrage, this);
+		String fullPath = new SelectionFichier().getNomFichier(fullPnPathForFiltering, this);
 		if (!fullPath.isEmpty()){
-			adresseReseauCompletPourFiltrage = fullPath;
-			System.out.println("fichier de réseau choisi : " + adresseReseauCompletPourFiltrage);
-			lab_FullPnSelection2.setText("File selected: "+adresseReseauCompletPourFiltrage);
-			lab_FullPnSelection2.setToolTipText(adresseReseauCompletPourFiltrage);
+			fullPnPathForFiltering = fullPath;
+			System.out.println("fichier de réseau choisi : " + fullPnPathForFiltering);
+			lab_fullPnFile.setText("File selected: "+fullPnPathForFiltering);
+			lab_fullPnFile.setToolTipText(fullPnPathForFiltering);
 		}
     } 
 
     private void bt_ExpertTraceSelectionActionPerformed(java.awt.event.ActionEvent evt) {
 		System.out.println("Selection d'une trace experte.");
-		String fullPath = new SelectionFichier().getNomFichier(adresseTrace, this);
+		String fullPath = new SelectionFichier().getNomFichier(tracesPath, this);
 		if (!fullPath.isEmpty()){
-			adresseTrace = fullPath;
-			System.out.println("fichier de réseau choisi : " + adresseTrace);
-			lab_ExpertTraceSelection.setText("File selected: "+adresseTrace);
-			lab_ExpertTraceSelection.setToolTipText(adresseTrace);
+			tracesPath = fullPath;
+			System.out.println("fichier de réseau choisi : " + tracesPath);
+			lab_expertTraceFile.setText("File selected: "+tracesPath);
+			lab_expertTraceFile.setToolTipText(tracesPath);
 		}
     }
 
@@ -1334,12 +1334,12 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 			// Load full Pn
 			System.out.println("Chargement du Rdp complet");
 			IPetriNet fullPn = new PetriNet(false, AccessibleGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-			fullPn.loadPetriNet(adresseReseauCompletPourFiltrage);
+			fullPn.loadPetriNet(fullPnPathForFiltering);
 			try {
 				// Load traces
 				System.out.println("Chargement des traces");
 				ITraces traces_expert = new Traces();
-				traces_expert.loadFile(adresseTrace);
+				traces_expert.loadFile(tracesPath);
 				
 				System.out.println("Généreration du réseau filtré");
 				// pour l'onglet 0
@@ -1350,7 +1350,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 				try {
 					JFileChooser chooser = new JFileChooser();
 					// Dossier de réseaux filtrés
-					chooser.setCurrentDirectory(new File(adresseReseauFiltre + File.separator));
+					chooser.setCurrentDirectory(new File(filteredPnPath + File.separator));
 					// Affichage et récupération de la réponse de l'utilisateur
 					int reponse = chooser.showDialog(chooser, "Save (.pnml extension)");
 					if (reponse == JFileChooser.APPROVE_OPTION) {
@@ -1358,7 +1358,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 						filename_new = chooser.getSelectedFile().toString();
 						if (filename_new.toLowerCase().endsWith(".pnml"))
 							filename_new = filename_new.substring(0, filename_new.length() - 5); // remove user extension
-						adresseReseauFiltre = filename_new.substring(0, filename_new.lastIndexOf(File.separator));
+						filteredPnPath = filename_new.substring(0, filename_new.lastIndexOf(File.separator));
 						System.out.println("fichier : " + filename_new + ".pnml");
 					}
 				} catch (HeadlessException he) {
@@ -1392,21 +1392,21 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 		if (!state){
 			enableOngletAnalyse(false);
 		} else {
-			fullPnActions.clear();
-			tracesActions.clear();
+			list_fullPnActions.clear();
+			list_tracesActions.clear();
 			for (HashMap.Entry<String,ILabeling> elem : pnName2labelingAlgo.entrySet()){
-				combo_FullPnFilter.addItem(elem.getKey());			
+				combo_fullPnSelection.addItem(elem.getKey());			
 			}
-			combo_FullPnFilter.setSelectedIndex(0);
+			combo_fullPnSelection.setSelectedIndex(0);
 		}
 	}
 
 	private void enableOngletAnalyse(boolean state){
 		jTabbedPane.setEnabledAt(2, state);
 		if (state){
-			analysedActions.clear();
-			labelsComputed.clear();
-			synthesis.clear();
+			list_analysedActions.clear();
+			list_labelsComputed.clear();
+			list_synthesis.clear();
 		}
 	}
 
@@ -1415,15 +1415,15 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 		// attaché au combo
 		// nom du full choisi
-		String fullPnName = (String)combo_FullPnFilter.getSelectedItem();
+		String fullPnName = (String)combo_fullPnSelection.getSelectedItem();
 		if (pnName2labelingAlgo.containsKey(fullPnName)){
-			fullPnActions.clear();
+			list_fullPnActions.clear();
 			// on rempli la liste des actions incluses dans ce Rdp
 			IPetriNet fullPn = pnName2labelingAlgo.get(fullPnName).getCompletePN();
 			if (fullPn != null){
 				for (ITransition tr : fullPn.getTransitions()) {
 					System.out.println(tr.getName());
-					fullPnActions.addElement(tr.getName());
+					list_fullPnActions.addElement(tr.getName());
 				}
 			} else {
 				JOptionPane.showMessageDialog(this, "Error, No full Petri net loaded for \""+fullPnName+"\".");
