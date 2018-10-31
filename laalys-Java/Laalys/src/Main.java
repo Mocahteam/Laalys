@@ -46,6 +46,7 @@ public class Main {
 			String serverIP = null;
 			Integer serverPort = null;
 			String outputName = null;
+			boolean debug = false;
 			for (int i = 0 ; i < args.length ; i++){
 				switch (args[i]){
 					case "-help":
@@ -56,6 +57,7 @@ public class Main {
 						System.out.println("No parameters shows GUI. In command line following options are available:");
 						System.out.println("\tOptions:");
 						System.out.println("\t\t-help\t\t\t\tprint this message");
+						System.out.println("\t\t-d\t\t\t\tshow debug logs");
 						System.out.println("\t\t-fullPn <DIR>\t\t\tload full Petri nets included into DIR");
 						System.out.println("\t\t-filteredPn <DIR>\t\tload filtered Petri nets included into DIR");
 						System.out.println("\t\t-features <DIR>\t\tload features included into DIR");
@@ -66,6 +68,10 @@ public class Main {
 						System.out.println("\t\t\t-serverIP <IP_ADRESS>\tTCP address that sends traces");
 						System.out.println("\t\t\t-serverPort <PORT>\tTCP port used by server");
 						System.exit(0);
+					case "-d":
+						i++;
+						debug = true;
+						break;
 					case "-fullPn":
 						i++;
 						if (i < args.length)
@@ -189,7 +195,7 @@ public class Main {
 				}
 				
 				// Init labeling algorithm
-				ILabeling algo = new Labeling_V10(monLog, false);
+				ILabeling algo = new Labeling_V10(monLog, debug);
 				algo.setCompletePN(fullPn);
 				algo.setFilteredPN(filteredPn);
 				algo.setFeatures(features);

@@ -93,6 +93,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
     private javax.swing.JLabel lab_specificationsFolder;
     // loading button
     private javax.swing.JButton bt_loadPnAndSpecif;
+    private javax.swing.JCheckBox cb_enableDebug;
     
     // UI for the second tab
     private javax.swing.JPanel tab_tracesManagement;
@@ -200,6 +201,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
         bt_specificationsFolder = new javax.swing.JButton();
         lab_specificationsFolder = new javax.swing.JLabel();
         bt_loadPnAndSpecif = new javax.swing.JButton();
+        cb_enableDebug = new javax.swing.JCheckBox();
         tab_tracesManagement = new javax.swing.JPanel();
         pan_fullPnSelection = new javax.swing.JPanel();
         lab_fullPnSelection = new javax.swing.JLabel();
@@ -418,6 +420,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
                 bt_LoadPnAndSpecifActionPerformed(evt);
             }
         });
+        cb_enableDebug.setText("Enable debug");
         
         // ---------- Add blocs to the first tab ----------
         javax.swing.GroupLayout tab_PnSelectionLayout = new javax.swing.GroupLayout(tab_pnFoldersSelection);
@@ -427,10 +430,8 @@ class InterfaceLaalys extends JFrame implements ItemListener {
             .addComponent(pan_fullPnFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pan_filteredPnFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pan_specificationsFolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(tab_PnSelectionLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bt_loadPnAndSpecif)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(cb_enableDebug)
+            .addComponent(bt_loadPnAndSpecif)
         );
         tab_PnSelectionLayout.setVerticalGroup(
             tab_PnSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -441,6 +442,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
                 .addGap(30, 30, 30)
                 .addComponent(pan_specificationsFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
+                .addComponent(cb_enableDebug)
                 .addComponent(bt_loadPnAndSpecif))
         );
         
@@ -1058,7 +1060,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 			}
 
 			// Init labeling algorithm
-			ILabeling algo = new Labeling_V10(monLog, false);
+			ILabeling algo = new Labeling_V10(monLog, cb_enableDebug.isSelected());
 			algo.setCompletePN(fullPn);
 			algo.setFilteredPN(filteredPn);
 			algo.setFeatures(features);
