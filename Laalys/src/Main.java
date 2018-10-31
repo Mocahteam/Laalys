@@ -307,8 +307,7 @@ public class Main {
 					        	}
 					        	// send back actions
 					        	System.out.println("Send actions: "+triggerableActions);
-					        	pw.print(triggerableActions);
-					        	pw.flush();
+					        	pw.println(triggerableActions);
 					        } else if (tokens[0].equalsIgnoreCase("NextActionToReach") && tokens.length == 4){
 					        	// found associated labeling algorithm instance
 					        	ILabeling algo = pnName2labelingAlgo.get(tokens[1]);
@@ -316,12 +315,10 @@ public class Main {
 					        		// compute and send back next action to perform
 					        		String nextActions = algo.getNextBetterActionsToReach(tokens[2], Integer.parseInt(tokens[3]));
 					        		System.out.println("Send actions: "+nextActions);
-					        		pw.print(nextActions);
-						        	pw.flush();
+					        		pw.println(nextActions);
 					        	} else {
 					        		System.err.println("Unknown Petri net \""+tokens[1]+"\" to label \""+tokens[2]+"\" action.");
-					        		pw.print("");
-						        	pw.flush();
+					        		pw.println("");
 					        	}
 					        } else if (tokens.length == 3){
 					        	// Cas par défaut ou le contenu doit suivre le format suivant : pnName\tactionName\tperformedBy
@@ -345,8 +342,7 @@ public class Main {
 					        	}
 					        	// send back labels
 					        	System.out.println("Send labels: "+mergedLabels);
-					        	pw.print(mergedLabels);
-					        	pw.flush();
+					        	pw.println(mergedLabels);
 					        } else {
 					        	System.out.println("Warning!!! invalid request.");
 					        }
