@@ -59,4 +59,5 @@
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.ITraces"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.AccessibleGraph"/>
 <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.CoverabilityGraph"/>
+<fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
 </qualifiedTypeNameHistroy>

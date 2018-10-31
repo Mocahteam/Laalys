@@ -35,12 +35,13 @@
 	<section name="CallHierarchySearchScope">
 	</section>
 	<section name="FatJarPackageWizard">
-		<item value="C:\Users\mmuratet\Documents\INSHEA\Recherche\Mocah\SVN_Mocah\laalys-Java" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
+		<item value="C:\Users\mmuratet\Documents\INSHEA\Recherche\Mocah\SVN_Mocah\laalys-Java.xml" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
 		<item value="Main - Laalys" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
-		<item value="C:\Users\mmuratet\Google Drive\Enseignements\UPMC\ANDROIDE\M2\Tutos\Tuto3\RessourcesTuto3\LaPorteGelee\LaalysV2.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="C:\Users\Mathieu Muratet\Google Drive\Enseignements\UPMC\ANDROIDE\M2\Tutos\Tuto3\RessourcesTuto3\LaPorteGelee\LaalysV2.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
 		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
 		<item value="2" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\Mathieu Muratet\Google Drive\Enseignements\UPMC\ANDROIDE\M2\Tutos\Tuto3\RessourcesTuto3\LaPorteGelee\LaalysV2.jar"/>
 			<item value="C:\Users\mmuratet\Google Drive\Enseignements\UPMC\ANDROIDE\M2\Tutos\Tuto3\RessourcesTuto3\LaPorteGelee\LaalysV2.jar"/>
 			<item value="C:\Users\mmuratet\Google Drive\Enseignements\UPMC\ANDROIDE\M2\Tutos\Tuto3\RessourcesTuto3\LaalysV2\LaalysV2.jar"/>
 			<item value="C:\Users\mmuratet\Google Drive\Enseignements\UPMC\ANDROIDE\M2\CoursSuivi\CasPratique\LaalysV2\LaalysV2.jar"/>
