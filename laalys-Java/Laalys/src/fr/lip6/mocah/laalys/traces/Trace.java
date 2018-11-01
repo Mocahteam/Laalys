@@ -68,7 +68,7 @@ public class Trace implements ITrace
 	 */
 	public String toString()
 	{
-		return "<transition pnName=\"" + this._pnName + "\" action=\"" + this._action + "\" try=\"" + this._isTry + "\" source=\"" + this._source + "\" origin=\"" + this._origin + "\" labels=\"" + this._labels +"\"/>";
+		return "<transition pnName=\"" + this._pnName + "\" action=\"" + this._action + (this._isTry != null ? "\" try=\"" + this._isTry : "") + "\" source=\"" + this._source + "\" origin=\"" + this._origin + "\" labels=\"" + this._labels +"\"/>";
 	}
 	
 	/**

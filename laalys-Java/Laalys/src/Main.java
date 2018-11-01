@@ -7,9 +7,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -150,14 +147,6 @@ public class Main {
 			
 			// Hash map to associate base Petri net name and labeling algorithm
 			HashMap<String, ILabeling> pnName2labelingAlgo = new HashMap<>();
-
-			// Init logger
-			Logger monLog = Logger.getLogger(Main.class.getName());
-			monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
-			monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
-			ConsoleHandler ch = new ConsoleHandler();
-			ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
-			monLog.addHandler(ch);
 			
 			// Check if for each file inside full Pn directory equivalent files exist in filtered and features directories
 			for (File fullChild : fullDir.listFiles()){
@@ -195,7 +184,7 @@ public class Main {
 				}
 				
 				// Init labeling algorithm
-				ILabeling algo = new Labeling_V10(monLog, debug);
+				ILabeling algo = new Labeling_V10(debug);
 				algo.setCompletePN(fullPn);
 				algo.setFilteredPN(filteredPn);
 				algo.setFeatures(features);

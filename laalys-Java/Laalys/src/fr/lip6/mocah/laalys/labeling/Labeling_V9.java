@@ -169,7 +169,7 @@ public class Labeling_V9 implements ILabeling {
 			labelAction( trace );
 		}
 		// terminer l'évaluation des actions manquantes
-		analyseTransitionCase6();
+		analyseTransitionEndStep();
 	}
 	
 	/**
@@ -715,7 +715,7 @@ public class Labeling_V9 implements ILabeling {
 	}
 	
 	// Cas 6 "Fin" : gestion des actions manquantes en fin de niveau
-	private void analyseTransitionCase6() throws Exception
+	public ITraces analyseTransitionEndStep() throws Exception
 	{
 		if ( this.logAll ) logger.log(Level.INFO, "CAS 6 :");
 		// si dernière transition de la trace c fn
@@ -754,6 +754,7 @@ public class Labeling_V9 implements ILabeling {
 				}
 			}
 		}
+		return null;
 	}
 
 

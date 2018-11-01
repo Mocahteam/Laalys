@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
@@ -150,6 +147,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
     
 	public HashMap<String, ILabeling> pnName2labelingAlgo = new HashMap<>();
 	private ArrayList<ITrace> list_tracesForAnalysis;
+	private ITraces allMissingTraces;
 	
 	
 	//DefaultListModel<Serializable> listeActionContent, listeNomActionsPourAnalyse;
@@ -220,6 +218,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
         tab_analysis = new javax.swing.JPanel();
         tab_filteredPnManagement = new javax.swing.JPanel();
         list_tracesForAnalysis = new ArrayList<ITrace>();
+        allMissingTraces = new Traces();
         bt_launchAnalysis = new javax.swing.JButton();
         pan_analysisColumns = new javax.swing.JPanel();
         pan_actionsAnalysed = new javax.swing.JPanel();
@@ -571,7 +570,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 						// suppression de la dernière ) et de tout ce qui suit
 						origin = origin.substring(0, origin.indexOf(')'));
 						// Création d'un objet trace pour stocker les données
-						ITrace nouvelletrace = new Trace(pnName, actionName, ActionSource.MANUAL, origin, false);
+						ITrace nouvelletrace = new Trace(pnName, actionName, ActionSource.MANUAL, origin, null);
 						list_tracesForAnalysis.add(i, nouvelletrace);
 					}
 				}
@@ -1003,78 +1002,76 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 		System.out.println(fullPnPath);
 		System.out.println(filteredPnPath);
 		System.out.println(featuresPath);
-
-		Logger monLog = Logger.getLogger(Main.class.getName());
-		monLog.setLevel(Level.ALL); //pour envoyer les messages de tous les niveaux
-		monLog.setUseParentHandlers(false); // pour supprimer la console par défaut
-		ConsoleHandler ch = new ConsoleHandler();
-		ch.setLevel(Level.INFO); // pour n'accepter que les message de niveau INFO
-		monLog.addHandler(ch);
+		
 		File fullDir = new File(fullPnPath);
 		pnName2labelingAlgo.clear();
+		int pnmlCounter = 0;
 		for (File fullChild : fullDir.listFiles()){
-			// get equivalent file in filtered folder
-			File filteredDir = new File(filteredPnPath);
-			File filteredChild = new File(filteredDir, fullChild.getName());
-			// get equivalent file in features folder
-			File featuresDir = new File(featuresPath);
-			File featuresChild = new File(featuresDir, fullChild.getName().substring(0, fullChild.getName().length()-4)+"xml");
-			if (!filteredChild.exists() || !featuresChild.exists()){
-				JOptionPane.showMessageDialog(this, "Error, equivalent file of full Petri net named \""+fullChild.getName()+"\" doesn't exist in selected folders\n\nLoading aborted");
-				pnName2labelingAlgo.clear();
-				return ;
-			}
-			// Instantiate full Petri net
-			IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
-			try {
-				fullPn.loadPetriNet(fullChild.getAbsolutePath());
-			} catch (Exception e0) {
-				JOptionPane.showMessageDialog(this, "Error, unable to load \""+fullChild.getAbsolutePath()+"\" file\n\nLoading aborted");
-				pnName2labelingAlgo.clear();
-				return ;
-			}
-			// Instantiate filtered Petri net
-			IPetriNet filteredPn = new PetriNet(true, type, strategy);
-			try {
-				filteredPn.loadPetriNet(filteredChild.getAbsolutePath());
-			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(this, "Error, unable to load \""+filteredChild.getAbsolutePath()+"\" file\n\nLoading aborted");
-				pnName2labelingAlgo.clear();
-				return;
-			}
-			// Instantiate features
-			IFeatures features = new Features();
-			try {
-				features.loadFile(featuresChild.getAbsolutePath());
-				// Vérifier s'il y a au moins une action de fin
-				if (features.getEndLevelTransitions().isEmpty()){
-					JOptionPane.showMessageDialog(this, "Incomplet specifications.\n\n"
-							+ "No end transition defined for \""+fullChild.getName()+"\" Petri net.");
+			if (fullChild.getName().endsWith(".pnml")) {
+				pnmlCounter++;
+				// get equivalent file in filtered folder
+				File filteredDir = new File(filteredPnPath);
+				File filteredChild = new File(filteredDir, fullChild.getName());
+				// get equivalent file in features folder
+				File featuresDir = new File(featuresPath);
+				File featuresChild = new File(featuresDir, fullChild.getName().substring(0, fullChild.getName().length()-4)+"xml");
+				if (!filteredChild.exists() || !featuresChild.exists()){
+					JOptionPane.showMessageDialog(this, "Error, equivalent file of full Petri net named \""+fullChild.getName()+"\" doesn't exist in selected folders\n\nLoading aborted");
+					pnName2labelingAlgo.clear();
+					return ;
+				}
+				// Instantiate full Petri net
+				IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+				try {
+					fullPn.loadPetriNet(fullChild.getAbsolutePath());
+				} catch (Exception e0) {
+					JOptionPane.showMessageDialog(this, "Error, unable to load \""+fullChild.getAbsolutePath()+"\" file\n\nLoading aborted");
+					pnName2labelingAlgo.clear();
+					return ;
+				}
+				// Instantiate filtered Petri net
+				IPetriNet filteredPn = new PetriNet(true, type, strategy);
+				try {
+					filteredPn.loadPetriNet(filteredChild.getAbsolutePath());
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(this, "Error, unable to load \""+filteredChild.getAbsolutePath()+"\" file\n\nLoading aborted");
 					pnName2labelingAlgo.clear();
 					return;
 				}
-			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(this, "Error, unable to load "+featuresChild.getAbsolutePath()+" file\n\nLoading aborted");
-				pnName2labelingAlgo.clear();
-				return ;
+				// Instantiate features
+				IFeatures features = new Features();
+				try {
+					features.loadFile(featuresChild.getAbsolutePath());
+					// Vérifier s'il y a au moins une action de fin
+					if (features.getEndLevelTransitions().isEmpty()){
+						JOptionPane.showMessageDialog(this, "Incomplet specifications.\n\n"
+								+ "No end transition defined for \""+fullChild.getName()+"\" Petri net.");
+						pnName2labelingAlgo.clear();
+						return;
+					}
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(this, "Error, unable to load "+featuresChild.getAbsolutePath()+" file\n\nLoading aborted");
+					pnName2labelingAlgo.clear();
+					return ;
+				}
+	
+				// Init labeling algorithm
+				ILabeling algo = new Labeling_V10(cb_enableDebug.isSelected());
+				algo.setCompletePN(fullPn);
+				algo.setFilteredPN(filteredPn);
+				algo.setFeatures(features);
+				try {
+					algo.reset();
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(this, "Error, Labeling algorithm initialisation fail.\n\nInitialization aborted");
+					pnName2labelingAlgo.clear();
+					return ;
+				}
+				String pnName = fullChild.getName();
+				if (pnName.endsWith(".pnml"))
+					pnName = pnName.substring(0, pnName.length()-5);
+				pnName2labelingAlgo.put(pnName, algo);
 			}
-
-			// Init labeling algorithm
-			ILabeling algo = new Labeling_V10(monLog, cb_enableDebug.isSelected());
-			algo.setCompletePN(fullPn);
-			algo.setFilteredPN(filteredPn);
-			algo.setFeatures(features);
-			try {
-				algo.reset();
-			} catch (Exception e2) {
-				JOptionPane.showMessageDialog(this, "Error, Labeling algorithm initialisation fail.\n\nInitialization aborted");
-				pnName2labelingAlgo.clear();
-				return ;
-			}
-			String pnName = fullChild.getName();
-			if (pnName.endsWith(".pnml"))
-				pnName = pnName.substring(0, pnName.length()-5);
-			pnName2labelingAlgo.put(pnName, algo);
 		}
 		
 		if (pnName2labelingAlgo.isEmpty()){
@@ -1164,6 +1161,19 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 							"Error, Unknown Petri net \""+trace.getPnName()+"\" to label \""+trace.getAction()+"\" action.");
 				}
 			}
+			
+			allMissingTraces = new Traces();
+			for (ILabeling algo : pnName2labelingAlgo.values()) {
+				if (algo != null) {
+					try {
+						ITraces localMissingTraces = algo.analyseTransitionEndStep();
+						allMissingTraces.append(localMissingTraces);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 
 			// vidage des trois colonnes
 			list_analysedActions.removeAllElements();
@@ -1196,6 +1206,22 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 
 			// calcul des effectifs de chaque label
 			for (ITrace tr : tracesPourAnalyse.getTraces()) {
+				IFeatures features = pnName2labelingAlgo.get(tr.getPnName()).getFeatures();
+				list_analysedActions.addElement(features.getPublicName(tr.getAction()));
+				ArrayList<String> labs = tr.getLabels();
+				list_labelsComputed.addElement(labs);
+				for (String lab : labs) {
+					for (int k = 0; k < nbLabels; k++){
+						if (lab == intitule[k]) {
+							effectif[k] += 1;
+							break;
+						}
+					}
+				}
+			}
+			
+			// ajout des traces manquantes
+			for (ITrace tr : allMissingTraces.getTraces()) {
 				IFeatures features = pnName2labelingAlgo.get(tr.getPnName()).getFeatures();
 				list_analysedActions.addElement(features.getPublicName(tr.getAction()));
 				ArrayList<String> labs = tr.getLabels();
@@ -1294,6 +1320,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 				// labels
 				ITraces itraces = new Traces();
 				itraces.setTraces(list_tracesForAnalysis);
+				itraces.append(allMissingTraces);
 				for (int k = 0; k < list_tracesForAnalysis.size(); k++)
 					System.out.println("pos " + k + " : " + list_tracesForAnalysis.get(k));
 				Document doc = itraces.toXML();
@@ -1394,6 +1421,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 		if (!state){
 			enableOngletAnalyse(false);
 		} else {
+			combo_fullPnSelection.removeAllItems();
 			list_fullPnActions.clear();
 			list_tracesActions.clear();
 			for (HashMap.Entry<String,ILabeling> elem : pnName2labelingAlgo.entrySet()){
@@ -1418,20 +1446,22 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 		// attaché au combo
 		// nom du full choisi
 		String fullPnName = (String)combo_fullPnSelection.getSelectedItem();
-		if (pnName2labelingAlgo.containsKey(fullPnName)){
-			list_fullPnActions.clear();
-			// on rempli la liste des actions incluses dans ce Rdp
-			IPetriNet fullPn = pnName2labelingAlgo.get(fullPnName).getCompletePN();
-			if (fullPn != null){
-				for (ITransition tr : fullPn.getTransitions()) {
-					System.out.println(tr.getName());
-					list_fullPnActions.addElement(tr.getName());
+		if (fullPnName != null) {
+			if (pnName2labelingAlgo.containsKey(fullPnName)){
+				list_fullPnActions.clear();
+				// on rempli la liste des actions incluses dans ce Rdp
+				IPetriNet fullPn = pnName2labelingAlgo.get(fullPnName).getCompletePN();
+				if (fullPn != null){
+					for (ITransition tr : fullPn.getTransitions()) {
+						System.out.println(tr.getName());
+						list_fullPnActions.addElement(tr.getName());
+					}
+				} else {
+					JOptionPane.showMessageDialog(this, "Error, No full Petri net loaded for \""+fullPnName+"\".");
 				}
 			} else {
-				JOptionPane.showMessageDialog(this, "Error, No full Petri net loaded for \""+fullPnName+"\".");
+				JOptionPane.showMessageDialog(this, "Error, Unknown full Petri net named \""+fullPnName+"\".");
 			}
-		} else {
-			JOptionPane.showMessageDialog(this, "Error, Unknown full Petri net named \""+fullPnName+"\".");
 		}
 	}
 }
