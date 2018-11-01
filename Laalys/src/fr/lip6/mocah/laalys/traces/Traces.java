@@ -152,6 +152,15 @@ public class Traces implements ITraces {
 	
 	/**
 	 * @inheritDoc
+	 */
+	public void append(ITraces source)
+	{
+		for(ITrace tr : source.getTraces() )
+			_traces.add(tr);
+	}
+	
+	/**
+	 * @inheritDoc
 	 * @return
 	 */
 	public String toString() 

@@ -1,8 +1,6 @@
 package fr.lip6.mocah.laalys.labeling;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import fr.lip6.mocah.laalys.features.IFeatures;
 import fr.lip6.mocah.laalys.labeling.constants.Labels;
@@ -15,19 +13,11 @@ import fr.lip6.mocah.laalys.petrinet.PetriNet;
 import fr.lip6.mocah.laalys.traces.ITrace;
 import fr.lip6.mocah.laalys.traces.ITraces;
 import fr.lip6.mocah.laalys.traces.Trace;
+import fr.lip6.mocah.laalys.traces.Traces;
 import fr.lip6.mocah.laalys.traces.constants.ActionSource;
 import fr.lip6.mocah.laalys.traces.constants.ActionType;
 
 public class Labeling_V10 implements ILabeling {
-	
-	/**
-	 * looger, on l'utilise afin de pouvoir garder une trace de ce qui a ete
-	 * fait par l'application. Utile pour le debug.
-	 * Deux fonctions sont a utiliser :
-	 * 		logger.log( message ) pour enregistrer ce qu'il c'est passe
-	 * 		logger.error( message ) pour enregister un message d'erreur
-	 */
-	private Logger logger = null;
 	
 	/**
 	 * est ce que l'on veut logger toutes les etpaes de la labellisation
@@ -73,11 +63,6 @@ public class Labeling_V10 implements ILabeling {
 	 * si nécessaire
 	 */
 	private ArrayList<IPetriNet> workingRdpList = null;
-	 
-	/**
-	 * ensemble des traces a analyser
-	 */
-	private ITraces traces = null;
 	
 	/**
 	 * les specificitees des RdP :
@@ -126,53 +111,9 @@ public class Labeling_V10 implements ILabeling {
 	private ITransition currentFilteredTransition = null;
 	
 	
-	public Labeling_V10( Logger logger, boolean logAll ) 
+	public Labeling_V10(boolean logAll ) 
 	{
-		this.logger = logger;
 		this.logAll = logAll;
-	}
-	
-	
-	/**
-	 * @inheritDoc
-	 * @param	traces
-	 * @throws Exception 
-	 */
-	public void label( ITraces traces ) throws Exception
-	{
-		if (this.logAll) logger.log(Level.INFO, "debut de la labellisation des actions" );
-		this.traces = traces;
-		this.traces.reset();
-		this.reset();
-		
-		//verification qu'il y a bien un RdP complet
-		if ( this.completeRdp == null )
-		{
-			logger.log(Level.SEVERE, "impossible d'effectuer l'analyse des traces sans reseau complet" );
-			// Lever une exception pour indiquer que la labelisation a échouée
-			throw new Exception ("Full Petri Net is required");
-		}
-		//verification qu'il y a bien un RdP filtre
-		if ( this.filteredRdp == null )
-		{
-			logger.log(Level.SEVERE, "impossible d'effectuer l'analyse des traces sans reseau filtree" );
-			// Lever une exception pour indiquer que la labelisation a échouée
-			throw new Exception ("Filtered Petri Net is required");
-		}
-		//vertification qu'il y bien au moins une action de fin
-		if (this.expertEndTransitions.isEmpty()) {
-			logger.log(Level.SEVERE, "impossible d'effectuer l'analyse des traces sans au moins une fin experte définie" );
-			// Lever une exception pour indiquer que la labelisation a échouée
-			throw new Exception ("At least one expert end is required");
-		}
-		
-		//on lance la labellisation de la trace
-		for (ITrace trace : this.traces.getTraces())
-		{
-			labelAction( trace );
-		}
-		// terminer l'évaluation des actions manquantes
-		analyseTransitionEndStep();
 	}
 	
 	/**
@@ -257,30 +198,30 @@ public class Labeling_V10 implements ILabeling {
 		//recuperation des transitions dans les differents Rdp
 		this.currentCompleteTransition = this.completeRdp.getTransitionById( action.getAction() );
 		if (currentCompleteTransition == null){
-			if ( this.logAll ) logger.log(Level.SEVERE, "impossible d'effectuer l'analyse de l'action \"" + action.getAction() + "\" car aucune équivalence n'est présente dans le réseau de Pétri Complet" );
+			if ( this.logAll ) System.err.println( "impossible d'effectuer l'analyse de l'action \"" + action.getAction() + "\" car aucune équivalence n'est présente dans le réseau de Pétri Complet" );
 			return;
 		}
 		this.currentFilteredTransition = this.filteredRdp.getTransitionById( action.getAction() );
 		this.currentAction = action;
-		if ( this.logAll ) logger.log(Level.INFO, "debut de la labellisation de l'action : " + this.currentAction.getAction() );
+		if ( this.logAll ) System.out.println( "debut de la labellisation de l'action : " + this.currentAction.getAction() );
 		
 		// Lancement de l'analyse de l'action courante.
 		// On regarde si la transition est un Try
 		if (!isTryAction()) {
-			if ( this.logAll ) logger.log(Level.INFO, "L'action n'est pas un Try  => sens(t, MC)");
+			if ( this.logAll ) System.out.println( "L'action n'est pas un Try  => sens(t, MC)");
 			analyseTransitionCase1();
 		} else {
-			if ( this.logAll ) logger.log(Level.INFO, "L'action est un Try => !sens(t, MC)");
+			if ( this.logAll ) System.out.println( "L'action est un Try => !sens(t, MC)");
 			analyseTransitionCase2();
 		}
 		
-		if ( this.logAll ) logger.log(Level.INFO, "l'action \"" +  this.currentAction.getAction() + "\" a ete labellisee \"" +  this.currentAction.getLabels() + "\"\n");
+		if ( this.logAll ) System.out.println( "l'action \"" +  this.currentAction.getAction() + "\" a ete labellisee \"" +  this.currentAction.getLabels() + "\"\n");
 	}
 	
 	// Cas 1 : cas des actions acceptées par le jeu
 	private void analyseTransitionCase1() throws Exception
 	{
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 1 : cas des actions acceptées par le jeu");
+		if ( this.logAll ) System.out.println( "CAS 1 : cas des actions acceptées par le jeu");
 		//on joue l'action dans le rdp complet => generation de M'C
 		this.completeRdp.changeStatePetriNet( this.currentCompleteTransition );
 		// enregistre le marquage M' du Rdp Complet
@@ -289,18 +230,18 @@ public class Labeling_V10 implements ILabeling {
 		this.MpC_subset = PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp);
 		//si ce n'est pas une transition systeme
 		if ( !this.systemTransitions.contains(this.currentAction.getAction()) && !this.currentAction.getOrigin().equals(ActionType.SYSTEM) ){
-			if ( this.logAll ) logger.log(Level.INFO, "Action non systeme");
+			if ( this.logAll ) System.out.println( "Action non systeme");
 			//on passe dans le cas 1_1 (cas des actions du joueur (non système) acceptées par le jeu)
 			analyseTransitionCase1_1();
 		}
 		else
 		{
-			if ( this.logAll ) logger.log(Level.INFO, "Action systeme");
+			if ( this.logAll ) System.out.println( "Action systeme");
 			// on joue la transition dans le Rdp de travail si elle est presente dans RdpF et si elle est sensibilisee dans RdpW1
 			//si t € RdpW1 && sens( t, RdpW1 )
 			if ( this.currentFilteredTransition != null && this.workingRdp1.enabledTransition( this.currentFilteredTransition ) )
 			{
-				if ( this.logAll ) logger.log(Level.INFO, "t € RdpW1 && sens( t, RdpW1 ) => calcul de M'W1");
+				if ( this.logAll ) System.out.println( "t € RdpW1 && sens( t, RdpW1 ) => calcul de M'W1");
 				// On calcule M'W1
 				this.workingRdp1.changeStatePetriNet(this.currentFilteredTransition);
 			}
@@ -309,8 +250,8 @@ public class Labeling_V10 implements ILabeling {
 			// Si tel est le cas, on propage ce label sur la derniere action non systeme jouee (on considere que c'est elle
 			// qui a entreine le declanchement de l'action systeme => A voir si cette hypothese est robuste...)
 			if (isMarkingSeen(MpC)) {
-				if ( this.logAll ) logger.log(Level.INFO, "M'C c historique joueur");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> propagation deja vu sur derniere action non systeme jouee");
+				if ( this.logAll ) System.out.println( "M'C c historique joueur");
+				if ( this.logAll ) System.out.println( "\t=> propagation deja vu sur derniere action non systeme jouee");
 				// recherche en sans inverse la premiere action non systeme
 				boolean found = false;
 				for (int i = completeMarkingSeen.size() - 1 ; i >= 0 && !found ; i--) {
@@ -332,57 +273,57 @@ public class Labeling_V10 implements ILabeling {
 	// Cas 2 : cas des actions refusées par le jeu
 	private void analyseTransitionCase2() throws Exception
 	{
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 2 : cas des actions refusées par le jeu");
+		if ( this.logAll ) System.out.println( "CAS 2 : cas des actions refusées par le jeu");
 		// Normalement on ne devrait jamais avoir un transition systeme non sensibilisee
 		// mais on verifie quand meme au cas ou
 		if ( !this.systemTransitions.contains(this.currentAction.getAction()) && !this.currentAction.getOrigin().equals(ActionType.SYSTEM) ){
-			if ( this.logAll ) logger.log(Level.INFO, "Action non systeme");
+			if ( this.logAll ) System.out.println( "Action non systeme");
 			//on regarde si la transition est presente dans le  rdp filtre
 			if ( this.currentFilteredTransition != null )
 			{
-				if ( this.logAll ) logger.log(Level.INFO, "t € RdpF");
+				if ( this.logAll ) System.out.println( "t € RdpF");
 				// On teste si la transition a pu etre declenchee => amont_t(t, GW1, MC)
 				if (this.workingRdp1.isPreviouslyEnabled(this.currentFilteredTransition)) {
-					if ( this.logAll ) logger.log(Level.INFO, "amont_t(t, GW1, MC)");
+					if ( this.logAll ) System.out.println( "amont_t(t, GW1, MC)");
 					// On teste si la transition pourra etre declenchee => v(t, GW1, MC, lSys)
 					if (this.workingRdp1.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MC_subset, this.systemTransitions)) {
-						if ( this.logAll ) logger.log(Level.INFO, "v(t, GW1, MC, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Intrusion");
+						if ( this.logAll ) System.out.println( "v(t, GW1, MC, lSys)");
+						if ( this.logAll ) System.out.println( "\t=> Intrusion");
 						currentAction.addLabel( Labels.INTRUSION );
 					}
 					else {
-						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GW1, MC, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tard");
+						if ( this.logAll ) System.out.println( "!v(t, GW1, MC, lSys)");
+						if ( this.logAll ) System.out.println( "\t=> Trop tard");
 						currentAction.addLabel( Labels.TROP_TARD );
 					}
 				}
 				else {
-					if ( this.logAll ) logger.log(Level.INFO, "!amont_t(t, GW1, MC)");
+					if ( this.logAll ) System.out.println( "!amont_t(t, GW1, MC)");
 					// On teste si la transition pourra etre declenchee => v(t, GW1, MC, lSys)
 					if (this.workingRdp1.isQuasiAliveFromMarking(this.currentFilteredTransition, this.MC_subset, this.systemTransitions)) {
-						if ( this.logAll ) logger.log(Level.INFO, "v(t, GW1, MC, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Trop tôt");
+						if ( this.logAll ) System.out.println( "v(t, GW1, MC, lSys)");
+						if ( this.logAll ) System.out.println( "\t=> Trop tôt");
 						currentAction.addLabel( Labels.TROP_TOT );
 					}
 					else {
 						// Vis-a-vis du marquage courant, on n'a jamais pu jouer cette transition et on ne pourrapas le faire. Mais
 						// comme t ϵ RdpF elle est forcement accessible sinon l'expert n'aurait pas pu la jouer. Donc c'est qu'elle
 						// est sur une autre branche.
-						if ( this.logAll ) logger.log(Level.INFO, "!v(t, GW1, MC, lSys)");
-						if ( this.logAll ) logger.log(Level.INFO, "\t=> Autre branche de resolution");
+						if ( this.logAll ) System.out.println( "!v(t, GW1, MC, lSys)");
+						if ( this.logAll ) System.out.println( "\t=> Autre branche de resolution");
 						currentAction.addLabel( Labels.AUTRE_BRANCHE_DE_RESOLUTION );
 					}
 				}
 			}
 			else
 			{
-				if ( this.logAll ) logger.log(Level.INFO, "!t € RdpF");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> Erronee");
+				if ( this.logAll ) System.out.println( "!t € RdpF");
+				if ( this.logAll ) System.out.println( "\t=> Erronee");
 				currentAction.addLabel( Labels.ERRONEE );
 			}
 		} else {
 			// celà ne devrait pas arriver, problème dans la trace ???
-			if ( this.logAll ) logger.log(Level.INFO, "Action système, Attention le cas d'une transition système non sensibilisée ne devrait pas arriver... Vérifier la trace ???");
+			if ( this.logAll ) System.out.println( "Action système, Attention le cas d'une transition système non sensibilisée ne devrait pas arriver... Vérifier la trace ???");
 			// De toute façon on ne labelise pas les transition systèmes donc on ne fait rien
 		}
 	}
@@ -390,12 +331,12 @@ public class Labeling_V10 implements ILabeling {
 	// Cas 1_1 : Cas des actions du joueur (non système) acceptées par le jeu
 	private void analyseTransitionCase1_1() throws Exception 
 	{
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 1_1 : Cas des actions du joueur (non système) acceptées par le jeu");
+		if ( this.logAll ) System.out.println( "CAS 1_1 : Cas des actions du joueur (non système) acceptées par le jeu");
 		
 		// PRE TRAITEMENT : Rechercher un RdpW déjà calculé incluant M'C ou en générer un si non trouvé
 		this.workingRdp2 = getKnownWorkingRdp(MpC_subset);
 		if (this.workingRdp2 == null){
-			if ( this.logAll ) logger.log(Level.INFO, "Necessité de reconstruction d'un nouveau graphe du Rdp filtré à partir de M'C");
+			if ( this.logAll ) System.out.println( "Necessité de reconstruction d'un nouveau graphe du Rdp filtré à partir de M'C");
 			// on construit un nouveau Rdp sur la base du filtré, on définit son marquage initial M'C et on calcule son graphe
 			this.workingRdp2 = new PetriNet(true, this.filteredRdp.getKindOfGraph(), this.filteredRdp.getGlobalStrategy());
 			this.workingRdp2.setPlaces( this.filteredRdp.getPlaces() );
@@ -410,17 +351,17 @@ public class Labeling_V10 implements ILabeling {
 		
 		// si t c fn
 		if (this.expertEndTransitions.contains( this.currentAction.getAction() )) {
-			if ( this.logAll ) logger.log(Level.INFO, "t c fn");
-			if ( this.logAll ) logger.log(Level.INFO, "\t=> correcte");
+			if ( this.logAll ) System.out.println( "t c fn");
+			if ( this.logAll ) System.out.println( "\t=> correcte");
 			this.currentAction.addLabel( Labels.CORRECTE );
 		} else { // sinon <=> t !c fn
-			if ( this.logAll ) logger.log(Level.INFO, "t !c fn");
+			if ( this.logAll ) System.out.println( "t !c fn");
 			// si v(fn, GW1, MC, lSys)
 			if ( isExpertEndsReachable( this.workingRdp1, MC_subset ) ) {
-				if ( this.logAll ) logger.log(Level.INFO, "v(fn, GW1, MC, lSys)");
+				if ( this.logAll ) System.out.println( "v(fn, GW1, MC, lSys)");
 				// si v(fn, GW2, M'C, lSys)
 				if ( isExpertEndsReachable( this.workingRdp2, MpC_subset ) ) {
-					if ( this.logAll ) logger.log(Level.INFO, "v(fn, GW2, M'C, lSys)");
+					if ( this.logAll ) System.out.println( "v(fn, GW2, M'C, lSys)");
 					//on recupere la liste des transitions a franchir pour atteindre la fin de niveau
 					//pour M'C ...
 					ArrayList<IPathIntersection> shortestPaths_MpC = getShortestPathsToTransitions( this.workingRdp2, MpC_subset, expertEndTransitions );
@@ -428,34 +369,34 @@ public class Labeling_V10 implements ILabeling {
 					ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( this.workingRdp1, MC_subset, expertEndTransitions );
 					// si longueur pcc(M'C, GW2, fn, lSys) < longueur pcc(MC, GW1, fn, lSys)
 					if (shortestPaths_MpC.get(0).getDistance() < shortestPaths_MC.get(0).getDistance()) {
-						if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) < longueur pcc(MC, GW1, fn, lSys)");
+						if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) < longueur pcc(MC, GW1, fn, lSys)");
 						analyseTransitionCase1_2();
 					}
 					// si longueur pcc(M'C, GW2, fn, lSys) == longueur pcc(MC, GW1, fn, lSys)
 					else if (shortestPaths_MpC.get(0).getDistance() == shortestPaths_MC.get(0).getDistance()) {
-						if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) == longueur pcc(MC, GW1, fn, lSys)");
+						if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) == longueur pcc(MC, GW1, fn, lSys)");
 						analyseTransitionCase1_3(shortestPaths_MpC, shortestPaths_MC);
 					}
 					// => longueur pcc(M'C, GW2, fn, lSys) > longueur pcc(MC, GW1, fn, lSys)
 					else {
-						if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) > longueur pcc(MC, GW1, fn, lSys)");
+						if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) > longueur pcc(MC, GW1, fn, lSys)");
 						analyseTransitionCase1_4(shortestPaths_MpC);
 					}
 				} else { // sinon <=> !v(fn, GW2, M'C, lSys)
-					if ( this.logAll ) logger.log(Level.INFO, "!v(fn, GW2, M'C, lSys)");
-					if ( this.logAll ) logger.log(Level.INFO, "\t=> erronée");
+					if ( this.logAll ) System.out.println( "!v(fn, GW2, M'C, lSys)");
+					if ( this.logAll ) System.out.println( "\t=> erronée");
 					this.currentAction.addLabel( Labels.ERRONEE );
 				}
 			} else { // sinon <=> !v(fn, GW1, MC, lSys)
-				if ( this.logAll ) logger.log(Level.INFO, "!v(fn, GW1, MC, lSys)");
+				if ( this.logAll ) System.out.println( "!v(fn, GW1, MC, lSys)");
 				// si v(fn, GW2, M'C, lSys)
 				if ( isExpertEndsReachable( this.workingRdp2, MpC_subset ) ) {
-					if ( this.logAll ) logger.log(Level.INFO, "v(fn, GW2, M'C, lSys)");
+					if ( this.logAll ) System.out.println( "v(fn, GW2, M'C, lSys)");
 					//on recupere la liste des transitions a franchir pour atteindre la fin de niveau à partir de M'C
 					ArrayList<IPathIntersection> shortestPaths_MpC = getShortestPathsToTransitions( this.workingRdp2, MpC_subset, expertEndTransitions );
 					analyseTransitionCase1_4(shortestPaths_MpC);
 				} else { // sinon <=> !v(fn, GW2, M'C, lSys)
-					if ( this.logAll ) logger.log(Level.INFO, "!v(fn, GW2, M'C, lSys)");
+					if ( this.logAll ) System.out.println( "!v(fn, GW2, M'C, lSys)");
 					analyseTransitionCase1_5();
 				}
 			}
@@ -463,8 +404,8 @@ public class Labeling_V10 implements ILabeling {
 		
 		// POST TRAITEMENT : on vérifie si le joueur a déjà rencontré M'C
 		if (isMarkingSeen(MpC)) {
-			if ( this.logAll ) logger.log(Level.INFO, "M'C c historique joueur");
-			if ( this.logAll ) logger.log(Level.INFO, "\t=> déjà vu");
+			if ( this.logAll ) System.out.println( "M'C c historique joueur");
+			if ( this.logAll ) System.out.println( "\t=> déjà vu");
 			this.currentAction.addLabel(Labels.DEJA_VU);
 		}
 		// ajout à l'historique
@@ -475,22 +416,22 @@ public class Labeling_V10 implements ILabeling {
 	
 	// Cas 1_2 : "Vers solution"
 	private void analyseTransitionCase1_2() throws Exception {
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 1_2 : Vers solution");
+		if ( this.logAll ) System.out.println( "CAS 1_2 : Vers solution");
 		// si t € RdpW1
 		if ( this.workingRdp1.getTransitionById(this.currentAction.getAction()) != null ) {
-			if ( this.logAll ) logger.log(Level.INFO, "t € RdpW1");
-			if ( this.logAll ) logger.log(Level.INFO, "\t=> correcte");
+			if ( this.logAll ) System.out.println( "t € RdpW1");
+			if ( this.logAll ) System.out.println( "\t=> correcte");
 			this.currentAction.addLabel( Labels.CORRECTE );
 		} else { // sinon <=> t !€ RdpW1
-			if ( this.logAll ) logger.log(Level.INFO, "t !€ RdpW1");
+			if ( this.logAll ) System.out.println( "t !€ RdpW1");
 			// si succ(M'C, MC, GW1)
 			if (this.workingRdp1.isSuccessorMarking(MpC_subset)) {
-				if ( this.logAll ) logger.log(Level.INFO, "succ(M'C, MC, GW1)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> équivalente");
+				if ( this.logAll ) System.out.println( "succ(M'C, MC, GW1)");
+				if ( this.logAll ) System.out.println( "\t=> équivalente");
 				this.currentAction.addLabel( Labels.EQUIVALENTE );
 			} else { // sinon <=> !succ(M'C, MC, GW1)
-				if ( this.logAll ) logger.log(Level.INFO, "!succ(M'C, MC, GW1)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> saut avant");
+				if ( this.logAll ) System.out.println( "!succ(M'C, MC, GW1)");
+				if ( this.logAll ) System.out.println( "\t=> saut avant");
 				this.currentAction.addLabel( Labels.SAUT_AVANT );
 			}
 		}
@@ -498,11 +439,11 @@ public class Labeling_V10 implements ILabeling {
 	
 	// Cas 1_3 : "Stagnation"
 	private void analyseTransitionCase1_3(ArrayList<IPathIntersection> shortestPath_MpC, ArrayList<IPathIntersection> shortestPath_MC) {
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 1_3 : Stagnation");
+		if ( this.logAll ) System.out.println( "CAS 1_3 : Stagnation");
 		// si M'C filtré == MC filtré
 		if (MpC_subset.isEqualTo(MC_subset)) {
-			if ( this.logAll ) logger.log(Level.INFO, "M'C filtré == MC filtré");
-			if ( this.logAll ) logger.log(Level.INFO, "\t=> inutile");
+			if ( this.logAll ) System.out.println( "M'C filtré == MC filtré");
+			if ( this.logAll ) System.out.println( "\t=> inutile");
 			this.currentAction.addLabel( Labels.INUTILE );
 		} else { // sinon <=> M'C filtré != MC filtré
 			// Vérifier si pcc(M'C, GW2, fn, lSys) == pcc(MC, GW1, fn, lSys)
@@ -522,12 +463,12 @@ public class Labeling_V10 implements ILabeling {
 				}
 			}
 			if (equal) {
-				if ( this.logAll ) logger.log(Level.INFO, "pcc(M'C, GW2, fn, lSys) == pcc(MC, GW1, fn, lSys)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> inutile");
+				if ( this.logAll ) System.out.println( "pcc(M'C, GW2, fn, lSys) == pcc(MC, GW1, fn, lSys)");
+				if ( this.logAll ) System.out.println( "\t=> inutile");
 				this.currentAction.addLabel( Labels.INUTILE );
 			} else { // sinon <=> pcc(M'C, GW2, fn, lSys) != pcc(MC, GW1, fn, lSys)
-				if ( this.logAll ) logger.log(Level.INFO, "pcc(M'C, GW2, fn, lSys) != pcc(MC, GW1, fn, lSys)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> non optimale");
+				if ( this.logAll ) System.out.println( "pcc(M'C, GW2, fn, lSys) != pcc(MC, GW1, fn, lSys)");
+				if ( this.logAll ) System.out.println( "\t=> non optimale");
 				this.currentAction.addLabel( Labels.NON_OPTIMALE );
 			}
 		}
@@ -535,7 +476,7 @@ public class Labeling_V10 implements ILabeling {
 	
 	// Cas 1_4 "Historique"
 	private void analyseTransitionCase1_4(ArrayList<IPathIntersection> shortestPath_MpC) throws Exception {
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 1_4 : Historique");
+		if ( this.logAll ) System.out.println( "CAS 1_4 : Historique");
 		
 		// calcul de la distance à la solution du meilleur état par lequel est passé le joueur
 		int minDist = Integer.MAX_VALUE;
@@ -551,34 +492,34 @@ public class Labeling_V10 implements ILabeling {
 		}
 		// si M'C inclus dans l'historique du joueur
 		if (isMarkingSeen(MpC)) {
-			if ( this.logAll ) logger.log(Level.INFO, "M'C c historique joueur");
+			if ( this.logAll ) System.out.println( "M'C c historique joueur");
 			// si longueur pcc(M'C, GW2, fn, lSys) == min longueurs pcc(MH, GH, fn, lSys)
 			if (shortestPath_MpC.get(0).getDistance() == minDist) {
-				if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) == min longueurs pcc(MH, GH, fn, lSys)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> rattrapage");
+				if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) == min longueurs pcc(MH, GH, fn, lSys)");
+				if ( this.logAll ) System.out.println( "\t=> rattrapage");
 				this.currentAction.addLabel( Labels.RATTRAPAGE );
 			} else { // sinon <=> longueur pcc(M'C, GW2, fn, lSys) != min longueurs pcc(MH, GH, fn, lSys)
-				if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) != min longueurs pcc(MH, GH, fn, lSys)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> retour en arrière");
+				if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) != min longueurs pcc(MH, GH, fn, lSys)");
+				if ( this.logAll ) System.out.println( "\t=> retour en arrière");
 				this.currentAction.addLabel( Labels.RETOUR_ARRIERE );
 			}
 		} else { // sinon <=> M'C NON inclus dans l'historique du joueur
-			if ( this.logAll ) logger.log(Level.INFO, "M'C !c historique joueur");
+			if ( this.logAll ) System.out.println( "M'C !c historique joueur");
 			// si longueur pcc(M'C, GW2, fn, lSys) < min longueurs pcc(MH, GH, fn, lSys)
 			if (shortestPath_MpC.get(0).getDistance() < minDist) {
-				if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) < min longueurs pcc(MH, GH, fn, lSys)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> saut avant");
+				if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) < min longueurs pcc(MH, GH, fn, lSys)");
+				if ( this.logAll ) System.out.println( "\t=> saut avant");
 				this.currentAction.addLabel( Labels.SAUT_AVANT );
 			} else { // sinon <=> longueur pcc(M'C, GW2, fn, lSys) >= min longueurs pcc(MH, GH, fn, lSys)
-				if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) >= min longueurs pcc(MH, GH, fn, lSys)");
+				if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) >= min longueurs pcc(MH, GH, fn, lSys)");
 				// si longueur pcc(M'C, GW2, fn, lSys) == min longueurs pcc(MH, GH, fn, lSys)
 				if (shortestPath_MpC.get(0).getDistance() == minDist) {
-					if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) == min longueurs pcc(MH, GH, fn, lSys)");
-					if ( this.logAll ) logger.log(Level.INFO, "\t=> rattrapage");
+					if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) == min longueurs pcc(MH, GH, fn, lSys)");
+					if ( this.logAll ) System.out.println( "\t=> rattrapage");
 					this.currentAction.addLabel( Labels.RATTRAPAGE );
 				} else { // sinon <=> longueur pcc(M'C, GW2, fn, lSys) > min longueurs pcc(MH, GH, fn, lSys)
-					if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(M'C, GW2, fn, lSys) > min longueurs pcc(MH, GH, fn, lSys)");
-					if ( this.logAll ) logger.log(Level.INFO, "\t=> non optimale");
+					if ( this.logAll ) System.out.println( "longueur pcc(M'C, GW2, fn, lSys) > min longueurs pcc(MH, GH, fn, lSys)");
+					if ( this.logAll ) System.out.println( "\t=> non optimale");
 					this.currentAction.addLabel( Labels.NON_OPTIMALE );
 				}
 			}
@@ -600,7 +541,7 @@ public class Labeling_V10 implements ILabeling {
 	
 	// Cas 1_5 "Tendance"
 	private void analyseTransitionCase1_5() throws Exception{
-		if ( this.logAll ) logger.log(Level.INFO, "CAS 1_5 : Tendance");
+		if ( this.logAll ) System.out.println( "CAS 1_5 : Tendance");
 		// calcul de la distance la plus courte pour atteindre la fin du niveau à partir du (ou des)
 		// marquage(s) le(s) plus proche(s) dans RdpF de M'C
 		ArrayList<IMarking> nearestMarkings = getNearestMarkingsThatBringsToExpertEnds(this.filteredRdp, this.MpC_subset);
@@ -627,69 +568,74 @@ public class Labeling_V10 implements ILabeling {
 		
 		// si longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) < longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)
 		if (mpcMinDist < mcMinDist) {
-			if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) < longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
-			if ( this.logAll ) logger.log(Level.INFO, "\t=> rapprochement");
+			if ( this.logAll ) System.out.println( "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) < longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
+			if ( this.logAll ) System.out.println( "\t=> rapprochement");
 			this.currentAction.addLabel( Labels.RAPPROCHEMENT );
 		} else { // sinon <=> longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) >= longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)
-			if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) >= longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
+			if ( this.logAll ) System.out.println( "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) >= longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
 			// si longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) == longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)
 			if (mpcMinDist == mcMinDist) {
-				if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) == longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> stagnation");
+				if ( this.logAll ) System.out.println( "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) == longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
+				if ( this.logAll ) System.out.println( "\t=> stagnation");
 				this.currentAction.addLabel( Labels.STAGNATION );
 			} else { // sinon <=> longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) > longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)
-				if ( this.logAll ) logger.log(Level.INFO, "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) > longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
-				if ( this.logAll ) logger.log(Level.INFO, "\t=> éloignement");
+				if ( this.logAll ) System.out.println( "longueur pcc(ppm(M'C, GF, fn), GF, fn, lSys) > longueur pcc(ppm(MC, GF, fn), GF, fn, lSys)");
+				if ( this.logAll ) System.out.println( "\t=> éloignement");
 				this.currentAction.addLabel( Labels.ELOIGNEMENT );
 			}
 		}
 	}
 	
 	// Cas "EndStep" : gestion des actions manquantes en fin de niveau
-	private void analyseTransitionEndStep() throws Exception
+	public ITraces analyseTransitionEndStep() throws Exception
 	{
-		if ( this.logAll ) logger.log(Level.INFO, "CAS \"EndStep\" :");
-		// si dernière transition de la trace c fn
-		if ( this.expertEndTransitions.contains(this.currentAction.getAction()))
-		{
-			if ( this.logAll ) logger.log(Level.INFO, "dernière transition de la trace c fn");
-			// On n'a rien à faire, on est dans le cas idéal où la dernière transition de la trace est une
-			// transition de fin qui a généré un marquage connu dans GF
-		} else { // sinon  <=> dernière transition de la trace !c fn
-			if ( this.logAll ) logger.log(Level.INFO, "dernière transition de la trace !c fn");
-			// si M'C == null
-			if (this.MpC_subset == null) {
-				if ( this.logAll ) logger.log(Level.INFO, "M'C == null");
-				// On est dans le cas où la dernière transition de la trace était une action refusée par le
-				// jeu, M'C == null. On cherche donc à identifier les transtitions manquantes pour atteindre
-				// la fin du niveau.
-				storeBadChoices();
-			} else { // sinon  <=> M'C != null
-				if ( this.logAll ) logger.log(Level.INFO, "M'C != null");
-				// si v(fn, GW2, M'C, lSys)
-				if (isExpertEndsReachable( this.workingRdp2, this.MpC_subset )){
-					if ( this.logAll ) logger.log(Level.INFO, "v(fn, GW2, M'C, lSys)");
-					// On est dans le cas où la dernière transition de la trace n'est pas une fin de niveau,
-					// on cherche donc à identifier les transtitions manquantes pour atteindre la fin du niveau
-					storeMissingTransitionFromMarking(this.workingRdp2, this.MpC_subset);
-				} else {
-					if ( this.logAll ) logger.log(Level.INFO, "!v(fn, GW2, M'C, lSys)");
-					// On est dans le cas où la dernière transition de la trace place le joueur dans un puits.
-					// On remonte donc le parcours du joueur jusqu'à trouver un marquage à partir du quel on
-					// peut redescendre jusqu'à la fin du niveau.
-					storeBadChoices();
+		ITraces missingTraces = new Traces();
+		if ( this.logAll ) System.out.println( "CAS \"EndStep\" :");
+		// si une action courante est définie cela signifie que cet algo a été pris en compte dans l'analyse
+		if (this.currentAction != null) {
+			// si dernière transition de la trace c fn
+			if ( this.expertEndTransitions.contains(this.currentAction.getAction()))
+			{
+				if ( this.logAll ) System.out.println( "dernière transition de la trace c fn");
+				// On n'a rien à faire, on est dans le cas idéal où la dernière transition de la trace est une
+				// transition de fin qui a généré un marquage connu dans GF
+			} else { // sinon  <=> dernière transition de la trace !c fn
+				if ( this.logAll ) System.out.println( "dernière transition de la trace !c fn");
+				// si M'C == null
+				if (this.MpC_subset == null) {
+					if ( this.logAll ) System.out.println( "M'C == null");
+					// On est dans le cas où la dernière transition de la trace était une action refusée par le
+					// jeu, M'C == null. On cherche donc à identifier les transtitions manquantes pour atteindre
+					// la fin du niveau.
+					storeBadChoices(missingTraces);
+				} else { // sinon  <=> M'C != null
+					if ( this.logAll ) System.out.println( "M'C != null");
+					// si v(fn, GW2, M'C, lSys)
+					if (isExpertEndsReachable( this.workingRdp2, this.MpC_subset )){
+						if ( this.logAll ) System.out.println( "v(fn, GW2, M'C, lSys)");
+						// On est dans le cas où la dernière transition de la trace n'est pas une fin de niveau,
+						// on cherche donc à identifier les transtitions manquantes pour atteindre la fin du niveau
+						storeMissingTransitionFromMarking(missingTraces, this.workingRdp2, this.MpC_subset);
+					} else {
+						if ( this.logAll ) System.out.println( "!v(fn, GW2, M'C, lSys)");
+						// On est dans le cas où la dernière transition de la trace place le joueur dans un puits.
+						// On remonte donc le parcours du joueur jusqu'à trouver un marquage à partir du quel on
+						// peut redescendre jusqu'à la fin du niveau.
+						storeBadChoices(missingTraces);
+					}
 				}
 			}
-		}
+		} else
+			if ( this.logAll ) System.out.println( "Aucune action courante pour "+completeRdp.getName()+", analyse avortée");
+		return missingTraces;
 	}
 
 	private boolean isTryAction () {
 		//on verifie si l'action est un try ou non
 		if ( this.currentAction.getIsTry() == null )
-		{
-			this.currentAction.setIsTry(!this.completeRdp.enabledTransition( this.currentCompleteTransition ));
-		}
-		return this.currentAction.getIsTry().booleanValue();
+			return !this.completeRdp.enabledTransition( this.currentCompleteTransition );
+		else
+			return this.currentAction.getIsTry().booleanValue();
 	}
 	
 	/**
@@ -715,7 +661,7 @@ public class Labeling_V10 implements ILabeling {
 	}
 	
 	// Permet d'enregistrer les mauvais choix fait par le joueur.
-	private void storeBadChoices () throws Exception {
+	private void storeBadChoices (ITraces missingTraces) throws Exception {
 		// compteur pour parcourir à l'envers les marquages traversés par le joueur
 		int badChoiceCpt = this.completeMarkingSeen.size() - 1;
 		
@@ -733,6 +679,7 @@ public class Labeling_V10 implements ILabeling {
 				// Noter la transition correspondante comme "mauvais choix"
 				ITrace prevAction = previousMarkingSeen.action;
 				prevAction.addLabel(Labels.MAUVAIS_CHOIX);
+				missingTraces.getTraces().add(prevAction);
 				// On continue à remonter les marquages traversés par le joueur
 				badChoiceCpt--;
 			}
@@ -741,10 +688,10 @@ public class Labeling_V10 implements ILabeling {
 		// Parmis les marquages par lesquels le joueur est passé dans le Rdp Complet, on en a trouvé depuis
 		// lequel on peut atteindre la fin du niveau. On enregistre donc toutes ces transitions comme
 		// manquantes.
-		storeMissingTransitionFromMarking(rdpFounded, markFounded);
+		storeMissingTransitionFromMarking(missingTraces, rdpFounded, markFounded);
 	}
 	
-	private void storeMissingTransitionFromMarking (IPetriNet rdpW, IMarking startingMarking) throws Exception {
+	private void storeMissingTransitionFromMarking (ITraces missingTraces, IPetriNet rdpW, IMarking startingMarking) throws Exception {
 		// calcul des plus courts chemins possibles
 		ArrayList<IPathIntersection> pcc = getShortestPathsToTransitions( rdpW, startingMarking, expertEndTransitions );
 		// Extraire au moins un chemin parmis tous les chemins possibles
@@ -767,10 +714,10 @@ public class Labeling_V10 implements ILabeling {
 			}
 			// On enregistre chacune des transitions restantes comme manquante
 			for (ITransition tr : missingTr) {
-				ITrace missing = new Trace(rdpW.getName(), tr.getId(), ActionSource.LABELISATION, ActionType.UNKNOW, false);
+				ITrace missing = new Trace(rdpW.getName().split("[.]pnml")[0], tr.getId(), ActionSource.LABELISATION, ActionType.UNKNOW, null);
 				missing.addLabel( Labels.MANQUANTE );
 				
-				traces.getTraces().add(missing);
+				missingTraces.getTraces().add(missing);
 			}
 		}
 	}

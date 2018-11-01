@@ -51,9 +51,13 @@ public interface ITraces {
 	 */
 	public void clear();
 	/**
-	 * copy all traces from "source" into this traces
+	 * clone all traces from "source" into this traces (without labels)
 	 */
 	public void  copy(ITraces source);
+	/**
+	 * append all traces from "source" into this traces
+	 */
+	public void  append(ITraces source);
 	/**
 	 * return a string representing traces
 	 * XML formated

@@ -17,13 +17,6 @@ public interface ILabeling {
 	 */
 	public void export(String exportPath) throws Exception;
 	
-	/**
-	 * lance l'analyse de toutes les actions contenu dans "traces"
-	 * @param	traces : liste des traces à analyser
-	 * @throws Exception 
-	 */
-	public void label( ITraces traces ) throws Exception;
-	
 
 	/**
 	 * labellise une action
@@ -42,6 +35,12 @@ public interface ILabeling {
 	 */
 	public String getNextBetterActionsToReach (String targetActionName, int maxActions) throws Exception;
 	
+	/**
+	 * Try to identify bad choices and missing actions to reach one of the end transitions
+	 * @return list of bad choices and missing actions to reach one of the end transitions
+	 * @throws Exception 
+	 */
+	public ITraces analyseTransitionEndStep() throws Exception;
 	/**
 	 * re initialise toutes les variables interne pour ne pas
 	 * risquer de fausser l'analyse d'une autre trace
