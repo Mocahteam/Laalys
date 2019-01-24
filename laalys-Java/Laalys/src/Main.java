@@ -291,6 +291,8 @@ public class Main {
 						        		if (workingPn.enabledTransition(transitions.get(i))){
 						        			// store this enabled transition
 						        			triggerableActions += transitions.get(i).getId();
+							        		if (i < transitions.size() - 1)
+							        			triggerableActions += "\t";
 						        		}
 						        	}
 					        	}
