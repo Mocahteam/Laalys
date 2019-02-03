@@ -290,12 +290,13 @@ public class Main {
 						        	for (int i = 0 ; i < transitions.size() ; i++){
 						        		if (workingPn.enabledTransition(transitions.get(i))){
 						        			// store this enabled transition
-						        			triggerableActions += transitions.get(i).getId();
-							        		if (i < transitions.size() - 1)
-							        			triggerableActions += "\t";
+						        			triggerableActions += transitions.get(i).getId()+"\t";
 						        		}
 						        	}
 					        	}
+					        	// remove last "\t" if it exists
+					        	if (triggerableActions.length() > 0 && triggerableActions.charAt(triggerableActions.length()-1) == '\t')
+					        		triggerableActions = triggerableActions.substring(0, triggerableActions.length()-1);
 					        	// send back actions
 					        	System.out.println("Send actions: "+triggerableActions);
 					        	pw.println(triggerableActions);
