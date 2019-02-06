@@ -28,7 +28,7 @@ public interface ILabeling {
 	/**
 	 * Get the name of the next better action to perform to reach target action name. Try to compute a path between current
 	 * state and the target action name. If found returns the first action of this path, if not found returns empty string "".
-	 * @param targetActionName the action name to reach. Use "end" key word to target expertEndTransitions.
+	 * @param targetActionName the action name to reach. Use "##playerObjectives##" key word to target expertEndTransitions.
 	 * @param maxActions the maximum number of actions returned.
 	 * @return a string containing all name actions separated by "\t" separator
 	 * @throws Exception 
