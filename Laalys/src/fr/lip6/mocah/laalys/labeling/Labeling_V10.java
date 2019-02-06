@@ -770,8 +770,13 @@ public class Labeling_V10 implements ILabeling {
 	public String getNextBetterActionsToReach(String targetActionName, int maxActions) throws Exception {
 		IPetriNet workingRdp = this.workingRdp1;
 		if (workingRdp == null) workingRdp = this.filteredRdp;
-		ArrayList<String> targets = new ArrayList<>();
-		targets.add(targetActionName);
+		ArrayList<String> targets;
+		if (targetActionName.equals("##playerObjectives##"))
+			targets = this.expertEndTransitions;
+		else {
+			targets = new ArrayList<>();
+			targets.add(targetActionName);
+		}
 		ArrayList<IPathIntersection> shortestPaths_MC = getShortestPathsToTransitions( workingRdp, PetriNet.extractSubMarkings(this.filteredRdp, this.completeRdp), targets );
 		if (shortestPaths_MC.size() == 0)
 			return "";
