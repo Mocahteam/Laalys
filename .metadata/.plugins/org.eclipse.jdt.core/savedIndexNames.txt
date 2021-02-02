@@ -1,22 +1,4 @@
 INDEX VERSION 1.131+D:\INSHEA\Recherche\Mocah\SVN_Mocah\laalys-Java\.metadata\.plugins\org.eclipse.jdt.core
-3688233713.index
-2161747041.index
-1633992518.index
-146530134.index
-866495595.index
-3173990942.index
-1180489742.index
-1713295793.index
-1607282252.index
 3376995798.index
-1703361771.index
-2327184759.index
-1110334383.index
-72535324.index
-2707737922.index
-2994552673.index
 3809049588.index
-2857209468.index
-1350010956.index
-3964918290.index
-1394848873.index
+3140233112.index

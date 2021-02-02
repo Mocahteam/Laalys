@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item value="false" key="isRegEx"/>
-		<item value="getNextBetterActionsToReach" key="selection"/>
-		<item value="false" key="casesensitive"/>
-		<item value="false" key="incremental"/>
-		<item value="true" key="wrap"/>
-		<item value="false" key="wholeword"/>
+		<item key="isRegEx" value="false"/>
+		<item key="selection" value="loadPetriNet"/>
+		<item key="casesensitive" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="wrap" value="true"/>
+		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="loadPetriNet"/>
+			<item value="loadPetirNet"/>
+			<item value="Load Petri"/>
+			<item value="éèàùäëüïöâêîûôñçÿ"/>
+			<item value="No folder selected"/>
+			<item value="nets selection"/>
+			<item value="Select folder"/>
+			<item value="!v(fn, GW1, MC, lSys)"/>
 			<item value="getNextBetterActionsToReach"/>
-			<item value="pnName2labelingAlgo"/>
-			<item value="debug"/>
+			<item value="getShortestPathsToTransitions"/>
+			<item value="&quot;end&quot;"/>
+			<item value="getTransitionById"/>
+			<item value="getShortestPaths_rec"/>
 			<item value="getShortestPathsToTransition"/>
-			<item value="Load Petri nets and"/>
-			<item value="itemStateChanged"/>
-			<item value="Error, Unknown full Petri net named"/>
-			<item value="analyseTransitionCase1_1"/>
-			<item value="analyseTransitionEndStep"/>
-			<item value="allMissingTraces"/>
-			<item value="list_tracesForAnalysis"/>
-			<item value="export"/>
-			<item value="Export Labels"/>
-			<item value="L&apos;action est un Try =&gt; !sens(t, MC)"/>
-			<item value="try"/>
+			<item value="pnName2labelingAlgo"/>
 		</list>
 		<list key="replacehistory">
 			<item value="System.out.println( "/>
@@ -35,10 +35,10 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="257" key="DIALOG_WIDTH"/>
-		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
-		<item value="381" key="DIALOG_HEIGHT"/>
-		<item value="1305" key="DIALOG_X_ORIGIN"/>
-		<item value="586" key="DIALOG_Y_ORIGIN"/>
+		<item key="DIALOG_WIDTH" value="284"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+		<item key="DIALOG_HEIGHT" value="391"/>
+		<item key="DIALOG_X_ORIGIN" value="1305"/>
+		<item key="DIALOG_Y_ORIGIN" value="586"/>
 	</section>
 </section>

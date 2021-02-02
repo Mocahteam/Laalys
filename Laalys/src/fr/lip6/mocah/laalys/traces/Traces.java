@@ -1,5 +1,6 @@
 package fr.lip6.mocah.laalys.traces;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -68,7 +69,7 @@ public class Traces implements ITraces {
 		
 		if (builder != null){
 			try {
-				this.xml = builder.parse(url);
+				this.xml = builder.parse(new FileInputStream(url));
 				// Parse document and build each Trace item
 				NodeList transitionsList = xml.getElementsByTagName("transition");
 				for (int i = 0 ; i < transitionsList.getLength() ; i++ )

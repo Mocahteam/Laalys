@@ -3,6 +3,7 @@ package fr.lip6.mocah.laalys.petrinet;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -278,7 +279,7 @@ public class PetriNet implements IPetriNet {
 		this.xml = null;
 		if (builder != null){
 			// Parse document
-			this.xml = builder.parse(url);
+			this.xml = builder.parse(new FileInputStream(url));
 		}
 		
 		// Analyse de l'xml

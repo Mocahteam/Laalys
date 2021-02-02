@@ -1027,6 +1027,7 @@ class InterfaceLaalys extends JFrame implements ItemListener {
 				} catch (Exception e0) {
 					JOptionPane.showMessageDialog(this, "Error, unable to load \""+fullChild.getAbsolutePath()+"\" file\n\nLoading aborted");
 					pnName2labelingAlgo.clear();
+					System.out.println(e0.getMessage());
 					return ;
 				}
 				// Instantiate filtered Petri net
