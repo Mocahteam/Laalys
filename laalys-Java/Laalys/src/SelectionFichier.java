@@ -35,10 +35,10 @@ class SelectionFichier {
 			if (dialogue.getSelectedFile() != null){
 				String filePath =  dialogue.getSelectedFile().getPath();
 				// recherche d'accent dans le path
-				if (Pattern.matches(".*[יטאשהכüןצגךמûפסחÿ].*", filePath)){
+				/*if (Pattern.matches(".*[יטאשהכüןצגךמûפסחÿ].*", filePath)){
 					JOptionPane.showMessageDialog(parent, "Selected path includes at least one accented character or ח\n\nFile selection aborted");
 					return "";
-				} else
+				} else*/
 					return dialogue.getSelectedFile().getPath();
 			}
 			else

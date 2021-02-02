@@ -1,5 +1,6 @@
 package fr.lip6.mocah.laalys.features;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class Features implements IFeatures {
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = factory.newDocumentBuilder();
-			Document xml = builder.parse(url);
+			Document xml = builder.parse(new FileInputStream(url));
 			// Récupération de toutes les transitions
 			NodeList transitionsList = xml.getElementsByTagName("transition");
 			for (int i = 0 ; i < transitionsList.getLength() ; i++ ){
