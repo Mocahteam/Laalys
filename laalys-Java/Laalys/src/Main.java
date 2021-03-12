@@ -1,10 +1,16 @@
 import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +28,7 @@ import fr.lip6.mocah.laalys.features.IFeatures;
 import fr.lip6.mocah.laalys.labeling.ILabeling;
 import fr.lip6.mocah.laalys.labeling.Labeling_V10;
 import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
+import fr.lip6.mocah.laalys.petrinet.IMarking;
 import fr.lip6.mocah.laalys.petrinet.IPetriNet;
 import fr.lip6.mocah.laalys.petrinet.ITransition;
 import fr.lip6.mocah.laalys.petrinet.PetriNet;
@@ -335,7 +342,77 @@ public class Main {
 					        	// send back labels
 					        	System.out.println("Send labels: "+mergedLabels);
 					        	pw.println(mergedLabels);
-					        } else {
+					        } else if(tokens[0].equalsIgnoreCase("GetPetriNetsMarkings")) {
+					        	String markings = "";
+					        	try {
+						        	for (Map.Entry<String, ILabeling> entry : pnName2labelingAlgo.entrySet()){
+						        		ILabeling algo = entry.getValue();
+							        	// get marking of the 2 PN
+						        		IMarking completeMarking = algo.getCompletePN().getCurrentMarkings();
+						        		IMarking filteredMarking = algo.getFilteredPN().getCurrentMarkings();
+						        		markings += entry.getKey()+"\t";
+						        		markings += Serializer.toString(completeMarking)+"\t";
+						        		markings += Serializer.toString(filteredMarking)+"\t\t";
+						        	}
+						        	// remove last 2 "\t" if they exist
+						        	if (markings.length() > 0) {
+						        		if(markings.charAt(markings.length()-1) == '\t')
+							        		markings = markings.substring(0, markings.length()-1);
+						        		if(markings.charAt(markings.length()-1) == '\t')
+							        		markings = markings.substring(0, markings.length()-1);
+						        	}
+						        	// send back markings
+						        	System.out.println("Send markings.");
+								} catch (Exception e) {
+					        		System.out.println("Warning!!! Markings sending aborted: "+e.getMessage());
+								}
+					        	pw.println(markings);
+					        } else if(tokens[0].equalsIgnoreCase("SetPetriNetsMarkings")) {
+					        	tokens = content.split("\t", -1);
+					        	
+					        	// find markings in list
+					        	String pnName = "";
+				        		IMarking completeMarking = null;
+				        		IMarking filteredMarking = null;
+					        	int j = -1;
+					        	try {
+						        	for(int i = 1; i < tokens.length; i++) {
+						        		if(tokens[i] == null || tokens[i].length() == 0)
+						        			j = 0;
+						        		else if(j == 0) {
+						        			pnName = tokens[i];
+						        			j++;
+						        		}
+						        		else if(j == 1) {
+						        			completeMarking = (IMarking) Serializer.fromString(tokens[i]);
+						        			j++;
+						        		}
+						        		else if(j == 2) {
+						        			filteredMarking = (IMarking) Serializer.fromString(tokens[i]);
+						        			j++;
+						        			
+						        			if(completeMarking != null && filteredMarking != null) {
+							        			// find corresponding PN to load markings
+						        				ILabeling algo =  pnName2labelingAlgo.get(pnName);
+						        				if(algo != null) {
+								        			algo.getCompletePN().setCurrentMarkings(completeMarking);
+								        			algo.getFilteredPN().setCurrentMarkings(filteredMarking);
+						        				}
+						        				else {
+									        		System.err.println("Unknown Petri net \"" + pnName + "\" during markings setting.");
+						        				}
+						        			}
+						        		}
+						        	}
+								} catch (Exception e) {
+					        		System.err.println("Warning!!! Markings setting aborted: "+e.getMessage());
+					        		pw.println("");
+								}
+					        	// send something because fyfy is waiting for an answer
+					        	pw.println("done");
+					        	System.out.println("Markings loaded.");
+					        }
+					        else {
 					        	System.out.println("Warning!!! invalid request.");
 					        }
 				        }

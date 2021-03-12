@@ -1,12 +1,13 @@
 package fr.lip6.mocah.laalys.petrinet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * ...
  * @author Mathieu Muratet
  */
-public interface IMarking {
+public interface IMarking extends Serializable {
 	public IMarking clone();
 	
 	/**
