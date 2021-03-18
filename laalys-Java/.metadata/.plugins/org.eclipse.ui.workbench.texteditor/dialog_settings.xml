@@ -2,12 +2,17 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="loadPetriNet"/>
+		<item key="selection" value="code"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="code"/>
+			<item value="getShortestPathsToTransitions"/>
+			<item value="computeGraph"/>
+			<item value="clone"/>
+			<item value="debug"/>
 			<item value="loadPetriNet"/>
 			<item value="loadPetirNet"/>
 			<item value="Load Petri"/>
@@ -17,12 +22,7 @@
 			<item value="Select folder"/>
 			<item value="!v(fn, GW1, MC, lSys)"/>
 			<item value="getNextBetterActionsToReach"/>
-			<item value="getShortestPathsToTransitions"/>
 			<item value="&quot;end&quot;"/>
-			<item value="getTransitionById"/>
-			<item value="getShortestPaths_rec"/>
-			<item value="getShortestPathsToTransition"/>
-			<item value="pnName2labelingAlgo"/>
 		</list>
 		<list key="replacehistory">
 			<item value="System.out.println( "/>
@@ -38,7 +38,7 @@
 		<item key="DIALOG_WIDTH" value="284"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
-		<item key="DIALOG_X_ORIGIN" value="1305"/>
-		<item key="DIALOG_Y_ORIGIN" value="586"/>
+		<item key="DIALOG_X_ORIGIN" value="1293"/>
+		<item key="DIALOG_Y_ORIGIN" value="508"/>
 	</section>
 </section>

@@ -1,16 +1,10 @@
 import java.io.BufferedInputStream;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -351,8 +345,8 @@ public class Main {
 						        		IMarking completeMarking = algo.getCompletePN().getCurrentMarkings();
 						        		IMarking filteredMarking = algo.getFilteredPN().getCurrentMarkings();
 						        		markings += entry.getKey()+"\t";
-						        		markings += Serializer.toString(completeMarking)+"\t";
-						        		markings += Serializer.toString(filteredMarking)+"\t\t";
+						        		markings += completeMarking.getCode()+"\t";
+						        		markings += filteredMarking.getCode()+"\t\t";
 						        	}
 						        	// remove last 2 "\t" if they exist
 						        	if (markings.length() > 0) {
@@ -372,8 +366,8 @@ public class Main {
 					        	
 					        	// find markings in list
 					        	String pnName = "";
-				        		IMarking completeMarking = null;
-				        		IMarking filteredMarking = null;
+				        		String completeCode = null;
+				        		String filteredCode = null;
 					        	int j = -1;
 					        	try {
 						        	for(int i = 1; i < tokens.length; i++) {
@@ -384,19 +378,19 @@ public class Main {
 						        			j++;
 						        		}
 						        		else if(j == 1) {
-						        			completeMarking = (IMarking) Serializer.fromString(tokens[i]);
+						        			completeCode = tokens[i];
 						        			j++;
 						        		}
 						        		else if(j == 2) {
-						        			filteredMarking = (IMarking) Serializer.fromString(tokens[i]);
+						        			filteredCode = tokens[i];
 						        			j++;
 						        			
-						        			if(completeMarking != null && filteredMarking != null) {
+						        			if(completeCode != null && filteredCode != null) {
 							        			// find corresponding PN to load markings
 						        				ILabeling algo =  pnName2labelingAlgo.get(pnName);
 						        				if(algo != null) {
-								        			algo.getCompletePN().setCurrentMarkings(completeMarking);
-								        			algo.getFilteredPN().setCurrentMarkings(filteredMarking);
+								        			algo.getCompletePN().getCurrentMarkings().setCode(completeCode);
+								        			algo.getFilteredPN().getCurrentMarkings().setCode(filteredCode);
 						        				}
 						        				else {
 									        		System.err.println("Unknown Petri net \"" + pnName + "\" during markings setting.");
