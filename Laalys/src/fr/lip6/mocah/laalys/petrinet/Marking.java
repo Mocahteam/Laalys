@@ -99,6 +99,17 @@ public class Marking implements IMarking {
 		return code;
 	}
 	
+	public void setCode(String newCode)
+	{
+		// vérifier si le nouveau code contient le même nombre de place que le marquage courant
+		String[] newTokens = newCode.split(":");
+		if (newTokens.length == marking.size()){
+			for (int cpt = 0 ; cpt < newTokens.length ; cpt++){
+				setTokenAt(cpt, Integer.parseInt(newTokens[cpt]));
+			}
+		}
+	}
+	
 	/** Retourne le nombre d'éléments constituant le marquage */
 	public int getLength()
 	{

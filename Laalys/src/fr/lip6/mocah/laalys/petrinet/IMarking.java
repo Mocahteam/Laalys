@@ -31,6 +31,8 @@ public interface IMarking extends Serializable {
 	
 	public String getCode();
 	
+	public void setCode(String newCode);
+	
 	/** Retourne le nombre d'éléments constituant le marquage */
 	public int getLength();
 	
