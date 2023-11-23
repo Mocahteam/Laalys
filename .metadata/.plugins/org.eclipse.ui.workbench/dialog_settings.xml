@@ -24,4 +24,6 @@
 			<item value="org.eclipse.jdt.ui.Java"/>
 		</list>
 	</section>
+	<section name="FileSystemImportWizard">
+	</section>
 </section>

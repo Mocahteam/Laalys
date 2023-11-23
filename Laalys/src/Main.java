@@ -21,6 +21,7 @@ import fr.lip6.mocah.laalys.features.Features;
 import fr.lip6.mocah.laalys.features.IFeatures;
 import fr.lip6.mocah.laalys.labeling.ILabeling;
 import fr.lip6.mocah.laalys.labeling.Labeling_V10;
+import fr.lip6.mocah.laalys.petrinet.AccessibleGraph;
 import fr.lip6.mocah.laalys.petrinet.CoverabilityGraph;
 import fr.lip6.mocah.laalys.petrinet.IMarking;
 import fr.lip6.mocah.laalys.petrinet.IPetriNet;
@@ -41,6 +42,7 @@ public class Main {
 			String filteredDirName = null;
 			String featuresDirName = null;
 			String traceName = null;
+			String kindOfGraph = CoverabilityGraph.TYPE;
 			String serverIP = null;
 			Integer serverPort = null;
 			String outputName = null;
@@ -54,13 +56,14 @@ public class Main {
 						System.out.println("Usage: LaalysV2 [OPTION]");
 						System.out.println("No parameters shows GUI. In command line following options are available:");
 						System.out.println("\tOptions:");
-						System.out.println("\t\t-help\t\t\t\tprint this message");
-						System.out.println("\t\t-d\t\t\t\tshow debug logs");
-						System.out.println("\t\t-fullPn <DIR>\t\t\tload full Petri nets included into DIR");
-						System.out.println("\t\t-filteredPn <DIR>\t\tload filtered Petri nets included into DIR");
+						System.out.println("\t\t-help\t\t\tprint this message");
+						System.out.println("\t\t-d\t\t\tshow debug logs");
+						System.out.println("\t\t-fullPn <DIR>\t\tload full Petri nets included into DIR");
+						System.out.println("\t\t-filteredPn <DIR>\tload filtered Petri nets included into DIR");
 						System.out.println("\t\t-features <DIR>\t\tload features included into DIR");
-						System.out.println("\t\t-traces <FILE>\t\t\tload file containing traces to analyse");
-						System.out.println("\t\t-o <FILE>\t\t\toutput file to store analysis (xml extension is automaticaly added)");
+						System.out.println("\t\t-traces <FILE>\t\tload file containing traces to analyse");
+						System.out.println("\t\t-kind ACCESS|COVER\tdefines the kind of graph built (default COVER)");
+						System.out.println("\t\t-o <FILE>\t\toutput file to store analysis (xml extension is automaticaly added)");
 						System.out.println("");
 						System.out.println("\t\tIf -traces option is not set, two more options are parsed:");
 						System.out.println("\t\t\t-serverIP <IP_ADRESS>\tTCP address that sends traces");
@@ -89,6 +92,14 @@ public class Main {
 						i++;
 						if (i < args.length)
 							traceName = args[i];
+						break;
+					case "-kind":
+						i++;
+						if (i < args.length)
+							if (args[i].equals("ACCESS"))
+								kindOfGraph = AccessibleGraph.TYPE;
+							else if (!args[i].equals("COVER"))
+								System.err.println("Warning with -kind option: must be equal to ACCESS or COVER. You pass \""+args[i]+"\" then default is used: COVER");								
 						break;
 					case "-serverIP":
 						i++;
@@ -160,7 +171,7 @@ public class Main {
 					System.exit(-7);
 				}
 				// Instantiate full Petri net
-				IPetriNet fullPn = new PetriNet(false, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+				IPetriNet fullPn = new PetriNet(false, kindOfGraph, CoverabilityGraph.STRATEGY_OR);
 				try {
 					fullPn.loadPetriNet(fullChild.getAbsolutePath());
 				} catch (Exception e) {
@@ -168,7 +179,7 @@ public class Main {
 					System.exit(-8);
 				}
 				// Instantiate filtered Petri net
-				IPetriNet filteredPn = new PetriNet(true, CoverabilityGraph.TYPE, CoverabilityGraph.STRATEGY_OR);
+				IPetriNet filteredPn = new PetriNet(true, kindOfGraph, CoverabilityGraph.STRATEGY_OR);
 				try {
 					filteredPn.loadPetriNet(filteredChild.getAbsolutePath());
 				} catch (Exception e) {
@@ -368,7 +379,7 @@ public class Main {
 					        	String pnName = "";
 				        		String completeCode = null;
 				        		String filteredCode = null;
-					        	int j = -1;
+					        	int j = 0;
 					        	try {
 						        	for(int i = 1; i < tokens.length; i++) {
 						        		if(tokens[i] == null || tokens[i].length() == 0)

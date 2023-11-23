@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="logs"/>
+		<item key="selection" value="port is not"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
+			<item value="port is not"/>
+			<item value="isQuasiAliveFromMarking"/>
+			<item value="isExpertEndsReachable"/>
+			<item value="sys valid U"/>
+			<item value="getFeatures"/>
+			<item value="_features"/>
+			<item value="reset"/>
+			<item value="setFeatures"/>
+			<item value="Load Petri nets and"/>
+			<item value="_globalStrategy"/>
+			<item value="!v(fn, GW1, MC, lSys)"/>
+			<item value="cas 1_1"/>
 			<item value="Logs"/>
 			<item value="LOGS"/>
 			<item value="logAll"/>
-			<item value="debug"/>
-			<item value="Warning"/>
-			<item value="code"/>
-			<item value="getShortestPathsToTransitions"/>
-			<item value="computeGraph"/>
-			<item value="clone"/>
-			<item value="loadPetriNet"/>
-			<item value="loadPetirNet"/>
-			<item value="Load Petri"/>
-			<item value="éèàùäëüïöâêîûôñçÿ"/>
-			<item value="No folder selected"/>
-			<item value="nets selection"/>
 		</list>
 		<list key="replacehistory">
 			<item value="System.out.println( "/>
@@ -38,7 +38,7 @@
 		<item key="DIALOG_WIDTH" value="284"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
-		<item key="DIALOG_X_ORIGIN" value="1293"/>
-		<item key="DIALOG_Y_ORIGIN" value="508"/>
+		<item key="DIALOG_X_ORIGIN" value="1458"/>
+		<item key="DIALOG_Y_ORIGIN" value="403"/>
 	</section>
 </section>
