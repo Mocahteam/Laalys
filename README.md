@@ -24,7 +24,7 @@ Laalys use Petri nets to label player actions. The release archive contains the 
 
 # Using Laalys by script
 This is the Python Script example included into release
-```
+```Python
 # You can use LaalysV2.jar with UI by executing it directly
 
 # You can also communicate with LaalysV2.jar with sockets
