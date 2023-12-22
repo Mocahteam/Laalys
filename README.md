@@ -4,7 +4,7 @@ Laalys (Learner Activity AnaLYser) is a software enabling to analyze player's tr
 Laalys is included inside [E-LearningScape](https://github.com/Mocahteam/E-LearningScape) to produce in-game feedbacks depending on players' difficulties.
 
 # Download
-Download Laalys here : [https://github.com/Mocahteam/Laalys/releases/download/V2.2/Laalys.zip](https://github.com/Mocahteam/Laalys/releases/download/V2.2/LaalysV2.2.zip)
+Download Laalys here : [https://github.com/Mocahteam/Laalys/releases/download/V2.2/LaalysV2.2.zip](https://github.com/Mocahteam/Laalys/releases/download/V2.2/LaalysV2.2.zip)
 
 # Requirements
 Java 1.8
