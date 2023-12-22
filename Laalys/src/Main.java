@@ -33,6 +33,21 @@ import fr.lip6.mocah.laalys.traces.Trace;
 import fr.lip6.mocah.laalys.traces.Traces;
 
 public class Main {
+	public static String getTriggerableActions (ILabeling algo) {
+		String result = "";
+    	// get all available transitions
+    	IPetriNet workingPn = algo.getFilteredPN();
+    	ArrayList<ITransition> transitions = workingPn.getTransitions();
+    	// parse all transition and check if they are enabled
+    	for (int i = 0 ; i < transitions.size() ; i++){
+    		if (workingPn.enabledTransition(transitions.get(i))){
+    			// store this enabled transition
+    			result += transitions.get(i).getId()+"\t";
+    		}
+    	}
+    	return result;
+	}
+	
 	public static void main(String[] args) {
 		if (args.length == 0)
 			new InterfaceLaalys();
@@ -287,77 +302,84 @@ public class Main {
 				        }
 				        if (!content.isEmpty()){
 					        System.out.println("Request received: "+content);
-					        // parsing content
-					        String[] tokens = content.split("\t");
-					        if (tokens[0].equalsIgnoreCase("Quit")){
-					        	break;
-					        } else if (tokens[0].equalsIgnoreCase("TriggerableActions")){
-					        	String triggerableActions = "";
-					        	for (Map.Entry<String, ILabeling> entry : pnName2labelingAlgo.entrySet()){
-					        		ILabeling algo = entry.getValue();
-						        	// get all available transitions
-						        	IPetriNet workingPn = algo.getFilteredPN();
-						        	ArrayList<ITransition> transitions = workingPn.getTransitions();
-						        	// parse all transition and check if they are enabled
-						        	for (int i = 0 ; i < transitions.size() ; i++){
-						        		if (workingPn.enabledTransition(transitions.get(i))){
-						        			// store this enabled transition
-						        			triggerableActions += transitions.get(i).getId()+"\t";
+					        try {
+						        // parsing content
+						        String[] tokens = content.split("\t");
+						        if (tokens[0].equalsIgnoreCase("Quit")){
+						        	System.out.println("Bye!");
+						        	break;
+						        } else if (tokens[0].equalsIgnoreCase("TriggerableActions")){
+						        	String triggerableActions = "";
+						        	if (tokens.length == 1) {
+						        		// get triggerable actions of all petri nets
+							        	for (Map.Entry<String, ILabeling> entry : pnName2labelingAlgo.entrySet()){
+							        		triggerableActions += getTriggerableActions(entry.getValue());
+							        	}
+						        	} else {
+						        		// get triggerable actions of the specified petri nets
+						        		for (int i = 1 ; i < tokens.length ; i++) {
+							        		// found associated labeling algorithm instance
+								        	ILabeling algo = pnName2labelingAlgo.get(tokens[i]);
+								        	if (algo != null){
+								        		// get triggerable actions for this petri net
+								        		triggerableActions += getTriggerableActions(algo);
+								        	} else {
+								        		System.err.println("Unknown Petri net \""+tokens[i]+"\" to provide triggerable actions.");
+								        		triggerableActions = "Error, petri net named \""+tokens[i]+"\" unknown.";
+								        		break;
+								        	}
 						        		}
 						        	}
-					        	}
-					        	// remove last "\t" if it exists
-					        	if (triggerableActions.length() > 0 && triggerableActions.charAt(triggerableActions.length()-1) == '\t')
-					        		triggerableActions = triggerableActions.substring(0, triggerableActions.length()-1);
-					        	// send back actions
-					        	System.out.println("Send actions: "+triggerableActions);
-					        	pw.println(triggerableActions);
-					        } else if (tokens[0].equalsIgnoreCase("NextActionToReach") && tokens.length == 4){
-					        	// found associated labeling algorithm instance
-					        	ILabeling algo = pnName2labelingAlgo.get(tokens[1]);
-					        	if (algo != null){
-					        		// compute and send back next action to perform
-					        		String nextActions = algo.getNextBetterActionsToReach(tokens[2], Integer.parseInt(tokens[3]));
-					        		System.out.println("Send actions: "+nextActions);
-					        		pw.println(nextActions);
-					        	} else {
-					        		System.err.println("Unknown Petri net \""+tokens[1]+"\" to label \""+tokens[2]+"\" action.");
-					        		pw.println("");
-					        	}
-					        } else if (tokens.length == 3){
-					        	// Cas par défaut ou le contenu doit suivre le format suivant : pnName\tactionName\tperformedBy
-					        	String mergedLabels = ""; 
-					        	try{
+						        	// remove last "\t" if it exists
+						        	if (triggerableActions.length() > 0 && triggerableActions.charAt(triggerableActions.length()-1) == '\t')
+						        		triggerableActions = triggerableActions.substring(0, triggerableActions.length()-1);
+						        	// send back actions
+						        	System.out.println("Send actions: "+triggerableActions);
+						        	pw.println(triggerableActions);
+						        } else if (tokens[0].equalsIgnoreCase("NextActionToReach") && tokens.length == 4){
 						        	// found associated labeling algorithm instance
-						        	ILabeling algo = pnName2labelingAlgo.get(tokens[0]);
+						        	ILabeling algo = pnName2labelingAlgo.get(tokens[1]);
 						        	if (algo != null){
-							        	ITrace trace = new Trace(tokens[0], tokens[1], null, tokens[2], null);
-						        		algo.labelAction(trace);
-							        	// merge labels 
-							        	for (int i = 0 ; i < trace.getLabels().size() ; i++)
-							        		mergedLabels += trace.getLabels().get(i)+"\t";
-							        	// removing last \t
-							        	if (mergedLabels.endsWith("\t"))
-							        		mergedLabels = mergedLabels.substring(0, mergedLabels.length()-1);
-						        	} else
-						        		System.err.println("Unknown Petri net \""+tokens[0]+"\" to label \""+tokens[1]+"\" action.");
-					        	}catch(Exception e){
-					        		System.out.println("Warning!!! Labeling aborted: "+e.getMessage());
-					        	}
-					        	// send back labels
-					        	System.out.println("Send labels: "+mergedLabels);
-					        	pw.println(mergedLabels);
-					        } else if(tokens[0].equalsIgnoreCase("GetPetriNetsMarkings")) {
-					        	String markings = "";
-					        	try {
-						        	for (Map.Entry<String, ILabeling> entry : pnName2labelingAlgo.entrySet()){
-						        		ILabeling algo = entry.getValue();
-							        	// get marking of the 2 PN
-						        		IMarking completeMarking = algo.getCompletePN().getCurrentMarkings();
-						        		IMarking filteredMarking = algo.getFilteredPN().getCurrentMarkings();
-						        		markings += entry.getKey()+"\t";
-						        		markings += completeMarking.getCode()+"\t";
-						        		markings += filteredMarking.getCode()+"\t\t";
+						        		// compute and send back next action to perform
+						        		String nextActions = algo.getNextBetterActionsToReach(tokens[2], Integer.parseInt(tokens[3]));
+						        		System.out.println("Send actions: "+nextActions);
+						        		pw.println(nextActions);
+						        	} else {
+						        		System.err.println("Unknown Petri net \""+tokens[1]+"\" to label \""+tokens[2]+"\" action.");
+						        		pw.println("Error, petri net named \""+tokens[1]+"\" unknown.");
+						        	}
+						        } else if(tokens[0].equalsIgnoreCase("GetPetriNetsMarkings")) {
+						        	String markings = "";
+					        		if (tokens.length == 1) {
+						        		// get marking of all petri nets
+							        	for (Map.Entry<String, ILabeling> entry : pnName2labelingAlgo.entrySet()){
+							        		ILabeling algo = entry.getValue();
+								        	// get marking of the 2 PN
+							        		IMarking completeMarking = algo.getCompletePN().getCurrentMarkings();
+							        		IMarking filteredMarking = algo.getFilteredPN().getCurrentMarkings();
+							        		markings += entry.getKey()+"\t"; // the name of the petri net
+							        		markings += completeMarking.getCode()+"\t";
+							        		markings += filteredMarking.getCode()+"\t\t";
+							        	}
+						        	} else {
+						        		// get marking of the specified petri nets
+						        		for (int i = 1 ; i < tokens.length ; i++) {
+							        		// found associated labeling algorithm instance
+								        	ILabeling algo = pnName2labelingAlgo.get(tokens[i]);
+								        	if (algo != null){
+								        		// get marking for this petri net
+									        	// get marking of the 2 PN
+								        		IMarking completeMarking = algo.getCompletePN().getCurrentMarkings();
+								        		IMarking filteredMarking = algo.getFilteredPN().getCurrentMarkings();
+								        		markings += tokens[i]+"\t"; // the name of the petri net
+								        		markings += completeMarking.getCode()+"\t";
+								        		markings += filteredMarking.getCode()+"\t\t";
+								        	} else {
+								        		System.err.println("Unknown Petri net \""+tokens[i]+"\" operation aborted.");
+								        		markings = tokens[i]+"\tError, petri net unknown.\t\t";
+								        		break;
+								        	}
+						        		}
 						        	}
 						        	// remove last 2 "\t" if they exist
 						        	if (markings.length() > 0) {
@@ -368,20 +390,17 @@ public class Main {
 						        	}
 						        	// send back markings
 						        	System.out.println("Send markings.");
-								} catch (Exception e) {
-					        		System.out.println("Warning!!! Markings sending aborted: "+e.getMessage());
-								}
-					        	pw.println(markings);
-					        } else if(tokens[0].equalsIgnoreCase("SetPetriNetsMarkings")) {
-					        	tokens = content.split("\t", -1);
-					        	
-					        	// find markings in list
-					        	String pnName = "";
-				        		String completeCode = null;
-				        		String filteredCode = null;
-					        	int j = 0;
-					        	try {
-						        	for(int i = 1; i < tokens.length; i++) {
+						        	pw.println(markings);
+						        } else if(tokens[0].equalsIgnoreCase("SetPetriNetsMarkings")) {
+						        	tokens = content.split("\t", -1); // because content can contains \t\t at the end and we want empty tokens
+						        	
+						        	// find markings in list
+						        	String pnName = "";
+					        		String completeCode = null;
+					        		String filteredCode = null;
+						        	int j = 0;
+					        		String result = "";
+						        	for(int i = 1; i < tokens.length; i++) { // we start to 1 to skeep the first token which is "SetPetriNetsMarkings"
 						        		if(tokens[i] == null || tokens[i].length() == 0)
 						        			j = 0;
 						        		else if(j == 0) {
@@ -402,24 +421,81 @@ public class Main {
 						        				if(algo != null) {
 								        			algo.getCompletePN().getCurrentMarkings().setCode(completeCode);
 								        			algo.getFilteredPN().getCurrentMarkings().setCode(filteredCode);
+								        			result += pnName+" done!\t";
 						        				}
 						        				else {
-									        		System.err.println("Unknown Petri net \"" + pnName + "\" during markings setting.");
+									        		System.err.println("Unknown Petri net \"" + pnName + "\" operation aborted.");
+									        		result += pnName+" unknown (Warning! operation aborted for this Petri net)\t";
 						        				}
 						        			}
 						        		}
 						        	}
-								} catch (Exception e) {
-					        		System.err.println("Warning!!! Markings setting aborted: "+e.getMessage());
-					        		pw.println("");
-								}
-					        	// send something because fyfy is waiting for an answer
-					        	pw.println("done");
-					        	System.out.println("Markings loaded.");
-					        }
-					        else {
-					        	System.out.println("Warning!!! invalid request.");
-					        }
+						        	// remove last "\t" if it exists
+						        	if (result.length() > 0 && result.charAt(result.length()-1) == '\t')
+						        		result = result.substring(0, result.length()-1);
+						        	System.out.println("Markings loaded.");
+						        	// send something because fyfy is waiting for an answer
+						        	pw.println(result);
+						        } else if(tokens[0].equalsIgnoreCase("ResetPetriNetsFromCurrentMarkings")) {
+					        		String result = "";
+					        		if (tokens.length == 1) {
+							        	for (Map.Entry<String, ILabeling> entry : pnName2labelingAlgo.entrySet()){
+							        		ILabeling algo = entry.getValue();
+							        		algo.getCompletePN().initialization();
+							        		algo.getFilteredPN().initialization();
+							        		result += entry.getKey()+" done!\t";
+							        	}
+					        		} else {
+						        		// get marking of the specified petri nets
+						        		for (int i = 1 ; i < tokens.length ; i++) {
+							        		// found associated labeling algorithm instance
+								        	ILabeling algo = pnName2labelingAlgo.get(tokens[i]);
+								        	if (algo != null){
+								        		algo.getCompletePN().initialization();
+								        		algo.getFilteredPN().initialization();
+								        		result += tokens[i]+" done!\t";
+								        	} else {
+								        		System.err.println("Unknown Petri net \""+tokens[i]+"\" operation aborted.");
+								        		result += tokens[i]+" unknown (Warning! operation aborted for this Petri net)\t";
+								        	}
+						        		}
+						        	}
+						        	// remove last "\t" if it exists
+						        	if (result.length() > 0 && result.charAt(result.length()-1) == '\t')
+						        		result = result.substring(0, result.length()-1);
+						        	System.out.println("Petri nets initialized.");
+						        	// send something because fyfy is waiting for an answer
+						        	pw.println(result);
+						        } else if (tokens.length == 3){
+						        	// Cas par défaut ou le contenu doit suivre le format suivant : pnName\tactionName\tperformedBy
+						        	String mergedLabels = "";
+						        	// found associated labeling algorithm instance
+						        	ILabeling algo = pnName2labelingAlgo.get(tokens[0]);
+						        	if (algo != null){
+							        	ITrace trace = new Trace(tokens[0], tokens[1], null, tokens[2], null);
+						        		algo.labelAction(trace);
+							        	// merge labels 
+							        	for (int i = 0 ; i < trace.getLabels().size() ; i++)
+							        		mergedLabels += trace.getLabels().get(i)+"\t";
+							        	// removing last \t
+							        	if (mergedLabels.endsWith("\t"))
+							        		mergedLabels = mergedLabels.substring(0, mergedLabels.length()-1);
+						        	} else {
+						        		System.err.println("Unknown Petri net \""+tokens[0]+"\" to label \""+tokens[1]+"\" action.");
+						        		mergedLabels = "Error, petri net named \""+tokens[0]+"\" unknown.";
+						        	}
+						        	// send back labels
+						        	System.out.println("Send labels: "+mergedLabels);
+						        	pw.println(mergedLabels);
+						        }
+						        else {
+						        	System.out.println("Warning!!! invalid request.");
+						        	pw.println("Error, invalid request.");
+						        }
+					        } catch (Exception e) {
+				        		System.out.println("Error!!! Exception: "+e.getMessage());
+				        		pw.println("Error, Exception: "+e.getMessage());
+							}
 				        }
 				        content = "";
 					}while ((stream = bis.read()) != -1); 

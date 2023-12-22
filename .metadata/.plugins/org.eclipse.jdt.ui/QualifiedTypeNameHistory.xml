@@ -51,8 +51,6 @@
     <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.ITrace"/>
     <fullyQualifiedTypeName name="java.awt.List"/>
     <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.IPetriNet"/>
-    <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.AccessibleGraph"/>
-    <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.CoverabilityGraph"/>
     <fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
     <fullyQualifiedTypeName name="java.util.logging.StreamHandler"/>
     <fullyQualifiedTypeName name="java.util.logging.SimpleFormatter"/>
@@ -60,4 +58,6 @@
     <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Traces"/>
     <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.traces.Trace"/>
     <fullyQualifiedTypeName name="java.io.FileInputStream"/>
+    <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.CoverabilityGraph"/>
+    <fullyQualifiedTypeName name="fr.lip6.mocah.laalys.petrinet.AccessibleGraph"/>
 </qualifiedTypeNameHistroy>

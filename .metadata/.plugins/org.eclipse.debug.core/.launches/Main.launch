@@ -7,10 +7,11 @@
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="1"/>
     </listAttribute>
-    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="Main"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="Laalys"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-fullPn exemples/Full -filteredPn exemples/Filtered -features exemples/Spec -serverIP localhost -serverPort 12012 -kind ACCESS"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="Laalys"/>
 </launchConfiguration>
